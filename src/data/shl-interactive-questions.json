@@ -1,0 +1,2517 @@
+[
+  {
+    "id": 1,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q1_r1",
+          "values": [
+            "Plant Retrofit",
+            "110",
+            "164"
+          ]
+        },
+        {
+          "id": "q1_r2",
+          "values": [
+            "Tank Farm",
+            "46",
+            "260"
+          ]
+        },
+        {
+          "id": "q1_r3",
+          "values": [
+            "Pipeline",
+            "65",
+            "178"
+          ]
+        },
+        {
+          "id": "q1_r4",
+          "values": [
+            "Controls Upgrade",
+            "149",
+            "78"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q1_r1": "watchlist",
+      "q1_r2": "priority",
+      "q1_r3": "priority",
+      "q1_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 2,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:1 | Office B:1 | Office C:2 | Office D:6"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_2_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 8
+        },
+        {
+          "id": "seg_2_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_2_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_2_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 64
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_2_1": 10,
+      "seg_2_2": 10,
+      "seg_2_3": 20,
+      "seg_2_4": 60
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 3,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 200 total (50 Service / 150 Product)",
+      "Month 2: Service +10%, Product +30%"
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "bar_1": {
+        "total": 200,
+        "split_pct": 25
+      },
+      "bar_2_initial": {
+        "total": 220,
+        "split_pct": 21
+      }
+    },
+    "correct_answer": {
+      "total": 250,
+      "split_pct": 22
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 4,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q4_r1",
+          "values": [
+            "Plant Retrofit",
+            "149",
+            "137"
+          ]
+        },
+        {
+          "id": "q4_r2",
+          "values": [
+            "Tank Farm",
+            "131",
+            "203"
+          ]
+        },
+        {
+          "id": "q4_r3",
+          "values": [
+            "Pipeline",
+            "118",
+            "190"
+          ]
+        },
+        {
+          "id": "q4_r4",
+          "values": [
+            "Controls Upgrade",
+            "131",
+            "100"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q4_r1": "watchlist",
+      "q4_r2": "watchlist",
+      "q4_r3": "watchlist",
+      "q4_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 5,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 120",
+      "Ratio units -> Office A:2 | Office B:2 | Office C:3 | Office D:3"
+    ],
+    "widget_data": {
+      "total_value": 120,
+      "segments": [
+        {
+          "id": "seg_5_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_5_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_5_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 36
+        },
+        {
+          "id": "seg_5_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 36
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_5_1": 20,
+      "seg_5_2": 20,
+      "seg_5_3": 30,
+      "seg_5_4": 30
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 6,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 200 total (60 Service / 140 Product)",
+      "Month 2: Service +5%, Product +10%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 200,
+        "split_pct": 30
+      },
+      "bar_2_initial": {
+        "total": 210,
+        "split_pct": 38
+      }
+    },
+    "correct_answer": {
+      "total": 217,
+      "split_pct": 29
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 7,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q7_r1",
+          "values": [
+            "Plant Retrofit",
+            "106",
+            "263"
+          ]
+        },
+        {
+          "id": "q7_r2",
+          "values": [
+            "Tank Farm",
+            "67",
+            "81"
+          ]
+        },
+        {
+          "id": "q7_r3",
+          "values": [
+            "Pipeline",
+            "152",
+            "265"
+          ]
+        },
+        {
+          "id": "q7_r4",
+          "values": [
+            "Controls Upgrade",
+            "96",
+            "147"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q7_r1": "priority",
+      "q7_r2": "watchlist",
+      "q7_r3": "watchlist",
+      "q7_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 8,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 360",
+      "Ratio units -> Office A:1 | Office B:2 | Office C:3 | Office D:4"
+    ],
+    "widget_data": {
+      "total_value": 360,
+      "segments": [
+        {
+          "id": "seg_8_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_8_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 22
+        },
+        {
+          "id": "seg_8_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 34
+        },
+        {
+          "id": "seg_8_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 30
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_8_1": 10,
+      "seg_8_2": 20,
+      "seg_8_3": 30,
+      "seg_8_4": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 9,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 260 total (117 Service / 143 Product)",
+      "Month 2: Service +30%, Product +25%"
+    ],
+    "widget_data": {
+      "axis_max": 400,
+      "bar_1": {
+        "total": 260,
+        "split_pct": 45
+      },
+      "bar_2_initial": {
+        "total": 240,
+        "split_pct": 37
+      }
+    },
+    "correct_answer": {
+      "total": 331,
+      "split_pct": 46
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 10,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q10_r1",
+          "values": [
+            "Plant Retrofit",
+            "122",
+            "257"
+          ]
+        },
+        {
+          "id": "q10_r2",
+          "values": [
+            "Tank Farm",
+            "58",
+            "156"
+          ]
+        },
+        {
+          "id": "q10_r3",
+          "values": [
+            "Pipeline",
+            "138",
+            "200"
+          ]
+        },
+        {
+          "id": "q10_r4",
+          "values": [
+            "Controls Upgrade",
+            "47",
+            "139"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q10_r1": "priority",
+      "q10_r2": "priority",
+      "q10_r3": "watchlist",
+      "q10_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 11,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 120",
+      "Ratio units -> Office A:1 | Office B:2 | Office C:3 | Office D:4"
+    ],
+    "widget_data": {
+      "total_value": 120,
+      "segments": [
+        {
+          "id": "seg_11_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_11_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 22
+        },
+        {
+          "id": "seg_11_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 36
+        },
+        {
+          "id": "seg_11_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 28
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_11_1": 10,
+      "seg_11_2": 20,
+      "seg_11_3": 30,
+      "seg_11_4": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 12,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 280 total (112 Service / 168 Product)",
+      "Month 2: Service +5%, Product +10%"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "bar_1": {
+        "total": 280,
+        "split_pct": 40
+      },
+      "bar_2_initial": {
+        "total": 290,
+        "split_pct": 52
+      }
+    },
+    "correct_answer": {
+      "total": 303,
+      "split_pct": 39
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 13,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q13_r1",
+          "values": [
+            "Plant Retrofit",
+            "85",
+            "88"
+          ]
+        },
+        {
+          "id": "q13_r2",
+          "values": [
+            "Tank Farm",
+            "90",
+            "148"
+          ]
+        },
+        {
+          "id": "q13_r3",
+          "values": [
+            "Pipeline",
+            "45",
+            "79"
+          ]
+        },
+        {
+          "id": "q13_r4",
+          "values": [
+            "Controls Upgrade",
+            "160",
+            "138"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q13_r1": "watchlist",
+      "q13_r2": "watchlist",
+      "q13_r3": "watchlist",
+      "q13_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 14,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 120",
+      "Ratio units -> Office A:2 | Office B:2 | Office C:3 | Office D:3"
+    ],
+    "widget_data": {
+      "total_value": 120,
+      "segments": [
+        {
+          "id": "seg_14_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_14_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 26
+        },
+        {
+          "id": "seg_14_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 32
+        },
+        {
+          "id": "seg_14_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 18
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_14_1": 20,
+      "seg_14_2": 20,
+      "seg_14_3": 30,
+      "seg_14_4": 30
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 15,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 200 total (120 Service / 80 Product)",
+      "Month 2: Service +10%, Product +20%"
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "bar_1": {
+        "total": 200,
+        "split_pct": 60
+      },
+      "bar_2_initial": {
+        "total": 180,
+        "split_pct": 56
+      }
+    },
+    "correct_answer": {
+      "total": 228,
+      "split_pct": 58
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 16,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q16_r1",
+          "values": [
+            "Plant Retrofit",
+            "132",
+            "230"
+          ]
+        },
+        {
+          "id": "q16_r2",
+          "values": [
+            "Tank Farm",
+            "155",
+            "66"
+          ]
+        },
+        {
+          "id": "q16_r3",
+          "values": [
+            "Pipeline",
+            "158",
+            "160"
+          ]
+        },
+        {
+          "id": "q16_r4",
+          "values": [
+            "Controls Upgrade",
+            "54",
+            "178"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q16_r1": "watchlist",
+      "q16_r2": "watchlist",
+      "q16_r3": "watchlist",
+      "q16_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 17,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:1 | Office B:1 | Office C:2 | Office D:6"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_17_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 12
+        },
+        {
+          "id": "seg_17_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 4
+        },
+        {
+          "id": "seg_17_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_17_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 70
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_17_1": 10,
+      "seg_17_2": 10,
+      "seg_17_3": 20,
+      "seg_17_4": 60
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 18,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 160 total (112 Service / 48 Product)",
+      "Month 2: Service +20%, Product +30%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 160,
+        "split_pct": 70
+      },
+      "bar_2_initial": {
+        "total": 150,
+        "split_pct": 62
+      }
+    },
+    "correct_answer": {
+      "total": 196,
+      "split_pct": 68
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 19,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q19_r1",
+          "values": [
+            "Plant Retrofit",
+            "57",
+            "73"
+          ]
+        },
+        {
+          "id": "q19_r2",
+          "values": [
+            "Tank Farm",
+            "146",
+            "235"
+          ]
+        },
+        {
+          "id": "q19_r3",
+          "values": [
+            "Pipeline",
+            "98",
+            "275"
+          ]
+        },
+        {
+          "id": "q19_r4",
+          "values": [
+            "Controls Upgrade",
+            "104",
+            "79"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q19_r1": "watchlist",
+      "q19_r2": "watchlist",
+      "q19_r3": "priority",
+      "q19_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 20,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:2 | Office B:3 | Office C:5"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_20_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 18
+        },
+        {
+          "id": "seg_20_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 28
+        },
+        {
+          "id": "seg_20_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 54
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_20_1": 20,
+      "seg_20_2": 30,
+      "seg_20_3": 50
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 21,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 160 total (104 Service / 56 Product)",
+      "Month 2: Service +15%, Product +15%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 160,
+        "split_pct": 65
+      },
+      "bar_2_initial": {
+        "total": 180,
+        "split_pct": 57
+      }
+    },
+    "correct_answer": {
+      "total": 184,
+      "split_pct": 65
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 22,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q22_r1",
+          "values": [
+            "Plant Retrofit",
+            "65",
+            "222"
+          ]
+        },
+        {
+          "id": "q22_r2",
+          "values": [
+            "Tank Farm",
+            "125",
+            "176"
+          ]
+        },
+        {
+          "id": "q22_r3",
+          "values": [
+            "Pipeline",
+            "75",
+            "264"
+          ]
+        },
+        {
+          "id": "q22_r4",
+          "values": [
+            "Controls Upgrade",
+            "99",
+            "87"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q22_r1": "priority",
+      "q22_r2": "watchlist",
+      "q22_r3": "priority",
+      "q22_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 23,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:2 | Office B:3 | Office C:5"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_23_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_23_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_23_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 52
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_23_1": 20,
+      "seg_23_2": 30,
+      "seg_23_3": 50
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 24,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 260 total (182 Service / 78 Product)",
+      "Month 2: Service +20%, Product +10%"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "bar_1": {
+        "total": 260,
+        "split_pct": 70
+      },
+      "bar_2_initial": {
+        "total": 250,
+        "split_pct": 66
+      }
+    },
+    "correct_answer": {
+      "total": 304,
+      "split_pct": 72
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 25,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q25_r1",
+          "values": [
+            "Plant Retrofit",
+            "147",
+            "127"
+          ]
+        },
+        {
+          "id": "q25_r2",
+          "values": [
+            "Tank Farm",
+            "143",
+            "105"
+          ]
+        },
+        {
+          "id": "q25_r3",
+          "values": [
+            "Pipeline",
+            "53",
+            "173"
+          ]
+        },
+        {
+          "id": "q25_r4",
+          "values": [
+            "Controls Upgrade",
+            "68",
+            "252"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q25_r1": "watchlist",
+      "q25_r2": "watchlist",
+      "q25_r3": "priority",
+      "q25_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 26,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 120",
+      "Ratio units -> Office A:1 | Office B:1 | Office C:2 | Office D:6"
+    ],
+    "widget_data": {
+      "total_value": 120,
+      "segments": [
+        {
+          "id": "seg_26_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 12
+        },
+        {
+          "id": "seg_26_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 8
+        },
+        {
+          "id": "seg_26_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 22
+        },
+        {
+          "id": "seg_26_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 58
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_26_1": 10,
+      "seg_26_2": 10,
+      "seg_26_3": 20,
+      "seg_26_4": 60
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 27,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 280 total (98 Service / 182 Product)",
+      "Month 2: Service +10%, Product +10%"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "bar_1": {
+        "total": 280,
+        "split_pct": 35
+      },
+      "bar_2_initial": {
+        "total": 260,
+        "split_pct": 23
+      }
+    },
+    "correct_answer": {
+      "total": 308,
+      "split_pct": 35
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 28,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q28_r1",
+          "values": [
+            "Plant Retrofit",
+            "55",
+            "161"
+          ]
+        },
+        {
+          "id": "q28_r2",
+          "values": [
+            "Tank Farm",
+            "132",
+            "122"
+          ]
+        },
+        {
+          "id": "q28_r3",
+          "values": [
+            "Pipeline",
+            "50",
+            "257"
+          ]
+        },
+        {
+          "id": "q28_r4",
+          "values": [
+            "Controls Upgrade",
+            "65",
+            "244"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q28_r1": "priority",
+      "q28_r2": "watchlist",
+      "q28_r3": "priority",
+      "q28_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 29,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:2 | Office B:3 | Office C:5"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_29_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_29_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 26
+        },
+        {
+          "id": "seg_29_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 60
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_29_1": 20,
+      "seg_29_2": 30,
+      "seg_29_3": 50
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 30,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 200 total (140 Service / 60 Product)",
+      "Month 2: Service +30%, Product +15%"
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "bar_1": {
+        "total": 200,
+        "split_pct": 70
+      },
+      "bar_2_initial": {
+        "total": 220,
+        "split_pct": 66
+      }
+    },
+    "correct_answer": {
+      "total": 251,
+      "split_pct": 73
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 31,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q31_r1",
+          "values": [
+            "Plant Retrofit",
+            "55",
+            "184"
+          ]
+        },
+        {
+          "id": "q31_r2",
+          "values": [
+            "Tank Farm",
+            "135",
+            "211"
+          ]
+        },
+        {
+          "id": "q31_r3",
+          "values": [
+            "Pipeline",
+            "79",
+            "153"
+          ]
+        },
+        {
+          "id": "q31_r4",
+          "values": [
+            "Controls Upgrade",
+            "157",
+            "104"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q31_r1": "priority",
+      "q31_r2": "watchlist",
+      "q31_r3": "watchlist",
+      "q31_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 32,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:1 | Office B:2 | Office C:3 | Office D:4"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_32_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 6
+        },
+        {
+          "id": "seg_32_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 18
+        },
+        {
+          "id": "seg_32_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 36
+        },
+        {
+          "id": "seg_32_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 40
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_32_1": 10,
+      "seg_32_2": 20,
+      "seg_32_3": 30,
+      "seg_32_4": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 33,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 200 total (110 Service / 90 Product)",
+      "Month 2: Service +5%, Product +15%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 200,
+        "split_pct": 55
+      },
+      "bar_2_initial": {
+        "total": 220,
+        "split_pct": 59
+      }
+    },
+    "correct_answer": {
+      "total": 219,
+      "split_pct": 53
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 34,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q34_r1",
+          "values": [
+            "Plant Retrofit",
+            "97",
+            "147"
+          ]
+        },
+        {
+          "id": "q34_r2",
+          "values": [
+            "Tank Farm",
+            "80",
+            "246"
+          ]
+        },
+        {
+          "id": "q34_r3",
+          "values": [
+            "Pipeline",
+            "89",
+            "125"
+          ]
+        },
+        {
+          "id": "q34_r4",
+          "values": [
+            "Controls Upgrade",
+            "106",
+            "217"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q34_r1": "watchlist",
+      "q34_r2": "priority",
+      "q34_r3": "watchlist",
+      "q34_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 35,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 240",
+      "Ratio units -> Office A:1 | Office B:2 | Office C:2 | Office D:5"
+    ],
+    "widget_data": {
+      "total_value": 240,
+      "segments": [
+        {
+          "id": "seg_35_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 12
+        },
+        {
+          "id": "seg_35_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 18
+        },
+        {
+          "id": "seg_35_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 16
+        },
+        {
+          "id": "seg_35_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 54
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_35_1": 10,
+      "seg_35_2": 20,
+      "seg_35_3": 20,
+      "seg_35_4": 50
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 36,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 180 total (72 Service / 108 Product)",
+      "Month 2: Service +5%, Product +30%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 180,
+        "split_pct": 40
+      },
+      "bar_2_initial": {
+        "total": 190,
+        "split_pct": 36
+      }
+    },
+    "correct_answer": {
+      "total": 216,
+      "split_pct": 35
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 37,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q37_r1",
+          "values": [
+            "Plant Retrofit",
+            "52",
+            "150"
+          ]
+        },
+        {
+          "id": "q37_r2",
+          "values": [
+            "Tank Farm",
+            "133",
+            "166"
+          ]
+        },
+        {
+          "id": "q37_r3",
+          "values": [
+            "Pipeline",
+            "50",
+            "157"
+          ]
+        },
+        {
+          "id": "q37_r4",
+          "values": [
+            "Controls Upgrade",
+            "60",
+            "63"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q37_r1": "priority",
+      "q37_r2": "watchlist",
+      "q37_r3": "priority",
+      "q37_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 38,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 240",
+      "Ratio units -> Office A:1 | Office B:1 | Office C:2 | Office D:6"
+    ],
+    "widget_data": {
+      "total_value": 240,
+      "segments": [
+        {
+          "id": "seg_38_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 16
+        },
+        {
+          "id": "seg_38_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 12
+        },
+        {
+          "id": "seg_38_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 16
+        },
+        {
+          "id": "seg_38_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 56
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_38_1": 10,
+      "seg_38_2": 10,
+      "seg_38_3": 20,
+      "seg_38_4": 60
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 39,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 240 total (144 Service / 96 Product)",
+      "Month 2: Service +10%, Product +10%"
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "bar_1": {
+        "total": 240,
+        "split_pct": 60
+      },
+      "bar_2_initial": {
+        "total": 220,
+        "split_pct": 52
+      }
+    },
+    "correct_answer": {
+      "total": 264,
+      "split_pct": 60
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 40,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q40_r1",
+          "values": [
+            "Plant Retrofit",
+            "127",
+            "262"
+          ]
+        },
+        {
+          "id": "q40_r2",
+          "values": [
+            "Tank Farm",
+            "70",
+            "130"
+          ]
+        },
+        {
+          "id": "q40_r3",
+          "values": [
+            "Pipeline",
+            "46",
+            "76"
+          ]
+        },
+        {
+          "id": "q40_r4",
+          "values": [
+            "Controls Upgrade",
+            "124",
+            "220"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q40_r1": "priority",
+      "q40_r2": "watchlist",
+      "q40_r3": "watchlist",
+      "q40_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 41,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 120",
+      "Ratio units -> Office A:1 | Office B:2 | Office C:2 | Office D:5"
+    ],
+    "widget_data": {
+      "total_value": 120,
+      "segments": [
+        {
+          "id": "seg_41_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 12
+        },
+        {
+          "id": "seg_41_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_41_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 26
+        },
+        {
+          "id": "seg_41_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 48
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_41_1": 10,
+      "seg_41_2": 20,
+      "seg_41_3": 20,
+      "seg_41_4": 50
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 42,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 160 total (56 Service / 104 Product)",
+      "Month 2: Service +5%, Product +35%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 160,
+        "split_pct": 35
+      },
+      "bar_2_initial": {
+        "total": 180,
+        "split_pct": 43
+      }
+    },
+    "correct_answer": {
+      "total": 199,
+      "split_pct": 30
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 43,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q43_r1",
+          "values": [
+            "Plant Retrofit",
+            "79",
+            "126"
+          ]
+        },
+        {
+          "id": "q43_r2",
+          "values": [
+            "Tank Farm",
+            "146",
+            "159"
+          ]
+        },
+        {
+          "id": "q43_r3",
+          "values": [
+            "Pipeline",
+            "95",
+            "268"
+          ]
+        },
+        {
+          "id": "q43_r4",
+          "values": [
+            "Controls Upgrade",
+            "71",
+            "222"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q43_r1": "watchlist",
+      "q43_r2": "watchlist",
+      "q43_r3": "priority",
+      "q43_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 44,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 180",
+      "Ratio units -> Office A:2 | Office B:2 | Office C:3 | Office D:3"
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "segments": [
+        {
+          "id": "seg_44_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_44_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 16
+        },
+        {
+          "id": "seg_44_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_44_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 36
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_44_1": 20,
+      "seg_44_2": 20,
+      "seg_44_3": 30,
+      "seg_44_4": 30
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 45,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 180 total (63 Service / 117 Product)",
+      "Month 2: Service +15%, Product +10%"
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "bar_1": {
+        "total": 180,
+        "split_pct": 35
+      },
+      "bar_2_initial": {
+        "total": 160,
+        "split_pct": 23
+      }
+    },
+    "correct_answer": {
+      "total": 201,
+      "split_pct": 36
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 46,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q46_r1",
+          "values": [
+            "Plant Retrofit",
+            "116",
+            "216"
+          ]
+        },
+        {
+          "id": "q46_r2",
+          "values": [
+            "Tank Farm",
+            "135",
+            "156"
+          ]
+        },
+        {
+          "id": "q46_r3",
+          "values": [
+            "Pipeline",
+            "157",
+            "188"
+          ]
+        },
+        {
+          "id": "q46_r4",
+          "values": [
+            "Controls Upgrade",
+            "67",
+            "229"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q46_r1": "watchlist",
+      "q46_r2": "watchlist",
+      "q46_r3": "watchlist",
+      "q46_r4": "priority"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 47,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 120",
+      "Ratio units -> Office A:1 | Office B:1 | Office C:2 | Office D:6"
+    ],
+    "widget_data": {
+      "total_value": 120,
+      "segments": [
+        {
+          "id": "seg_47_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 4
+        },
+        {
+          "id": "seg_47_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 8
+        },
+        {
+          "id": "seg_47_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 16
+        },
+        {
+          "id": "seg_47_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 72
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_47_1": 10,
+      "seg_47_2": 10,
+      "seg_47_3": 20,
+      "seg_47_4": 60
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  },
+  {
+    "id": 48,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust Month 2 total and Service/Product split.",
+    "question": "Move the handles until Month 2 matches the growth rules.",
+    "prompt_rules": [
+      "Month 1: 260 total (91 Service / 169 Product)",
+      "Month 2: Service +30%, Product +25%"
+    ],
+    "widget_data": {
+      "axis_max": 400,
+      "bar_1": {
+        "total": 260,
+        "split_pct": 35
+      },
+      "bar_2_initial": {
+        "total": 280,
+        "split_pct": 47
+      }
+    },
+    "correct_answer": {
+      "total": 329,
+      "split_pct": 36
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+  },
+  {
+    "id": 49,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical",
+    "instruction": "Classify each project based on revenue-to-investment coverage.",
+    "question": "Assign the right funding category for each project.",
+    "prompt_rules": [
+      "Priority if Revenue >= 2 x Investment",
+      "Watchlist if Revenue < 2 x Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Project",
+        "Investment (M)",
+        "Revenue (M)",
+        "Category"
+      ],
+      "rows": [
+        {
+          "id": "q49_r1",
+          "values": [
+            "Plant Retrofit",
+            "90",
+            "92"
+          ]
+        },
+        {
+          "id": "q49_r2",
+          "values": [
+            "Tank Farm",
+            "67",
+            "234"
+          ]
+        },
+        {
+          "id": "q49_r3",
+          "values": [
+            "Pipeline",
+            "146",
+            "185"
+          ]
+        },
+        {
+          "id": "q49_r4",
+          "values": [
+            "Controls Upgrade",
+            "95",
+            "87"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "priority",
+          "label": "Priority"
+        },
+        {
+          "id": "watchlist",
+          "label": "Watchlist"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q49_r1": "watchlist",
+      "q49_r2": "priority",
+      "q49_r3": "watchlist",
+      "q49_r4": "watchlist"
+    },
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+  },
+  {
+    "id": 50,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical",
+    "instruction": "Adjust the pie chart to satisfy the ratio model.",
+    "question": "Resize segments to match the office ratio rules.",
+    "prompt_rules": [
+      "Total value = 240",
+      "Ratio units -> Office A:1 | Office B:2 | Office C:3 | Office D:4"
+    ],
+    "widget_data": {
+      "total_value": 240,
+      "segments": [
+        {
+          "id": "seg_50_1",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 4
+        },
+        {
+          "id": "seg_50_2",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 16
+        },
+        {
+          "id": "seg_50_3",
+          "label": "Office C",
+          "color": "orange",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_50_4",
+          "label": "Office D",
+          "color": "purple",
+          "initial_pct": 56
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_50_1": 10,
+      "seg_50_2": 20,
+      "seg_50_3": 30,
+      "seg_50_4": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+  }
+]

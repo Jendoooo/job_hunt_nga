@@ -1,4 +1,8 @@
 import { Flag, CheckCircle2, XCircle } from 'lucide-react'
+import SHLDragTableWidget from './interactive/SHLDragTableWidget'
+import SHLResizablePieWidget from './interactive/SHLResizablePieWidget'
+import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
+import { evaluateQuestionAnswer, hasAnsweredValue, isInteractiveQuestionType } from '../utils/questionScoring'
 
 export default function QuestionCard({
     question,
@@ -12,6 +16,11 @@ export default function QuestionCard({
     onToggleFlag,
 }) {
     const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F']
+    const isInteractive = isInteractiveQuestionType(question?.type)
+    const hasInteractionAnswer = hasAnsweredValue(selectedAnswer)
+    const interactiveResult = isInteractive && hasInteractionAnswer
+        ? evaluateQuestionAnswer(question, selectedAnswer)
+        : null
 
     function getOptionClass(index) {
         let cls = 'question-option'
@@ -24,6 +33,37 @@ export default function QuestionCard({
 
         if (selectedAnswer === index) return `${cls} question-option--selected`
         return cls
+    }
+
+    function renderInteractiveWidget() {
+        switch (question.type) {
+            case 'interactive_drag_table':
+                return (
+                    <SHLDragTableWidget
+                        data={question.widget_data}
+                        value={selectedAnswer}
+                        onAnswer={onSelectAnswer}
+                    />
+                )
+            case 'interactive_pie_chart':
+                return (
+                    <SHLResizablePieWidget
+                        data={question.widget_data}
+                        value={selectedAnswer}
+                        onAnswer={onSelectAnswer}
+                    />
+                )
+            case 'interactive_stacked_bar':
+                return (
+                    <SHLAdjustableBarWidget
+                        data={question.widget_data}
+                        value={selectedAnswer}
+                        onAnswer={onSelectAnswer}
+                    />
+                )
+            default:
+                return null
+        }
     }
 
     return (
@@ -61,31 +101,67 @@ export default function QuestionCard({
                     />
                 )}
 
+                {question.instruction && (
+                    <p className="question-card__instruction">{question.instruction}</p>
+                )}
+
                 <h3 className="question-card__question">
                     {question.question}
                 </h3>
 
-                <div className="question-card__options">
-                    {question.options.map((option, index) => {
-                        const isCurrentCorrect = showResult && index === correctAnswer
-                        const isCurrentWrong = showResult && selectedAnswer === index && index !== correctAnswer
-                        return (
-                            <button
-                                key={index}
-                                type="button"
-                                className={getOptionClass(index)}
-                                onClick={() => !showResult && onSelectAnswer(index)}
-                                disabled={showResult}
-                                aria-pressed={selectedAnswer === index}
-                            >
-                                <span className="question-option__label">{optionLetters[index]}</span>
-                                <span className="question-option__text">{option}</span>
-                                {isCurrentCorrect && <CheckCircle2 size={18} className="question-option__icon question-option__icon--correct" />}
-                                {isCurrentWrong && <XCircle size={18} className="question-option__icon question-option__icon--wrong" />}
-                            </button>
-                        )
-                    })}
-                </div>
+                {Array.isArray(question.prompt_rules) && question.prompt_rules.length > 0 && (
+                    <ul className="question-card__rules">
+                        {question.prompt_rules.map((rule) => (
+                            <li key={rule}>{rule}</li>
+                        ))}
+                    </ul>
+                )}
+
+                {isInteractive ? (
+                    <>
+                        <div className="question-card__interactive">
+                            {renderInteractiveWidget()}
+                        </div>
+
+                        {showResult && hasInteractionAnswer && (
+                            <div className={`question-card__interactive-result ${interactiveResult ? 'question-card__interactive-result--correct' : 'question-card__interactive-result--incorrect'}`}>
+                                {interactiveResult ? (
+                                    <>
+                                        <CheckCircle2 size={16} />
+                                        Your current interactive answer is correct.
+                                    </>
+                                ) : (
+                                    <>
+                                        <XCircle size={16} />
+                                        Your current interactive answer is not correct yet.
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </>
+                ) : (
+                    <div className="question-card__options">
+                        {(question.options || []).map((option, index) => {
+                            const isCurrentCorrect = showResult && index === correctAnswer
+                            const isCurrentWrong = showResult && selectedAnswer === index && index !== correctAnswer
+                            return (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    className={getOptionClass(index)}
+                                    onClick={() => !showResult && onSelectAnswer(index)}
+                                    disabled={showResult}
+                                    aria-pressed={selectedAnswer === index}
+                                >
+                                    <span className="question-option__label">{optionLetters[index]}</span>
+                                    <span className="question-option__text">{option}</span>
+                                    {isCurrentCorrect && <CheckCircle2 size={18} className="question-option__icon question-option__icon--correct" />}
+                                    {isCurrentWrong && <XCircle size={18} className="question-option__icon question-option__icon--wrong" />}
+                                </button>
+                            )
+                        })}
+                    </div>
+                )}
 
                 {showResult && question.explanation && (
                     <section className="question-card__explanation">

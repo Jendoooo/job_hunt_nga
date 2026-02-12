@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import AIExplainer from './AIExplainer'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
+import { buildQuestionResults, isInteractiveQuestionType } from '../utils/questionScoring'
 import {
     Trophy,
     Star,
@@ -135,13 +136,12 @@ export default function ScoreReport({
     const [saving, setSaving] = useState(false)
     const [saveError, setSaveError] = useState('')
 
+    const questionResults = buildQuestionResults(questions, answers)
     const totalQuestions = questions.length || 1
-    const correctCount = questions.reduce((count, q, i) => count + (answers[i] === q.correctAnswer ? 1 : 0), 0)
+    const correctCount = questionResults.filter((result) => result.correct).length
     const score = Math.round((correctCount / totalQuestions) * 100)
-    const skipped = questions.length - Object.keys(answers).length
-    const incorrectAnswers = questions
-        .map((q, i) => ({ ...q, index: i }))
-        .filter(q => answers[q.index] !== q.correctAnswer)
+    const skipped = questionResults.filter((result) => !result.answered).length
+    const incorrectAnswers = questionResults.filter((result) => result.answered && !result.correct)
 
     const saveResults = useCallback(async () => {
         if (!user || saved || saving) return saved
@@ -250,6 +250,8 @@ export default function ScoreReport({
 
     if (reviewMode && incorrectAnswers.length > 0) {
         const q = incorrectAnswers[currentReview]
+        const interactiveReview = isInteractiveQuestionType(q.type)
+        const expectedInteractiveAnswer = q.correct_answer || q.correctAnswer
         return (
             <div className="score-review">
                 <header className="score-review__top">
@@ -263,21 +265,34 @@ export default function ScoreReport({
                 <article className="score-review__card">
                     <p className="score-review__question-tag">Question {q.index + 1}</p>
                     <h3>{q.question}</h3>
-                    <div className="score-review__options">
-                        {q.options.map((option, oi) => (
-                            <div
-                                key={oi}
-                                className={`score-review__option ${oi === q.correctAnswer
-                                    ? 'score-review__option--correct'
-                                    : answers[q.index] === oi
-                                        ? 'score-review__option--wrong'
-                                        : ''}`}
-                            >
-                                <span>{String.fromCharCode(65 + oi)}</span>
-                                <p>{option}</p>
+                    {Array.isArray(q.options) && typeof q.correctAnswer === 'number' ? (
+                        <div className="score-review__options">
+                            {q.options.map((option, oi) => (
+                                <div
+                                    key={oi}
+                                    className={`score-review__option ${oi === q.correctAnswer
+                                        ? 'score-review__option--correct'
+                                        : q.answer === oi
+                                            ? 'score-review__option--wrong'
+                                            : ''}`}
+                                >
+                                    <span>{String.fromCharCode(65 + oi)}</span>
+                                    <p>{option}</p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="score-review__interactive">
+                            <div>
+                                <h4>Your Response</h4>
+                                <pre>{JSON.stringify(q.answer, null, 2)}</pre>
                             </div>
-                        ))}
-                    </div>
+                            <div>
+                                <h4>Expected Answer</h4>
+                                <pre>{JSON.stringify(expectedInteractiveAnswer, null, 2)}</pre>
+                            </div>
+                        </div>
+                    )}
 
                     {q.explanation && (
                         <div className="score-review__explanation">
@@ -286,7 +301,9 @@ export default function ScoreReport({
                         </div>
                     )}
 
-                    <AIExplainer question={q} />
+                    {!interactiveReview && Array.isArray(q.options) && typeof q.correctAnswer === 'number' && (
+                        <AIExplainer question={q} />
+                    )}
                 </article>
 
                 <footer className="score-review__actions">

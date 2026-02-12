@@ -64,6 +64,48 @@
 - `npm run lint`: PASS
 - `npm run build`: PASS
 
+## 2026-02-12 - NLNG Interactive Numerical Module (Table/Pie/Stacked Bar)
+
+## User Direction
+- Add a new NLNG subsection for SHL-style Interactive Numerical.
+- Align implementation with three widget types:
+  - drag-table classification
+  - adjustable pie ratios
+  - adjustable stacked bar totals/splits
+- Wire this cleanly into the current platform, keep docs synchronized.
+
+## Changes Applied
+- Dependencies:
+  - Installed `@dnd-kit/core` and `recharts`.
+- New interactive widget layer (`src/components/interactive/`):
+  - `SHLDragTableWidget.jsx` (drag labels into row drop zones).
+  - `SHLResizablePieWidget.jsx` (ratio adjustment with +/- controls and live chart updates).
+  - `SHLAdjustableBarWidget.jsx` (dual-handle total + split adjustment).
+- Question rendering contract:
+  - `src/components/QuestionCard.jsx` now routes on `question.type` for:
+    - `interactive_drag_table`
+    - `interactive_pie_chart`
+    - `interactive_stacked_bar`
+  - Added prompt rules/instruction blocks and interactive correctness banner for practice mode.
+- Scoring contract:
+  - Added `src/utils/questionScoring.js` with type-aware evaluation + tolerance support.
+  - Updated `src/components/ScoreReport.jsx` to score interactive answers and show non-MCQ review payloads safely.
+- New NLNG interactive page:
+  - Added `src/pages/NLNGInteractiveTest.jsx` with setup/test/finish flow, exam/practice modes, timer, nav, save path.
+- Routing + dashboard:
+  - Added protected route `/test/nlng-interactive` in `src/App.jsx`.
+  - Added NLNG Interactive card on dashboard in `src/pages/Dashboard.jsx`.
+- Data generation:
+  - Added `scripts/generate_shl_module.js` to generate 50-question interactive bank.
+  - Generated `src/data/shl-interactive-questions.json` (17 table, 17 pie, 16 stacked-bar).
+  - Added npm script `generate:shl-interactive` in `package.json`.
+- Styling:
+  - Extended `src/index.css` for interactive widgets, rules/instruction blocks, interactive result states, and mobile behavior.
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS
+
 ## 2026-02-12 - Save-Exit Unblock + Full Practice Coverage + Vercel Hardening
 
 ## User Report

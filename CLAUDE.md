@@ -10,6 +10,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `/test/technical` -> `src/pages/TechnicalTest.jsx` (protected)
 - `/test/saville-practice` -> `src/pages/SavillePractice.jsx` (protected)
 - `/test/nlng` -> `src/pages/NLNGTest.jsx` (protected)
+- `/test/nlng-interactive` -> `src/pages/NLNGInteractiveTest.jsx` (protected)
 - `/test/ai-generated` -> `src/pages/AIGeneratedTest.jsx` (protected)
 
 ## Core Shared Contracts
@@ -27,12 +28,19 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Score review explanation supports formatted HTML content
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
+- Question scoring: `src/utils/questionScoring.js`
+  - Evaluates standard MCQ + interactive types with tolerance support
+- Interactive widgets:
+  - `src/components/interactive/SHLDragTableWidget.jsx`
+  - `src/components/interactive/SHLResizablePieWidget.jsx`
+  - `src/components/interactive/SHLAdjustableBarWidget.jsx`
 
 ## Data Modules
 - `src/data/aptitude-questions.json`
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (30 questions live; Set 1 + additional chunks)
+- `src/data/shl-interactive-questions.json` (50 interactive numerical questions)
 
 ## Dashboard Module Status
 - TotalEnergies:
@@ -40,6 +48,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Process Technical Assessment: Active (exam + practice)
 - NLNG:
   - SHL Deductive Reasoning: Active (exam + practice, custom questions/time)
+  - SHL Interactive Numerical: Active (exam + practice; drag-table, pie, stacked-bar)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:
@@ -48,6 +57,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 ## UI System Status
 - Shared styling lives in `src/index.css`.
 - Core shells/components are standardized across dashboard, auth, tests, and score report.
+- Question card supports typed widget rendering for interactive numerical questions.
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.
 - Dashboard surfaces runtime errors for attempt loading and AI generation.
@@ -60,6 +70,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 
 ## Pending Work
 - Complete NLNG SHL ingestion for full Sets 2-4 beyond current 30-question bank and QA each addition.
+- Run manual touch-device QA for interactive widgets (drop zones, handles, drag sensitivity).
 - Run complete manual QA across breakpoints 320/375/768/1024/1280+.
 - Optional: optimize bundle splitting to reduce large chunk warning.
 - Validate Supabase production schema/policies in live environment for insert/select parity.

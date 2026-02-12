@@ -1,9 +1,11 @@
 # Project Walkthrough
 
 ## Overview
+
 This project is a React + Vite assessment platform for graduate candidate preparation. It supports employer-specific tracks (TotalEnergies, NLNG), drill mode, and AI-generated practice.
 
 ## Main User Flows
+
 1. Authenticate via Supabase on `/login`.
 2. Launch modules from dashboard groups:
    - TotalEnergies
@@ -15,9 +17,11 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    - Question card
    - Question navigator
    - Flagging and review
+   - Interactive widgets for numerical items (table, pie, stacked bar)
 4. View score report and save attempt to Supabase.
 
 ## Key Files
+
 - Routing: `src/App.jsx`
 - Auth provider: `src/context/AuthContext.jsx`
 - Auth hook/context: `src/context/useAuth.js`
@@ -27,6 +31,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
   - `src/pages/TechnicalTest.jsx`
   - `src/pages/SavillePractice.jsx`
   - `src/pages/NLNGTest.jsx`
+  - `src/pages/NLNGInteractiveTest.jsx`
   - `src/pages/AIGeneratedTest.jsx`
 - Shared UI:
   - `src/components/Timer.jsx`
@@ -34,9 +39,16 @@ This project is a React + Vite assessment platform for graduate candidate prepar
   - `src/components/QuestionNav.jsx`
   - `src/components/AIExplainer.jsx`
   - `src/components/ScoreReport.jsx`
+  - `src/components/interactive/SHLDragTableWidget.jsx`
+  - `src/components/interactive/SHLResizablePieWidget.jsx`
+  - `src/components/interactive/SHLAdjustableBarWidget.jsx`
+- Scoring/selection utilities:
+  - `src/utils/questionSession.js`
+  - `src/utils/questionScoring.js`
 - Styling system: `src/index.css`
 
 ## Setup
+
 1. Install dependencies:
    ```bash
    npm install
@@ -56,10 +68,17 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    npm run lint
    npm run build
    ```
+5. Regenerate interactive numerical dataset (optional):
+   ```bash
+   npm run generate:shl-interactive
+   ```
 
 ## Current Status
+
 - NLNG route and dashboard entry are active.
 - NLNG setup supports exam/practice modes and selectable question/time profiles.
+- NLNG Interactive Numerical route (`/test/nlng-interactive`) is active and linked from dashboard.
+- Interactive numerical question types are supported through `QuestionCard` type routing.
 - Aptitude setup supports exam/practice modes and selectable questions/time per subtest.
 - Saville setup supports exam/practice modes and selectable question/time profiles.
 - Dragnet appears as Coming Soon.

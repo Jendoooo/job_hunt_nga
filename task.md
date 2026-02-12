@@ -41,6 +41,10 @@ Date: 2026-02-12
   - [x] User-selectable question count
   - [x] User-selectable time limit
   - [x] Practice mode + exam mode
+- [x] NLNG Interactive Numerical flow (`src/pages/NLNGInteractiveTest.jsx`)
+  - [x] User-selectable question count
+  - [x] User-selectable time limit
+  - [x] Practice mode + exam mode
 - [x] AI generated flow (`src/pages/AIGeneratedTest.jsx`)
 - [x] Score report review flow (`src/components/ScoreReport.jsx`)
 - [x] AI generator error feedback surfaced in dashboard UI
@@ -58,6 +62,19 @@ Date: 2026-02-12
 - [x] Add missing NLNG question ID 28
 - [ ] Complete full Sets 2-4 ingestion beyond current 30-question bank
 - [ ] Run and review `scripts/validate-shl.js` output before merging new sets
+- [x] Add SHL Interactive Numerical bank (`src/data/shl-interactive-questions.json`) with 50 generated items
+- [x] Add generation script (`scripts/generate_shl_module.js`) and npm command (`generate:shl-interactive`)
+
+## Phase 7: Interactive Numerical Module
+- [x] Install interaction dependencies (`@dnd-kit/core`, `recharts`)
+- [x] Implement `SHLDragTableWidget.jsx`
+- [x] Implement `SHLResizablePieWidget.jsx`
+- [x] Implement `SHLAdjustableBarWidget.jsx`
+- [x] Extend `QuestionCard.jsx` to route interactive question types
+- [x] Extend scoring logic to support interactive answers/tolerances
+- [x] Add protected route `/test/nlng-interactive`
+- [x] Add dashboard NLNG Interactive module card
+- [x] Add interactive review fallback in score report for non-MCQ responses
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
@@ -67,5 +84,6 @@ Date: 2026-02-12
 ## Next Actions
 1. Run manual UX/accessibility checks on all target breakpoints and log defects.
 2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
-3. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
-4. Optionally split large frontend bundle if payload size reduction is required.
+3. Validate Interactive Numerical usability on touch devices (drag handles + drag/drop hit zones).
+4. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
+5. Optionally split large frontend bundle if payload size reduction is required.

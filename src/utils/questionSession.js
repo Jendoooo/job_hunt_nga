@@ -1,9 +1,33 @@
 function normalizeText(value) {
     if (value === null || value === undefined) return ''
+
+    if (typeof value === 'object') {
+        return stableSerialize(value)
+    }
+
     return String(value)
         .toLowerCase()
         .replace(/\s+/g, ' ')
         .trim()
+}
+
+function normalizeForComparison(value) {
+    if (value === null || typeof value !== 'object') return value
+
+    if (Array.isArray(value)) {
+        return value.map((item) => normalizeForComparison(item))
+    }
+
+    return Object.keys(value)
+        .sort()
+        .reduce((accumulator, key) => {
+            accumulator[key] = normalizeForComparison(value[key])
+            return accumulator
+        }, {})
+}
+
+function stableSerialize(value) {
+    return JSON.stringify(normalizeForComparison(value))
 }
 
 function questionSignature(question) {

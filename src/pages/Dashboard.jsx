@@ -250,6 +250,18 @@ export default function Dashboard() {
                     path: '/test/nlng',
                     accent: 'sky',
                 },
+                {
+                    id: 'nlng-interactive',
+                    title: 'SHL Interactive Numerical',
+                    subtitle: 'Table, Pie, Stacked Bar',
+                    description: 'Hands-on data interpretation with draggable and adjustable widgets.',
+                    icon: BarChart3,
+                    stat: '50 Qs',
+                    type: 'Practice + Exam',
+                    status: 'active',
+                    path: '/test/nlng-interactive',
+                    accent: 'sky',
+                },
             ],
         },
         {
