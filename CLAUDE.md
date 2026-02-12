@@ -38,8 +38,10 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Supports stacked-bar single-target and multi-bar target answer contracts
 - Interactive widgets:
   - `src/components/interactive/SHLDragTableWidget.jsx`
-  - `src/components/interactive/SHLResizablePieWidget.jsx` (full pie + draggable handles, min-slice constraint, optional info cards)
-  - `src/components/interactive/SHLAdjustableBarWidget.jsx` (totals above bars, axis prefix/step, legend, both-bar adjust support via `interactive_bars`)
+  - `src/components/interactive/SHLResizablePieWidget.jsx` (full pie + draggable handles, min-slice constraint; exact SHL colors #007ab3/#63b209/#f73c33/#f68016)
+  - `src/components/interactive/SHLAdjustableBarWidget.jsx` (PLOT_LEFT=72 for Y-axis visibility; sharp bars; invisible handles r=20; % labels inside segments)
+  - `src/components/interactive/SHLTabbedEvalWidget.jsx` (per-person tabs + expense table + Approved/Not Approved buttons)
+  - `src/components/interactive/SHLPointGraphWidget.jsx` (draggable SVG line graph; RAF-throttled; dollar Y-axis labels; PLOT_LEFT=88)
 - Render safety:
   - `src/components/RenderErrorBoundary.jsx` used in NLNG Interactive flow to prevent blank-screen dead ends on widget render faults
 
@@ -50,12 +52,10 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/nlng-deductive-questions.json` (expanded bank; some items may be draft with `correctAnswer: -1` and are excluded from sessions)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
   - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
-- `src/data/shl-interactive-questions.json` (62 interactive numerical questions; mixed `interactive_numerical` + `interactive_numerical_hard`)
-  - Generated from gold standard; currently 62 records.
-  - Hard models included:
-    - Tiered progressive drag-table verification
-    - Equation-system pie constraints (reverse engineered from target percentages)
-    - Historical-reference stacked bars (`reference_bar` + `interactive_bars`)
+- `src/data/shl-interactive-questions.json` (63 interactive numerical questions across 5 types)
+  - Generated from gold standard via `scripts/generate_shl_module.js`
+  - Types: drag_table(36), pie(9), stacked_bar(9), tabbed_evaluation(2), point_graph(7)
+  - Hard models: tiered drag-table, equation-system pie, historical stacked bars, stock value graphs, meal approval tabs
 
 ## Dashboard Module Status
 - TotalEnergies:
@@ -88,15 +88,17 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 ## Verification Snapshot (2026-02-12)
 - `npm run lint`: pass
 - `npm run build`: pass
-- Cloud CLIs (`vercel`, `supabase`) can be used if authenticated locally.
-- Do not commit tokens/keys; configure via local environment variables or provider dashboards.
+- Production deployed: https://testplatfrom.vercel.app
+- Vercel env vars set: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_DEEPSEEK_API_KEY
+- ScoreReport SELECT timeout removed — cold-start Supabase saves no longer fail
+- attemptOutbox.js auto-retries local-saves in background on dashboard load
 
 ## Pending Work
-- Complete NLNG SHL ingestion for full Sets 2-4 beyond current 30-question bank and QA each addition.
-- Run manual touch-device QA for interactive widgets (drop zones, handles, drag sensitivity).
+- Complete 29 draft NLNG deductive questions (`correctAnswer: -1`) in `src/data/nlng-deductive-questions.json`.
+- Run manual touch-device QA for interactive widgets (drag handles, pie handles, point graph dots).
 - Run complete manual QA across breakpoints 320/375/768/1024/1280+.
 - Optional: optimize bundle splitting to reduce large chunk warning.
-- Validate Supabase production schema/policies in live environment for insert/select parity.
+- Validate Supabase production RLS policies allow insert/select for authenticated users.
 - Decide whether to route AI calls through a backend proxy/edge function in production.
 
 ## Update Snapshot (2026-02-12 - Interactive Expansion)
