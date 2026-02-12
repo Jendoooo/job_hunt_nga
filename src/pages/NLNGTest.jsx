@@ -1,23 +1,23 @@
-import { useRef, useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
 import QuestionCard from '../components/QuestionCard'
 import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
-import AIExplainer from '../components/AIExplainer'
-import practiceQuestions from '../data/saville-practice-questions.json'
+import deductiveQuestions from '../data/nlng-deductive-questions.json'
 import {
-    Wrench,
+    Lightbulb,
     ArrowLeft,
+    AlertCircle,
+    Play,
     BookOpen,
     Timer as TimerIcon,
-    Play,
 } from 'lucide-react'
 
-const QUESTION_OPTIONS = [10, 15, 20, 30]
-const TIME_OPTIONS_MINUTES = [15, 30, 45, 60]
-const DEFAULT_QUESTION_COUNT = 20
-const DEFAULT_TIME_MINUTES = 30
+const QUESTION_OPTIONS = [10, 15, 18]
+const TIME_OPTIONS_MINUTES = [10, 15, 18, 25]
+const DEFAULT_QUESTION_COUNT = 18
+const DEFAULT_TIME_MINUTES = 18
 
 function shuffleQuestions(items) {
     const next = [...items]
@@ -28,48 +28,53 @@ function shuffleQuestions(items) {
     return next
 }
 
-export default function SavillePractice() {
+export default function NLNGTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
-    const [mode, setMode] = useState('practice')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
-    const [sessionQuestions, setSessionQuestions] = useState([])
+    const [activeQuestions, setActiveQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [answers, setAnswers] = useState({})
     const [flagged, setFlagged] = useState([])
-    const [showExplanation, setShowExplanation] = useState({})
     const [timeTaken, setTimeTaken] = useState(0)
     const startTimeRef = useRef(null)
 
+    const availableQuestions = deductiveQuestions.filter((question) => question.subtest === 'deductive')
     const totalTimeSeconds = timeLimitMinutes * 60
 
     function startTest() {
-        const selectedQuestions = shuffleQuestions(practiceQuestions).slice(0, Math.min(questionCount, practiceQuestions.length))
+        const maxQuestions = Math.min(questionCount, availableQuestions.length)
+        const selectedQuestions = shuffleQuestions(availableQuestions).slice(0, maxQuestions)
 
-        setSessionQuestions(selectedQuestions)
+        setActiveQuestions(selectedQuestions)
         setCurrentQuestion(0)
         setAnswers({})
         setFlagged([])
-        setShowExplanation({})
         setTimeTaken(0)
         setStage('test')
         startTimeRef.current = Date.now()
     }
 
-    function handleAnswer(answerIndex) {
-        setAnswers((prev) => ({ ...prev, [currentQuestion]: answerIndex }))
-        if (mode === 'practice') {
-            setShowExplanation((prev) => ({ ...prev, [currentQuestion]: true }))
-        }
-    }
-
     function finishTest() {
         const elapsed = startTimeRef.current
-            ? Math.floor((Date.now() - startTimeRef.current) / 1000)
-            : 0
+            ? Math.round((Date.now() - startTimeRef.current) / 1000)
+            : totalTimeSeconds
+
         setTimeTaken(elapsed)
-        setStage('review')
+        setStage('finish')
+    }
+
+    function handleAnswer(answerIndex) {
+        setAnswers((prev) => ({ ...prev, [currentQuestion]: answerIndex }))
+    }
+
+    function toggleFlag() {
+        setFlagged((prev) =>
+            prev.includes(currentQuestion)
+                ? prev.filter((index) => index !== currentQuestion)
+                : [...prev, currentQuestion]
+        )
     }
 
     if (stage === 'setup') {
@@ -80,39 +85,17 @@ export default function SavillePractice() {
                         <ArrowLeft size={18} /> Dashboard
                     </button>
                     <div className="flex items-center gap-2">
-                        <Wrench className="text-emerald-600" size={20} />
-                        <h1 className="text-lg font-bold text-slate-800">Process Engineer Practice</h1>
+                        <Lightbulb className="text-sky-500" size={20} />
+                        <h1 className="text-lg font-bold text-slate-800">NLNG SHL Deductive</h1>
                     </div>
                 </header>
 
                 <div className="test-setup">
                     <div className="test-setup__card">
-                        <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Practice Session</h2>
+                        <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Assessment Session</h2>
                         <p className="test-setup__description">
-                            Choose your mode, question count, and time limit for focused engineering drill practice.
+                            Run SHL-style deductive reasoning practice with your preferred question count and time constraint.
                         </p>
-
-                        <div className="test-setup__mode">
-                            <h3>Select Mode</h3>
-                            <div className="test-setup__mode-options">
-                                <button
-                                    className={`test-setup__mode-btn ${mode === 'practice' ? 'test-setup__mode-btn--active' : ''}`}
-                                    onClick={() => setMode('practice')}
-                                >
-                                    <BookOpen className={`mb-2 ${mode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
-                                    <span className="test-setup__mode-label">Practice Mode</span>
-                                    <span className="test-setup__mode-desc">Show worked explanations while answering</span>
-                                </button>
-                                <button
-                                    className={`test-setup__mode-btn ${mode === 'exam' ? 'test-setup__mode-btn--active' : ''}`}
-                                    onClick={() => setMode('exam')}
-                                >
-                                    <TimerIcon className={`mb-2 ${mode === 'exam' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
-                                    <span className="test-setup__mode-label">Exam Mode</span>
-                                    <span className="test-setup__mode-desc">No explanations until score report</span>
-                                </button>
-                            </div>
-                        </div>
 
                         <div className="test-setup__mode">
                             <h3>Question Count</h3>
@@ -122,7 +105,7 @@ export default function SavillePractice() {
                                         key={count}
                                         className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
                                         onClick={() => setQuestionCount(count)}
-                                        disabled={count > practiceQuestions.length}
+                                        disabled={count > availableQuestions.length}
                                     >
                                         {count} Qs
                                     </button>
@@ -145,12 +128,32 @@ export default function SavillePractice() {
                             </div>
                         </div>
 
+                        <div className="bg-sky-50 border border-sky-100 rounded-xl p-6 mb-8">
+                            <div className="flex items-center gap-2 mb-3">
+                                <BookOpen className="text-sky-600 shrink-0" size={18} />
+                                <h3 className="font-bold text-sky-900">What to Expect</h3>
+                            </div>
+                            <ul className="text-sm text-sky-800 space-y-2 list-disc list-inside">
+                                <li>Each question tests logical inference from a fixed set of statements.</li>
+                                <li>Choose the option that is guaranteed by the information given.</li>
+                                <li>No negative marking, so answer every question before time expires.</li>
+                            </ul>
+                        </div>
+
+                        <div className="bg-amber-50 border border-amber-100 rounded-xl p-5 mb-8 flex items-start gap-3">
+                            <AlertCircle className="text-amber-600 shrink-0 mt-0.5" size={18} />
+                            <div className="text-sm text-amber-800">
+                                <strong className="block mb-1">Session Summary</strong>
+                                {questionCount} questions in {timeLimitMinutes} minutes.
+                            </div>
+                        </div>
+
                         <button
                             className="btn btn--primary btn--lg btn--full flex items-center justify-center gap-2"
                             onClick={startTest}
+                            disabled={availableQuestions.length === 0}
                         >
-                            <Play size={20} fill="currentColor" />
-                            Start Practice ({questionCount} Qs / {timeLimitMinutes} min)
+                            <Play size={18} /> Start Assessment
                         </button>
                     </div>
                 </div>
@@ -158,24 +161,25 @@ export default function SavillePractice() {
         )
     }
 
-    if (stage === 'review') {
+    if (stage === 'finish') {
         return (
             <div className="test-page">
                 <header className="test-page__header">
                     <div className="flex items-center gap-2">
-                        <Wrench className="text-emerald-600" size={20} />
-                        <h1 className="text-lg font-bold text-slate-800">Practice Results</h1>
+                        <Lightbulb className="text-sky-500" size={20} />
+                        <h1 className="text-lg font-bold text-slate-800">NLNG SHL - Results</h1>
                     </div>
                 </header>
+
                 <ScoreReport
-                    questions={sessionQuestions}
+                    questions={activeQuestions}
                     answers={answers}
                     flagged={flagged}
-                    timeTaken={timeTaken}
+                    timeTaken={timeTaken || totalTimeSeconds}
                     totalTime={totalTimeSeconds}
-                    assessmentType="saville-practice"
-                    moduleName={`Detailed Calculation Practice (${questionCount}Q / ${timeLimitMinutes}m)`}
-                    mode={mode}
+                    assessmentType="nlng-shl"
+                    moduleName={`NLNG SHL Deductive (${activeQuestions.length}Q / ${timeLimitMinutes}m)`}
+                    mode="exam"
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />
@@ -183,62 +187,56 @@ export default function SavillePractice() {
         )
     }
 
-    const question = sessionQuestions[currentQuestion]
-    if (!question) {
-        return null
-    }
+    const question = activeQuestions[currentQuestion]
+    if (!question) return null
 
     return (
         <div className="test-page">
             <header className="test-page__header test-page__header--compact">
                 <div className="test-page__header-left">
-                    <h2 className="text-sm font-bold text-slate-700 hidden sm:block">Process Engineer Practice</h2>
-                    <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">
-                        Calculation
-                    </span>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white mr-3 bg-sky-500">
+                        <Lightbulb size={18} />
+                    </div>
+                    <div>
+                        <h2 className="text-sm font-bold text-slate-800">Deductive Reasoning</h2>
+                        <div className="test-page__subtest-progress">
+                            Question {currentQuestion + 1} of {activeQuestions.length}
+                        </div>
+                    </div>
                 </div>
+
                 <div className="test-page__header-right">
-                    <Timer duration={totalTimeSeconds} onTimeUp={finishTest} />
-                    <button className="btn btn--danger btn--sm" onClick={finishTest}>
-                        End Session
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <TimerIcon size={16} className="text-slate-500" />
+                        <Timer duration={totalTimeSeconds} onTimeUp={finishTest} />
+                    </div>
                 </div>
             </header>
 
             <div className="test-page__body">
-                <div className="test-page__sidebar hidden lg:block">
+                <aside className="test-page__sidebar hidden lg:block">
                     <QuestionNav
-                        totalQuestions={sessionQuestions.length}
+                        totalQuestions={activeQuestions.length}
                         currentQuestion={currentQuestion}
                         answers={answers}
                         flagged={flagged}
                         onNavigate={setCurrentQuestion}
                     />
-                </div>
+                </aside>
 
                 <div className="test-page__content">
                     <div className="max-w-3xl mx-auto w-full">
                         <QuestionCard
                             question={question}
                             questionNumber={currentQuestion + 1}
-                            totalQuestions={sessionQuestions.length}
+                            totalQuestions={activeQuestions.length}
                             selectedAnswer={answers[currentQuestion]}
                             onSelectAnswer={handleAnswer}
-                            showResult={mode === 'practice' && showExplanation[currentQuestion]}
+                            showResult={false}
                             correctAnswer={question.correctAnswer}
                             isFlagged={flagged.includes(currentQuestion)}
-                            onToggleFlag={() => {
-                                setFlagged((prev) =>
-                                    prev.includes(currentQuestion)
-                                        ? prev.filter((index) => index !== currentQuestion)
-                                        : [...prev, currentQuestion]
-                                )
-                            }}
+                            onToggleFlag={toggleFlag}
                         />
-
-                        {mode === 'practice' && showExplanation[currentQuestion] && (
-                            <AIExplainer question={question} />
-                        )}
 
                         <div className="test-page__nav-buttons mt-6">
                             <button
@@ -249,16 +247,7 @@ export default function SavillePractice() {
                                 Previous
                             </button>
 
-                            {mode === 'practice' && answers[currentQuestion] !== undefined && !showExplanation[currentQuestion] && (
-                                <button
-                                    className="btn btn--primary"
-                                    onClick={() => setShowExplanation((prev) => ({ ...prev, [currentQuestion]: true }))}
-                                >
-                                    Check Answer
-                                </button>
-                            )}
-
-                            {currentQuestion < sessionQuestions.length - 1 ? (
+                            {currentQuestion < activeQuestions.length - 1 ? (
                                 <button
                                     className="btn btn--primary"
                                     onClick={() => setCurrentQuestion((prev) => prev + 1)}

@@ -30,12 +30,16 @@ export default function Timer({ duration, onTimeUp, isPaused = false }) {
 
     const minutes = Math.floor(timeLeft / 60)
     const seconds = timeLeft % 60
-    const percentage = (timeLeft / duration) * 100
+    const safeDuration = duration > 0 ? duration : 1
+    const percentage = (timeLeft / safeDuration) * 100
     const isUrgent = timeLeft <= 60
     const isCritical = timeLeft <= 30
 
     return (
-        <div className={`timer ${isUrgent ? 'timer--urgent' : ''} ${isCritical ? 'timer--critical' : ''}`}>
+        <div
+            className={`timer ${isUrgent ? 'timer--urgent' : ''} ${isCritical ? 'timer--critical' : ''}`}
+            aria-live="polite"
+        >
             <div className="timer__ring">
                 <svg viewBox="0 0 100 100">
                     <circle

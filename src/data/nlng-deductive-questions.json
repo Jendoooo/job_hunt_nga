@@ -1,0 +1,248 @@
+[
+  {
+    "id": 1,
+    "subtest": "deductive",
+    "context": "It takes twice as long to fly to City A as it takes to fly to City B.\nIt takes longer to fly to City B than it takes to fly to City D.\nIt takes the same amount of time to fly to City A and City C.\nIt takes less time to fly to City E than City A.",
+    "question": "Which statement must be true?",
+    "options": [
+      "It takes twice as long to fly to City C as to City B.",
+      "It takes the least amount of time to fly to City D.",
+      "It takes half as long to fly to City D as to City A.",
+      "It takes the same amount of time to fly to City C and City B.",
+      "It takes half the time to fly to City D as it takes to fly to City B."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Setting A = 2B: since A = C, it follows that C = 2B — City C takes twice as long to fly to as City B (option A). We only know D &lt; B, not that D = B/2 or D = A/2, so options C and E cannot be confirmed. Option B is wrong because we cannot compare D to all other cities."
+  },
+  {
+    "id": 2,
+    "subtest": "deductive",
+    "context": "Ken and Logan start their shift at the same time.\nMatthew starts his shift 1 hour earlier than Nathan does.\nNathan starts his shift at least 2 hours later than Logan.\nA shift lasts 8 hours.\nNathan's shift ends at 6 p.m.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Ken and Logan work from 6 a.m. until 2 p.m.",
+      "Matthew and Logan start their shift at the same time.",
+      "Matthew's shift starts at 8 a.m.",
+      "The latest that Logan's shift can start is 8 a.m.",
+      "Matthew's shift starts before Logan starts his shift."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Nathan ends at 6 p.m. → Nathan starts at 10 a.m. Nathan ≥ Logan + 2 hrs → Logan ≤ 8 a.m. Therefore the <strong>latest Logan can start is 8 a.m.</strong> Ken = Logan (same time), so the latest for Ken is also 8 a.m. Matthew = Nathan − 1 hr = 9 a.m. Option C is only true if Logan starts exactly at 8 a.m., which is not guaranteed. Option E fails if Logan starts at 8 a.m. (same as Matthew = 9 a.m. — actually Matthew would be after Logan in that case)."
+  },
+  {
+    "id": 3,
+    "subtest": "deductive",
+    "context": "Airline A has first class, business class, and coach seats.\n• All first class seats are covered in leather.\n• Some business class seats are covered in nylon.\n• Some first class seats recline.\n• Hayden's seat is covered in leather.\n• All nylon seats have a built-in television monitor.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Hayden has a seat that reclines.",
+      "All seats covered in nylon are in business class.",
+      "Some leather seats recline.",
+      "Hayden is flying first class.",
+      "Hayden has a seat with a television monitor."
+    ],
+    "correctAnswer": 2,
+    "explanation": "All first class seats are leather. Some first class seats recline. Therefore <strong>some leather seats recline</strong> (option C). We cannot confirm Hayden reclines (she may be in a non-reclining leather seat). We cannot confirm she is first class because the passage does not say all leather seats are first class. Option B is unconfirmed — nylon is only mentioned in business class, but other classes could theoretically have nylon seats too."
+  },
+  {
+    "id": 4,
+    "subtest": "deductive",
+    "context": "<p style='margin-bottom:0.75rem'>A call centre requires that agents take breaks <strong>no longer than 15 minutes</strong>. Agents are also only given <strong>3 minutes to type notes</strong> after a call. The supervisor must note anyone breaking these rules.</p><table class='q-table'><thead><tr><th>Agent</th><th>Current Activity</th><th>Time on Activity</th></tr></thead><tbody><tr><td>Amy</td><td>On a call</td><td>10:01</td></tr><tr><td>Andrew</td><td>On a call</td><td>3:25</td></tr><tr><td>Beth</td><td>On break</td><td>14:59</td></tr><tr><td>Chloe</td><td>On a call</td><td>9:23</td></tr><tr><td>Benjamin</td><td>Typing call notes</td><td>3:07</td></tr><tr><td>Christopher</td><td>On break</td><td>16:23</td></tr><tr><td>David</td><td>On break</td><td>15:58</td></tr><tr><td>Daisy</td><td>On a call</td><td>21:46</td></tr><tr><td>Edward</td><td>On a call</td><td>2:01</td></tr><tr><td>Emily</td><td>Typing call notes</td><td>4:43</td></tr><tr><td>Frank</td><td>Typing call notes</td><td>2:45</td></tr><tr><td>Fiona</td><td>On a call</td><td>3:09</td></tr><tr><td>Gemma</td><td>Typing call notes</td><td>14:23</td></tr><tr><td>George</td><td>On break</td><td>15:58</td></tr></tbody></table>",
+    "question": "The supervisor will need to write notes on how many people?",
+    "options": ["3", "4", "6", "8", "12"],
+    "correctAnswer": 2,
+    "explanation": "Only note agents exceeding their time limits: <strong>Benjamin</strong> (typing notes 3:07 &gt; 3:00 ✓), <strong>Christopher</strong> (break 16:23 &gt; 15:00 ✓), <strong>David</strong> (break 15:58 &gt; 15:00 ✓), <strong>Emily</strong> (typing notes 4:43 &gt; 3:00 ✓), <strong>Gemma</strong> (typing notes 14:23 &gt; 3:00 ✓), <strong>George</strong> (break 15:58 &gt; 15:00 ✓). Frank is 2:45 (under limit). Beth is 14:59 (under limit). Total = 6."
+  },
+  {
+    "id": 5,
+    "subtest": "deductive",
+    "context": "Each airline has from 4 to 10 flights to City A every day.\nAirline B has the fewest possible flights to City A.\nAirline C and Airline D have the same number of flights to City A.\nAirline D has twice as many flights to City A as Airline E.\nOrange Airlines has fewer flights to City A than Airline C.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Airline B has four flights to City A.",
+      "Airline E has more flights to City A than Airline B.",
+      "Orange Airlines has more flights to City A than Airline B.",
+      "Airline C has fewer flights to City A than Airline E.",
+      "Orange Airlines has more flights to City A than Airline D."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Airline B has the <strong>fewest possible</strong> flights. The minimum allowed is 4 flights per day, so Airline B has exactly <strong>4 flights</strong>. We cannot determine the exact values of other airlines or make comparisons without knowing their specific counts."
+  },
+  {
+    "id": 6,
+    "subtest": "deductive",
+    "context": "<table class='q-table'><thead><tr><th>Promotion</th><th>Start Date</th><th>Length</th><th>Min. Purchase</th><th>Rate</th></tr></thead><tbody><tr><td>Retailer Discount</td><td>June 1</td><td>60 days</td><td>£200.00</td><td>5%</td></tr><tr><td>Cash-Back Bonus</td><td>June 1</td><td>60 days</td><td>£100.00</td><td>2.5%</td></tr></tbody></table><p style='margin-top:0.75rem'><strong>Today's Date:</strong> July 21</p><p style='margin-top:0.5rem'><strong>Past Customer Transactions:</strong></p><table class='q-table'><thead><tr><th>Date</th><th>Amount</th></tr></thead><tbody><tr><td>May 12</td><td>£310.12</td></tr><tr><td>June 9</td><td>£278.45</td></tr><tr><td>June 22</td><td>£55.75</td></tr><tr><td>July 3</td><td>£98.15</td></tr><tr><td>July 10</td><td>£115.35</td></tr><tr><td>July 20</td><td>£34.25</td></tr></tbody></table>",
+    "question": "How many customer transactions are eligible for the Retailer Cash-Back Bonus?",
+    "options": ["0", "1", "2", "4", "5"],
+    "correctAnswer": 2,
+    "explanation": "The Cash-Back Bonus runs 60 days from June 1. 60 days before July 21 = May 22, so eligible dates are <strong>May 22 – July 21</strong>. Transactions in this window: June 9 (£278.45 ≥ £100 ✓), June 22 (£55.75 &lt; £100 ✗), July 3 (£98.15 &lt; £100 ✗), July 10 (£115.35 ≥ £100 ✓), July 20 (£34.25 &lt; £100 ✗). May 12 is before May 22 — ineligible. Total eligible = <strong>2</strong>."
+  },
+  {
+    "id": 7,
+    "subtest": "deductive",
+    "context": "Five employees — Nathan, Nicole, Oscar, Olivia, and Ashley — arrive at work at five different times: 8:00 a.m., 8:05 a.m., 8:10 a.m., 8:15 a.m., and 8:20 a.m.\n• Ashley arrives before Oscar.\n• Olivia arrives before Nicole.",
+    "question": "Which statement cannot be true?",
+    "options": [
+      "Nathan is the last to arrive.",
+      "Nicole gets to work at 8:15 a.m.",
+      "Oscar arrives at 8:00 a.m.",
+      "Olivia and Ashley both arrive after 8:00 a.m.",
+      "Ashley arrives after Nathan."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Ashley must arrive <strong>before</strong> Oscar. If Oscar arrived at 8:00 a.m. (the earliest slot), there would be no earlier slot for Ashley — making this <strong>impossible</strong>. The other options are all consistent with valid orderings."
+  },
+  {
+    "id": 8,
+    "subtest": "deductive",
+    "context": "• Forklifts are used earlier in the week than tractors.\n• Isabel is the only operator of large vehicles on Tuesdays.\n• Isabel never operates tractors.\n• Cranes are used later in the week than tractors.\n• Sometimes Isabel operates bucket trucks.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Forklifts are used earlier in the week than cranes.",
+      "Cranes are used on Wednesdays.",
+      "Bucket trucks and forklifts are used on the same day.",
+      "Cranes are used on Thursdays.",
+      "Sometimes bucket trucks are used earlier in the week than tractors."
+    ],
+    "correctAnswer": 0,
+    "explanation": "From the clues: Forklifts &lt; Tractors (in day of week), and Tractors &lt; Cranes. By transitivity, <strong>Forklifts &lt; Cranes</strong> — forklifts are used earlier in the week than cranes. The exact days for cranes cannot be determined, and no direct link between bucket trucks and forklifts is established."
+  },
+  {
+    "id": 9,
+    "subtest": "deductive",
+    "context": "<table class='q-table'><thead><tr><th>Date</th><th>Interaction Codes</th></tr></thead><tbody><tr><td>January 20</td><td>15, 07, 82</td></tr><tr><td>March 2</td><td>10, 20, 23</td></tr><tr><td>March 17</td><td>15, 05, 17, 93</td></tr><tr><td>May 1</td><td>15, 07, 05, 76, 93</td></tr><tr><td>May 22</td><td>10, 20, 45</td></tr><tr><td>June 19</td><td>15, 17, 82</td></tr><tr><td>July 21</td><td>15, 07, 12</td></tr></tbody></table><p style='margin-top:0.75rem'><strong>Interaction Codes:</strong> 05 = late payment dispute &nbsp;|&nbsp; 07 = account balance inquiry &nbsp;|&nbsp; 10 = send late payment notice &nbsp;|&nbsp; 12 = account closing &nbsp;|&nbsp; 15 = customer initiated call &nbsp;|&nbsp; 17 = customer will make payment in 5 days &nbsp;|&nbsp; 20 = account past due courtesy call &nbsp;|&nbsp; 23 = unanswered telephone call &nbsp;|&nbsp; 45 = telephone number does not exist &nbsp;|&nbsp; 76 = customer change of address &nbsp;|&nbsp; 82 = sales call &nbsp;|&nbsp; 93 = customer requested supervisor</p>",
+    "question": "What is different about the January 20 and May 1 memos?",
+    "options": [
+      "One involved a late payment dispute and the other a send late payment notice.",
+      "One involved a sales call and the other a late payment dispute.",
+      "One involved a late payment dispute and the other an unanswered telephone call.",
+      "One involved a sales call and the other an unanswered telephone call.",
+      "One was a customer initiated call and the other an account overdue courtesy call."
+    ],
+    "correctAnswer": 1,
+    "explanation": "January 20 codes (15, 07, <strong>82</strong>): customer call, account balance inquiry, <strong>sales call</strong>. May 1 codes (15, 07, <strong>05</strong>, 76, 93): customer call, balance inquiry, <strong>late payment dispute</strong>, change of address, requested supervisor. The key difference is <strong>a sales call (Jan 20) vs. a late payment dispute (May 1)</strong>."
+  },
+  {
+    "id": 10,
+    "subtest": "deductive",
+    "context": "<table class='q-table'><thead><tr><th>Prize</th><th>Points Required</th></tr></thead><tbody><tr><td>Headphones</td><td>650</td></tr><tr><td>Radio</td><td>2,000</td></tr><tr><td>Telephone</td><td>3,500</td></tr><tr><td>DVD Player</td><td>6,000</td></tr><tr><td>Camera</td><td>9,500</td></tr><tr><td>Webcam</td><td>11,000</td></tr><tr><td>GPS Tracking System</td><td>14,000</td></tr><tr><td>MP3 Player</td><td>19,000</td></tr><tr><td>Video Camera</td><td>24,000</td></tr><tr><td>Television</td><td>36,000</td></tr></tbody></table>",
+    "question": "If an employee has 24,000 points, which statement is true?",
+    "options": [
+      "The employee can get the radio, camera, and GPS tracking system.",
+      "The employee can get the video camera and the headphones.",
+      "The employee can get the telephone and MP3 player.",
+      "The employee can get the MP3 player, DVD player, and the headphones.",
+      "The employee can get the television."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Check each option against 24,000 points: A) 2,000 + 9,500 + 14,000 = 25,500 &gt; 24,000 ✗ &nbsp; B) 24,000 + 650 = 24,650 &gt; 24,000 ✗ &nbsp; <strong>C) 3,500 + 19,000 = 22,500 ≤ 24,000 ✓</strong> &nbsp; D) 19,000 + 6,000 + 650 = 25,650 &gt; 24,000 ✗ &nbsp; E) 36,000 &gt; 24,000 ✗"
+  },
+  {
+    "id": 11,
+    "subtest": "deductive",
+    "context": "<table class='q-table'><thead><tr><th>Field</th><th>Detail</th></tr></thead><tbody><tr><td>Prescription No.</td><td>0654854-0654</td></tr><tr><td>Medication</td><td>Medication X</td></tr><tr><td>Doctor</td><td>Javier Lee</td></tr><tr><td>Patient</td><td>Jessica Brown</td></tr><tr><td>Dosage per Tablet</td><td>600 mg</td></tr><tr><td>Tablets per Bottle</td><td>24</td></tr><tr><td>Refills Remaining</td><td>2 (not including this bottle)</td></tr></tbody></table><p style='margin-top:0.5rem'><strong>Directions:</strong> Take one tablet by mouth 3 to 4 times daily as needed for pain.</p>",
+    "question": "If Jessica refills her prescription as many times as allowed, how many tablets will she have received altogether?",
+    "options": ["24 tablets", "36 tablets", "72 tablets", "80 tablets", "600 tablets"],
+    "correctAnswer": 2,
+    "explanation": "Jessica has the current bottle + 2 refills = <strong>3 bottles total</strong>. Each bottle contains 24 tablets. Total = 24 × 3 = <strong>72 tablets</strong>."
+  },
+  {
+    "id": 12,
+    "subtest": "deductive",
+    "context": "Jessica returned the calls of 16 clients this morning, and 10 more this afternoon. Therefore, a total of exactly 26 clients' calls were returned today.",
+    "question": "Which statement, if true, weakens the argument?",
+    "options": [
+      "More client calls will be returned tomorrow.",
+      "More client calls are always returned in the morning than in the afternoon.",
+      "Jessica returns more client calls than others.",
+      "A maximum of 26 client calls can be returned per day.",
+      "Two other people returned client calls today."
+    ],
+    "correctAnswer": 4,
+    "explanation": "The argument's hidden assumption is that <strong>Jessica was the only person</strong> returning calls. If two other people also returned calls today, the total number of calls returned would exceed 26 — directly undermining the claim that 'exactly 26' were returned."
+  },
+  {
+    "id": 13,
+    "subtest": "deductive",
+    "context": "<table class='q-table'><thead><tr><th>Service Plan</th><th>Manager Points</th></tr></thead><tbody><tr><td>Basic</td><td>2</td></tr><tr><td>Expanded</td><td>5</td></tr><tr><td>Expanded Plus</td><td>7.5</td></tr><tr><td>Premium</td><td>20</td></tr></tbody></table><p style='margin-top:0.75rem'>At the end of the week, a team sells: <strong>5 Basic, 12 Expanded, 6 Expanded Plus, 20 Premium</strong>.</p>",
+    "question": "How many points did the manager earn?",
+    "options": ["450", "500", "515", "565", "600"],
+    "correctAnswer": 2,
+    "explanation": "(5 × 2) + (12 × 5) + (6 × 7.5) + (20 × 20) = 10 + 60 + 45 + 400 = <strong>515 points</strong>."
+  },
+  {
+    "id": 14,
+    "subtest": "deductive",
+    "context": "• Logan is the information technology manager.\n• Matthew is the accounting manager.\n• Kayla and Lauren report to Matthew.\n• Logan is a member of the safety team.\n• Lauren is a member of the safety team.\n• Kayla is certified in CPR and first aid.\n• No two members of the safety team work in the same department.\n• Safety team members must be certified in both CPR and first aid.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Lauren reports to Kayla.",
+      "Logan is the safety team leader.",
+      "Kayla works in Logan's department.",
+      "Lauren is certified in both CPR and first aid.",
+      "Kayla works in the information technology department."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Lauren is a member of the safety team. Safety team members <strong>must be certified in both CPR and first aid</strong>. Therefore Lauren is certified in both. (Note: Kayla reports to Matthew in accounting but is NOT stated to be on the safety team — only certified in CPR/first aid. No two safety team members share a department, and Logan/Lauren are on separate teams.)"
+  },
+  {
+    "id": 15,
+    "subtest": "deductive",
+    "context": "In a hospital, the following conditions apply:\n• Refrigerators are located in the east wing.\n• Cabinets are located throughout the building.\n• Vials of blood in storage are refrigerated.\n• Prescription medication must be locked in a cabinet.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Refrigerators are located in most areas of the building.",
+      "All stored vials of blood are kept in the east wing.",
+      "Some prescription medication is kept in the east wing.",
+      "Prescription medication is located throughout the building.",
+      "All cabinets are kept locked."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Vials of blood in storage → refrigerated. Refrigerators → east wing only. Therefore <strong>all stored vials of blood are in the east wing</strong>. Option C cannot be confirmed (cabinets are everywhere but there's no link between prescription medication and the east wing specifically). Option D is too broad — we only know medication is in cabinets, not where all cabinets are located."
+  },
+  {
+    "id": 16,
+    "subtest": "deductive",
+    "context": "• The A305 model phone has the speaker feature only.\n• The B205 model phone has the speaker and voicemail features.\n• The C105 model phone has the speaker and voicemail features, and includes a headset.\n• Isabel has the model with the voicemail feature but no headset.\n• The receptionist has a C105 model phone.\n• Jessica's phone has the speaker feature only.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Jessica is the receptionist.",
+      "Isabel has a B205 model phone.",
+      "Isabel has an A305 model phone.",
+      "The A305 is more expensive than the B205.",
+      "Isabel has a C105 model phone."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Isabel needs voicemail (eliminates A305) but no headset (eliminates C105). The only model with voicemail and no headset is the <strong>B205</strong>. Jessica has speaker only → A305 (but she is not necessarily the receptionist, as the receptionist has C105)."
+  },
+  {
+    "id": 17,
+    "subtest": "deductive",
+    "context": "<p style='margin-bottom:0.5rem'><strong>Electronic Database Information System</strong></p><p>Always verify the customer's name, address, and telephone number. Any verification or changes in the account screen, or any inquiries in the payment screen, must be coded and entered in the contact screen.</p><table class='q-table' style='margin-top:0.75rem'><thead><tr><th>Screen</th><th>Access Code</th></tr></thead><tbody><tr><td>Account Information Screen</td><td>110</td></tr><tr><td>Customer Contact Screen</td><td>115</td></tr><tr><td>Customer Payment Screen</td><td>120</td></tr></tbody></table><table class='q-table' style='margin-top:0.75rem'><thead><tr><th>Account Information Codes</th><th>Payment Information Codes</th></tr></thead><tbody><tr><td>210: Verify account name</td><td>410: Prior late payments</td></tr><tr><td>215: Verify account address</td><td>415: Payment due in five days notice</td></tr><tr><td>220: Verify account telephone</td><td>420: Payment overdue</td></tr><tr><td>310: Change of telephone number</td><td>510: Account balance inquiry</td></tr><tr><td>315: Change of address</td><td>515: Account status</td></tr></tbody></table>",
+    "question": "What do the following codes mean: 110, 310, 120, 415?",
+    "options": [
+      "Entered account screen, changed telephone number, entered payment screen, payment due in five days' notice.",
+      "Entered payment screen, payment due in five days' notice, entered telephone number.",
+      "Entered change of address, entered payment screen, prior late payments.",
+      "Entered account screen, changed telephone number, entered contact screen, payment due in five days' notice.",
+      "Entered account screen, changed address, entered payment screen, payment due in five days' notice."
+    ],
+    "correctAnswer": 0,
+    "explanation": "110 = Entered account information screen. 310 = Change of telephone number. 120 = Entered customer payment screen. 415 = Payment due in five days notice. This matches option A exactly. Option D is wrong because 120 is the payment screen, not the contact screen (115)."
+  },
+  {
+    "id": 18,
+    "subtest": "deductive",
+    "context": "• Nathan and all of his co-workers refuel airplanes.\n• Oscar works with Nathan.\n• Maria does not refuel airplanes.\n• Everyone who refuels airplanes also de-ices airplanes.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Nathan does not de-ice airplanes.",
+      "Some of Oscar's co-workers do not de-ice airplanes.",
+      "Oscar does not refuel airplanes.",
+      "Maria de-ices airplanes.",
+      "Maria does not work with Nathan."
+    ],
+    "correctAnswer": 4,
+    "explanation": "Nathan and all his co-workers refuel airplanes. If Maria worked with Nathan, she would be a co-worker and would also refuel airplanes — but Maria does NOT refuel airplanes. Therefore <strong>Maria cannot be Nathan's co-worker</strong>, meaning Maria does not work with Nathan."
+  }
+]

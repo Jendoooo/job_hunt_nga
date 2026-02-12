@@ -18,6 +18,7 @@ export default function QuestionNav({
 
     return (
         <div className="question-nav">
+            <h3 className="question-nav__title">Question Navigator</h3>
             <div className="question-nav__stats">
                 <div className="question-nav__stat">
                     <span className="question-nav__stat-dot question-nav__stat-dot--answered"></span>
@@ -36,8 +37,10 @@ export default function QuestionNav({
                 {Array.from({ length: totalQuestions }, (_, i) => (
                     <button
                         key={i}
+                        type="button"
                         className={getButtonClass(i)}
                         onClick={() => onNavigate(i)}
+                        aria-label={`Go to question ${i + 1}`}
                     >
                         {i + 1}
                     </button>

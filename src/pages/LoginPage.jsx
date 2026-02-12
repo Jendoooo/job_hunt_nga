@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion as Motion, AnimatePresence } from 'framer-motion'
 import { Mail, Lock, User, ArrowRight, CheckCircle2, Loader2, Target } from 'lucide-react'
 
 export default function LoginPage() {
@@ -25,7 +25,7 @@ export default function LoginPage() {
                 navigate('/')
             } else {
                 await signUp(email, password, fullName)
-                setError('Account created! Check your email to confirm, then log in.')
+                setError('Account created! Confirm your email, then sign in.')
                 setIsLogin(true)
             }
         } catch (err) {
@@ -36,77 +36,42 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="login-page">
-            {/* Left Side - Branding & Messaging */}
-            <div className="login-page__brand-side">
-                <div className="login-page__bg-pattern">
-                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M0 100 C 20 0 50 0 100 100 Z" fill="url(#grad)" opacity="0.1" />
-                        <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stopColor="white" stopOpacity="0.5" />
-                                <stop offset="100%" stopColor="white" stopOpacity="0" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-
-                <div className="login-page__brand-content">
-                    <div className="login-page__logo">
-                        <Target size={32} strokeWidth={2.5} />
+        <div className="auth-page">
+            <aside className="auth-page__brand">
+                <div className="auth-page__brand-bg"></div>
+                <div className="auth-page__brand-content">
+                    <div className="auth-logo">
+                        <Target size={24} />
                         <span>JobHunt Nigeria</span>
                     </div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        <h1 className="login-page__headline">
-                            Master Your Graduate Assessment.
-                        </h1>
-                        <p className="login-page__subheadline">
-                            Practice with industry-standard aptitude tests, technical assessments, and AI-powered feedback designed for top-tier graduate programs.
-                        </p>
-                    </motion.div>
+                    <h1>Assessment practice designed for real hiring pressure.</h1>
+                    <p>
+                        Train with employer-aligned modules, timed flows, and detailed post-test feedback built for graduate recruitment.
+                    </p>
+                    <ul>
+                        <li><CheckCircle2 size={16} /> TotalEnergies technical + aptitude tracks</li>
+                        <li><CheckCircle2 size={16} /> NLNG SHL deductive preparation</li>
+                        <li><CheckCircle2 size={16} /> AI-assisted explanations and custom quizzes</li>
+                    </ul>
                 </div>
+            </aside>
 
-                <div className="login-page__features">
-                    <div className="login-page__feature">
-                        <CheckCircle2 size={20} />
-                        <span>TotalEnergies Technical Coverage</span>
-                    </div>
-                    <div className="login-page__feature">
-                        <CheckCircle2 size={20} />
-                        <span>Saville Swift Analysis Practice</span>
-                    </div>
-                    <div className="login-page__feature">
-                        <CheckCircle2 size={20} />
-                        <span>AI-Driven Explanations</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Right Side - Form */}
-            <div className="login-page__form-side">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="login-card"
+            <main className="auth-page__panel">
+                <Motion.section
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="auth-card"
                 >
-                    <div className="login-card__header">
-                        <h2 className="login-card__title">
-                            {isLogin ? 'Welcome Back' : 'Create Account'}
-                        </h2>
-                        <p className="login-card__subtitle">
-                            {isLogin ? 'Enter your credentials to access your dashboard.' : 'Start your journey to success today.'}
-                        </p>
-                    </div>
+                    <header className="auth-card__header">
+                        <p className="auth-card__eyebrow">Secure Access</p>
+                        <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
+                        <p>{isLogin ? 'Sign in to continue your preparation.' : 'Create your account to begin practice.'}</p>
+                    </header>
 
-                    <form onSubmit={handleSubmit} className="login-card__form">
-                        <AnimatePresence mode='wait'>
+                    <form onSubmit={handleSubmit} className="auth-form">
+                        <AnimatePresence mode="wait">
                             {!isLogin && (
-                                <motion.div
+                                <Motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
                                     exit={{ opacity: 0, height: 0 }}
@@ -114,7 +79,7 @@ export default function LoginPage() {
                                 >
                                     <label htmlFor="fullName">Full Name</label>
                                     <div className="form-group-icon">
-                                        <User size={20} />
+                                        <User size={18} />
                                         <input
                                             id="fullName"
                                             className="form-input"
@@ -125,14 +90,14 @@ export default function LoginPage() {
                                             required={!isLogin}
                                         />
                                     </div>
-                                </motion.div>
+                                </Motion.div>
                             )}
                         </AnimatePresence>
 
                         <div className="form-group">
                             <label htmlFor="email">Email Address</label>
                             <div className="form-group-icon">
-                                <Mail size={20} />
+                                <Mail size={18} />
                                 <input
                                     id="email"
                                     className="form-input"
@@ -148,54 +113,50 @@ export default function LoginPage() {
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
                             <div className="form-group-icon">
-                                <Lock size={20} />
+                                <Lock size={18} />
                                 <input
                                     id="password"
                                     className="form-input"
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
+                                    placeholder="Enter password"
                                     required
                                 />
                             </div>
                         </div>
 
                         {error && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className={`login-card__message ${error.includes('created') ? 'login-card__message--success' : 'login-card__message--error'}`}
-                            >
+                            <div className={`auth-form__message ${error.includes('created') ? 'auth-form__message--success' : 'auth-form__message--error'}`}>
                                 {error}
-                            </motion.div>
+                            </div>
                         )}
 
-                        <button
-                            className="btn btn--primary btn--full btn--lg"
-                            type="submit"
-                            disabled={loading}
-                        >
-                            {loading ? <Loader2 className="animate-spin" size={20} /> : (
+                        <button className="btn btn--primary btn--lg btn--full" type="submit" disabled={loading}>
+                            {loading ? <Loader2 className="animate-spin" size={18} /> : (
                                 <>
                                     {isLogin ? 'Sign In' : 'Create Account'}
-                                    <ArrowRight size={20} />
+                                    <ArrowRight size={16} />
                                 </>
                             )}
                         </button>
                     </form>
 
-                    <div className="login-card__footer">
-                        {isLogin ? "Don't have an account?" : "Already have an account?"}
+                    <footer className="auth-card__footer">
+                        <span>{isLogin ? "Don't have an account?" : 'Already have an account?'}</span>
                         <button
-                            className="login-card__toggle"
-                            onClick={() => { setIsLogin(!isLogin); setError(''); }}
+                            type="button"
+                            className="auth-card__toggle"
+                            onClick={() => {
+                                setIsLogin(!isLogin)
+                                setError('')
+                            }}
                         >
                             {isLogin ? 'Sign up' : 'Sign in'}
                         </button>
-                    </div>
-                </motion.div>
-            </div>
+                    </footer>
+                </Motion.section>
+            </main>
         </div>
     )
 }

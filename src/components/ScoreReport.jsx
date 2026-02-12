@@ -1,11 +1,63 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import AIExplainer from './AIExplainer'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import {
-    Trophy, Star, ThumbsUp, CheckCircle2, AlertTriangle,
-    Clock, Flag, XCircle, RotateCcw, ArrowLeft, ClipboardList, Check
+    Trophy,
+    Star,
+    ThumbsUp,
+    CheckCircle2,
+    AlertTriangle,
+    Clock,
+    Flag,
+    XCircle,
+    RotateCcw,
+    ArrowLeft,
+    ArrowRight,
+    ClipboardList,
+    Check,
 } from 'lucide-react'
+
+function normalizeForComparison(value) {
+    if (value === null || typeof value !== 'object') {
+        return value
+    }
+
+    if (Array.isArray(value)) {
+        return value.map((item) => normalizeForComparison(item))
+    }
+
+    return Object.keys(value)
+        .sort()
+        .reduce((accumulator, key) => {
+            accumulator[key] = normalizeForComparison(value[key])
+            return accumulator
+        }, {})
+}
+
+function stableSerialize(value) {
+    return JSON.stringify(normalizeForComparison(value))
+}
+
+function isLikelyDuplicateAttempt(latestAttempt, payload) {
+    if (!latestAttempt) return false
+
+    const latestCreatedAt = new Date(latestAttempt.created_at).getTime()
+    const now = Date.now()
+    const ageInSeconds = Number.isNaN(latestCreatedAt) ? Number.MAX_SAFE_INTEGER : Math.abs(now - latestCreatedAt) / 1000
+
+    if (ageInSeconds > 30) return false
+
+    return (
+        latestAttempt.assessment_type === payload.assessment_type &&
+        latestAttempt.module_name === payload.module_name &&
+        latestAttempt.score === payload.score &&
+        latestAttempt.total_questions === payload.total_questions &&
+        latestAttempt.time_taken_seconds === payload.time_taken_seconds &&
+        latestAttempt.mode === payload.mode &&
+        stableSerialize(latestAttempt.answers || {}) === stableSerialize(payload.answers || {})
+    )
+}
 
 export default function ScoreReport({
     questions,
@@ -17,211 +69,237 @@ export default function ScoreReport({
     moduleName,
     mode,
     onRetry,
-    onBackToDashboard
+    onBackToDashboard,
 }) {
     const { user } = useAuth()
     const [reviewMode, setReviewMode] = useState(false)
     const [currentReview, setCurrentReview] = useState(0)
     const [saved, setSaved] = useState(false)
+    const [saving, setSaving] = useState(false)
+    const [saveError, setSaveError] = useState('')
 
-    const correctCount = questions.reduce((count, q, i) => {
-        return count + (answers[i] === q.correctAnswer ? 1 : 0)
-    }, 0)
+    const totalQuestions = questions.length || 1
+    const correctCount = questions.reduce((count, q, i) => count + (answers[i] === q.correctAnswer ? 1 : 0), 0)
+    const score = Math.round((correctCount / totalQuestions) * 100)
+    const skipped = questions.length - Object.keys(answers).length
+    const incorrectAnswers = questions
+        .map((q, i) => ({ ...q, index: i }))
+        .filter(q => answers[q.index] !== q.correctAnswer)
 
-    const score = Math.round((correctCount / questions.length) * 100)
-    const incorrectAnswers = questions.map((q, i) => ({ ...q, index: i }))
-        .filter((q, i) => answers[q.index] !== q.correctAnswer)
+    const saveResults = useCallback(async () => {
+        if (!user || saved || saving) return saved
+        setSaving(true)
+        setSaveError('')
 
-    // Save to Supabase
-    async function saveResults() {
-        if (!user || saved) return
         try {
-            const { error } = await supabase.from('test_attempts').insert({
+            const payload = {
                 user_id: user.id,
                 assessment_type: assessmentType,
                 module_name: moduleName,
                 score: correctCount,
                 total_questions: questions.length,
                 time_taken_seconds: timeTaken,
-                mode: mode,
-                answers: answers,
-            })
+                mode,
+                answers,
+            }
+
+            const { data: latestAttempt, error: latestError } = await supabase
+                .from('test_attempts')
+                .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .maybeSingle()
+
+            if (latestError) throw latestError
+
+            if (isLikelyDuplicateAttempt(latestAttempt, payload)) {
+                setSaved(true)
+                return true
+            }
+
+            const { error } = await supabase.from('test_attempts').insert(payload)
             if (error) throw error
             setSaved(true)
+
+            // Notify dashboard to refresh attempts even without a full page reload.
+            window.dispatchEvent(new Event('attempt-saved'))
+            return true
         } catch (err) {
             console.error('Failed to save results:', err)
+            setSaveError(err?.message || 'Unable to save results right now.')
+            return false
+        } finally {
+            setSaving(false)
         }
+    }, [
+        user,
+        saved,
+        saving,
+        assessmentType,
+        moduleName,
+        correctCount,
+        questions.length,
+        timeTaken,
+        mode,
+        answers,
+    ])
+
+    useEffect(() => {
+        saveResults()
+    }, [saveResults])
+
+    async function handleBackToDashboard() {
+        if (!saved) {
+            await saveResults()
+        }
+        onBackToDashboard()
     }
 
-    // Auto-save on mount
-    useState(() => {
-        saveResults()
-    })
-
     function getGrade() {
-        if (score >= 90) return { label: 'Excellent', icon: Trophy, color: '#10b981' }
-        if (score >= 75) return { label: 'Very Good', icon: Star, color: '#3b82f6' }
-        if (score >= 60) return { label: 'Good', icon: ThumbsUp, color: '#8b5cf6' }
-        if (score >= 50) return { label: 'Pass', icon: CheckCircle2, color: '#f59e0b' }
-        return { label: 'Needs Improvement', icon: AlertTriangle, color: '#ef4444' }
+        if (score >= 90) return { label: 'Excellent', icon: Trophy, tone: 'excellent' }
+        if (score >= 75) return { label: 'Very Good', icon: Star, tone: 'very-good' }
+        if (score >= 60) return { label: 'Good', icon: ThumbsUp, tone: 'good' }
+        if (score >= 50) return { label: 'Pass', icon: CheckCircle2, tone: 'pass' }
+        return { label: 'Needs Work', icon: AlertTriangle, tone: 'improve' }
     }
 
     const grade = getGrade()
 
-    if (reviewMode) {
+    if (reviewMode && incorrectAnswers.length > 0) {
         const q = incorrectAnswers[currentReview]
         return (
-            <div className="max-w-3xl mx-auto p-8">
-                <div className="flex items-center justify-between mb-6">
-                    <button
-                        className="btn btn--ghost flex items-center gap-2"
-                        onClick={() => setReviewMode(false)}
-                    >
-                        <ArrowLeft size={16} /> Back to Results
+            <div className="score-review">
+                <header className="score-review__top">
+                    <button className="btn btn--ghost" onClick={() => setReviewMode(false)}>
+                        <ArrowLeft size={15} />
+                        Back To Results
                     </button>
-                    <span className="text-sm font-semibold text-slate-500">
-                        Reviewing Wrong Answer {currentReview + 1} of {incorrectAnswers.length}
-                    </span>
-                </div>
+                    <span>Reviewing {currentReview + 1} of {incorrectAnswers.length}</span>
+                </header>
 
-                <div className="bg-white border boundary-slate-200 rounded-xl p-6 shadow-sm">
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">
-                            Question {q.index + 1}
-                        </span>
-                    </div>
-                    <div className="text-lg text-slate-800 mb-6 leading-relaxed font-medium">{q.question}</div>
-                    <div className="space-y-3">
+                <article className="score-review__card">
+                    <p className="score-review__question-tag">Question {q.index + 1}</p>
+                    <h3>{q.question}</h3>
+                    <div className="score-review__options">
                         {q.options.map((option, oi) => (
                             <div
                                 key={oi}
-                                className={`flex items-center gap-3 p-4 border-2 rounded-lg text-sm transition-colors
-                                ${oi === q.correctAnswer
-                                        ? 'border-green-500 bg-green-50 text-green-900'
-                                        : answers[q.index] === oi && oi !== q.correctAnswer
-                                            ? 'border-red-200 bg-red-50 text-red-900'
-                                            : 'border-slate-100 bg-slate-50 text-slate-600'}`}
+                                className={`score-review__option ${oi === q.correctAnswer
+                                    ? 'score-review__option--correct'
+                                    : answers[q.index] === oi
+                                        ? 'score-review__option--wrong'
+                                        : ''}`}
                             >
-                                <span className={`w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold border
-                                    ${oi === q.correctAnswer
-                                        ? 'bg-green-500 text-white border-green-500'
-                                        : answers[q.index] === oi && oi !== q.correctAnswer
-                                            ? 'bg-red-500 text-white border-red-500'
-                                            : 'bg-white text-slate-500 border-slate-200'}`}
-                                >
-                                    {String.fromCharCode(65 + oi)}
-                                </span>
-                                <span className="flex-1 font-medium">{option}</span>
-                                {oi === q.correctAnswer && <CheckCircle2 className="text-green-600" size={20} />}
-                                {answers[q.index] === oi && oi !== q.correctAnswer && <XCircle className="text-red-500" size={20} />}
+                                <span>{String.fromCharCode(65 + oi)}</span>
+                                <p>{option}</p>
                             </div>
                         ))}
                     </div>
+
                     {q.explanation && (
-                        <div className="mt-6 p-4 bg-slate-50 border-l-4 border-blue-500 text-slate-700 text-sm leading-relaxed rounded-r-lg">
-                            <strong className="block text-blue-700 mb-1">Explanation:</strong> {q.explanation}
+                        <div className="score-review__explanation">
+                            <h4>Explanation</h4>
+                            <p>{q.explanation}</p>
                         </div>
                     )}
-                    <div className="mt-6">
-                        <AIExplainer question={q} />
-                    </div>
-                </div>
 
-                <div className="flex items-center justify-between mt-6">
+                    <AIExplainer question={q} />
+                </article>
+
+                <footer className="score-review__actions">
                     <button
-                        className="btn btn--secondary flex items-center gap-2"
+                        className="btn btn--secondary"
                         onClick={() => setCurrentReview(Math.max(0, currentReview - 1))}
                         disabled={currentReview === 0}
                     >
-                        <ArrowLeft size={16} /> Previous
+                        <ArrowLeft size={15} />
+                        Previous
                     </button>
                     <button
-                        className="btn btn--secondary flex items-center gap-2"
+                        className="btn btn--secondary"
                         onClick={() => setCurrentReview(Math.min(incorrectAnswers.length - 1, currentReview + 1))}
                         disabled={currentReview === incorrectAnswers.length - 1}
                     >
-                        Next <ArrowRight size={16} />
+                        Next
+                        <ArrowRight size={15} />
                     </button>
-                </div>
+                </footer>
             </div>
         )
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-8">
-            <div className={`text-center p-10 bg-white border border-slate-200 rounded-2xl mb-6 relative overflow-hidden shadow-sm`}>
-                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${score >= 50 ? 'from-green-500 to-emerald-400' : 'from-red-500 to-orange-400'
-                    }`} />
+        <section className="score-report">
+            <article className={`score-report__hero score-report__hero--${grade.tone}`}>
+                <div className="score-report__grade-icon">
+                    <grade.icon size={30} />
+                </div>
+                <h2>{grade.label}</h2>
+                <p className="score-report__score">{score}%</p>
+                <p className="score-report__score-sub">
+                    {correctCount}/{questions.length} correct answers
+                </p>
+            </article>
 
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-50 mb-4 text-3xl">
-                    <grade.icon size={32} color={grade.color} />
-                </div>
-
-                <h2 className="text-4xl font-bold mb-1" style={{ color: grade.color }}>
-                    {grade.label}
-                </h2>
-
-                <div className="flex items-baseline justify-center gap-2">
-                    <span className="text-6xl font-black tracking-tighter text-slate-900">
-                        {score}%
-                    </span>
-                    <span className="text-slate-400 font-medium">
-                        ({correctCount}/{questions.length} correct)
-                    </span>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div className="bg-white p-4 border border-slate-200 rounded-xl text-center shadow-sm">
-                    <Clock className="w-5 h-5 mx-auto text-blue-500 mb-2" />
-                    <span className="block text-lg font-bold text-slate-800 tabular-nums">
-                        {Math.floor(timeTaken / 60)}m {timeTaken % 60}s
-                    </span>
-                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Time Taken</span>
-                </div>
-                <div className="bg-white p-4 border border-slate-200 rounded-xl text-center shadow-sm">
-                    <Clock className="w-5 h-5 mx-auto text-slate-400 mb-2" />
-                    <span className="block text-lg font-bold text-slate-800 tabular-nums">
-                        {Math.floor(totalTime / 60)}m
-                    </span>
-                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Allowed</span>
-                </div>
-                <div className="bg-white p-4 border border-slate-200 rounded-xl text-center shadow-sm">
-                    <XCircle className="w-5 h-5 mx-auto text-slate-400 mb-2" />
-                    <span className="block text-lg font-bold text-slate-800 tabular-nums">
-                        {questions.length - Object.keys(answers).length}
-                    </span>
-                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Skipped</span>
-                </div>
-                <div className="bg-white p-4 border border-slate-200 rounded-xl text-center shadow-sm">
-                    <Flag className="w-5 h-5 mx-auto text-amber-500 mb-2" />
-                    <span className="block text-lg font-bold text-slate-800 tabular-nums">{flagged.length}</span>
-                    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Flagged</span>
-                </div>
+            <div className="score-report__stats">
+                <article>
+                    <Clock size={16} />
+                    <span>{Math.floor(timeTaken / 60)}m {timeTaken % 60}s</span>
+                    <p>Time Taken</p>
+                </article>
+                <article>
+                    <Clock size={16} />
+                    <span>{Math.floor(totalTime / 60)}m</span>
+                    <p>Time Allowed</p>
+                </article>
+                <article>
+                    <XCircle size={16} />
+                    <span>{skipped}</span>
+                    <p>Skipped</p>
+                </article>
+                <article>
+                    <Flag size={16} />
+                    <span>{flagged.length}</span>
+                    <p>Flagged</p>
+                </article>
             </div>
 
             {saved && (
-                <div className="flex items-center justify-center gap-2 text-sm text-green-600 font-medium mb-8 bg-green-50 py-2 rounded-lg border border-green-100">
-                    <Check size={16} /> Results saved to your profile
+                <div className="score-report__saved">
+                    <Check size={14} />
+                    Results saved to your profile
                 </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            {saving && (
+                <div className="score-report__saving">
+                    Saving your result...
+                </div>
+            )}
+
+            {saveError && (
+                <div className="score-report__save-error">
+                    Could not save result yet: {saveError}
+                </div>
+            )}
+
+            <div className="score-report__actions">
                 {incorrectAnswers.length > 0 && (
-                    <button
-                        className="btn btn--primary flex-1 flex items-center justify-center gap-2"
-                        onClick={() => setReviewMode(true)}
-                    >
-                        <ClipboardList size={18} /> Review Best Answers
+                    <button className="btn btn--primary" onClick={() => setReviewMode(true)}>
+                        <ClipboardList size={16} />
+                        Review Incorrect
                     </button>
                 )}
-                <button className="btn btn--secondary flex-1 flex items-center justify-center gap-2" onClick={onRetry}>
-                    <RotateCcw size={18} /> Retry Test
+                <button className="btn btn--secondary" onClick={onRetry}>
+                    <RotateCcw size={16} />
+                    Retry
                 </button>
-                <button className="btn btn--ghost flex-1 flex items-center justify-center gap-2" onClick={onBackToDashboard}>
-                    <ArrowLeft size={18} /> Dashboard
+                <button className="btn btn--ghost" onClick={handleBackToDashboard} disabled={saving}>
+                    <ArrowLeft size={16} />
+                    Dashboard
                 </button>
             </div>
-        </div>
+        </section>
     )
 }

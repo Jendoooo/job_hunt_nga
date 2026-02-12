@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext'
+import { useAuth } from './context/useAuth'
 import LoginPage from './pages/LoginPage'
 import Dashboard from './pages/Dashboard'
 import TechnicalTest from './pages/TechnicalTest'
 import AptitudeTest from './pages/AptitudeTest'
 import SavillePractice from './pages/SavillePractice'
 import AIGeneratedTest from './pages/AIGeneratedTest'
+import NLNGTest from './pages/NLNGTest'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -48,6 +50,7 @@ function AppRoutes() {
       <Route path="/test/technical" element={<ProtectedRoute><TechnicalTest /></ProtectedRoute>} />
       <Route path="/test/aptitude" element={<ProtectedRoute><AptitudeTest /></ProtectedRoute>} />
       <Route path="/test/saville-practice" element={<ProtectedRoute><SavillePractice /></ProtectedRoute>} />
+      <Route path="/test/nlng" element={<ProtectedRoute><NLNGTest /></ProtectedRoute>} />
       <Route path="/test/ai-generated" element={<ProtectedRoute><AIGeneratedTest /></ProtectedRoute>} />
     </Routes>
   )

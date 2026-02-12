@@ -1,306 +1,522 @@
 [
-    {
-        "id": 1,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'Sticking to traditional eating times and formal eating habits is no longer the norm. The value and number of on-the-run eating occasions, both snacks and meals, is increasing significantly. Three meals a day maxim no longer holds true because more consumers are eating outside of the home and at times to suit their lifestyles.'  — Eating on-the-run is increasing.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 0,
-        "explanation": "The passage directly states on-the-run eating occasions are 'increasing significantly'."
-    },
-    {
-        "id": 2,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'Breakfast, in particular, is now more commonly skipped and those who do eat breakfast are taking less time to prepare it. Consumers are developing more complex and paradoxical eating patterns and demanding products that are more convenient and healthier.'  — Consumers want products that are both convenient and healthy.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 0,
-        "explanation": "The passage states consumers are 'demanding products that are more convenient and healthier'."
-    },
-    {
-        "id": 3,
-        "subtest": "verbal",
-        "question": "Based on the passage about consumer trends: 'The three meals a day maxim no longer holds true.'  — Most people now eat exactly two meals per day.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 2,
-        "explanation": "The passage says three meals a day is no longer the norm, but does not specify what replaced it."
-    },
-    {
-        "id": 4,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'Process safety management requires a systematic approach to identifying hazards, evaluating risks, and implementing controls. Organizations that fail to properly maintain safety systems may face catastrophic consequences including loss of life, environmental damage, and significant financial losses.'  — Financial losses are the most serious consequence of safety failures.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 2,
-        "explanation": "The passage lists multiple consequences but does not rank them by severity."
-    },
-    {
-        "id": 5,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'The oil and gas industry employs various corrosion management strategies including regular inspection programs, application of protective coatings, cathodic protection, and use of corrosion-resistant alloys. The choice of strategy depends on the specific operating environment and economic considerations.'  — Corrosion management strategy is influenced by operating conditions.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 0,
-        "explanation": "The passage states 'choice of strategy depends on the specific operating environment'."
-    },
-    {
-        "id": 6,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'Reservoir engineers use decline curve analysis to forecast future production rates. This technique assumes that past production trends will continue into the future, though this assumption may not always hold true.'  — Decline curve analysis always provides accurate production forecasts.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 1,
-        "explanation": "The passage explicitly states 'this assumption may not always hold true', meaning it's not always accurate."
-    },
-    {
-        "id": 7,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'Nigeria's oil and gas sector accounts for approximately 90% of export earnings and about 60% of government revenue. The sector has attracted significant foreign direct investment, with multinational companies operating alongside the national oil company NNPC.'  — NNPC operates independently without any collaboration with foreign companies.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 1,
-        "explanation": "The passage says multinationals operate 'alongside' NNPC, indicating collaboration."
-    },
-    {
-        "id": 8,
-        "subtest": "verbal",
-        "question": "Based on the passage: 'Heat exchangers in the oil and gas industry must be designed to handle fouling, which is the accumulation of unwanted material on heat transfer surfaces. Fouling reduces efficiency and increases operating costs. Regular cleaning schedules help mitigate these effects.'  — Fouling can be completely prevented with proper design.",
-        "options": [
-            "True on the basis of the passage",
-            "False on the basis of the passage",
-            "Not possible to say from the passage"
-        ],
-        "correctAnswer": 2,
-        "explanation": "The passage mentions cleaning to 'mitigate' effects but doesn't say whether fouling can be completely prevented."
-    },
-    {
-        "id": 9,
-        "subtest": "numerical",
-        "question": "An annual sales report shows: Retail Outlets sold 4,380 million units, On-Line sold 2,232 million units, Mail Order sold 1,512 million units, and Telephone sold 972 million units. What was the total sales volume for On-Line, Mail Order and Telephone combined?",
-        "options": [
-            "4,716 million",
-            "4,380 million",
-            "3,744 million",
-            "5,124 million"
-        ],
-        "correctAnswer": 0,
-        "explanation": "2,232 + 1,512 + 972 = 4,716 million units."
-    },
-    {
-        "id": 10,
-        "subtest": "numerical",
-        "question": "If Retail Outlets had an average of 365 units per transaction, and sold 4,380 million units total, approximately how many transactions were there?",
-        "options": [
-            "12 million",
-            "1.2 million",
-            "120 million",
-            "1.2 billion"
-        ],
-        "correctAnswer": 0,
-        "explanation": "4,380,000,000 ÷ 365 = approximately 12,000,000 = 12 million transactions."
-    },
-    {
-        "id": 11,
-        "subtest": "numerical",
-        "question": "Mail Order had 72% repeat customers with 1,512 million units sold. How many units were from repeat customers?",
-        "options": [
-            "1,088.64 million",
-            "1,108.64 million",
-            "423.36 million",
-            "756 million"
-        ],
-        "correctAnswer": 0,
-        "explanation": "1,512 × 0.72 = 1,088.64 million units from repeat customers."
-    },
-    {
-        "id": 12,
-        "subtest": "numerical",
-        "question": "A pipeline carries 180 m³/h of crude oil. What is the flow in litres per second?",
-        "options": [
-            "50 L/s",
-            "500 L/s",
-            "5 L/s",
-            "180 L/s"
-        ],
-        "correctAnswer": 0,
-        "explanation": "180 m³/h = 180,000 L/h. 180,000 ÷ 3,600 = 50 L/s."
-    },
-    {
-        "id": 13,
-        "subtest": "numerical",
-        "question": "On-Line sales were 2,232 million units with 23% repeat customer transactions. How many units came from new customers (77%)?",
-        "options": [
-            "1,718.64 million",
-            "513.36 million",
-            "1,116 million",
-            "2,000 million"
-        ],
-        "correctAnswer": 0,
-        "explanation": "2,232 × 0.77 = 1,718.64 million from new customers."
-    },
-    {
-        "id": 14,
-        "subtest": "numerical",
-        "question": "Telephone had 972 million units sold with average 270 units per transaction. How many transactions occurred?",
-        "options": [
-            "3.6 million",
-            "36 million",
-            "360,000",
-            "2.7 million"
-        ],
-        "correctAnswer": 0,
-        "explanation": "972,000,000 ÷ 270 = 3,600,000 = 3.6 million transactions."
-    },
-    {
-        "id": 15,
-        "subtest": "numerical",
-        "question": "If On-Line sales grew by 15% year-on-year from 2,232 million units, what would the projected sales be?",
-        "options": [
-            "2,566.8 million",
-            "2,345.8 million",
-            "2,678.4 million",
-            "2,900 million"
-        ],
-        "correctAnswer": 0,
-        "explanation": "2,232 × 1.15 = 2,566.8 million units."
-    },
-    {
-        "id": 16,
-        "subtest": "numerical",
-        "question": "What percentage of total sales came from Retail Outlets? (Total: 4,380 + 2,232 + 1,512 + 972 = 9,096 million)",
-        "options": [
-            "48.2%",
-            "52.3%",
-            "38.5%",
-            "44.0%"
-        ],
-        "correctAnswer": 0,
-        "explanation": "4,380 ÷ 9,096 × 100 = 48.15%, approximately 48.2%."
-    },
-    {
-        "id": 17,
-        "subtest": "diagrammatic",
-        "question": "Operator T changes shading of all figures. Operator U swaps 1st and 3rd figures. Operator V changes 1st figure. Input: [dark triangle, dark circle, light square]. Process: T. What is the output?",
-        "options": [
-            "Light triangle, light circle, dark square",
-            "Dark triangle, dark circle, dark square",
-            "Light square, light circle, dark triangle",
-            "Light triangle, dark circle, light square"
-        ],
-        "correctAnswer": 0,
-        "explanation": "T changes all shading: dark→light, dark→light, light→dark. Result: light triangle, light circle, dark square."
-    },
-    {
-        "id": 18,
-        "subtest": "diagrammatic",
-        "question": "Operator T changes shading. Operator U swaps 1st and 3rd. Operator V changes 1st figure's shape. Input: [triangle, circle]. Process: U then T. What sequence of operations was applied?",
-        "options": [
-            "First swap positions, then change all shading",
-            "First change shading, then swap positions",
-            "Only swap positions",
-            "Only change shading"
-        ],
-        "correctAnswer": 0,
-        "explanation": "U swaps 1st and 3rd positions first, then T changes the shading of all figures."
-    },
-    {
-        "id": 19,
-        "subtest": "diagrammatic",
-        "question": "If the input is [circle, triangle, square] and operator U is applied (swap 1st and 3rd), what is the output?",
-        "options": [
-            "Square, triangle, circle",
-            "Circle, square, triangle",
-            "Triangle, circle, square",
-            "Circle, triangle, square"
-        ],
-        "correctAnswer": 0,
-        "explanation": "U swaps 1st and 3rd positions: circle↔square. Result: square, triangle, circle."
-    },
-    {
-        "id": 20,
-        "subtest": "diagrammatic",
-        "question": "Input: [dark circle, light triangle, dark square]. Apply V (changes 1st figure) then T (changes all shading). What is the 1st figure in the output?",
-        "options": [
-            "Light version of the changed 1st figure",
-            "Dark version of the changed 1st figure",
-            "Original dark circle",
-            "Light circle"
-        ],
-        "correctAnswer": 0,
-        "explanation": "V changes the 1st figure first, then T inverts all shading. The 1st figure would be light after T is applied."
-    },
-    {
-        "id": 21,
-        "subtest": "diagrammatic",
-        "question": "Which operator would you apply to [A, B, C] to get [C, B, A]?",
-        "options": [
-            "T (change shading)",
-            "U (swap 1st and 3rd)",
-            "V (change 1st figure)",
-            "T then V"
-        ],
-        "correctAnswer": 1,
-        "explanation": "U swaps the 1st and 3rd positions, giving [C, B, A]."
-    },
-    {
-        "id": 22,
-        "subtest": "diagrammatic",
-        "question": "If T is applied twice to a set of figures, what is the net effect?",
-        "options": [
-            "All shading is twice as dark",
-            "Figures return to original shading",
-            "Only the first figure changes",
-            "All figures disappear"
-        ],
-        "correctAnswer": 1,
-        "explanation": "T inverts shading. Applying T twice inverts then inverts again = back to original."
-    },
-    {
-        "id": 23,
-        "subtest": "diagrammatic",
-        "question": "Input: [light square, dark circle, light triangle]. Apply U. What is the output?",
-        "options": [
-            "Light triangle, dark circle, light square",
-            "Dark circle, light square, light triangle",
-            "Light square, light triangle, dark circle",
-            "Light triangle, light square, dark circle"
-        ],
-        "correctAnswer": 0,
-        "explanation": "U swaps 1st and 3rd: light square ↔ light triangle. Middle stays. Result: light triangle, dark circle, light square."
-    },
-    {
-        "id": 24,
-        "subtest": "diagrammatic",
-        "question": "What series of operators transforms [dark circle, dark triangle, dark square] into [light square, light triangle, light circle]?",
-        "options": [
-            "U then T",
-            "T then U",
-            "U only",
-            "T only"
-        ],
-        "correctAnswer": 0,
-        "explanation": "U swaps 1st and 3rd: [dark square, dark triangle, dark circle]. Then T changes shading: [light square, light triangle, light circle]."
-    }
+  {
+    "id": 1,
+    "subtest": "verbal",
+    "context": "Sticking to traditional eating times and formal eating habits is no longer the norm. The value and number of on-the-run eating occasions, both snacks and meals, is increasing significantly. The three meals a day maxim no longer holds true because more consumers are eating outside of the home and at times to suit their lifestyles.",
+    "question": "Eating on-the-run is increasing.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage directly states that on-the-run eating occasions are 'increasing significantly'."
+  },
+  {
+    "id": 2,
+    "subtest": "verbal",
+    "context": "Breakfast, in particular, is now more commonly skipped and those who do eat breakfast are taking less time to prepare it. Consumers are developing more complex and paradoxical eating patterns and demanding products that are more convenient and healthier.",
+    "question": "Consumers want products that are both convenient and healthy.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage states consumers are 'demanding products that are more convenient and healthier'."
+  },
+  {
+    "id": 3,
+    "subtest": "verbal",
+    "context": "The three meals a day maxim no longer holds true because more consumers are eating outside of the home and at times to suit their lifestyles.",
+    "question": "Most people now eat exactly two meals per day.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 2,
+    "explanation": "The passage says three meals a day is no longer the norm but does not specify what replaced it."
+  },
+  {
+    "id": 4,
+    "subtest": "verbal",
+    "context": "Process safety management requires a systematic approach to identifying hazards, evaluating risks, and implementing controls. Organisations that fail to properly maintain safety systems may face catastrophic consequences including loss of life, environmental damage, and significant financial losses.",
+    "question": "Financial losses are the most serious consequence of safety failures.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 2,
+    "explanation": "The passage lists multiple consequences but does not rank them by severity."
+  },
+  {
+    "id": 5,
+    "subtest": "verbal",
+    "context": "Renewable energy investment in sub-Saharan Africa has grown by 35% over the last five years. Solar capacity has expanded the fastest, followed by wind power. Despite this growth, access to reliable electricity for rural households remains a significant challenge in many countries.",
+    "question": "Wind power has expanded faster than solar capacity in sub-Saharan Africa.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 1,
+    "explanation": "The passage states solar expanded fastest, followed by wind — making wind second, not first."
+  },
+  {
+    "id": 6,
+    "subtest": "verbal",
+    "context": "Renewable energy investment in sub-Saharan Africa has grown by 35% over the last five years. Solar capacity has expanded the fastest, followed by wind power. Despite this growth, access to reliable electricity for rural households remains a significant challenge in many countries.",
+    "question": "Rural households in sub-Saharan Africa lack access to reliable electricity in all countries.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 2,
+    "explanation": "The passage says 'many countries', not all countries. The scope cannot be confirmed as universal."
+  },
+  {
+    "id": 7,
+    "subtest": "verbal",
+    "context": "Digital transformation programmes typically take three to five years to deliver measurable business outcomes. Organisations that invest in staff training alongside technology deployment report significantly higher rates of successful adoption. However, senior leadership commitment is considered the single most important factor for long-term success.",
+    "question": "Staff training is considered the most important factor for successful digital transformation.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 1,
+    "explanation": "The passage states senior leadership commitment is the single most important factor, not staff training."
+  },
+  {
+    "id": 8,
+    "subtest": "verbal",
+    "context": "Digital transformation programmes typically take three to five years to deliver measurable business outcomes. Organisations that invest in staff training alongside technology deployment report significantly higher rates of successful adoption. However, senior leadership commitment is considered the single most important factor for long-term success.",
+    "question": "Organisations that train staff during technology deployment tend to see better adoption.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage states that organisations investing in staff training report 'significantly higher rates of successful adoption'."
+  },
+  {
+    "id": 9,
+    "subtest": "verbal",
+    "context": "The global demand for liquefied natural gas (LNG) is projected to increase substantially over the next decade, driven primarily by growing energy needs in Asia. Several new LNG export terminals are under construction in West Africa, which analysts expect to contribute meaningfully to global supply by 2028.",
+    "question": "Asia is the primary driver of projected LNG demand growth.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage states demand growth is 'driven primarily by growing energy needs in Asia'."
+  },
+  {
+    "id": 10,
+    "subtest": "verbal",
+    "context": "The global demand for liquefied natural gas (LNG) is projected to increase substantially over the next decade, driven primarily by growing energy needs in Asia. Several new LNG export terminals are under construction in West Africa, which analysts expect to contribute meaningfully to global supply by 2028.",
+    "question": "West African LNG terminals are already operational and contributing to global supply.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 1,
+    "explanation": "The passage says the terminals are 'under construction' and expected to contribute by 2028 — they are not yet operational."
+  },
+  {
+    "id": 11,
+    "subtest": "verbal",
+    "context": "Supply chain disruptions caused by the pandemic accelerated adoption of nearshoring strategies among European manufacturers. Companies moved production closer to end markets to reduce logistics lead times and improve resilience. This trend has continued even as global shipping costs normalised.",
+    "question": "European manufacturers began nearshoring only after global shipping costs increased.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 1,
+    "explanation": "The passage states nearshoring was driven by supply chain disruptions, not shipping costs. The trend continued even after costs normalised."
+  },
+  {
+    "id": 12,
+    "subtest": "verbal",
+    "context": "Supply chain disruptions caused by the pandemic accelerated adoption of nearshoring strategies among European manufacturers. Companies moved production closer to end markets to reduce logistics lead times and improve resilience. This trend has continued even as global shipping costs normalised.",
+    "question": "Nearshoring helps reduce logistics lead times.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage directly states companies moved production closer to end markets 'to reduce logistics lead times'."
+  },
+  {
+    "id": 13,
+    "subtest": "verbal",
+    "context": "Carbon capture and storage (CCS) technology involves capturing CO2 emissions from industrial sources and storing them underground to prevent atmospheric release. While CCS has been deployed at commercial scale in Norway since the 1990s, widespread global adoption remains limited due to high capital costs and regulatory uncertainty.",
+    "question": "CCS technology was first deployed commercially in Norway.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 2,
+    "explanation": "The passage says Norway deployed CCS at commercial scale since the 1990s but does not claim it was the first country globally to do so."
+  },
+  {
+    "id": 14,
+    "subtest": "verbal",
+    "context": "Carbon capture and storage (CCS) technology involves capturing CO2 emissions from industrial sources and storing them underground to prevent atmospheric release. While CCS has been deployed at commercial scale in Norway since the 1990s, widespread global adoption remains limited due to high capital costs and regulatory uncertainty.",
+    "question": "High capital costs are one reason CCS adoption worldwide has been limited.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage explicitly lists 'high capital costs and regulatory uncertainty' as reasons for limited global adoption."
+  },
+  {
+    "id": 15,
+    "subtest": "verbal",
+    "context": "Workplace mental health programmes have gained prominence as employers seek to reduce absenteeism and improve productivity. Research indicates that for every dollar invested in mental health support, companies can expect returns of up to four dollars through reduced sick leave and improved performance. However, stigma remains a barrier to employee uptake.",
+    "question": "Investment in mental health support always yields a four-to-one financial return.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 1,
+    "explanation": "The passage says companies 'can expect returns of up to four dollars' — 'up to' indicates a maximum, not a guaranteed outcome."
+  },
+  {
+    "id": 16,
+    "subtest": "verbal",
+    "context": "Workplace mental health programmes have gained prominence as employers seek to reduce absenteeism and improve productivity. Research indicates that for every dollar invested in mental health support, companies can expect returns of up to four dollars through reduced sick leave and improved performance. However, stigma remains a barrier to employee uptake.",
+    "question": "Employee stigma can reduce the effectiveness of mental health programmes.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage states 'stigma remains a barrier to employee uptake', which would reduce programme effectiveness."
+  },
+  {
+    "id": 17,
+    "subtest": "verbal",
+    "context": "Autonomous vehicles are expected to transform urban mobility by reducing traffic congestion, improving road safety, and lowering transportation costs. Proponents argue that the elimination of human error — responsible for over 90% of road accidents — would dramatically reduce casualty rates. Critics caution that infrastructure readiness and cybersecurity risks pose significant challenges.",
+    "question": "Human error accounts for the majority of road accidents.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage states human error is 'responsible for over 90% of road accidents' — a clear majority."
+  },
+  {
+    "id": 18,
+    "subtest": "verbal",
+    "context": "Autonomous vehicles are expected to transform urban mobility by reducing traffic congestion, improving road safety, and lowering transportation costs. Proponents argue that the elimination of human error — responsible for over 90% of road accidents — would dramatically reduce casualty rates. Critics caution that infrastructure readiness and cybersecurity risks pose significant challenges.",
+    "question": "Critics believe autonomous vehicles will not improve road safety.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 2,
+    "explanation": "The passage says critics highlight implementation challenges but does not say they dispute road safety benefits."
+  },
+  {
+    "id": 19,
+    "subtest": "verbal",
+    "context": "The rise of e-commerce has fundamentally altered consumer expectations around delivery speed and convenience. Same-day delivery, once considered a premium service, is increasingly viewed as a baseline expectation by online shoppers. This has forced traditional retailers to invest heavily in last-mile logistics infrastructure to remain competitive.",
+    "question": "Same-day delivery is now considered a premium luxury by most online shoppers.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 1,
+    "explanation": "The passage states same-day delivery 'is increasingly viewed as a baseline expectation' — the opposite of a premium luxury."
+  },
+  {
+    "id": 20,
+    "subtest": "verbal",
+    "context": "The rise of e-commerce has fundamentally altered consumer expectations around delivery speed and convenience. Same-day delivery, once considered a premium service, is increasingly viewed as a baseline expectation by online shoppers. This has forced traditional retailers to invest heavily in last-mile logistics infrastructure to remain competitive.",
+    "question": "Traditional retailers have had to invest in logistics to compete with e-commerce.",
+    "options": ["True on the basis of the passage", "False on the basis of the passage", "Not possible to say from the passage"],
+    "correctAnswer": 0,
+    "explanation": "The passage explicitly states traditional retailers were 'forced to invest heavily in last-mile logistics infrastructure to remain competitive'."
+  },
+  {
+    "id": 21,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Sales Channel</th><th>Total Transactions (000s)</th><th>Repeat Customer %</th></tr></thead><tbody><tr><td>In-Store</td><td>480</td><td>60%</td></tr><tr><td>Online</td><td>320</td><td>23%</td></tr><tr><td>Mail Order</td><td>150</td><td>35%</td></tr><tr><td>Phone</td><td>90</td><td>72%</td></tr></tbody></table>",
+    "question": "The Online channel had the lowest proportion of repeat customers.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 0,
+    "explanation": "Online had 23% repeat customers — lower than In-Store (60%), Mail Order (35%), and Phone (72%)."
+  },
+  {
+    "id": 22,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Sales Channel</th><th>Total Transactions (000s)</th><th>Repeat Customer %</th></tr></thead><tbody><tr><td>In-Store</td><td>480</td><td>60%</td></tr><tr><td>Online</td><td>320</td><td>23%</td></tr><tr><td>Mail Order</td><td>150</td><td>35%</td></tr><tr><td>Phone</td><td>90</td><td>72%</td></tr></tbody></table>",
+    "question": "How many repeat customer transactions occurred through the Phone channel?",
+    "options": ["64,800", "6,480", "90,000", "72,000"],
+    "correctAnswer": 0,
+    "explanation": "Phone transactions = 90,000. Repeat customers = 72% × 90,000 = 64,800."
+  },
+  {
+    "id": 23,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Sales Channel</th><th>Total Transactions (000s)</th><th>Repeat Customer %</th></tr></thead><tbody><tr><td>In-Store</td><td>480</td><td>60%</td></tr><tr><td>Online</td><td>320</td><td>23%</td></tr><tr><td>Mail Order</td><td>150</td><td>35%</td></tr><tr><td>Phone</td><td>90</td><td>72%</td></tr></tbody></table>",
+    "question": "What percentage of total transactions were made through the Mail Order channel?",
+    "options": ["14.4%", "15.8%", "18.2%", "10.5%"],
+    "correctAnswer": 0,
+    "explanation": "Total = 480 + 320 + 150 + 90 = 1,040 (000s). Mail Order = 150 ÷ 1,040 = 14.4%."
+  },
+  {
+    "id": 24,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Department</th><th>Q1 Revenue (₦M)</th><th>Q2 Revenue (₦M)</th><th>Q3 Revenue (₦M)</th></tr></thead><tbody><tr><td>Upstream</td><td>4,200</td><td>3,800</td><td>4,600</td></tr><tr><td>Midstream</td><td>1,800</td><td>2,100</td><td>1,950</td></tr><tr><td>Downstream</td><td>3,100</td><td>3,400</td><td>3,250</td></tr></tbody></table>",
+    "question": "Midstream revenue increased in every quarter shown.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 1,
+    "explanation": "Midstream: Q1=1,800 → Q2=2,100 (increase) → Q3=1,950 (decrease). It did not increase in every quarter."
+  },
+  {
+    "id": 25,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Department</th><th>Q1 Revenue (₦M)</th><th>Q2 Revenue (₦M)</th><th>Q3 Revenue (₦M)</th></tr></thead><tbody><tr><td>Upstream</td><td>4,200</td><td>3,800</td><td>4,600</td></tr><tr><td>Midstream</td><td>1,800</td><td>2,100</td><td>1,950</td></tr><tr><td>Downstream</td><td>3,100</td><td>3,400</td><td>3,250</td></tr></tbody></table>",
+    "question": "What was the total revenue across all departments in Q2?",
+    "options": ["₦9,300M", "₦9,100M", "₦9,800M", "₦8,850M"],
+    "correctAnswer": 0,
+    "explanation": "Q2 total = 3,800 + 2,100 + 3,400 = ₦9,300M."
+  },
+  {
+    "id": 26,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Department</th><th>Q1 Revenue (₦M)</th><th>Q2 Revenue (₦M)</th><th>Q3 Revenue (₦M)</th></tr></thead><tbody><tr><td>Upstream</td><td>4,200</td><td>3,800</td><td>4,600</td></tr><tr><td>Midstream</td><td>1,800</td><td>2,100</td><td>1,950</td></tr><tr><td>Downstream</td><td>3,100</td><td>3,400</td><td>3,250</td></tr></tbody></table>",
+    "question": "Upstream revenue in Q1 was more than twice the Midstream revenue in Q1.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 0,
+    "explanation": "Upstream Q1 = 4,200. Two times Midstream Q1 = 2 × 1,800 = 3,600. 4,200 > 3,600 — True."
+  },
+  {
+    "id": 27,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Project</th><th>Budget (₦B)</th><th>Spend to Date (₦B)</th><th>% Complete</th></tr></thead><tbody><tr><td>Alpha</td><td>12.0</td><td>7.2</td><td>55%</td></tr><tr><td>Beta</td><td>8.5</td><td>6.8</td><td>80%</td></tr><tr><td>Gamma</td><td>15.0</td><td>4.5</td><td>25%</td></tr><tr><td>Delta</td><td>6.0</td><td>6.0</td><td>90%</td></tr></tbody></table>",
+    "question": "Project Delta has exceeded its budget.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 2,
+    "explanation": "Delta has spent its full ₦6.0B budget at 90% completion. A cost overrun is likely but cannot be confirmed from the data shown."
+  },
+  {
+    "id": 28,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Project</th><th>Budget (₦B)</th><th>Spend to Date (₦B)</th><th>% Complete</th></tr></thead><tbody><tr><td>Alpha</td><td>12.0</td><td>7.2</td><td>55%</td></tr><tr><td>Beta</td><td>8.5</td><td>6.8</td><td>80%</td></tr><tr><td>Gamma</td><td>15.0</td><td>4.5</td><td>25%</td></tr><tr><td>Delta</td><td>6.0</td><td>6.0</td><td>90%</td></tr></tbody></table>",
+    "question": "Which project has spent the lowest percentage of its budget relative to its completion?",
+    "options": ["Gamma", "Alpha", "Beta", "Delta"],
+    "correctAnswer": 0,
+    "explanation": "Spend as % of budget: Alpha=60%, Beta=80%, Gamma=30%, Delta=100%. Gamma spent only 30% of its budget for 25% completion — the lowest spend ratio."
+  },
+  {
+    "id": 29,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Year</th><th>Production (MMscfd)</th><th>Export %</th><th>Domestic %</th></tr></thead><tbody><tr><td>2020</td><td>4,100</td><td>62%</td><td>38%</td></tr><tr><td>2021</td><td>4,350</td><td>65%</td><td>35%</td></tr><tr><td>2022</td><td>4,080</td><td>60%</td><td>40%</td></tr><tr><td>2023</td><td>4,520</td><td>68%</td><td>32%</td></tr></tbody></table>",
+    "question": "In absolute volume terms, domestic consumption was highest in 2022.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 0,
+    "explanation": "Domestic volumes: 2020=1,558, 2021=1,522.5, 2022=1,632, 2023=1,446.4 MMscfd. 2022 had the highest absolute domestic consumption."
+  },
+  {
+    "id": 30,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Year</th><th>Production (MMscfd)</th><th>Export %</th><th>Domestic %</th></tr></thead><tbody><tr><td>2020</td><td>4,100</td><td>62%</td><td>38%</td></tr><tr><td>2021</td><td>4,350</td><td>65%</td><td>35%</td></tr><tr><td>2022</td><td>4,080</td><td>60%</td><td>40%</td></tr><tr><td>2023</td><td>4,520</td><td>68%</td><td>32%</td></tr></tbody></table>",
+    "question": "What was the approximate export volume in 2023?",
+    "options": ["3,074 MMscfd", "2,952 MMscfd", "4,520 MMscfd", "3,520 MMscfd"],
+    "correctAnswer": 0,
+    "explanation": "Export = 68% × 4,520 = 3,073.6 ≈ 3,074 MMscfd."
+  },
+  {
+    "id": 31,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Staff Grade</th><th>Headcount</th><th>Training Hours/yr</th><th>Cost per Hour (₦)</th></tr></thead><tbody><tr><td>Graduate</td><td>120</td><td>80</td><td>15,000</td></tr><tr><td>Senior</td><td>65</td><td>50</td><td>25,000</td></tr><tr><td>Manager</td><td>30</td><td>30</td><td>40,000</td></tr><tr><td>Director</td><td>10</td><td>20</td><td>80,000</td></tr></tbody></table>",
+    "question": "The total annual training spend on Directors exceeds that on Managers.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 1,
+    "explanation": "Directors: 10 × 20 × ₦80,000 = ₦16M. Managers: 30 × 30 × ₦40,000 = ₦36M. Manager spend is higher than Director spend."
+  },
+  {
+    "id": 32,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Staff Grade</th><th>Headcount</th><th>Training Hours/yr</th><th>Cost per Hour (₦)</th></tr></thead><tbody><tr><td>Graduate</td><td>120</td><td>80</td><td>15,000</td></tr><tr><td>Senior</td><td>65</td><td>50</td><td>25,000</td></tr><tr><td>Manager</td><td>30</td><td>30</td><td>40,000</td></tr><tr><td>Director</td><td>10</td><td>20</td><td>80,000</td></tr></tbody></table>",
+    "question": "What is the total annual training spend on Graduate staff?",
+    "options": ["₦144,000,000", "₦14,400,000", "₦96,000,000", "₦120,000,000"],
+    "correctAnswer": 0,
+    "explanation": "Graduate spend: 120 × 80 hrs × ₦15,000/hr = 120 × ₦1,200,000 = ₦144,000,000."
+  },
+  {
+    "id": 33,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Wellsite</th><th>Daily Output (bbl/day)</th><th>Uptime %</th><th>Op. Cost ($/bbl)</th></tr></thead><tbody><tr><td>Okan</td><td>8,200</td><td>94%</td><td>12.50</td></tr><tr><td>Amenam</td><td>6,500</td><td>88%</td><td>14.00</td></tr><tr><td>Obagi</td><td>5,100</td><td>97%</td><td>10.80</td></tr><tr><td>Usan</td><td>9,800</td><td>91%</td><td>16.20</td></tr></tbody></table>",
+    "question": "Obagi has the highest uptime and the lowest operating cost per barrel.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 0,
+    "explanation": "Uptime: Obagi=97% (highest of all). Operating cost: Obagi=$10.80/bbl (lowest of all). Both conditions are satisfied."
+  },
+  {
+    "id": 34,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Wellsite</th><th>Daily Output (bbl/day)</th><th>Uptime %</th><th>Op. Cost ($/bbl)</th></tr></thead><tbody><tr><td>Okan</td><td>8,200</td><td>94%</td><td>12.50</td></tr><tr><td>Amenam</td><td>6,500</td><td>88%</td><td>14.00</td></tr><tr><td>Obagi</td><td>5,100</td><td>97%</td><td>10.80</td></tr><tr><td>Usan</td><td>9,800</td><td>91%</td><td>16.20</td></tr></tbody></table>",
+    "question": "What is the approximate daily operating cost for Usan?",
+    "options": ["$158,760", "$148,500", "$171,200", "$163,800"],
+    "correctAnswer": 0,
+    "explanation": "Usan: 9,800 bbl/day × $16.20/bbl = $158,760/day."
+  },
+  {
+    "id": 35,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Month</th><th>Incidents</th><th>Near-Misses</th><th>Lost Time Injuries</th></tr></thead><tbody><tr><td>January</td><td>14</td><td>8</td><td>2</td></tr><tr><td>February</td><td>11</td><td>6</td><td>1</td></tr><tr><td>March</td><td>18</td><td>12</td><td>3</td></tr><tr><td>April</td><td>9</td><td>5</td><td>0</td></tr></tbody></table>",
+    "question": "In March, the ratio of near-misses to total incidents was higher than in January.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 0,
+    "explanation": "January: 8/14 = 57.1%. March: 12/18 = 66.7%. March had a higher ratio."
+  },
+  {
+    "id": 36,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Month</th><th>Incidents</th><th>Near-Misses</th><th>Lost Time Injuries</th></tr></thead><tbody><tr><td>January</td><td>14</td><td>8</td><td>2</td></tr><tr><td>February</td><td>11</td><td>6</td><td>1</td></tr><tr><td>March</td><td>18</td><td>12</td><td>3</td></tr><tr><td>April</td><td>9</td><td>5</td><td>0</td></tr></tbody></table>",
+    "question": "What was the total number of Lost Time Injuries across all four months?",
+    "options": ["6", "5", "7", "4"],
+    "correctAnswer": 0,
+    "explanation": "LTIs: 2 + 1 + 3 + 0 = 6."
+  },
+  {
+    "id": 37,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Country</th><th>Crude Production (Mbbl/day)</th><th>YoY Change</th><th>Refining Capacity (Mbbl/day)</th></tr></thead><tbody><tr><td>Nigeria</td><td>1,420</td><td>-3.2%</td><td>445</td></tr><tr><td>Angola</td><td>1,150</td><td>+1.8%</td><td>65</td></tr><tr><td>Algeria</td><td>960</td><td>+0.5%</td><td>510</td></tr><tr><td>Libya</td><td>680</td><td>-8.4%</td><td>350</td></tr></tbody></table>",
+    "question": "Algeria's refining capacity exceeds its crude production.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 1,
+    "explanation": "Algeria: Production = 960 Mbbl/day, Refining capacity = 510 Mbbl/day. Production is higher."
+  },
+  {
+    "id": 38,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Country</th><th>Crude Production (Mbbl/day)</th><th>YoY Change</th><th>Refining Capacity (Mbbl/day)</th></tr></thead><tbody><tr><td>Nigeria</td><td>1,420</td><td>-3.2%</td><td>445</td></tr><tr><td>Angola</td><td>1,150</td><td>+1.8%</td><td>65</td></tr><tr><td>Algeria</td><td>960</td><td>+0.5%</td><td>510</td></tr><tr><td>Libya</td><td>680</td><td>-8.4%</td><td>350</td></tr></tbody></table>",
+    "question": "Which country had the largest absolute year-on-year decline in production?",
+    "options": ["Libya", "Nigeria", "Angola", "Algeria"],
+    "correctAnswer": 0,
+    "explanation": "Libya: 8.4% × 680 ≈ 57 Mbbl/day decline. Nigeria: 3.2% × 1,420 ≈ 45 Mbbl/day decline. Libya had the larger absolute decline."
+  },
+  {
+    "id": 39,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Training Module</th><th>Pass Rate</th><th>Candidates</th></tr></thead><tbody><tr><td>Safety Induction</td><td>92%</td><td>250</td></tr><tr><td>Process Engineering</td><td>74%</td><td>180</td></tr><tr><td>Permit to Work</td><td>88%</td><td>310</td></tr><tr><td>Emergency Response</td><td>81%</td><td>140</td></tr></tbody></table>",
+    "question": "More candidates passed the Permit to Work module than the Safety Induction module.",
+    "options": ["True", "False", "Not possible to say"],
+    "correctAnswer": 0,
+    "explanation": "Permit to Work passes: 88% × 310 = 272.8 ≈ 273. Safety Induction passes: 92% × 250 = 230. More passed PTW."
+  },
+  {
+    "id": 40,
+    "subtest": "numerical",
+    "context": "<table class='q-table'><thead><tr><th>Training Module</th><th>Pass Rate</th><th>Candidates</th></tr></thead><tbody><tr><td>Safety Induction</td><td>92%</td><td>250</td></tr><tr><td>Process Engineering</td><td>74%</td><td>180</td></tr><tr><td>Permit to Work</td><td>88%</td><td>310</td></tr><tr><td>Emergency Response</td><td>81%</td><td>140</td></tr></tbody></table>",
+    "question": "How many candidates failed the Process Engineering module?",
+    "options": ["47", "133", "26", "46"],
+    "correctAnswer": 0,
+    "explanation": "Failed = 26% × 180 = 46.8 ≈ 47 candidates."
+  },
+  {
+    "id": 41,
+    "subtest": "diagrammatic",
+    "question": "A panel defines two operators:\n• ⊕  inverts the shading of every figure  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n• ⊗  swaps the 1st and 3rd figures in the sequence\n\nInput:  [ ■  ▲  ○ ]  →  Apply  ⊕  →  Output: ?",
+    "options": ["☐  △  ●", "○  ▲  ■", "■  ▲  ○", "☐  ▲  ○"],
+    "correctAnswer": 0,
+    "explanation": "⊕ inverts all shading: ■→☐, ▲→△, ○→●. Result: [ ☐  △  ● ]."
+  },
+  {
+    "id": 42,
+    "subtest": "diagrammatic",
+    "question": "A panel defines two operators:\n• ⊕  inverts the shading of every figure  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n• ⊗  swaps the 1st and 3rd figures in the sequence\n\nInput:  [ ▲  ●  ■ ]  →  Apply  ⊗  →  Output: ?",
+    "options": ["■  ●  ▲", "▲  ●  ■", "●  ▲  ■", "■  ▲  ●"],
+    "correctAnswer": 0,
+    "explanation": "⊗ swaps the 1st and 3rd figures: ▲ ↔ ■. Result: [ ■  ●  ▲ ]."
+  },
+  {
+    "id": 43,
+    "subtest": "diagrammatic",
+    "question": "A panel defines two operators:\n• ⊕  inverts the shading of every figure  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n• ⊗  swaps the 1st and 3rd figures in the sequence\n\nInput:  [ ○  △  ☐ ]  →  Apply  ⊕  then  ⊗  →  Output: ?",
+    "options": ["■  ▲  ●", "●  ▲  ■", "■  △  ●", "☐  ▲  ○"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (⊕): ○→●, △→▲, ☐→■ → [ ●  ▲  ■ ]. Step 2 (⊗): swap 1st and 3rd → [ ■  ▲  ● ]."
+  },
+  {
+    "id": 44,
+    "subtest": "diagrammatic",
+    "question": "A panel defines two operators:\n• ⊕  inverts the shading of every figure  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n• ⊗  swaps the 1st and 3rd figures in the sequence\n\nInput:  [ ■  ○  ▲ ]  →  Apply  ⊗  then  ⊕  →  Output: ?",
+    "options": ["△  ●  ☐", "☐  ●  △", "▲  ○  ■", "△  ○  ☐"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (⊗): swap 1st/3rd → [ ▲  ○  ■ ]. Step 2 (⊕): invert all → [ △  ●  ☐ ]."
+  },
+  {
+    "id": 45,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• α  rotates the sequence one position to the right  (last item moves to front)\n• β  replaces the 2nd figure with the 3rd figure\n• γ  inverts all shading  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n\nInput:  [ ☐  ■  △ ]  →  Apply  α  →  Output: ?",
+    "options": ["△  ☐  ■", "■  △  ☐", "☐  △  ■", "■  ☐  △"],
+    "correctAnswer": 0,
+    "explanation": "α rotates right: the last item (△) moves to the front. Result: [ △  ☐  ■ ]."
+  },
+  {
+    "id": 46,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• α  rotates the sequence one position to the right  (last item moves to front)\n• β  replaces the 2nd figure with the 3rd figure\n• γ  inverts all shading  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n\nInput:  [ ○  ■  ▲ ]  →  Apply  β  →  Output: ?",
+    "options": ["○  ▲  ▲", "▲  ■  ○", "○  ■  ▲", "▲  ○  ■"],
+    "correctAnswer": 0,
+    "explanation": "β replaces the 2nd figure with the 3rd: position 2 (■) becomes ▲. Result: [ ○  ▲  ▲ ]."
+  },
+  {
+    "id": 47,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• α  rotates the sequence one position to the right  (last item moves to front)\n• β  replaces the 2nd figure with the 3rd figure\n• γ  inverts all shading  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n\nInput:  [ △  ☐  ● ]  →  Apply  γ  →  Output: ?",
+    "options": ["▲  ■  ○", "△  ☐  ●", "○  ■  ▲", "▲  ○  ■"],
+    "correctAnswer": 0,
+    "explanation": "γ inverts all: △→▲, ☐→■, ●→○. Result: [ ▲  ■  ○ ]."
+  },
+  {
+    "id": 48,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• α  rotates the sequence one position to the right  (last item moves to front)\n• β  replaces the 2nd figure with the 3rd figure\n• γ  inverts all shading  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n\nInput:  [ ■  ○  △ ]  →  Apply  α  then  γ  →  Output: ?",
+    "options": ["▲  ☐  ●", "△  ☐  ●", "▲  ■  ○", "△  ■  ○"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (α): rotate right → [ △  ■  ○ ]. Step 2 (γ): invert all → [ ▲  ☐  ● ]."
+  },
+  {
+    "id": 49,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• ◈  inverts shading of the 1st figure only\n• ◉  moves the last figure to the 1st position\n• ◊  removes the last figure\n\nInput:  [ ○  ■  ▲ ]  →  Apply  ◈  →  Output: ?",
+    "options": ["●  ■  ▲", "○  ☐  ▲", "○  ■  △", "●  ▲  ■"],
+    "correctAnswer": 0,
+    "explanation": "◈ inverts only the 1st figure: ○→●. The 2nd and 3rd are unchanged. Result: [ ●  ■  ▲ ]."
+  },
+  {
+    "id": 50,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• ◈  inverts shading of the 1st figure only\n• ◉  moves the last figure to the 1st position\n• ◊  removes the last figure\n\nInput:  [ ○  ■  ▲ ]  →  Apply  ◉  →  Output: ?",
+    "options": ["▲  ○  ■", "○  ▲  ■", "■  ○  ▲", "○  ■  ▲"],
+    "correctAnswer": 0,
+    "explanation": "◉ moves the last figure (▲) to the 1st position. Result: [ ▲  ○  ■ ]."
+  },
+  {
+    "id": 51,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• ◈  inverts shading of the 1st figure only\n• ◉  moves the last figure to the 1st position\n• ◊  removes the last figure\n\nInput:  [ △  ●  ☐ ]  →  Apply  ◊  then  ◈  →  Output: ?",
+    "options": ["▲  ●", "△  ○", "▲  ○", "△  ●"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (◊): remove last (☐) → [ △  ● ]. Step 2 (◈): invert 1st (△→▲) → [ ▲  ● ]."
+  },
+  {
+    "id": 52,
+    "subtest": "diagrammatic",
+    "question": "Study the following input–output pairs, all produced by a single unknown operator:\n\n[ ■  ●  ▲ ]  →  [ ▲  ●  ■ ]\n[ ○  △  ☐ ]  →  [ ☐  △  ○ ]\n[ ●  ■  ○ ]  →  [ ○  ■  ● ]\n\nWhich operator was applied in each case?",
+    "options": ["Swap the 1st and 3rd figures", "Invert all shading", "Rotate one position to the right", "Remove the middle figure"],
+    "correctAnswer": 0,
+    "explanation": "In all three examples, the 1st and 3rd figures swap positions while the 2nd stays in place. The operator is: swap the 1st and 3rd figures."
+  },
+  {
+    "id": 53,
+    "subtest": "diagrammatic",
+    "question": "Study the following input–output pairs, all produced by a single unknown operator:\n\n[ ■  ●  ▲ ]  →  [ ☐  ○  △ ]\n[ ○  ☐  ■ ]  →  [ ●  ■  ☐ ]\n\nWhich operator was applied?",
+    "options": ["Invert all shading", "Rotate one position to the right", "Swap the 1st and 3rd figures", "Replace the 1st figure with the last"],
+    "correctAnswer": 0,
+    "explanation": "In both cases every figure has its shading inverted: ■→☐, ●→○, ▲→△ (and vice versa). The operator inverts all shading."
+  },
+  {
+    "id": 54,
+    "subtest": "diagrammatic",
+    "question": "A panel defines two operators:\n• P  rotates the sequence one position to the left  (first item moves to the end)\n• Q  inverts all shading  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n\nInput:  [ ☐  ■  △ ]  →  Apply  P  then  Q  →  Output: ?",
+    "options": ["☐  ▲  ■", "■  △  ☐", "▲  ☐  △", "■  ▲  ☐"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (P): rotate left — first item (☐) moves to end → [ ■  △  ☐ ]. Step 2 (Q): invert all shading — ■→☐, △→▲, ☐→■ → [ ☐  ▲  ■ ]."
+  },
+  {
+    "id": 55,
+    "subtest": "diagrammatic",
+    "question": "A panel defines two operators:\n• P  rotates the sequence one position to the left  (first item moves to the end)\n• Q  inverts all shading  (■ ↔ ☐,  ▲ ↔ △,  ● ↔ ○)\n\nInput:  [ △  ●  ○ ]  →  Apply  Q  then  P  →  Output: ?",
+    "options": ["○  ●  ▲", "▲  ○  ●", "●  ▲  ○", "▲  ●  ■"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (Q): invert all — △→▲, ●→○, ○→● → [ ▲  ○  ● ]. Step 2 (P): rotate left — first item (▲) moves to end → [ ○  ●  ▲ ]."
+  },
+  {
+    "id": 56,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• ♦  adds a figure: duplicates the last item and appends it to the sequence\n• ♣  removes the first figure\n• ♠  swaps the 1st and 2nd figures\n\nInput:  [ ▲  ●  ■ ]  →  Apply  ♦  →  Output: ?",
+    "options": ["▲  ●  ■  ■", "■  ▲  ●  ■", "▲  ●  ■  ▲", "▲  ▲  ●  ■"],
+    "correctAnswer": 0,
+    "explanation": "♦ duplicates the last item (■) and appends it. Result: [ ▲  ●  ■  ■ ]."
+  },
+  {
+    "id": 57,
+    "subtest": "diagrammatic",
+    "question": "A panel defines three operators:\n• ♦  duplicates and appends the last item\n• ♣  removes the first figure\n• ♠  swaps the 1st and 2nd figures\n\nInput:  [ ○  △  ☐ ]  →  Apply  ♣  then  ♠  →  Output: ?",
+    "options": ["☐  △", "△  ☐", "○  △", "△  ○"],
+    "correctAnswer": 0,
+    "explanation": "Step 1 (♣): remove 1st (○) → [ △  ☐ ]. Step 2 (♠): swap 1st and 2nd → [ ☐  △ ]."
+  },
+  {
+    "id": 58,
+    "subtest": "diagrammatic",
+    "question": "Study the sequence and identify the pattern:\n\nPosition 1:  ■  ▲  ●\nPosition 2:  ☐  ▲  ●\nPosition 3:  ■  △  ●\nPosition 4:  ☐  △  ●\nPosition 5:  ■  ▲  ○\nPosition 6:  ?",
+    "options": ["☐  ▲  ○", "■  △  ○", "☐  △  ●", "■  ▲  ●"],
+    "correctAnswer": 0,
+    "explanation": "Figure 1 alternates ■/☐ every step. Figure 2 alternates ▲/△ every 2 steps. Figure 3 alternates ●/○ every 4 steps. At position 6: figure 1 = ☐, figure 2 = ▲, figure 3 = ○. Result: [ ☐  ▲  ○ ]."
+  },
+  {
+    "id": 59,
+    "subtest": "diagrammatic",
+    "question": "A process applies an unknown operator to produce the following results:\n\n[ ■  ●  ▲  ○ ]  →  [ ■  ●  ▲ ]\n[ △  ☐  ■  ● ]  →  [ △  ☐  ■ ]\n[ ○  ▲  ●  ☐ ]  →  [ ○  ▲  ● ]\n\nWhich operator was applied?",
+    "options": ["Remove the last figure", "Remove the first figure", "Swap the 1st and last figures", "Invert all shading"],
+    "correctAnswer": 0,
+    "explanation": "In all three cases, the last figure is removed from the sequence. The operator is: remove the last figure."
+  },
+  {
+    "id": 60,
+    "subtest": "diagrammatic",
+    "question": "A process applies an unknown single operator. Identify it from these pairs:\n\n[ ▲  ●  ■ ]  →  [ ▲  ■  ● ]\n[ ☐  △  ○ ]  →  [ ☐  ○  △ ]\n[ ●  ■  ▲ ]  →  [ ●  ▲  ■ ]\n\nWhich operator was applied?",
+    "options": ["Swap the 2nd and 3rd figures", "Swap the 1st and 2nd figures", "Rotate one position to the right", "Invert all shading"],
+    "correctAnswer": 0,
+    "explanation": "In all three cases, the 1st figure is unchanged while the 2nd and 3rd swap. The operator is: swap the 2nd and 3rd figures."
+  }
 ]

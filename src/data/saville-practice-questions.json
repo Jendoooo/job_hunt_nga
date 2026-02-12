@@ -1,146 +1,212 @@
 [
-    {
-        "id": 1,
-        "question": "A pipeline carries 180 m³/h of crude oil. What is the flow in litres per second (L/s)?",
-        "options": [
-            "50 L/s",
-            "500 L/s",
-            "5 L/s",
-            "180 L/s"
-        ],
-        "correctAnswer": 0,
-        "explanation": "1 m³ = 1000 L → 180 m³/h = 180,000 L/h. 1 hour = 3600 s → 180,000 ÷ 3,600 = 50 L/s."
-    },
-    {
-        "id": 2,
-        "question": "Original data: Tank volume = 12,500 L, density = 0.875 kg/L. Reported mass = 10,937.5 kg. Is this correct?",
-        "options": [
-            "Correct — no error",
-            "Incorrect — should be 10,625 kg",
-            "Incorrect — should be 11,250 kg",
-            "Incorrect — should be 14,285.7 kg"
-        ],
-        "correctAnswer": 0,
-        "explanation": "mass = volume × density = 12,500 × 0.875 = 12,500 × (7/8) = (12,500 ÷ 8) × 7 = 1,562.5 × 7 = 10,937.5 kg. Correct!"
-    },
-    {
-        "id": 3,
-        "question": "Two tanks at different elevations: Tank A (higher) and Tank B (lower). To pump liquid from B to A, where should the pump be placed?",
-        "options": [
-            "Close to Tank B at low level (suction flooded)",
-            "Between tanks at midline elevation",
-            "At the top of Tank B above liquid surface",
-            "At Tank A discharge"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Place pump close to liquid surface to minimize cavitation risk and ensure positive NPSHa. Installing above liquid risks cavitation."
-    },
-    {
-        "id": 4,
-        "question": "A centrifugal pump runs at 1450 rpm producing 120 m³/h at 20 m head. If speed doubles to 2900 rpm, what is the new flow and head? (Affinity laws)",
-        "options": [
-            "Flow ≈ 240 m³/h, Head ≈ 80 m",
-            "Flow ≈ 240 m³/h, Head ≈ 40 m",
-            "Flow ≈ 120 m³/h, Head ≈ 80 m",
-            "Flow ≈ 480 m³/h, Head ≈ 160 m"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Affinity laws: Flow ∝ N (doubles → 240 m³/h), Head ∝ N² (quadruples → 80 m)."
-    },
-    {
-        "id": 5,
-        "question": "Feed = 1000 kg/h containing 5.0 wt% water. Product must have ≤1.0 wt% water. Bottoms has 40 wt% water. Find the product mass flow (kg/h).",
-        "options": [
-            "≈ 897.4 kg/h",
-            "≈ 950 kg/h",
-            "≈ 800 kg/h",
-            "≈ 102.6 kg/h"
-        ],
-        "correctAnswer": 0,
-        "explanation": "P + B = 1000; 0.05×1000 = 0.01P + 0.40B; solving: B ≈ 102.56 kg/h; P = 1000 - 102.56 ≈ 897.44 kg/h."
-    },
-    {
-        "id": 6,
-        "question": "Hydrocarbon pump: ρ = 800 kg/m³, Q = 0.05 m³/s, H = 20 m, η = 70%. Find shaft power (kW). (g = 9.81 m/s²)",
-        "options": [
-            "≈ 11.2 kW",
-            "≈ 7.85 kW",
-            "≈ 15.7 kW",
-            "≈ 22.4 kW"
-        ],
-        "correctAnswer": 0,
-        "explanation": "P_h = ρgQH = 800 × 9.81 × 0.05 × 20 = 7,848 W = 7.848 kW. Shaft power = 7.848/0.70 ≈ 11.2 kW."
-    },
-    {
-        "id": 7,
-        "question": "Heat crude at 2 kg/s from 40°C to 100°C. Cp = 2.0 kJ/(kg·K). Find required duty (kW).",
-        "options": [
-            "240 kW",
-            "120 kW",
-            "480 kW",
-            "60 kW"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Q = ṁ × Cp × ΔT = 2 × 2.0 × (100-40) = 2 × 2.0 × 60 = 240 kW."
-    },
-    {
-        "id": 8,
-        "question": "What is the difference between flash point and fire point?",
-        "options": [
-            "Flash point = brief ignition; fire point = sustained combustion (≥5 seconds)",
-            "Flash point = sustained combustion; fire point = brief ignition",
-            "They are the same thing",
-            "Flash point = auto-ignition; fire point = piloted ignition"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Flash point is when vapors briefly ignite from external source. Fire point is when vapors sustain combustion for ≥5 seconds."
-    },
-    {
-        "id": 9,
-        "question": "Convert 50 psig to psia. (Atmospheric = 14.7 psia)",
-        "options": [
-            "64.7 psia",
-            "50 psia",
-            "35.3 psia",
-            "100 psia"
-        ],
-        "correctAnswer": 0,
-        "explanation": "psia = psig + 14.7 = 50 + 14.7 = 64.7 psia."
-    },
-    {
-        "id": 10,
-        "question": "A gas at 300 K and 2 atm is heated to 600 K at constant volume. What is the new pressure? (Gay-Lussac's Law)",
-        "options": [
-            "4 atm",
-            "2 atm",
-            "6 atm",
-            "1 atm"
-        ],
-        "correctAnswer": 0,
-        "explanation": "P1/T1 = P2/T2 → P2 = P1 × T2/T1 = 2 × 600/300 = 4 atm."
-    },
-    {
-        "id": 11,
-        "question": "1 barrel of oil equals how many US gallons?",
-        "options": [
-            "42 gallons",
-            "55 gallons",
-            "35 gallons",
-            "100 gallons"
-        ],
-        "correctAnswer": 0,
-        "explanation": "1 barrel (bbl) = 42 US gallons. This is a standard conversion in the oil industry."
-    },
-    {
-        "id": 12,
-        "question": "If a separator processes 5000 barrels of fluid per day with 20% water cut, how many barrels of water per day?",
-        "options": [
-            "1000 bbl/day",
-            "2000 bbl/day",
-            "500 bbl/day",
-            "4000 bbl/day"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Water = 5000 × 0.20 = 1000 bbl/day."
-    }
+  {
+    "id": 1,
+    "question": "A pipeline carries 180 m³/h of crude oil. What is the flow in litres per second (L/s)?",
+    "options": ["50 L/s", "500 L/s", "5 L/s", "180 L/s"],
+    "correctAnswer": 0,
+    "explanation": "1 m³ = 1,000 L → 180 m³/h = 180,000 L/h. 1 hour = 3,600 s → 180,000 ÷ 3,600 = <strong>50 L/s</strong>."
+  },
+  {
+    "id": 2,
+    "question": "Original data: Tank volume = 12,500 L, density = 0.875 kg/L. Reported mass = 10,937.5 kg. Is this correct?",
+    "options": ["Correct — no error", "Incorrect — should be 10,625 kg", "Incorrect — should be 11,250 kg", "Incorrect — should be 14,285.7 kg"],
+    "correctAnswer": 0,
+    "explanation": "mass = V × ρ = 12,500 × 0.875 = <strong>10,937.5 kg</strong>. The reported value is correct."
+  },
+  {
+    "id": 3,
+    "question": "Two tanks at different elevations: Tank A (higher) and Tank B (lower). To pump liquid from B to A, where should the pump be placed?",
+    "options": ["Close to Tank B at low level (suction flooded)", "Between tanks at midline elevation", "At the top of Tank B above the liquid surface", "At the Tank A discharge"],
+    "correctAnswer": 0,
+    "explanation": "Place the pump close to the liquid surface at Tank B to minimise cavitation risk and ensure positive NPSHa (Net Positive Suction Head available). Installing the pump above the liquid surface risks cavitation."
+  },
+  {
+    "id": 4,
+    "question": "A centrifugal pump runs at 1,450 rpm producing 120 m³/h at 20 m head. If the speed doubles to 2,900 rpm, what are the new flow and head? (Affinity laws)",
+    "options": ["Flow = 240 m³/h, Head = 80 m", "Flow = 240 m³/h, Head = 40 m", "Flow = 120 m³/h, Head = 80 m", "Flow = 480 m³/h, Head = 160 m"],
+    "correctAnswer": 0,
+    "explanation": "Affinity laws: Flow ∝ N (doubles → <strong>240 m³/h</strong>). Head ∝ N² (quadruples → 4 × 20 = <strong>80 m</strong>)."
+  },
+  {
+    "id": 5,
+    "question": "Feed = 1,000 kg/h containing 5.0 wt% water. Product must have ≤1.0 wt% water. Bottoms has 40 wt% water. Find the product mass flow (kg/h).",
+    "options": ["≈ 897 kg/h", "≈ 950 kg/h", "≈ 800 kg/h", "≈ 103 kg/h"],
+    "correctAnswer": 0,
+    "explanation": "P + B = 1,000 and 0.05 × 1,000 = 0.01P + 0.40B. Solving: 50 = 0.01P + 0.40(1,000 − P) → 50 = 0.01P + 400 − 0.40P → 0.39P = 350 → P ≈ <strong>897 kg/h</strong>."
+  },
+  {
+    "id": 6,
+    "question": "Hydrocarbon pump: ρ = 800 kg/m³, Q = 0.05 m³/s, H = 20 m, η = 70%. Find shaft power. (g = 9.81 m/s²)",
+    "options": ["≈ 11.2 kW", "≈ 7.85 kW", "≈ 15.7 kW", "≈ 22.4 kW"],
+    "correctAnswer": 0,
+    "explanation": "Hydraulic power P<sub>h</sub> = ρgQH = 800 × 9.81 × 0.05 × 20 = 7,848 W ≈ 7.85 kW. Shaft power = 7.85 ÷ 0.70 ≈ <strong>11.2 kW</strong>."
+  },
+  {
+    "id": 7,
+    "question": "Heat crude oil at 2 kg/s from 40°C to 100°C. Cp = 2.0 kJ/(kg·K). Find the required heat duty (kW).",
+    "options": ["240 kW", "120 kW", "480 kW", "60 kW"],
+    "correctAnswer": 0,
+    "explanation": "Q = ṁ × C<sub>p</sub> × ΔT = 2 × 2.0 × (100 − 40) = 2 × 2.0 × 60 = <strong>240 kW</strong>."
+  },
+  {
+    "id": 8,
+    "question": "What is the difference between flash point and fire point of a liquid?",
+    "options": ["Flash point = brief ignition; fire point = sustained combustion (≥5 s)", "Flash point = sustained combustion; fire point = brief ignition", "They are the same thing", "Flash point = auto-ignition; fire point = piloted ignition"],
+    "correctAnswer": 0,
+    "explanation": "The <strong>flash point</strong> is the lowest temperature at which vapours briefly ignite from an external ignition source. The <strong>fire point</strong> is the temperature at which vapours sustain combustion for at least 5 seconds."
+  },
+  {
+    "id": 9,
+    "question": "Convert 50 psig to psia. (Atmospheric pressure = 14.7 psia)",
+    "options": ["64.7 psia", "50 psia", "35.3 psia", "100 psia"],
+    "correctAnswer": 0,
+    "explanation": "psia = psig + P<sub>atm</sub> = 50 + 14.7 = <strong>64.7 psia</strong>."
+  },
+  {
+    "id": 10,
+    "question": "A gas at 300 K and 2 atm is heated to 600 K at constant volume. What is the new pressure? (Gay-Lussac's Law)",
+    "options": ["4 atm", "2 atm", "6 atm", "1 atm"],
+    "correctAnswer": 0,
+    "explanation": "P₁/T₁ = P₂/T₂ at constant volume. P₂ = P₁ × T₂/T₁ = 2 × 600/300 = <strong>4 atm</strong>."
+  },
+  {
+    "id": 11,
+    "question": "1 barrel of crude oil equals how many US gallons?",
+    "options": ["42 gallons", "55 gallons", "35 gallons", "100 gallons"],
+    "correctAnswer": 0,
+    "explanation": "1 standard oil barrel (bbl) = <strong>42 US gallons</strong>. This is the international standard used in crude oil trading."
+  },
+  {
+    "id": 12,
+    "question": "A separator processes 5,000 bbl/day of fluid with a 20% water cut. How many barrels of water are produced per day?",
+    "options": ["1,000 bbl/day", "2,000 bbl/day", "500 bbl/day", "4,000 bbl/day"],
+    "correctAnswer": 0,
+    "explanation": "Water = 5,000 × 0.20 = <strong>1,000 bbl/day</strong>."
+  },
+  {
+    "id": 13,
+    "question": "A heat exchanger heats 5 kg/s of water from 20°C to 80°C. Cp (water) = 4.18 kJ/(kg·K). What is the duty?",
+    "options": ["1,254 kW", "627 kW", "2,508 kW", "418 kW"],
+    "correctAnswer": 0,
+    "explanation": "Q = ṁ × C<sub>p</sub> × ΔT = 5 × 4.18 × (80 − 20) = 5 × 4.18 × 60 = <strong>1,254 kW</strong>."
+  },
+  {
+    "id": 14,
+    "question": "A compressor takes gas at 1 bar, 300 K and compresses it adiabatically to 4 bar. γ = 1.4. What is the outlet temperature (K)?",
+    "options": ["≈ 446 K", "≈ 600 K", "≈ 380 K", "≈ 300 K"],
+    "correctAnswer": 0,
+    "explanation": "T₂ = T₁ × (P₂/P₁)<sup>(γ−1)/γ</sup> = 300 × 4<sup>0.4/1.4</sup> = 300 × 4<sup>0.286</sup> ≈ 300 × 1.486 ≈ <strong>446 K</strong>."
+  },
+  {
+    "id": 15,
+    "question": "A distillation column has a reflux ratio R = 3. Distillate flow D = 100 kmol/h. What is the liquid returned to the column (L) from the condenser?",
+    "options": ["300 kmol/h", "100 kmol/h", "400 kmol/h", "33.3 kmol/h"],
+    "correctAnswer": 0,
+    "explanation": "R = L/D → L = R × D = 3 × 100 = <strong>300 kmol/h</strong>."
+  },
+  {
+    "id": 16,
+    "question": "Convert 1 MMscfd (million standard cubic feet per day) to m³/day. (1 ft = 0.3048 m)",
+    "options": ["≈ 28,317 m³/day", "≈ 3,280 m³/day", "≈ 100,000 m³/day", "≈ 2,832 m³/day"],
+    "correctAnswer": 0,
+    "explanation": "1 ft³ = (0.3048)³ = 0.02832 m³. 1 MMscfd = 1,000,000 × 0.02832 ≈ <strong>28,317 m³/day</strong>."
+  },
+  {
+    "id": 17,
+    "question": "A pipe carries fluid at 3 m/s. The pipe diameter is reduced from 0.2 m to 0.1 m (Continuity equation). What is the new velocity?",
+    "options": ["12 m/s", "6 m/s", "1.5 m/s", "3 m/s"],
+    "correctAnswer": 0,
+    "explanation": "Continuity: A₁V₁ = A₂V₂. A ∝ D². V₂ = V₁ × (D₁/D₂)² = 3 × (0.2/0.1)² = 3 × 4 = <strong>12 m/s</strong>."
+  },
+  {
+    "id": 18,
+    "question": "What is the API gravity of water?",
+    "options": ["10 °API", "0 °API", "30 °API", "100 °API"],
+    "correctAnswer": 0,
+    "explanation": "By definition, water has an API gravity of exactly <strong>10 °API</strong>. Crude oils with API &gt;10 float on water (light); below 10 they sink (heavy)."
+  },
+  {
+    "id": 19,
+    "question": "A vessel has a MAWP (Maximum Allowable Working Pressure) of 20 barg. A safety relief valve must be set at or below what pressure?",
+    "options": ["20 barg", "22 barg", "18 barg", "25 barg"],
+    "correctAnswer": 0,
+    "explanation": "Per pressure vessel codes (e.g. ASME), relief valves must be set at or below the vessel's MAWP. The set pressure must not exceed <strong>20 barg</strong>."
+  },
+  {
+    "id": 20,
+    "question": "Feed to a splitter: 1,000 kg/h. Overhead draw = 40%, bottoms = 60%. What are the overhead and bottoms flows?",
+    "options": ["Overhead = 400 kg/h, Bottoms = 600 kg/h", "Overhead = 600 kg/h, Bottoms = 400 kg/h", "Overhead = 500 kg/h, Bottoms = 500 kg/h", "Overhead = 350 kg/h, Bottoms = 650 kg/h"],
+    "correctAnswer": 0,
+    "explanation": "Overhead = 1,000 × 0.40 = <strong>400 kg/h</strong>. Bottoms = 1,000 × 0.60 = <strong>600 kg/h</strong>."
+  },
+  {
+    "id": 21,
+    "question": "A two-phase separator processes 2,000 bbl/day of liquid and 5 MMscfd of gas. If the gas shrinkage factor is 0.90, what is the corrected gas volume?",
+    "options": ["4.5 MMscfd", "5 MMscfd", "5.5 MMscfd", "4.0 MMscfd"],
+    "correctAnswer": 0,
+    "explanation": "Corrected gas = 5 × 0.90 = <strong>4.5 MMscfd</strong>. Shrinkage factors account for heavier components condensing at surface conditions."
+  },
+  {
+    "id": 22,
+    "question": "An orifice plate has a meter factor of 0.98. A raw meter reading shows 200 m³/h. What is the corrected flow?",
+    "options": ["196 m³/h", "204 m³/h", "200 m³/h", "192 m³/h"],
+    "correctAnswer": 0,
+    "explanation": "Corrected flow = raw reading × meter factor = 200 × 0.98 = <strong>196 m³/h</strong>."
+  },
+  {
+    "id": 23,
+    "question": "If a pump's impeller diameter is reduced by 10% (from 300 mm to 270 mm), by what factor does the head change? (Affinity laws: H ∝ D²)",
+    "options": ["Head reduces to 81% of original", "Head reduces to 90% of original", "Head doubles", "Head is unchanged"],
+    "correctAnswer": 0,
+    "explanation": "H ∝ D². New H / Old H = (270/300)² = (0.9)² = 0.81. Head reduces to <strong>81%</strong> of the original value."
+  },
+  {
+    "id": 24,
+    "question": "A fired heater has a thermal efficiency of 82%. The required process duty is 10 MW. What is the required fuel firing rate?",
+    "options": ["≈ 12.2 MW", "≈ 8.2 MW", "≈ 10 MW", "≈ 18 MW"],
+    "correctAnswer": 0,
+    "explanation": "Firing rate = Process duty / Efficiency = 10 / 0.82 ≈ <strong>12.2 MW</strong>."
+  },
+  {
+    "id": 25,
+    "question": "A stream contains 60 mol% methane (MW=16) and 40 mol% ethane (MW=30). What is the average molecular weight?",
+    "options": ["21.6 g/mol", "23 g/mol", "18.5 g/mol", "46 g/mol"],
+    "correctAnswer": 0,
+    "explanation": "Average MW = (0.60 × 16) + (0.40 × 30) = 9.6 + 12.0 = <strong>21.6 g/mol</strong>."
+  },
+  {
+    "id": 26,
+    "question": "What does HAZOP stand for?",
+    "options": ["Hazard and Operability Study", "Hazardous Operations Process", "Hazard Analysis and Operational Planning", "High Availability Zone Operations Protocol"],
+    "correctAnswer": 0,
+    "explanation": "<strong>HAZOP = Hazard and Operability Study</strong>. It is a structured risk identification technique using guide words (MORE, LESS, NO, REVERSE, etc.) applied to process parameters."
+  },
+  {
+    "id": 27,
+    "question": "A control valve has Cv = 80 and is controlling a liquid with ΔP = 1 bar (SG = 0.85). Estimate the flow in m³/h. (Q = Cv × √(ΔP/SG))",
+    "options": ["≈ 86.8 m³/h", "≈ 80 m³/h", "≈ 68 m³/h", "≈ 94 m³/h"],
+    "correctAnswer": 0,
+    "explanation": "Q = Cv × √(ΔP/SG) = 80 × √(1/0.85) = 80 × √1.176 = 80 × 1.085 ≈ <strong>86.8 m³/h</strong>."
+  },
+  {
+    "id": 28,
+    "question": "In a LOPA (Layers of Protection Analysis), what is the term for the probability that a specific protection layer fails to respond when called upon?",
+    "options": ["PFD — Probability of Failure on Demand", "SIL — Safety Integrity Level", "MTTF — Mean Time to Failure", "FTA — Fault Tree Analysis"],
+    "correctAnswer": 0,
+    "explanation": "<strong>PFD (Probability of Failure on Demand)</strong> is the likelihood that a protection layer (e.g., a safety instrumented function) fails to act when a demand occurs. It is the core metric in LOPA."
+  },
+  {
+    "id": 29,
+    "question": "The Antoine equation is used to estimate what property of a pure component?",
+    "options": ["Vapour pressure as a function of temperature", "Viscosity as a function of pressure", "Heat capacity as a function of temperature", "Liquid density as a function of temperature"],
+    "correctAnswer": 0,
+    "explanation": "The <strong>Antoine equation</strong> — log₁₀(P*) = A − B/(C+T) — relates <strong>vapour pressure</strong> to temperature for a pure component. It is widely used in VLE calculations."
+  },
+  {
+    "id": 30,
+    "question": "A gas mixture contains 80 mol% methane at 50 bar and 300 K. Using Henry's Law concept, if the partial pressure of methane is required, what is it?",
+    "options": ["40 bar", "50 bar", "80 bar", "10 bar"],
+    "correctAnswer": 0,
+    "explanation": "Partial pressure = mole fraction × total pressure = 0.80 × 50 = <strong>40 bar</strong> (Dalton's Law for ideal gases)."
+  }
 ]

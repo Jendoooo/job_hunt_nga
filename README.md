@@ -1,16 +1,66 @@
-# React + Vite
+# JobHunt Nigeria Assessment Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Light-theme, employer-aligned assessment practice platform built with React + Vite.
 
-Currently, two official plugins are available:
+## Modules
+- TotalEnergies:
+  - Swift Analysis Aptitude (custom questions-per-subtest + time-per-subtest)
+  - Process Technical Assessment
+- NLNG:
+  - SHL Deductive Reasoning (custom question count + time limit)
+- Drills:
+  - Engineering Math Practice (custom question count + time limit)
+- AI:
+  - Custom generated quizzes
+- Dragnet:
+  - Coming Soon card on dashboard
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React + Vite
+- Supabase (Auth + attempts storage)
+- DeepSeek API (AI generation/explanation)
+- Vanilla CSS design system in `src/index.css`
 
-## React Compiler
+## Local Setup
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Add `.env`:
+   ```env
+   VITE_SUPABASE_URL=...
+   VITE_SUPABASE_ANON_KEY=...
+   VITE_DEEPSEEK_API_KEY=...
+   ```
+3. Run:
+   ```bash
+   npm run dev
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Validation
+```bash
+npm run lint
+npm run build
+```
 
-## Expanding the ESLint configuration
+## Routing
+- `/login`
+- `/`
+- `/test/aptitude`
+- `/test/technical`
+- `/test/saville-practice`
+- `/test/nlng`
+- `/test/ai-generated`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Data Files
+- `src/data/aptitude-questions.json`
+- `src/data/technical-questions.json`
+- `src/data/saville-practice-questions.json`
+- `src/data/nlng-deductive-questions.json`
+
+## Next Planned Work
+1. Expand NLNG SHL Sets 2-4 using `scripts/validate-shl.js`.
+2. Run full manual responsive/a11y QA sweep.
+3. Validate live Supabase schema/policies against current insert/query contract.
+4. Decide backend proxy strategy for AI generation/explanation requests.
+5. Optional bundle chunk optimization.

@@ -1,7 +1,26 @@
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1/chat/completions'
-const DEEPSEEK_API_KEY = 'sk-d37352371b7e41b9be0bdc3f0e1a62f4'
+const DEEPSEEK_API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY
+
+function assertApiKey() {
+    if (!DEEPSEEK_API_KEY) {
+        throw new Error('Missing DeepSeek API key. Set VITE_DEEPSEEK_API_KEY in your .env file and restart the dev server.')
+    }
+}
+
+function parseJsonContent(content) {
+    const normalized = content.trim().replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```$/i, '').trim()
+    const jsonMatch = normalized.match(/\[[\s\S]*\]/)
+
+    if (jsonMatch) {
+        return JSON.parse(jsonMatch[0])
+    }
+
+    return JSON.parse(normalized)
+}
 
 export async function explainAnswer(question, options, correctAnswer, explanation) {
+    assertApiKey()
+
     const prompt = `You are a process engineering tutor helping a graduate prepare for an assessment. 
 
 Question: ${question}
@@ -32,7 +51,8 @@ Keep it concise but thorough. Use simple language suitable for a graduate engine
         })
 
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`)
+            const body = await response.text()
+            throw new Error(`DeepSeek API error ${response.status}: ${body}`)
         }
 
         const data = await response.json()
@@ -44,6 +64,8 @@ Keep it concise but thorough. Use simple language suitable for a graduate engine
 }
 
 export async function generateQuestions(topic, count = 5, difficulty = 'medium') {
+    assertApiKey()
+
     const prompt = `Generate ${count} multiple-choice questions for a TotalEnergies Process Engineering graduate assessment on the topic: "${topic}".
 
 Difficulty: ${difficulty}
@@ -83,18 +105,14 @@ Return ONLY the JSON array, no other text.`
         })
 
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`)
+            const body = await response.text()
+            throw new Error(`DeepSeek API error ${response.status}: ${body}`)
         }
 
         const data = await response.json()
         const content = data.choices[0].message.content
 
-        // Parse JSON from response (handle possible markdown wrapping)
-        const jsonMatch = content.match(/\[[\s\S]*\]/)
-        if (jsonMatch) {
-            return JSON.parse(jsonMatch[0])
-        }
-        return JSON.parse(content)
+        return parseJsonContent(content)
     } catch (error) {
         console.error('DeepSeek API error:', error)
         throw error

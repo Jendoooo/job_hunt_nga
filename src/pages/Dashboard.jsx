@@ -1,52 +1,102 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import { supabase } from '../lib/supabase'
 import { generateQuestions } from '../services/deepseek'
 import {
-    Target, LogOut, Settings, Brain, Wrench, Sparkles,
-    ChevronRight, Clock, FileText, CheckCircle2, History
+    Target,
+    LogOut,
+    Brain,
+    Settings,
+    Calculator,
+    Lightbulb,
+    Sparkles,
+    ArrowRight,
+    Clock3,
+    Layers3,
+    History,
+    BarChart3,
+    CheckCircle2,
+    UserCircle2,
+    Construction,
 } from 'lucide-react'
 
 export default function Dashboard() {
     const { user, profile, signOut } = useAuth()
     const navigate = useNavigate()
+
     const [recentAttempts, setRecentAttempts] = useState([])
     const [showAIGen, setShowAIGen] = useState(false)
     const [aiTopic, setAiTopic] = useState('')
     const [aiCount, setAiCount] = useState(5)
     const [aiLoading, setAiLoading] = useState(false)
     const [aiQuestions, setAiQuestions] = useState(null)
+    const [aiError, setAiError] = useState('')
+    const [loadingAttempts, setLoadingAttempts] = useState(false)
+    const [attemptsError, setAttemptsError] = useState('')
+    const [signingOut, setSigningOut] = useState(false)
 
-    useEffect(() => {
-        fetchRecentAttempts()
-    }, [user])
+    const [testsTaken, setTestsTaken] = useState(0)
+    const [passRate, setPassRate] = useState(null)
 
-    async function fetchRecentAttempts() {
+    const fetchRecentAttempts = useCallback(async () => {
         if (!user) return
+        setLoadingAttempts(true)
+        setAttemptsError('')
+
         try {
             const { data, error } = await supabase
                 .from('test_attempts')
                 .select('*')
                 .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
-                .limit(10)
 
             if (error) throw error
-            setRecentAttempts(data || [])
+            const attempts = data || []
+            const passCount = attempts.filter((attempt) => (attempt.score / attempt.total_questions) >= 0.7).length
+
+            setRecentAttempts(attempts.slice(0, 8))
+            setTestsTaken(attempts.length)
+            setPassRate(attempts.length > 0 ? Math.round((passCount / attempts.length) * 100) : null)
         } catch (err) {
             console.error('Error fetching attempts:', err)
+            setAttemptsError('Could not load recent activity from Supabase.')
+        } finally {
+            setLoadingAttempts(false)
         }
-    }
+    }, [user])
+
+    useEffect(() => {
+        fetchRecentAttempts()
+
+        function handleAttemptSaved() {
+            fetchRecentAttempts()
+        }
+
+        const intervalId = setInterval(fetchRecentAttempts, 20000)
+
+        window.addEventListener('attempt-saved', handleAttemptSaved)
+        return () => {
+            clearInterval(intervalId)
+            window.removeEventListener('attempt-saved', handleAttemptSaved)
+        }
+    }, [fetchRecentAttempts])
 
     async function handleGenerateQuestions() {
         if (!aiTopic.trim()) return
+        setAiError('')
+        setAiQuestions(null)
         setAiLoading(true)
         try {
             const questions = await generateQuestions(aiTopic, aiCount)
+            if (!Array.isArray(questions) || questions.length === 0) {
+                throw new Error('AI returned an empty question set.')
+            }
             setAiQuestions(questions)
         } catch (err) {
             console.error('Failed to generate questions:', err)
+            const message = err?.message || 'Failed to generate questions.'
+            setAiError(message)
         } finally {
             setAiLoading(false)
         }
@@ -59,242 +109,341 @@ export default function Dashboard() {
         navigate('/test/ai-generated')
     }
 
-    const displayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'
+    const displayName =
+        profile?.full_name ||
+        user?.user_metadata?.full_name ||
+        user?.email?.split('@')[0] ||
+        'Candidate'
 
-    const assessments = [
+    const moduleSections = [
         {
-            id: 'technical',
-            title: 'Technical Assessment',
-            subtitle: 'TotalEnergies Process Engineering',
-            description: '155 MCQs covering VLE, Equipment Selection, P&ID, Process Safety, and Process Fundamentals',
-            icon: Settings,
-            sections: ['VLE & Phase Behavior', 'Equipment Selection', 'P&ID Interpretation', 'Process Safety', 'Process Fundamentals'],
-            color: '#3b82f6',
-            path: '/test/technical',
+            id: 'total',
+            title: 'TotalEnergies',
+            description: 'Official Saville-style process engineering track.',
+            modules: [
+                {
+                    id: 'saville-aptitude',
+                    title: 'Swift Analysis Aptitude',
+                    subtitle: 'Verbal, Numerical, Diagrammatic',
+                    description: 'Timed section-based cognitive screening.',
+                    icon: Brain,
+                    stat: '18 mins',
+                    type: 'Exam',
+                    status: 'active',
+                    path: '/test/aptitude',
+                    accent: 'blue',
+                },
+                {
+                    id: 'technical',
+                    title: 'Process Technical Assessment',
+                    subtitle: 'Domain + fundamentals',
+                    description: '155-item bank with practice and exam modes.',
+                    icon: Settings,
+                    stat: '155 Qs',
+                    type: 'Practice + Exam',
+                    status: 'active',
+                    path: '/test/technical',
+                    accent: 'slate',
+                },
+            ],
         },
         {
-            id: 'aptitude',
-            title: 'Swift Analysis Aptitude',
-            subtitle: 'Saville Consulting',
-            description: 'Timed aptitude test: Verbal (6 min), Numerical (6 min), Diagrammatic Reasoning (6 min)',
-            icon: Brain,
-            sections: ['Verbal Reasoning', 'Numerical Reasoning', 'Diagrammatic Reasoning'],
-            color: '#8b5cf6',
-            path: '/test/aptitude',
+            id: 'nlng',
+            title: 'NLNG',
+            description: 'SHL-aligned readiness for graduate trainee screening.',
+            modules: [
+                {
+                    id: 'nlng-shl',
+                    title: 'SHL Deductive Reasoning',
+                    subtitle: 'Logic and inference',
+                    description: 'Timed deductive module modeled after SHL format.',
+                    icon: Lightbulb,
+                    stat: '18 Qs',
+                    type: 'Exam',
+                    status: 'active',
+                    path: '/test/nlng',
+                    accent: 'sky',
+                },
+            ],
         },
         {
-            id: 'saville-practice',
-            title: 'Process Engineer Practice',
-            subtitle: 'Saville-Style Questions',
-            description: 'Flow conversions, error-checking, pump placement, affinity laws, mass balances, safety concepts',
-            icon: Wrench,
-            sections: ['Numerical Reasoning', 'Error Checking', 'Mechanical Reasoning', 'Technical Problems'],
-            color: '#10b981',
-            path: '/test/saville-practice',
+            id: 'drills',
+            title: 'Drills',
+            description: 'Focused speed and calculation training.',
+            modules: [
+                {
+                    id: 'saville-practice',
+                    title: 'Engineering Math Drills',
+                    subtitle: 'Conversions, balances, quick math',
+                    description: '30 process-focused drill questions with explanations.',
+                    icon: Calculator,
+                    stat: '30 Qs',
+                    type: 'Drill',
+                    status: 'active',
+                    path: '/test/saville-practice',
+                    accent: 'emerald',
+                },
+            ],
+        },
+        {
+            id: 'dragnet',
+            title: 'Dragnet',
+            description: 'Planned module for additional Nigerian hiring tracks.',
+            modules: [
+                {
+                    id: 'dragnet-coming',
+                    title: 'Dragnet Assessment Track',
+                    subtitle: 'Module roadmap in progress',
+                    description: 'Question bank and delivery flow are currently being finalized.',
+                    icon: Construction,
+                    stat: 'Planned',
+                    type: 'Coming Soon',
+                    status: 'coming-soon',
+                    accent: 'amber',
+                },
+            ],
         },
     ]
 
+    function launchModule(module) {
+        if (module.status !== 'active') return
+        if (module.path) {
+            navigate(module.path)
+        }
+    }
+
+    async function handleSignOut() {
+        setSigningOut(true)
+        try {
+            await signOut()
+            navigate('/login', { replace: true })
+        } catch (error) {
+            console.error('Failed to sign out:', error)
+        } finally {
+            setSigningOut(false)
+        }
+    }
+
     return (
-        <div className="dashboard">
-            <header className="dashboard__header">
-                <div className="flex items-center gap-2">
-                    <Target className="text-blue-600" size={24} />
-                    <h1 className="text-lg font-bold text-slate-800">JobHunt Nigeria</h1>
+        <div className="platform-page">
+            <header className="platform-header">
+                <div className="platform-header__brand">
+                    <span className="platform-header__logo">
+                        <Target size={18} />
+                    </span>
+                    <div>
+                        <h1>JobHunt Nigeria</h1>
+                        <p>Graduate Assessment Platform</p>
+                    </div>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="text-right hidden sm:block">
-                        <span className="block text-sm font-semibold text-slate-700">{displayName}</span>
-                        <span className="block text-xs text-slate-500">Candidate</span>
+
+                <div className="platform-header__actions">
+                    <div className="platform-user">
+                        <UserCircle2 size={18} />
+                        <span>{displayName}</span>
                     </div>
                     <button
-                        className="btn btn--ghost btn--sm flex items-center gap-2 text-slate-500 hover:text-red-600"
-                        onClick={signOut}
+                        className="btn btn--ghost platform-logout"
+                        onClick={handleSignOut}
+                        disabled={signingOut}
+                        aria-label="Sign out"
                     >
                         <LogOut size={16} />
-                        <span className="hidden sm:inline">Sign Out</span>
+                        {signingOut ? 'Signing out...' : 'Sign out'}
                     </button>
                 </div>
             </header>
 
-            <main className="dashboard__content">
-                <section className="dashboard__greeting">
-                    <h2 className="text-2xl font-bold text-slate-800">Welcome back, {displayName.split(' ')[0]}</h2>
-                    <p className="text-slate-500 mt-1">Select a module to continue your preparation.</p>
+            <main className="platform-shell dashboard-shell">
+                <section className="dashboard-hero">
+                    <div className="dashboard-hero__text">
+                        <p className="dashboard-eyebrow">Assessment Command Center</p>
+                        <h2>Prepare like a top candidate, not a guesser.</h2>
+                        <p>
+                            Run targeted practice, simulate timed pressure, and track your readiness across
+                            employer-specific pathways.
+                        </p>
+                    </div>
+                    <div className="dashboard-hero__metrics">
+                        <article className="metric-card">
+                            <span className="metric-card__label">Pass Rate</span>
+                            <strong className="metric-card__value">{passRate !== null ? `${passRate}%` : '--'}</strong>
+                        </article>
+                        <article className="metric-card">
+                            <span className="metric-card__label">Tests Taken</span>
+                            <strong className="metric-card__value">{testsTaken}</strong>
+                        </article>
+                    </div>
                 </section>
 
-                <section className="dashboard__section">
-                    <div className="flex items-center gap-2 mb-4 text-slate-400 font-semibold uppercase text-xs tracking-wider">
-                        <FileText size={14} />
-                        <span>Assessment Modules</span>
-                    </div>
+                <div className="dashboard-grid">
+                    <section className="dashboard-main">
+                        {moduleSections.map(section => (
+                            <div className="module-group" key={section.id}>
+                                <header className="module-group__header">
+                                    <h3>{section.title}</h3>
+                                    <p>{section.description}</p>
+                                </header>
+                                <div className="module-group__grid">
+                                    {section.modules.map(module => {
+                                        const isLive = module.status === 'active'
+                                        return (
+                                            <article
+                                                key={module.id}
+                                                className={`module-card module-card--${module.accent || 'blue'} ${!isLive ? 'module-card--disabled' : ''}`}
+                                                aria-disabled={!isLive}
+                                            >
+                                                <div className="module-card__top">
+                                                    <span className="module-card__icon">
+                                                        <module.icon size={20} />
+                                                    </span>
+                                                    <span className={`module-card__status ${isLive ? 'module-card__status--live' : 'module-card__status--soon'}`}>
+                                                        {isLive ? 'Live' : 'Coming Soon'}
+                                                    </span>
+                                                </div>
 
-                    <div className="dashboard__modules">
-                        {assessments.map(a => (
-                            <div
-                                key={a.id}
-                                className="module-card group"
-                                style={{ '--card-accent': a.color }}
-                                onClick={() => navigate(a.path)}
-                            >
-                                <div className="mb-4">
-                                    <div className="w-12 h-12 rounded-lg bg-slate-50 flex items-center justify-center text-slate-600 group-hover:text-blue-600 group-hover:bg-blue-50 transition-colors">
-                                        <a.icon size={24} color={a.color} />
-                                    </div>
-                                </div>
-                                <h4 className="text-lg font-bold text-slate-800 mb-1">{a.title}</h4>
-                                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3 block">{a.subtitle}</span>
-                                <p className="text-sm text-slate-600 mb-4 line-clamp-2">{a.description}</p>
+                                                <h4>{module.title}</h4>
+                                                <p className="module-card__subtitle">{module.subtitle}</p>
+                                                <p className="module-card__description">{module.description}</p>
 
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {a.sections.slice(0, 3).map((s, i) => (
-                                        <span key={i} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-medium border border-slate-200">
-                                            {s}
-                                        </span>
-                                    ))}
-                                    {a.sections.length > 3 && (
-                                        <span className="px-2 py-1 bg-slate-100 text-slate-500 text-xs rounded font-medium border border-slate-200">
-                                            +{a.sections.length - 3} more
-                                        </span>
-                                    )}
-                                </div>
+                                                <div className="module-card__meta">
+                                                    <span><Clock3 size={14} /> {module.stat}</span>
+                                                    <span><Layers3 size={14} /> {module.type}</span>
+                                                </div>
 
-                                <div className="w-full flex items-center justify-between text-sm font-semibold mt-auto pt-4 border-t border-slate-100 group-hover:border-blue-100 transition-colors">
-                                    <span style={{ color: a.color }}>Start Practice</span>
-                                    <ChevronRight size={16} style={{ color: a.color }} />
+                                                <button
+                                                    className={`btn btn--sm ${isLive ? 'btn--primary' : 'btn--secondary'}`}
+                                                    onClick={() => launchModule(module)}
+                                                    disabled={!isLive}
+                                                >
+                                                    {isLive ? <>Open Module <ArrowRight size={14} /></> : 'In Progress'}
+                                                </button>
+                                            </article>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         ))}
-                    </div>
-                </section>
+                    </section>
 
-                {/* AI Question Generator */}
-                <section className="dashboard__section">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2 text-slate-400 font-semibold uppercase text-xs tracking-wider">
-                            <Sparkles size={14} />
-                            <span>AI Question Generator</span>
-                        </div>
-                        <button
-                            className="text-xs font-semibold text-blue-600 hover:underline"
-                            onClick={() => setShowAIGen(!showAIGen)}
-                        >
-                            {showAIGen ? 'Hide Generator' : 'Open Generator'}
-                        </button>
-                    </div>
+                    <aside className="dashboard-side">
+                        <section className="ai-studio">
+                            <header>
+                                <Sparkles size={16} />
+                                <h4>AI Practice Studio</h4>
+                            </header>
+                            <p>Generate fresh practice questions by topic and launch an instant custom test.</p>
 
-                    {showAIGen && (
-                        <div className="ai-generator">
-                            <div className="ai-generator__form">
-                                <div className="form-group flex-1">
-                                    <label className="form-label">Topic or Concept</label>
+                            {!showAIGen ? (
+                                <button
+                                    className="btn btn--primary btn--full"
+                                    onClick={() => setShowAIGen(true)}
+                                >
+                                    Start AI Generator
+                                </button>
+                            ) : (
+                                <div className="ai-studio__form">
+                                    <label htmlFor="ai-topic">Topic</label>
                                     <input
-                                        className="form-input w-full"
+                                        id="ai-topic"
+                                        className="form-input"
                                         type="text"
                                         value={aiTopic}
-                                        onChange={e => setAiTopic(e.target.value)}
-                                        placeholder="e.g. Heat exchanger sizing, NPSH calculations..."
+                                        onChange={(e) => setAiTopic(e.target.value)}
+                                        placeholder="e.g. Distillation column design"
                                     />
+
+                                    <div className="ai-studio__count">
+                                        {[5, 10].map(n => (
+                                            <button
+                                                key={n}
+                                                className={`btn btn--sm ${aiCount === n ? 'btn--primary' : 'btn--secondary'}`}
+                                                onClick={() => setAiCount(n)}
+                                            >
+                                                {n} Questions
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="ai-studio__actions">
+                                        <button
+                                            className="btn btn--ghost"
+                                            onClick={() => {
+                                                setShowAIGen(false)
+                                                setAiError('')
+                                                setAiQuestions(null)
+                                            }}
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            className="btn btn--primary"
+                                            onClick={handleGenerateQuestions}
+                                            disabled={!aiTopic.trim() || aiLoading}
+                                        >
+                                            {aiLoading ? 'Generating...' : 'Generate'}
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="form-group w-32">
-                                    <label className="form-label">Questions</label>
-                                    <select
-                                        className="form-input w-full"
-                                        value={aiCount}
-                                        onChange={e => setAiCount(Number(e.target.value))}
-                                    >
-                                        <option value={5}>5 Qs</option>
-                                        <option value={10}>10 Qs</option>
-                                        <option value={15}>15 Qs</option>
-                                        <option value={20}>20 Qs</option>
-                                    </select>
+                            )}
+
+                            {aiError && (
+                                <div className="score-report__save-error">
+                                    {aiError}
                                 </div>
-                                <button
-                                    className="btn btn--primary h-[42px] px-6"
-                                    onClick={handleGenerateQuestions}
-                                    disabled={aiLoading || !aiTopic.trim()}
-                                >
-                                    {aiLoading ? (
-                                        <span className="flex items-center gap-2">Generating...</span>
-                                    ) : (
-                                        <span className="flex items-center gap-2">
-                                            <Sparkles size={16} /> Generate
-                                        </span>
-                                    )}
-                                </button>
-                            </div>
+                            )}
 
                             {aiQuestions && (
-                                <div className="mt-6 p-4 bg-blue-50 border border-blue-100 rounded-lg flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <CheckCircle2 className="text-blue-600" size={20} />
-                                        <div>
-                                            <p className="text-sm font-semibold text-blue-900">Analysis Complete</p>
-                                            <p className="text-xs text-blue-700">Generated {aiQuestions.length} questions on "{aiTopic}"</p>
-                                        </div>
-                                    </div>
+                                <div className="ai-studio__ready">
+                                    <span><CheckCircle2 size={15} /> Quiz ready</span>
                                     <button className="btn btn--primary btn--sm" onClick={startAITest}>
-                                        Start Quiz →
+                                        Launch
                                     </button>
                                 </div>
                             )}
-                        </div>
-                    )}
-                </section>
+                        </section>
 
-                {/* Recent Attempts */}
-                {recentAttempts.length > 0 && (
-                    <section className="dashboard__section">
-                        <div className="flex items-center gap-2 mb-4 text-slate-400 font-semibold uppercase text-xs tracking-wider">
-                            <History size={14} />
-                            <span>Recent Activity</span>
-                        </div>
-
-                        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                            <div className="hidden sm:grid grid-cols-5 gap-4 p-4 border-b border-slate-100 bg-slate-50 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                                <span className="col-span-2">Assessment</span>
-                                <span>Score</span>
-                                <span>Mode</span>
-                                <span className="text-right">Date</span>
-                            </div>
-
-                            <div className="divide-y divide-slate-100">
-                                {recentAttempts.map((attempt, i) => {
+                        <section className="activity-panel">
+                            <header>
+                                <h4><History size={16} /> Recent Activity</h4>
+                            </header>
+                            <div className="activity-list">
+                                {loadingAttempts && recentAttempts.length === 0 && (
+                                    <div className="empty-state">
+                                        <BarChart3 size={18} />
+                                        <p>Loading your recent attempts...</p>
+                                    </div>
+                                )}
+                                {attemptsError && (
+                                    <div className="score-report__save-error">
+                                        {attemptsError}
+                                    </div>
+                                )}
+                                {recentAttempts.length === 0 && !loadingAttempts && !attemptsError && (
+                                    <div className="empty-state">
+                                        <BarChart3 size={18} />
+                                        <p>No attempts yet. Start a module to build your stats.</p>
+                                    </div>
+                                )}
+                                {recentAttempts.map(attempt => {
                                     const percentage = Math.round((attempt.score / attempt.total_questions) * 100)
-                                    const isPass = percentage >= 60
-
+                                    const passed = percentage >= 70
                                     return (
-                                        <div key={i} className="p-4 sm:grid sm:grid-cols-5 sm:gap-4 sm:items-center hover:bg-slate-50 transition-colors">
-                                            <div className="col-span-2 mb-2 sm:mb-0">
-                                                <p className="text-sm font-medium text-slate-800">{attempt.module_name}</p>
-                                                <p className="text-xs text-slate-500 capitalize">{attempt.assessment_type.replace('-', ' ')}</p>
+                                        <article className="activity-item" key={attempt.id}>
+                                            <div className="activity-item__text">
+                                                <strong>{attempt.module_name || 'Practice Test'}</strong>
+                                                <span>{new Date(attempt.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
                                             </div>
-
-                                            <div className="mb-2 sm:mb-0 flex items-center gap-2">
-                                                <div className={`text-sm font-bold ${isPass ? 'text-green-600' : 'text-amber-600'}`}>
-                                                    {percentage}%
-                                                </div>
-                                                <span className="text-xs text-slate-400">({attempt.score}/{attempt.total_questions})</span>
-                                            </div>
-
-                                            <div className="mb-2 sm:mb-0">
-                                                <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${attempt.mode === 'exam'
-                                                        ? 'bg-purple-100 text-purple-700'
-                                                        : 'bg-blue-100 text-blue-700'
-                                                    }`}>
-                                                    {attempt.mode === 'exam' ? 'Timed Exam' : 'Practice'}
-                                                </span>
-                                            </div>
-
-                                            <div className="text-right text-xs text-slate-500">
-                                                {new Date(attempt.created_at).toLocaleDateString()}
-                                            </div>
-                                        </div>
+                                            <span className={`activity-item__score ${passed ? 'activity-item__score--pass' : 'activity-item__score--warn'}`}>
+                                                {percentage}%
+                                            </span>
+                                        </article>
                                     )
                                 })}
                             </div>
-                        </div>
-                    </section>
-                )}
+                        </section>
+                    </aside>
+                </div>
             </main>
         </div>
     )

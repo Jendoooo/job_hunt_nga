@@ -1,0 +1,1012 @@
+SHL Practice Test
+SET 1 – Questions 1-18
+Deductive Reasoning Assessment
+Instructions: Read each scenario carefully and select the statement that must be true (or cannot be true, or weakens/strengthens the argument as specified).
+Question 1
+Scenario:
+It takes twice as long to fly to City A as it takes to fly to City B.
+It takes longer to fly to City B than it takes to fly to City D.
+It takes the same amount of time to fly to City A and City C.
+It takes less time to fly to City E than City A.
+Which statement must be true?
+A. It takes twice as long to fly to City C as to City B.
+B. It takes the least amount of time to fly to City D.
+C. It takes half as long to fly to City D as to City A.
+D. It takes the same amount of time to fly to City C and City B.
+E. It takes half the time to fly to City D as it takes to fly to City B.
+Thinking the answer here is option A. did some simple maths from the statement → A = 2B |B > D | A = C | A > E | given these C = 2B and automatically option A s the most relevant. 
+Question 2
+Scenario:
+Ken and Logan start their shift at the same time.
+Matthew starts his shift 1 hour earlier than Nathan does.
+Nathan starts his shift at least 2 hours later than Logan.
+A shift lasts 8 hours.
+Nathan's shift ends at 6 p.m.
+Which statement must be true?
+A. Ken and Logan work from 6 a.m. until 2 p.m.
+B. Matthew and Logan start their shift at the same time.
+C. Matthew's shift starts at 8 a.m.
+D. The latest that Logan's shift can start is 8 a.m.
+E. Matthew's shift starts before Logan starts his shift.
+
+K=L | M = N - 1 | N >= L + 2 | Nathan -> 10 am to 6 pm \\ Latest Logan and Ken Shift start  is 8 am \\ // Option D 
+
+Question 3
+Scenario:
+Airline A has first class, business class, and coach seats. The following conditions apply:
+All first class seats are covered in leather.
+Some business class seats are covered in nylon.
+Some first class seats recline.
+Hayden's seat is covered in leather.
+All nylon seats have a built-in television monitor.
+Which statement must be true?
+A. Hayden has a seat that reclines.
+B. All seats covered in nylon are in business class.
+C. Some leather seats recline.
+D. Hayden is flying first class.
+E. Hayden has a seat with a television monitor. 
+All first class leather , some recline // some business class seats are nylon and all nylon seats have a tv monitor // hayden has a seat covered in leather //> Answer is option C – some leather seats recline 
+Question 4
+Scenario:
+A call centre requires that agents take breaks no longer than 15 minutes. Additionally, call centre agents are only given 3 minutes to type notes after a call. If an agent is breaking these rules, the supervisor must make a note of it.
+Call Agent Monitoring System:
+Agent - Current Actvity - time on current activity (MM:SS)
+Amy - On a call - 10:01
+Andrew - On a call - 3:25
+Beth - On break - 14:59
+Chloe - On a call - 9:23
+Benjamin - Typing call notes - 3:07
+Christopher - On break - 16:23
+David - On break - 15:58
+Daisy - On a call - 21:46
+Edward - On a call - 2:01
+Emily - Typing call notes - 4:43
+Frank - Typing call notes - 2:45
+Fiona - On a call - 3:09
+Gemma - Typing call notes - 14:23
+George - On break - 15:58
+The supervisor will need to write notes on how many people?
+A. 3
+B. 4
+C. 6
+D. 8
+E. 12
+We can only rport on notes taking exceeding 3 mins and breaks exceeding the 15 mins so we Report the following -> Benjamin, Christopher, David, Emily , Gemma , george, -. 6 
+Question 5
+Scenario:
+Each airline has from 4 to 10 flights to City A every day.
+Airline B has the fewest possible flights to City A.
+Airline C and Airline D have the same number of flights to City A.
+Airline D has twice as many flights to City A as Airline E.
+Orange Airlines has fewer flights to City A than Airline C.
+Which statement must be true?
+A. Airline B has four flights to City A.
+B. Airline E has more flights to City A than Airline B.
+C. Orange Airlines has more flights to City A than Airline B.
+D. Airline C has fewer flights to City A than Airline E.
+E. Orange Airlines has more flights to City A than Airline D.
+C =D \\ D = 2E / C > Orange Airline / D > Orange Airline // B is the lowest and by extension takes the lowest possible value of 4 . 
+Question 6
+
+
+Scenario:
+Retail Promotions Inquiry for London-based Customers
+Retailer Discount Starting Date: June 1
+Retailer Cash-Back Bonus Starting Date: June 1
+Today's Date: July 21
+Terms for Retailer Discount:
+Length of program: 60 days | Minimum required purchase: £200.00 | Retail discount rate: 5%
+Terms for Retailer Cash-Back Bonus:
+Length of program: 60 days | Minimum required purchase: £100.00 | Retail discount rate: 2.5%
+Past Customer Transactions:
+May 12: £310.12 | June 9: £278.45 | June 22: £55.75
+July 3: £98.15 | July 10: £115.35 | July 20: £34.25
+How many customer transactions are eligible for the Retailer Cash-Back Bonus?
+A. 0
+B. 1
+C. 2
+D. 4
+E. 5
+Elgible dates , 60 days before july 21 is from may 21 , so we have five days then with minimum purchase of 100 pounds leaves 2 out of 5. So the answer is 2. 
+Question 7
+Scenario:
+Five employees, Nathan, Nicole, Oscar, Olivia, and Ashley, arrive at work in the morning at five different times: 8:00 a.m., 8:05 a.m., 8:10 a.m., 8:15 a.m., and 8:20 a.m. The following conditions apply:
+Ashley arrives before Oscar.
+Olivia arrives before Nicole.
+Which statement cannot be true?
+A. Nathan is the last to arrive.
+B. Nicole gets to work at 8:15 a.m.
+C. Oscar arrives at 8:00 a.m.
+D. Olivia and Ashley both arrive after 8:00 a.m.
+E. Ashley arrives after Nathan.
+Ashley before oscar  , olivia before nicole . → Answer isoption C because ashley arrives before oscar and by extension oscar can not be the first to arrive at 8am. 
+Question 8
+Scenario:
+Forklifts are used earlier in the week than tractors.
+Isabel is the only operator of large vehicles on Tuesdays.
+Isabel never operates tractors.
+Cranes are used later in the week than tractors.
+Sometimes Isabel operates bucket trucks.
+Which statement must be true?
+A. Forklifts are used earlier in the week than cranes.
+B. Cranes are used on Wednesdays.
+C. Bucket trucks and forklifts are used on the same day.
+D. Cranes are used on Thursday.
+E. Sometimes bucket trucks are used earlier in the week than tractors.
+Option A → forklifts are used earlier in the week than cranes. 
+Question 9
+Scenario:
+Customer Interaction Information
+Name: Jessica Brown | Account Number: 1225637
+Interaction Dates and Codes:
+January 20: 15, 07, 82
+March 2: 10, 20, 23
+March 17: 15, 05, 17, 93
+May 1: 15, 07, 05, 76, 93
+May 22: 10, 20, 45
+June 19: 15, 17, 82
+July 21: 15, 07, 12
+Interaction Codes:
+05: late payment dispute | 07: account balance inquiry | 10: send late payment notice
+12: account closing | 15: customer initiated call | 17: customer will make payment in 5 days
+20: account past due courtesy call | 23: unanswered telephone call
+45: telephone number does not exist | 76: customer change of address
+82: sales call | 93: customer requested supervisor
+What is different about the January 20 and May 1 memos?
+A. One involved a late payment dispute and the other a send late payment notice.
+B. One involved a sales call and the other a late payment dispute.
+C. One involved a late payment dispute and the other an unanswered telephone call.
+D. One involved a sales call and the other an unanswered telephone call.
+E. One was a customer initiated call and the other an account overdue courtesy call.
+
+Jan 20 - 15,07 82 - customer intiated call to inquire about account balance followed by a sales call .
+May 1 - 15 07 05 76 93 - customer initiated call to inqrie about account balance , also a late payment dispute , a change of address request as well as requesting for a supervisor. .. Option B is the answer since a major difference is the late payment dispute .
+Question 10
+Scenario:
+Employee Reward Program
+A company offers a reward system in which prizes can be redeemed from the reward points that employees receive for good performance.
+Prize Points Needed:
+Headphones: 650 | Radio: 2,000 | Telephone: 3,500 | DVD Player: 6,000
+Camera: 9,500 | Webcam: 11,000 | GPS Tracking System: 14,000
+MP3 Player: 19,000 | Video Camera: 24,000 | Television: 36,000
+If an employee has 24,000 points, which statement is true?
+A. The employee can get the radio, camera, and GPS tracking system.
+B. The employee can get the video camera and the headphones.
+C. The employee can get the telephone and MP3 player.
+D. The employee can get the MP3 player, DVD player, and the headphones.
+E. The employee can get the television.
+Option C -telephone and MP3 player sums up to 22,500
+Question 11
+Scenario:
+Preventive Care Initiatives - Eligibility Form for U.S.-based Provider
+Prescription Number: 0654854-0654 | Medication: X
+Doctor's Name: Javier Lee | Patient's Name: Jessica Brown
+Dosage per Tablet: 600 milligrams | Tablets per Bottle: 24
+Refills Remaining (Not including this bottle): 2
+Directions: Take one tablet by mouth 3 to 4 times daily as needed for pain.
+Warnings:
+May cause drowsiness or dizziness.
+Do not take with aspirin or products containing aspirin.
+Take with plenty of liquids.
+May be taken with meals.
+CONSULT YOUR PHYSICIAN IF YOU EXPERIENCE CONTINUED PAIN OR DISCOMFORT
+If Jessica refills her prescription as many times as it is allowed, how many tablets will she have received altogether?
+A. 24 tablets
+B. 36 tablets
+C. 72 tablets
+D. 80 tablets
+E. 600 tablets
+24 times 3 is 72 
+Question 12
+Scenario:
+Jessica returned the calls of 16 clients this morning, and 10 more this afternoon.
+Therefore, a total of exactly 26 clients' calls were returned today.
+Which statement, if true, weakens the argument?
+A. More client calls will be returned tomorrow.
+B. More client calls are always returned in the morning than in the afternoon.
+C. Jessica returns more client calls than others.
+D. A maximum of 26 client calls can be returned per day.
+E. Two other people returned client calls today.
+The premise here is Jessica rerutned all the calls that were made today , so if some other people made calls , then it would weaken the argument . so Option E is the answer . 
+Question 13
+Scenario:
+Manager Reward Program
+A company offers a variety of service plans to its customers. The company is currently promoting the Premium service plan, and managers are to encourage their team members to sell Premium service plans. At the end of each week, managers earn points based on the service plans their team members sell.
+Manager Points by Service Plan:
+Basic: 2 | Expanded: 5 | Expanded Plus: 7.5 | Premium: 20
+At the end of the week, a team sells 5 Basic plans, 12 Expanded plans, 6 Expanded Plus plans, and 20 Premium plans.
+How many points did the manager earn?
+A. 450
+B. 500
+C. 515
+D. 565
+E. 600
+5 x 2 + 12 x 5 + 7.5 x 6  + 20 x 20 → 10 + 60 + 45 + 400 → 515
+Question 14
+Scenario:
+Logan is the information technology manager.
+Matthew is the accounting manager.
+Kayla and Lauren report to Matthew.
+Logan is a member of the safety team.
+Lauren is a member of the safety team.
+Kayla is certified in CPR and first aid.
+No two members of the safety team work in the same department.
+Safety team members must be certified in both CPR and first aid.
+Which statement must be true?
+A. Lauren reports to Kayla.
+B. Logan is the safety team leader.
+C. Kayla works in Logan's department.
+D. Lauren is certified in both CPR and first aid.
+E. Kayla works in the information technology department.
+
+If lauren is a memeber of the safety team then she is ceritified in both CPR and first aid. 
+Question 15
+Scenario:
+In a hospital the following conditions apply:
+Refrigerators are located in the east wing.
+Cabinets are located throughout the building.
+Vials of blood in storage are refrigerated.
+Prescription medication must be locked in a cabinet.
+Which statement must be true?
+A. Refrigerators are located in most areas of the building.
+B. All stored vials of blood are kept in the east wing.
+C. Some prescription medication is kept in the east wing.
+D. Prescription medication is located throughout the building.
+E. All cabinets are kept locked.
+If refrigerators are in the eat win and vials of blood in storage are refrigraed then the answer is all soted vias o f blod are kept in the east wing. So option B 
+Question 16
+Scenario:
+The A305 model phone has the speaker feature only.
+The B205 model phone has the speaker and voicemail features.
+The C105 model phone has the speaker and voicemail features, and includes a headset.
+Isabel has the model with the voicemail feature but no headset.
+The receptionist has a C105 model phone.
+Jessica's phone has the speaker feature only.
+Which statement must be true?
+A. Jessica is the receptionist.
+B. Isabel has a B205 model phone.
+C. Isabel has an A305 model phone.
+D. The A305 is more expensive than the B205.
+E. Isabel has a C105 model phone.
+Option B - Isabel has a B205 model phone as it hs the voicemail feature too.
+Question 17
+Scenario:
+Electronic Database Information System
+Whenever contact is made with a customer, always begin with the customer general account information screen.
+Always verify the customer's name, address, and telephone number. Any verification or changes made in the account information screen or any inquiries in the payment information screen must be coded and entered into the customer contact screen.
+The code used to access the customer general account screen is 110.
+The code used to access the customer contact screen is 115.
+The code used to access the customer payment screen is 120.
+Processing Codes:
+Account Information Screen:
+210: Verify account name | 215: Verify account address | 220: Verify account telephone number
+310: Change of telephone number | 315: Change of address
+Payment Information Screen:
+410: Prior late payments | 415: Payment due in five days notice | 420: Payment overdue | 510: Account balance inquiry | 515: Account status
+What do the following codes mean: 110, 310, 120, 415?
+A. Entered account screen, changed telephone number, entered payment screen, payment due in five days' notice
+B. Entered payment screen, payment due in five days' notice, entered telephone number
+C. Entered change of address, entered payment screen, prior late payments
+D. Entered account screen, changed telephone number, entered contact screen, payment due in five days' notice
+E. Entered account screen, changed address, entered payment screen, payment due in five days' notice
+The answer is Option A 
+Question 18
+Scenario:
+Nathan and all of his co-workers refuel airplanes.
+Oscar works with Nathan.
+Maria does not refuel airplanes.
+Everyone who refuels airplanes also de-ices airplanes.
+Which statement must be true?
+A. Nathan does not de-ice airplanes.
+B. Some of Oscar's co-workers do not de-ice airplanes.
+C. Oscar does not refuel airplanes.
+D. Maria de-ices airplanes.
+E. Maria does not work with Nathan.
+
+Maria doesn’t work with Nathan as she wold also refuel and deice airplanes if she were nathan’s coworker so option  E . 
+— End of Set 1 —
+
+
+
+
+
+
+QUESTION SET TWO 
+SHL Practice Test - Question Set 2
+Question 1
+
+
+Scenario: Client Response Priority Guide for a London-based Company For a London-based company, the priority level of how to respond to a customer issue is based on the client's yearly revenue and contract length.
+Priority Table: | Yearly Revenue | Contract Length | Priority Level | | :--- | :--- | :--- | | Less than £50,000 | Less than 1 year | 6 | | Less than £50,000 | 1 year or longer | 5 | | £50,001–£100,000 | Less than 1 year | 5 | | £50,001–£100,000 | 1 year or longer | 4 | | £100,001–£250,000 | Less than 1 year | 4 | | £100,001–£250,000 | 1 year or longer | 3 | | £250,001–£500,000 | Less than 1 year | 3 | | £250,001–£500,000 | 1 year or longer | 2 | | Greater than £500,000 | Less than 1 year | 2 | | Greater than £500,000 | 1 year or longer | 1 |
+Question: Which is a priority level 4 client? 
+A client that generates £252,000 in yearly revenue with an 18 month contract.
+A client that generates £52,000 in yearly revenue with a 6 month contract.
+A client that generates £225,000 in yearly revenue with a 2 year contract.
+A client that generates £167,000 in yearly revenue with a 9 month contract.
+A client that generates £1 million in yearly revenue with a 3 month contract.
+
+Question 2
+Scenario: Every afternoon, a company has four 1-hour meetings in its conference room beginning at 1 pm. The schedule is the same each day. The following conditions apply:
+The sales team does not meet first.
+The engineering meeting starts later than the sales meeting.
+The human resources meeting starts later than the production meeting.
+Question: Which statement must be true? 
+Production meets before engineering.
+Human resources meets last.
+Human resources meets at 3 p.m.
+Engineering meets at 2 p.m.
+Sales meets before human resources.
+1-2-3-4 → Sales - 2,3→ engr 3,4, prod before hr –. Answer is production meets before engineering because in all cases , engr could either mee by 3 or 4. Eitherway , it doesn’t give room for two meetings after it , and since hr starts after production , it will definetly need to start before engineering meeting since thee is no other room for it . so Option A . 
+
+Question 3
+Scenario:
+Lauren has more meetings than Logan.
+Logan has more meetings than Matthew.
+Maria has more meetings than Matthew.
+Question: How does the number of meetings Lauren has compare to the number of meetings Maria has? 
+Lauren has more meetings than Maria.
+Maria has more meetings than Lauren.
+Lauren and Maria have the same number of meetings.
+Lauren has twice as many meetings as Maria.
+The answer cannot be determined from the information given.
+Lauren > Logan > Matthew \\ Maria >> Matthew  Option E - Answer cannot be determined from the info given. 
+
+Question 4
+Scenario:
+Company A is a top customer.
+Company B purchased 100 units.
+Company C received a five percent discount with a 50-unit purchase.
+Only top customers and customers that purchase at least 75 units receive a five percent discount.
+Question: Which statement must be true? 
+Company B received a five percent discount.
+Top customers always purchase at least 75 units.
+A customer must be a top customer to receive a five percent discount.
+Company A must purchase at least 75 units to receive a five percent discount.
+Company A always purchases at least 75 units.
+
+
+Company B received a 5 percent discount 
+Question 5
+Scenario: Customer Interaction Information Table: | Name: Jessica Brown | Account Number: 1225637 | | :--- | :--- | | Date | Interaction | | January 20 | 15, 07, 82 | | March 2 | 10, 20, 23 | | March 17 | 15, 05, 17, 93 | | May 1 | 15, 07, 05, 76, 93 | | May 22 | 10, 20, 45 | | June 19 | 15, 17, 82 | | July 21 | 15, 07, 12 |
+Interaction Codes:
+05: late payment dispute
+10: send late payment notice
+15: customer initiated call
+82: sales call
+(See previous full table for all codes)
+Question: What is different about the January 20 and May 1 memos? 
+One involved a late payment dispute and the other a send late payment notice.
+One involved a sales call and the other a late payment dispute.
+One involved a late payment dispute and the other an unanswered telephone call.
+One involved a sales call and the other an unanswered telephone call.
+One was a customer initiated call and the other an account overdue courtesy call.
+Option B - One involved a sales call and the other a late payment dispute. 
+Question 6
+Scenario: Jessica returned the calls of 16 clients this morning, and 10 more this afternoon. Therefore, a total of exactly 26 clients' calls were returned today.
+Question: Which statement, if true, weakens the argument? 
+More client calls will be returned tomorrow.
+More client calls are always returned in the morning than in the afternoon.
+Jessica returns more client calls than others.
+A maximum of 26 client calls can be returned per day.
+Two other people returned client calls today.
+Option EE - two other people returned cient calls today . 
+Question 7
+Scenario: In the human resources department, all employees share an office with one other person.
+Everyone in the human resources department interviews applicants.
+The person with whom Andrew shares an office writes computer programs.
+Andrew works in the human resources department.
+Brianna does not interview applicants.
+Question: Which statement must be true? 
+Brianna shares an office with Andrew.
+Brianna writes computer programs.
+Andrew interviews applicants.
+Brianna shares an office with someone who interviews applicants.
+Brianna and Andrew work in the same department.
+Option C – Andrew interviews applicantss 
+Question 8
+Scenario:
+Hannah and Javier live in the same city.
+Javier works in the fabrication department at Company A.
+Everyone who works in the fabrication department at Company A lives in City B.
+Isabel lives in City C.
+Question: Which statement must be true? 
+Isabel works in the fabrication department at Company A.
+Hannah works in the fabrication department of Company A.
+Isabel works in City B.
+Hannah lives in City B.
+Javier lives in City C.
+
+Question 9
+Scenario:
+Lauren has 5 years of seniority over Logan.
+Lauren has been with the company twice as long as Matthew.
+Lauren had her 10-year service anniversary 4 years ago.
+Maria started with the company 2 years after Lauren.
+Question: From most to least, who has seniority? 
+Lauren, Logan, Matthew, Maria
+Lauren, Logan, Maria, Matthew
+Lauren, Maria, Matthew, Logan
+Lauren, Maria, Logan, Matthew
+Matthew, Maria, Lauren, Logan
+
+Question 10
+
+Scenario: A group of five students meets once a week to study. Next semester each student will be enrolled for the following courses. (Note: Specific table data is inferred from options as it is not fully visible in snippet, but logical deduction is required based on options).
+Nathan is taking Algebra, English, Art, and Chemistry.
+Olivia is taking English, Biology, Chemistry, and Tennis.
+Ashley is taking Orchestra, Weightlifting, Physics, Spanish, and English.
+Oscar is taking Algebra, Weightlifting, Geometry, and English.
+Andrew is taking English, Biology, Tennis, History, and Geometry.
+Question: Which statement must be true? 
+No one shares all of their courses with at least one other person.
+Three students are taking Geometry.
+Nathan and Oscar share only one course.
+No one is taking French.
+Oscar is the only one taking Weightlifting.
+
+Question 11
+Scenario:
+Plant A is in City C and Plant B is in City D.
+Ashley works at Plant A and Plant B.
+Brandon only works at Plant B.
+Brandon works some night shifts.
+Ashley worked last Wednesday.
+Question: Which statement must be true? 
+Brandon worked in City C last week.
+Some employees at Plant A work night shifts.
+Ashley works in City C but Brandon does not.
+Ashley does not work night shifts.
+Ashley worked in City C last Wednesday.
+
+Question 12
+Scenario: A company offers a variety of service plans. The table displays points associated with each plan. Manager Reward Program:
+Basic: 2 points
+Expanded: 5 points
+Expanded Plus: 7.5 points
+Premium: 20 points
+At the end of the week, a team sells 5 Basic plans, 12 Expanded plans, 6 Expanded Plus plans, and 20 Premium plans.
+Question: How many points did the manager earn? 
+450
+500
+515
+565
+600
+
+Question 13
+Scenario:
+All cars are blue.
+Some toys are cars.
+Question: Which statement must be true? 
+Some toys are blue.
+Some cars are not toys.
+All blue things are cars.
+Some blue things are not cars.
+All cars are toys.
+
+Question 14
+Scenario:
+David is issued a Brand A computer.
+Erin is issued a Brand B computer.
+All the laptop computers issued are Brand A computers.
+Some of the desktop computers issued are Brand B computers.
+All of the Brand B computers issued are desktops.
+Each manager is issued a laptop computer.
+Question: Which statement must be true? 
+All desktops are Brand A computers.
+David received a desktop computer.
+Erin received a laptop computer.
+Each manager received a Brand A computer.
+Erin and David are managers.
+
+Question 15
+Scenario: Retail Promotions Inquiry for London-based Customers
+Retailer Discount Starting Date: June 1
+Retailer Cash-Back Bonus Starting Date: June 1
+Table Terms: | | Terms for Retailer Discount | Terms for Retailer Cash-Back Bonus | | :--- | :--- | :--- | | Minimum required purchase | £200.00 | £100.00 | | Retail discount rate | 5% | 2.5% |
+Question: What is the minimum required purchase for a Retailer Discount? 
+100
+102.5
+200
+210
+300
+
+Question 16
+Scenario: A manager needs to travel for business to cities G, H, I, J, K, L, M, N, and O. The following conditions apply:
+K and L cannot be visited in one trip.
+J, M, and O cannot be visited in one trip.
+M and N cannot be visited in one trip.
+G and M cannot be visited in one trip.
+Question: Which group of cities can all be visited in one trip? 
+G, J, K, M
+G, H, I, K
+H, J, K, L
+G, L, M, O
+I, J, K, L
+
+Question 17
+Scenario:
+Logan is the information technology manager.
+Matthew is the accounting manager.
+Kayla and Lauren report to Matthew.
+Logan is a member of the safety team.
+Lauren is a member of the safety team.
+Kayla is certified in CPR and first aid.
+No two members of the safety team work in the same department.
+Safety team members must be certified in both CPR and first aid.
+Question: Which statement must be true? 
+Lauren reports to Kayla.
+Logan is the safety team leader.
+Kayla works in Logan's department.
+Lauren is certified in both CPR and first aid.
+Kayla works in the information technology department.
+
+Question 18
+Scenario:
+Oscar packed exactly four cartons.
+Olivia packed fewer cartons than Andrew did.
+Andrew packed half as many cartons as Brandon did.
+Andrew packed more cartons than Oscar.
+Question: Which statement must be true? 
+Brandon packed fewer cartons than Olivia.
+Brandon packed more cartons than Oscar.
+Andrew packed exactly five cartons.
+Olivia packed exactly five cartons.
+Brandon packed exactly nine cartons.
+QUESTION SET THREE 
+SHL Practice Test - Question Set 3 (Raw Extraction)
+Question 1
+Scenario: Every afternoon, a company has four 1-hour meetings in its conference room beginning at 1 pm. The schedule is the same each day. The following conditions apply:
+The sales team does not meet first.
+The engineering meeting starts later than the sales meeting.
+The human resources meeting starts later than the production meeting.
+Question: Which statement must be true?
+Production meets before engineering. 
+Human resources meets last. 
+Human resources meets at 3 p.m. 
+Engineering meets at 2 p.m. 
+Sales meets before human resources. 
+
+Question 2
+Scenario: Ken and Logan start their shift at the same time. Matthew starts his shift 1 hour earlier than Nathan does. Nathan starts his shift at least 2 hours later than Logan. A shift lasts 8 hours. Nathan's shift ends at 6 pm.
+Question: Which statement must be true?
+Ken and Logan work from 6 a.m. until 2 p.m. 
+Matthew and Logan start their shift at the same time. 
+Matthew's shift starts at 8 a.m. 
+The latest that Logan's shift can start is 8 a.m. 
+Matthew's shift starts before Logan starts his shift. 
+
+Question 3
+Scenario: Six people, Olivia, Ashley, Andrew, Brianna, Brandon, and Cecilia, compete in a typing competition. The following conditions apply...
+Question: If Olivia and Ashley finish first and fifth, respectively, which statement must be true?
+Andrew finishes second. 
+Cecilia does not finish first or last. 
+Andrew does not finish immediately behind either Olivia or Ashley. 
+Andrew finishes immediately ahead of Brianna. 
+Cecilia finishes third. 
+Brianna finishes third. 
+Brandon finishes third. 
+Brandon finishes sixth. 
+
+Question 4
+Scenario: Customer relationship management (CRM) is a process that a company uses to track and organize its current and prospective customers. Special software is used for this purpose. Information about interactions with customers can be entered, stored, and accessed by employees in different company departments. CRM initiatives often fail because implementation was limited to software installation, without providing the context and support for employees to take advantage of the information systems. Thus, CRM providers who provide training as an integral piece of the implementation often find that over time, they dominate the market, having run their competitors out of business. 
+Question: Which statement, if true, strengthens the argument?
+CRM training programs vary widely in their duration and quality. 
+Many CRM providers have successfully partnered with training firms who deliver the training for them while they focus on what they do best, which is systems implementation. 
+More and more different types of training materials, including those related to CRM software, can be found online for free. 
+Most employees need to be sold on the benefits of using CRM systems before they really become avid users of these systems. 
+Almost all past CRM failures in the marketplace were due to lack of solid training programs or poor customer support processes following the implementation of their systems. 
+
+Question 5
+Scenario: Working for a U.S.-based company, Hayden successfully completed a sale worth $100,000 this morning, and Ian successfully completed a sale worth $25,000 this afternoon. Therefore, the two brought in exactly $125,000 worth of sales today. 
+Question: What is the assumption of the argument?
+Neither Hayden nor Ian made any other sales today. 
+The sales team consists of more than just Ian and Hayden. 
+Hayden is a better salesperson than Ian. 
+Sales to clients in the morning are worth more than those in the afternoon. 
+Ian is a better salesperson than Hayden. 
+
+Question 6
+Scenario:
+Shop A is cleaned every 7 days. 
+Shop B is cleaned more frequently than Shop A. 
+Shop C is cleaned every time Shop B is cleaned. 
+Shop D is cleaned less frequently than Shop B. 
+Shop L is cleaned less frequently than Shop D. 
+Question: Which statement cannot be true?
+Shop A is cleaned more frequently than Shop L. 
+Shop B is cleaned every 8 days. 
+Shop C is cleaned every 4 days. 
+Shop D is cleaned less frequently than is Shop A. 
+Shop B is cleaned more frequently than Shop L. 
+
+Question 7
+Scenario:
+Cecilia spends 5 hours a week performing maintenance duties. 
+Last week, Daniela spent 6 hours performing maintenance duties. 
+Brandon spends less time every week performing maintenance duties than Cecilia does. 
+Last week, Carlos spent more than 3 hours performing maintenance duties. 
+Cecilia spends more time every week performing maintenance duties than Carlos does. 
+Question: Which statement must be true?
+Daniela spends more time performing maintenance duties than Cecilia every week. 
+Carlos spends less than 5 hours performing maintenance duties every week. 
+Last week, Brandon spent more time performing maintenance duties than Daniela. 
+Last week, Brandon spent less than 4 hours performing maintenance duties. 
+Last week, Carlos spent more time performing maintenance duties than Brandon. 
+
+Question 8
+Scenario:
+At Airport A, each hangar contains two airplanes. 
+Every airplane at Airport A flies to City B. 
+Airplane 45 shares a hangar with an airplane that flies to City C. 
+Airplane 45 flies in and out of Airport A. 
+Airplane 67 does not fly to City B. 
+Question: Which statement must be true?
+Airplane 67 shares a hangar with an airplane that flies to City B. 
+Airplane 67 is in the same hangar as Airplane 45. 
+Airplane 67 shares a hangar with an airplane that flies to City C. 
+Airplane 45 and Airplane 67 are kept in the same airport. 
+Airplane 67 does not have a hangar at Airport A. 
+
+Question 9
+Scenario: In order to curtail the metropolis' traffic congestion, the City Council has suggested imposing a fee on all passenger cars coming into the city from outside the city limits. The rationale is that such a surcharge will encourage many people to begin using mass transit. 
+Question: Which statement, if true, indicates a serious flaw in the suggestion?
+The fee on passenger vehicles will exceed the cost of round-trip mass transit fare. 
+The percent of private vehicles that comprise the traffic congestion is just under 40 percent. 
+It is projected that gas prices are on the rise, which will increase the cost of driving private vehicles. 
+The mass transit system is not easily accessible outside of the city, so most outside commuters cannot use it. 
+Current parking fees are high, making the cost of using a private vehicle more expensive than relying on public transportation. 
+
+Question 10
+Scenario: A company's marketing department has done an analysis of factors contributing to customer loyalty. The table below displays the survey results for two separate surveys for what factors contribute to customers' repeat business and what areas customers believe need improvement. 
+Marketing Survey Table: | Factor | Percent Indicating Factor as Main Reason for Repeat Business | Percent Indicating Factor as Area in Most Need of Improvement | | :--- | :--- | :--- | | Quality | 10% | 35% | | Price | 30% | 20% | | Service | 35% | 20% | | Technology | 15% | 20% | | Other | 10% | 5% | 
+(Note: 220 clients responded to each survey.) 
+Question: How many clients reported both that price was the main factor influencing repeat business and that technology was the area most in need of improvement?
+99 
+110 
+120 
+121 
+132 
+
+Question 11
+Scenario: It takes twice as long to fly to City A as it takes to fly to City B. It takes longer to fly to City B than it takes to fly to City D. It takes the same amount of time to fly to City A and City C. It takes less time to fly to City E than City A. 
+Question: Which statement must be true?
+It takes less time to fly to City E than to fly to City C. 
+It takes the most amount of time to fly to City E. 
+It takes the same amount of time to fly to City E and City B. 
+It takes half as long to fly to City D as to City A. 
+It takes the same amount of time to fly to City C and City B. 
+
+Question 12
+Scenario: Cargo weighing over 1000 kilograms is shipped on type A cargo planes. Cargo weighing 500 to 999 kilograms is shipped on type B cargo planes. Cargo weighing 500 to 999 kilograms often contains airplane engine parts. Crate C weighs 1175 kilograms. Type A cargo planes are only flown on Mondays. 
+Question: Which statement must be true?
+Airplane engine parts must be shipped on type A cargo planes. 
+Crate C should be shipped on a type A cargo plane. 
+Crate C cannot be shipped on Monday. 
+Crate C contains airplane engine parts. 
+All crates containing airplane engine parts weigh over 500 kilograms. 
+
+Question 13
+Scenario: Preventive Care Initiatives - Eligibility Form for U.S.-based Provider
+Prescription Number: 0654854-0654
+Medication: X
+Doctor's Name: Javier Lee
+Patient's Name: Jessica Brown
+Dosage per Tablet: 600 milligrams
+Refills Remaining (Not including this bottle): 2
+Tablets per Bottle: 24
+Directions: Take one tablet by mouth 3 to 4 times daily as needed for pain. 
+Question: If Jessica refills her prescription as many times as it is allowed, how many tablets will she have received altogether?
+24 tablets 
+36 tablets 
+72 tablets 
+80 tablets 
+600 tablets 
+
+Question 14
+Scenario:
+Plant A is in City C and Plant B is in City D.
+Ashley works at Plant A and Plant B.
+Brandon only works at Plant B.
+Brandon works some night shifts.
+Ashley worked last Wednesday. 
+Question: Which statement must be true?
+There are no night shifts at Plant A. 
+Some employees at Plant B work night shifts. 
+Ashley does not work night shifts. 
+Ashley worked in City C last Wednesday. 
+Ashley works in City D but Brandon does not. 
+
+Question 15
+Scenario: Office Calendar Dates that are underlined are paid holidays. Dates that are bold are paydays. Saturdays and Sundays are weekend days. All days except paid holidays and weekend days are workdays. Calendar visual indicates: 1st is Sunday. Bold dates (Paydays): 11, 25. Underlined dates (Holidays): 12, 19... 
+Question: What is the date of the first Friday after the first payday of the month?
+2 
+9 
+16 
+23 
+30 
+
+Question 16
+Scenario:
+Ethan is bilingual.
+Felicia is a human resources manager.
+Ethan works in Felicia's department.
+Gina works in the sales department.
+Five of the sales associates are bilingual. 
+Question: Which statement must be true?
+Gina is bilingual. 
+Ethan speaks Spanish. 
+Gina was hired before Ethan. 
+Ethan works in the human resource department. 
+Felicia is bilingual. 
+
+Question 17
+Scenario:
+David is issued a Brand A computer.
+Erin is issued a Brand B computer.
+All the laptop computers issued are Brand A computers.
+Some of the desktop computers issued are Brand B computers.
+All of the Brand B computers issued are desktops.
+Each manager is issued a laptop computer. 
+Question: Which statement must be true?
+All desktops are Brand A computers. 
+David received a desktop computer. 
+Erin received a laptop computer. 
+Each manager received a Brand A computer. 
+Erin and David are managers. 
+
+Question 18
+Scenario: Electronic Database Information System Always verify the customer's name, address, and telephone number. Any verification or changes made in the account information screen or any inquiries in the payment information screen must be coded and entered into the customer contact screen. 
+Account Screen: 110 | Contact Screen: 115 | Payment Screen: 120 
+Processing Codes Table: | Account Information Screen | Payment Information Screen | | :--- | :--- | | 210: Verify account name | 410: Prior late payments | | 215: Verify account address | 415: Payment due in five days notice | | 220: Verify account telephone number | 420: Payment overdue | | 310: Change of telephone number | 510: Account balance inquiry | | 315: Change of address | 515: Account status |
+Question: What is the correct sequence of codes for inquiries about account balance and account status?
+210, 215, 220, 510, 515 
+220, 510, 515 
+215, 220, 120, 420, 510 
+215, 220, 510, 515 
+210, 215, 220, 420, 515 
+
+QUESTION SET FOUR 
+
+Question 1 (CRM Argument)
+Scenario:
+Customer relationship management (CRM) is a process that a company uses to track and organize its current and prospective customers. Special software is used for this purpose. Information about interactions with customers can be entered, stored, and accessed by employees in different company departments. CRM initiatives often fail because implementation was limited to software installation, without providing the context and support for employees to take advantage of the information systems. Thus, CRM providers who provide training as an integral piece of the implementation should find that over time, they dominate the market, having run their competitors out of business.
+Question: Which statement, if true, strengthens the argument? 
+CRM training programs vary widely in their duration and quality.
+Many CRM providers have successfully partnered with training firms who deliver the training for them while they focus on what they do best, which is systems implementation.
+More and more different types of training materials, including those related to CRM software, can be found online for free.
+Most employees need to be sold on the benefits of using CRM systems before they really become avid users of these systems.
+Almost all past CRM failures in the marketplace were due to lack of solid training programs or poor customer support processes following the implementation of their systems. 
+
+Question 2 (Gift Shop Log)
+Scenario:
+A gift shop cashier at a European tourist attraction must make a note of certain types of sales in a special log book. The following purchases must be recorded in the log book: 3
+All purchases over €200.
+All purchases over €100, paid in cash.
+All purchases paid with traveler's checks.
+Question: Which purchase should be recorded? 
+€35, paid with traveler's check.
+€45, paid with debit card.
+€100, paid in cash.
+€190, paid with credit card.
+€12, paid with a credit card.
+
+Question 3 (Arrival Times)
+Scenario:
+Five employees, Nathan, Nicole, Oscar, Olivia, and Ashley, arrive at work in the morning at five different times: 8:00 a.m., 8:05 a.m., 8:10 a.m., 8:15 a.m., and 8:20 a.m. The following conditions apply: 5
+Ashley arrives before Oscar.
+Olivia arrives before Nicole.
+Question: Which statement cannot be true? 
+Nathan is the last to arrive.
+Nicole gets to work at 8:15 a.m.
+Oscar arrives at 8:00 a.m.
+Olivia and Ashley both arrive after 8:00 a.m.
+Ashley arrives after Nathan. 7
+
+Question 4 (Shift Times)
+Scenario:
+Ken and Logan start their shift at the same time. 
+Matthew starts his shift 1 hour earlier than Nathan does. 
+Nathan starts his shift at least 2 hours later than Logan.
+A shift lasts 8 hours.
+Nathan's shift ends at 6 p.m. 
+Question: Which statement must be true?
+Ken and Logan work from 6 a.m. until 2 p.m.
+Matthew and Logan start their shift at the same time. 
+Matthew's shift starts at 8 a.m. 
+The latest that Logan's shift can start is 8 a.m.
+Matthew's shift starts before Logan starts his shift.
+
+Question 5 (Account Codes)
+Scenario:
+Coding Commercial Accounts: 14
+Silver Accounts: Account code 10.
+Gold Accounts: Account code 20.
+Platinum Accounts: Account code 30.
+Credit limit codes: 101-10, 101-25, 101-50.
+Overdraft fee codes: 201-25, 201-50, 201-75.
+Insurance codes: 301, 305, 310.
+Note: Codes are always listed first by account, then credit limit, overdraft fee, and insurance.
+Question: Which of the following series of codes is incorrect? 15
+20, 305 (Inferred from table column headers, possibly incomplete option text)
+10, 101-10, 201-75 16
+10, 201-25 17
+101-50, 310 18
+30, 201-75 19
+(Note: The options provided in the source image are fragmented segments of codes rather than full sequences. The question asks to identify an incorrect series based on the order: Account -> Credit -> Overdraft -> Insurance.)
+
+Question 6 (Sales Competition)
+Scenario:
+Six people, Ethan, Frank, Gabriel, Erin, Felicia, and Gina, compete in a sales competition. The following conditions apply: 20
+Gabriel does not finish immediately behind either Ethan or Frank.
+Gabriel finishes immediately ahead of Erin. 21
+Question: If Ethan and Frank finish first and fifth respectively, which statement must be true? 22
+Gina does not finish first or last. 23
+Gabriel finishes second.
+Gina finishes third. 24
+Erin finishes third. 25
+Felicia finishes third.
+Felicia finishes sixth.
+
+Question 7 (Seaports)
+Scenario:
+A country has six seaports, E, F, G, H, I, and J, where ships only travel from... (Text cuts off, but diagram implies connections). Passengers can transfer to different ships at the ports. 26
+Question: If port G is closed which trip is impossible? 27
+E to F 28
+E to H
+F to E
+F to G
+G to H
+H to I
+H to F
+J to E
+I to E
+J to I
+J to G
+J to H
+
+Question 8 (Frank's Faxes)
+Scenario:
+Frank faxed eight contracts to clients in the morning, and four in the afternoon. Therefore, a total of exactly 12 contracts were faxed to clients today. 29
+Question: Which statement strengthens the argument? 30
+No other person faxed contracts to clients today.
+A minimum of 13 contracts must be faxed per day.
+Frank faxes more contracts to clients than others.
+More contracts are always faxed to clients in the morning than in the afternoon. 31
+More contracts will be faxed to clients tomorrow. 32
+
+Question 9 (Delivery Route)
+Scenario:
+A delivery route is set up with one run per day scheduled Monday through Friday. Delivery drivers Maria, Nicole, and Oscar service the route. The following conditions apply: 33
+No driver can drive the route on two consecutive days.
+Nicole drives the Wednesday route.
+Question: If Maria drives the Thursday route, which statement must be true? (Note: Source text says "Alana drives the Thursday route", but Alana is not in the list of drivers. Assuming typo for Maria or Oscar).
+Correction based on source text: "Alana drives the Thursday route, which statement must be true?" (Note: This seems to be a typo in the original question as "Alana" was not introduced. Assuming "Alana" might be a typo for one of the established drivers or a fourth driver not listed in the intro).
+Options: 34
+Maria or Nicole drives the Monday route.
+Nicole or Oscar drives the Monday route.
+Maria or Oscar drives the Tuesday route.
+Maria or Nicole drives the Friday route.
+Maria or Oscar drives the Friday route.
+
+Question 10 (Cargo Planes)
+Scenario:
+Cargo weighing over 1000 kilograms is shipped on type A cargo planes.
+Cargo weighing 500 to 999 kilograms is shipped on type B cargo planes.
+Cargo weighing 500 to 999 kilograms often contains airplane engine parts.
+Crate C weighs 1175 kilograms.
+Type A cargo planes are only flown on Mondays. 35
+Question: Which statement must be true? 36
+Crate C should be shipped on a type B cargo plane. 37
+Some airplane engine parts can be shipped on type B cargo planes. (Inferred from "type A" typo in source option "type A cargo planes" for engine parts).
+Only crates weighing more than 1000 kilograms are shipped on Monday. 38
+Only crates weighing more than 1000 kilograms contain engine parts. 39
+Crate C contains airplane engine parts.
+
+Question 11 (Airline Flights)
+Scenario:
+Each airline has from 4 to 10 flights to City A every day.
+Airline B has the fewest possible flights to City A.
+Airline C and Airline D have the same number of flights to City A.
+Airline D has twice as many flights to City A as Airline E.
+Orange Airlines has fewer flights to City A than Airline C. 40
+Question: Which statement must be true? 41
+Airline B has four flights to City A. 42
+Airline E has more flights to City A than Airline B.
+Orange Airlines has more flights to City A than Airline B.
+Airline C has fewer flights to City A than Airline E.
+Orange Airlines has more flights to City A than Airline D. 43
+
+Question 12 (Employee Bonus)
+Scenario:
+To be eligible for the bonus, an employee must meet 75 percent or more of his/her goal, receive an evaluation of Good or Excellent, and all of his team members must meet at least 50 percent or more of their goals. 44
+Data Table: 45454545
+Team 1: Erin (74%, Good), Ethan (45%, Average), Felicia (81%, Excellent).
+Team 2: Frank (59%, Poor), Gina (58%, Poor), Gabriel (77%, Good).
+Team 3: Hannah (79%, Excellent), Hayden (76%, Average), Isabel (52%, Poor).
+Question: Who is eligible for the bonus? 46
+Erin, Felicia, Gabriel, Hannah, Hayden.
+Felicia, Gabriel, Hannah.
+Felicia, Gabriel, Hayden.
+Gabriel, Hannah, Hayden.
+Gabriel, Hannah.
+
+Question 13 (Document Shelf)
+Scenario:
+Twelve documents are aligned on a shelf - four new employee manuals, three employee handbooks, two project binders, and three computer manuals. The following conditions apply: 47
+One of the project binders is first.
+The four new employee manuals are together. 48
+The project binders are next to each other.
+The employee handbooks are not next to each other. 49
+Question: If a project binder is first and a new employee manual is 12th, which statement must be true? 50
+An employee handbook is third. 51
+An employee handbook is eighth.
+If an employee handbook is third, then a computer manual is seventh. 52
+If an employee handbook is fourth, then a computer manual is fifth. 53
+If a computer manual is fourth, then a computer manual is fifth. 54
+
+Question 14 (Class Schedule)
+Scenario:
+Isabel, Jessica, Javier, and Ken are all attending a class beginning between 9 a.m. and 5 p.m. 55
+Isabel's class begins 4 hours later than Ken's class. 56
+Jessica's class begins at noon.
+Javier's class begins after 1 p.m.
+Question: Which statement must be true? (Source text partially obscured "Which ... be the...") 57
+Isabel's class begins at or before 1 pm. 58
+Javier's class begins at 5 pm.
+Jessica and Javier are attending the same class.
+Ken's class begins at 8 am or earlier. 59
+Jessica's class begins after Ken's class. 60
+Jessica's class begins before Javier's.
+
+Question 15 (Doctor Appointments)
+Scenario:
+A doctor's office is scheduling patients Olivia, Andrew, Ashley, Brandon, and Brianna for Monday through Friday, during the 9 a.m. to 10 a.m. appointment. The following conditions apply: 61
+Brianna gets the Monday appointment and Olivia the Friday appointment.
+Brandon has an appointment exactly 2 days after Ashley.
+Question: Which statement cannot be true? 62
+Andrew's appointment is after Brandon's appointment. 63
+Ashley's appointment is before Andrew's appointment.
+Andrew's appointment is later than Brianna's appointment.
+Ashley's appointment is the day immediately after Brianna's appointment.
+Andrew's appointment is on Wednesday. 64
+
+Question 16 (Typing Competition)
+Scenario:
+Six people, Olivia, Ashley, Andrew, Brianna, Brandon, and Cecilia, compete in a typing competition. The following conditions apply: 65
+Andrew finishes second.
+Cecilia does not finish first or last.
+Andrew does not finish immediately behind either Olivia or Ashley.
+Andrew finishes immediately ahead of Brianna. 66
+Question: Which statement must be true? 67
+Either Olivia or Ashley must finish sixth. 68
+Olivia must finish fourth.
+Ashley must finish fifth.
+Cecilia finishes fifth.
+Brandon finishes sixth.
+
+Question (Unnumbered - Logic: Dogs/Mammals)
+Scenario:
+All dogs are mammals.
+Some mammals are colorblind. 69
+Question: Which statement must be true? 70
+Some dogs are colorblind.
+Some dogs are not colorblind.
+All dogs are colorblind.
+Some dogs may be colorblind.
+No dogs are colorblind.
+
+Question (Unnumbered - Logic: Ethan/Felicia)
+Scenario:
+Ethan is bilingual.
+Felicia is a human resources manager.
+Ethan works under Felicia. (Note: Set 1 had "Ethan works in Felicia's department").
+Gina works in the sales department.
+Five of the sales associates are bilingual. 71
+Question: Which statement must be true? (Note: Question text is cut off, options provided).
+Felicia is bilingual. 72
+Gina speaks Spanish.
+Ethan is a sales associate.
+Felicia is Ethan's department manager.
+All of the human resource employees are bilingual.
+
+

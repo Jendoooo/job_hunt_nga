@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
 import QuestionCard from '../components/QuestionCard'
@@ -7,91 +7,105 @@ import ScoreReport from '../components/ScoreReport'
 import AIExplainer from '../components/AIExplainer'
 import technicalQuestions from '../data/technical-questions.json'
 import {
-    Settings, ArrowLeft, Timer as TimerIcon, BookOpen,
-    CheckCircle2, Play, Circle, AlertTriangle
+    Settings,
+    ArrowLeft,
+    Timer as TimerIcon,
+    BookOpen,
+    CheckCircle2,
+    Play,
+    Circle,
 } from 'lucide-react'
 
 const SECTIONS = [
-    { key: 'vle', name: 'VLE & Phase Behavior', color: '#3b82f6' },
-    { key: 'equipment', name: 'Equipment Selection & Sizing', color: '#8b5cf6' },
-    { key: 'pid', name: 'P&ID Interpretation', color: '#10b981' },
+    { key: 'vle', name: 'VLE and Phase Behavior', color: '#3b82f6' },
+    { key: 'equipment', name: 'Equipment Selection and Sizing', color: '#8b5cf6' },
+    { key: 'pid', name: 'P and ID Interpretation', color: '#10b981' },
     { key: 'safety', name: 'Process Safety', color: '#f59e0b' },
     { key: 'fundamentals', name: 'Process Fundamentals', color: '#ef4444' },
 ]
 
+function shuffleQuestions(items) {
+    const next = [...items]
+    for (let i = next.length - 1; i > 0; i -= 1) {
+        const randomIndex = Math.floor(Math.random() * (i + 1))
+        ;[next[i], next[randomIndex]] = [next[randomIndex], next[i]]
+    }
+    return next
+}
+
 export default function TechnicalTest() {
     const navigate = useNavigate()
-    const [stage, setStage] = useState('setup') // setup, test, review
-    const [mode, setMode] = useState('practice') // practice or exam
-    const [selectedSections, setSelectedSections] = useState(SECTIONS.map(s => s.key))
-    const [examTime, setExamTime] = useState(90) // minutes
+    const [stage, setStage] = useState('setup')
+    const [mode, setMode] = useState('practice')
+    const [selectedSections, setSelectedSections] = useState(SECTIONS.map((section) => section.key))
+    const [examTime, setExamTime] = useState(90)
+    const [questionCount, setQuestionCount] = useState(40)
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [answers, setAnswers] = useState({})
     const [flagged, setFlagged] = useState([])
     const [showExplanation, setShowExplanation] = useState({})
-    const startTimeRef = useRef(null)
+    const [activeQuestions, setActiveQuestions] = useState([])
     const [timeTaken, setTimeTaken] = useState(0)
+    const startTimeRef = useRef(null)
 
-    // Filter questions based on selected sections
-    const questions = technicalQuestions.filter(q => selectedSections.includes(q.section))
+    const availableQuestions = technicalQuestions.filter((question) =>
+        selectedSections.includes(question.section)
+    )
 
-    function toggleSection(key) {
-        setSelectedSections(prev =>
-            prev.includes(key)
-                ? prev.filter(k => k !== key)
-                : [...prev, key]
+    const selectedSectionNames = SECTIONS
+        .filter((section) => selectedSections.includes(section.key))
+        .map((section) => section.name)
+        .join(', ')
+
+    function toggleSection(sectionKey) {
+        setSelectedSections((prev) =>
+            prev.includes(sectionKey)
+                ? prev.filter((key) => key !== sectionKey)
+                : [...prev, sectionKey]
         )
     }
 
     function startTest() {
-        if (questions.length === 0) return
+        if (availableQuestions.length === 0) return
+
+        let questionsToUse = [...availableQuestions]
+        if (mode === 'exam') {
+            questionsToUse = shuffleQuestions(questionsToUse).slice(0, questionCount)
+        }
+
+        setActiveQuestions(questionsToUse)
         setStage('test')
         setCurrentQuestion(0)
         setAnswers({})
         setFlagged([])
         setShowExplanation({})
+        setTimeTaken(0)
         startTimeRef.current = Date.now()
     }
 
     function handleAnswer(answerIndex) {
-        setAnswers(prev => ({ ...prev, [currentQuestion]: answerIndex }))
-
+        setAnswers((prev) => ({ ...prev, [currentQuestion]: answerIndex }))
         if (mode === 'practice') {
-            setShowExplanation(prev => ({ ...prev, [currentQuestion]: true }))
+            setShowExplanation((prev) => ({ ...prev, [currentQuestion]: true }))
         }
     }
 
-    function handleTimeUp() {
-        finishTest()
-    }
-
     function finishTest() {
-        const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000)
+        const elapsed = startTimeRef.current
+            ? Math.floor((Date.now() - startTimeRef.current) / 1000)
+            : 0
         setTimeTaken(elapsed)
         setStage('review')
     }
 
     function toggleFlag() {
-        setFlagged(prev =>
+        setFlagged((prev) =>
             prev.includes(currentQuestion)
-                ? prev.filter(i => i !== currentQuestion)
+                ? prev.filter((index) => index !== currentQuestion)
                 : [...prev, currentQuestion]
         )
     }
 
-    function nextQuestion() {
-        if (currentQuestion < questions.length - 1) {
-            setCurrentQuestion(prev => prev + 1)
-        }
-    }
-
-    function prevQuestion() {
-        if (currentQuestion > 0) {
-            setCurrentQuestion(prev => prev - 1)
-        }
-    }
-
-    // Setup screen
     if (stage === 'setup') {
         return (
             <div className="test-page">
@@ -107,9 +121,9 @@ export default function TechnicalTest() {
 
                 <div className="test-setup">
                     <div className="test-setup__card">
-                        <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Your Test</h2>
+                        <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Test Session</h2>
                         <p className="test-setup__description">
-                            Customize your practice session or simulate exam conditions for the Technical Assessment.
+                            Build a custom technical run in practice mode, or simulate a timed exam environment.
                         </p>
 
                         <div className="test-setup__mode">
@@ -121,7 +135,7 @@ export default function TechnicalTest() {
                                 >
                                     <BookOpen className={`mb-2 ${mode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
                                     <span className="test-setup__mode-label">Practice Mode</span>
-                                    <span className="test-setup__mode-desc">Untimed • See explanations immediately</span>
+                                    <span className="test-setup__mode-desc">Untimed with explanations</span>
                                 </button>
                                 <button
                                     className={`test-setup__mode-btn ${mode === 'exam' ? 'test-setup__mode-btn--active' : ''}`}
@@ -129,48 +143,68 @@ export default function TechnicalTest() {
                                 >
                                     <TimerIcon className={`mb-2 ${mode === 'exam' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
                                     <span className="test-setup__mode-label">Exam Mode</span>
-                                    <span className="test-setup__mode-desc">Timed • No explanations until end</span>
+                                    <span className="test-setup__mode-desc">Timed without live explanations</span>
                                 </button>
                             </div>
                         </div>
 
                         {mode === 'exam' && (
-                            <div className="test-setup__time">
-                                <h3>Time Limit</h3>
-                                <div className="test-setup__time-options">
-                                    {[30, 60, 90, 120].map(t => (
-                                        <button
-                                            key={t}
-                                            className={`test-setup__time-btn ${examTime === t ? 'test-setup__time-btn--active' : ''}`}
-                                            onClick={() => setExamTime(t)}
-                                        >
-                                            {t} min
-                                        </button>
-                                    ))}
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <div className="test-setup__time">
+                                    <h3>Time Limit</h3>
+                                    <div className="test-setup__time-options">
+                                        {[30, 60, 90, 120].map((minutes) => (
+                                            <button
+                                                key={minutes}
+                                                className={`test-setup__time-btn ${examTime === minutes ? 'test-setup__time-btn--active' : ''}`}
+                                                onClick={() => setExamTime(minutes)}
+                                            >
+                                                {minutes} min
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="test-setup__count">
+                                    <h3>Question Count</h3>
+                                    <div className="test-setup__time-options">
+                                        {[20, 40, 60, 100].map((count) => (
+                                            <button
+                                                key={count}
+                                                className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
+                                                onClick={() => setQuestionCount(count)}
+                                            >
+                                                {count}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         )}
 
                         <div className="test-setup__sections">
-                            <h3>Sections ({questions.length} questions selected)</h3>
+                            <h3>Sections ({availableQuestions.length} matching questions)</h3>
                             <div className="test-setup__section-grid">
-                                {SECTIONS.map(s => {
-                                    const count = technicalQuestions.filter(q => q.section === s.key).length
-                                    const isSelected = selectedSections.includes(s.key)
+                                {SECTIONS.map((section) => {
+                                    const count = technicalQuestions.filter((question) => question.section === section.key).length
+                                    const isSelected = selectedSections.includes(section.key)
+
                                     return (
                                         <button
-                                            key={s.key}
+                                            key={section.key}
                                             className={`test-setup__section-btn ${isSelected ? 'test-setup__section-btn--active' : ''}`}
-                                            onClick={() => toggleSection(s.key)}
-                                            style={{ '--section-color': s.color }}
+                                            onClick={() => toggleSection(section.key)}
+                                            style={{ '--section-color': section.color }}
                                         >
                                             <div className="flex items-center gap-2">
                                                 {isSelected ? (
-                                                    <CheckCircle2 size={16} color={s.color} fill={s.color + '20'} />
+                                                    <CheckCircle2 size={16} color={section.color} fill={`${section.color}20`} />
                                                 ) : (
                                                     <Circle size={16} className="text-slate-300" />
                                                 )}
-                                                <span className={`test-setup__section-name ${isSelected ? 'text-slate-900' : 'text-slate-500'}`}>{s.name}</span>
+                                                <span className={`test-setup__section-name ${isSelected ? 'text-slate-900' : 'text-slate-500'}`}>
+                                                    {section.name}
+                                                </span>
                                             </div>
                                             <span className="test-setup__section-count">{count} Qs</span>
                                         </button>
@@ -182,9 +216,12 @@ export default function TechnicalTest() {
                         <button
                             className="btn btn--primary btn--lg btn--full flex items-center justify-center gap-2"
                             onClick={startTest}
-                            disabled={questions.length === 0}
+                            disabled={availableQuestions.length === 0}
                         >
-                            <Play size={20} fill="currentColor" /> Start Test ({questions.length} Questions)
+                            <Play size={20} fill="currentColor" />
+                            {mode === 'exam'
+                                ? `Start Timed Test (${questionCount} Qs)`
+                                : `Start Practice (${availableQuestions.length} Qs)`}
                         </button>
                     </div>
                 </div>
@@ -192,57 +229,61 @@ export default function TechnicalTest() {
         )
     }
 
-    // Review / Score screen
     if (stage === 'review') {
         return (
             <div className="test-page">
                 <header className="test-page__header">
                     <div className="flex items-center gap-2">
                         <Settings className="text-blue-600" size={20} />
-                        <h1 className="text-lg font-bold text-slate-800">Technical Assessment — Results</h1>
+                        <h1 className="text-lg font-bold text-slate-800">Technical Assessment Results</h1>
                     </div>
                 </header>
                 <ScoreReport
-                    questions={questions}
+                    questions={activeQuestions}
                     answers={answers}
                     flagged={flagged}
                     timeTaken={timeTaken}
                     totalTime={mode === 'exam' ? examTime * 60 : 0}
                     assessmentType="totalenergies-technical"
-                    moduleName={selectedSections.join(', ')}
+                    moduleName={selectedSectionNames}
                     mode={mode}
-                    onRetry={() => { setStage('setup'); }}
+                    onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />
             </div>
         )
     }
 
-    // Test in progress
-    const q = questions[currentQuestion]
-    const currentSection = SECTIONS.find(s => s.key === q.section)
+    const question = activeQuestions[currentQuestion]
+    if (!question) return null
+
+    const currentSection = SECTIONS.find((section) => section.key === question.section)
 
     return (
         <div className="test-page">
             <header className="test-page__header test-page__header--compact">
                 <div className="test-page__header-left">
-                    <h2 className="text-sm font-bold text-slate-700 hidden sm:block">Technical Assessment</h2>
+                    <h2 className="text-sm font-bold text-slate-800 hidden sm:block">Technical Assessment</h2>
                     <span
-                        className="px-3 py-1 rounded-full text-xs font-semibold text-white flex items-center gap-1"
-                        style={{ background: currentSection?.color }}
+                        className="px-3 py-1 rounded-full text-xs font-semibold text-white"
+                        style={{ background: currentSection?.color || '#3b82f6' }}
                     >
-                        {currentSection?.name}
+                        {currentSection?.name || 'General'}
                     </span>
                 </div>
+
                 <div className="test-page__header-right">
                     {mode === 'exam' && (
-                        <Timer
-                            duration={examTime * 60}
-                            onTimeUp={handleTimeUp}
-                        />
+                        <div className="flex items-center gap-2">
+                            <TimerIcon size={16} className="text-slate-500" />
+                            <Timer
+                                duration={examTime * 60}
+                                onTimeUp={finishTest}
+                            />
+                        </div>
                     )}
                     <button className="btn btn--danger btn--sm" onClick={finishTest}>
-                        Submit Test
+                        Finish Test
                     </button>
                 </div>
             </header>
@@ -250,7 +291,7 @@ export default function TechnicalTest() {
             <div className="test-page__body">
                 <div className="test-page__sidebar hidden lg:block">
                     <QuestionNav
-                        totalQuestions={questions.length}
+                        totalQuestions={activeQuestions.length}
                         currentQuestion={currentQuestion}
                         answers={answers}
                         flagged={flagged}
@@ -259,55 +300,57 @@ export default function TechnicalTest() {
                 </div>
 
                 <div className="test-page__content">
-                    <QuestionCard
-                        question={q}
-                        questionNumber={currentQuestion + 1}
-                        totalQuestions={questions.length}
-                        selectedAnswer={answers[currentQuestion]}
-                        onSelectAnswer={handleAnswer}
-                        showResult={mode === 'practice' && showExplanation[currentQuestion]}
-                        correctAnswer={q.correctAnswer}
-                        isFlagged={flagged.includes(currentQuestion)}
-                        onToggleFlag={toggleFlag}
-                    />
+                    <div className="max-w-3xl mx-auto w-full">
+                        <QuestionCard
+                            question={question}
+                            questionNumber={currentQuestion + 1}
+                            totalQuestions={activeQuestions.length}
+                            selectedAnswer={answers[currentQuestion]}
+                            onSelectAnswer={handleAnswer}
+                            showResult={mode === 'practice' && showExplanation[currentQuestion]}
+                            correctAnswer={question.correctAnswer}
+                            isFlagged={flagged.includes(currentQuestion)}
+                            onToggleFlag={toggleFlag}
+                        />
 
-                    {mode === 'practice' && showExplanation[currentQuestion] && (
-                        <AIExplainer question={q} />
-                    )}
-
-                    <div className="test-page__nav-buttons">
-                        <button
-                            className="btn btn--secondary"
-                            onClick={prevQuestion}
-                            disabled={currentQuestion === 0}
-                        >
-                            ← Previous
-                        </button>
-
-                        {mode === 'practice' && answers[currentQuestion] !== undefined && !showExplanation[currentQuestion] && (
-                            <button
-                                className="btn btn--primary"
-                                onClick={() => setShowExplanation(prev => ({ ...prev, [currentQuestion]: true }))}
-                            >
-                                Check Answer
-                            </button>
+                        {mode === 'practice' && showExplanation[currentQuestion] && (
+                            <AIExplainer question={question} />
                         )}
 
-                        {currentQuestion < questions.length - 1 ? (
+                        <div className="test-page__nav-buttons mt-6">
                             <button
-                                className="btn btn--primary"
-                                onClick={nextQuestion}
+                                className="btn btn--secondary"
+                                onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
+                                disabled={currentQuestion === 0}
                             >
-                                Next →
+                                Previous
                             </button>
-                        ) : (
-                            <button
-                                className="btn btn--primary"
-                                onClick={finishTest}
-                            >
-                                Finish Test
-                            </button>
-                        )}
+
+                            {mode === 'practice' && answers[currentQuestion] !== undefined && !showExplanation[currentQuestion] && (
+                                <button
+                                    className="btn btn--primary"
+                                    onClick={() => setShowExplanation((prev) => ({ ...prev, [currentQuestion]: true }))}
+                                >
+                                    Check Answer
+                                </button>
+                            )}
+
+                            {currentQuestion < activeQuestions.length - 1 ? (
+                                <button
+                                    className="btn btn--primary"
+                                    onClick={() => setCurrentQuestion((prev) => prev + 1)}
+                                >
+                                    Next
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn btn--primary"
+                                    onClick={finishTest}
+                                >
+                                    Submit
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
