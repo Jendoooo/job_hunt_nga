@@ -1,0 +1,306 @@
+[
+    {
+        "id": 1,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'Sticking to traditional eating times and formal eating habits is no longer the norm. The value and number of on-the-run eating occasions, both snacks and meals, is increasing significantly. Three meals a day maxim no longer holds true because more consumers are eating outside of the home and at times to suit their lifestyles.'  — Eating on-the-run is increasing.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The passage directly states on-the-run eating occasions are 'increasing significantly'."
+    },
+    {
+        "id": 2,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'Breakfast, in particular, is now more commonly skipped and those who do eat breakfast are taking less time to prepare it. Consumers are developing more complex and paradoxical eating patterns and demanding products that are more convenient and healthier.'  — Consumers want products that are both convenient and healthy.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The passage states consumers are 'demanding products that are more convenient and healthier'."
+    },
+    {
+        "id": 3,
+        "subtest": "verbal",
+        "question": "Based on the passage about consumer trends: 'The three meals a day maxim no longer holds true.'  — Most people now eat exactly two meals per day.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The passage says three meals a day is no longer the norm, but does not specify what replaced it."
+    },
+    {
+        "id": 4,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'Process safety management requires a systematic approach to identifying hazards, evaluating risks, and implementing controls. Organizations that fail to properly maintain safety systems may face catastrophic consequences including loss of life, environmental damage, and significant financial losses.'  — Financial losses are the most serious consequence of safety failures.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The passage lists multiple consequences but does not rank them by severity."
+    },
+    {
+        "id": 5,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'The oil and gas industry employs various corrosion management strategies including regular inspection programs, application of protective coatings, cathodic protection, and use of corrosion-resistant alloys. The choice of strategy depends on the specific operating environment and economic considerations.'  — Corrosion management strategy is influenced by operating conditions.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The passage states 'choice of strategy depends on the specific operating environment'."
+    },
+    {
+        "id": 6,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'Reservoir engineers use decline curve analysis to forecast future production rates. This technique assumes that past production trends will continue into the future, though this assumption may not always hold true.'  — Decline curve analysis always provides accurate production forecasts.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The passage explicitly states 'this assumption may not always hold true', meaning it's not always accurate."
+    },
+    {
+        "id": 7,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'Nigeria's oil and gas sector accounts for approximately 90% of export earnings and about 60% of government revenue. The sector has attracted significant foreign direct investment, with multinational companies operating alongside the national oil company NNPC.'  — NNPC operates independently without any collaboration with foreign companies.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The passage says multinationals operate 'alongside' NNPC, indicating collaboration."
+    },
+    {
+        "id": 8,
+        "subtest": "verbal",
+        "question": "Based on the passage: 'Heat exchangers in the oil and gas industry must be designed to handle fouling, which is the accumulation of unwanted material on heat transfer surfaces. Fouling reduces efficiency and increases operating costs. Regular cleaning schedules help mitigate these effects.'  — Fouling can be completely prevented with proper design.",
+        "options": [
+            "True on the basis of the passage",
+            "False on the basis of the passage",
+            "Not possible to say from the passage"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The passage mentions cleaning to 'mitigate' effects but doesn't say whether fouling can be completely prevented."
+    },
+    {
+        "id": 9,
+        "subtest": "numerical",
+        "question": "An annual sales report shows: Retail Outlets sold 4,380 million units, On-Line sold 2,232 million units, Mail Order sold 1,512 million units, and Telephone sold 972 million units. What was the total sales volume for On-Line, Mail Order and Telephone combined?",
+        "options": [
+            "4,716 million",
+            "4,380 million",
+            "3,744 million",
+            "5,124 million"
+        ],
+        "correctAnswer": 0,
+        "explanation": "2,232 + 1,512 + 972 = 4,716 million units."
+    },
+    {
+        "id": 10,
+        "subtest": "numerical",
+        "question": "If Retail Outlets had an average of 365 units per transaction, and sold 4,380 million units total, approximately how many transactions were there?",
+        "options": [
+            "12 million",
+            "1.2 million",
+            "120 million",
+            "1.2 billion"
+        ],
+        "correctAnswer": 0,
+        "explanation": "4,380,000,000 ÷ 365 = approximately 12,000,000 = 12 million transactions."
+    },
+    {
+        "id": 11,
+        "subtest": "numerical",
+        "question": "Mail Order had 72% repeat customers with 1,512 million units sold. How many units were from repeat customers?",
+        "options": [
+            "1,088.64 million",
+            "1,108.64 million",
+            "423.36 million",
+            "756 million"
+        ],
+        "correctAnswer": 0,
+        "explanation": "1,512 × 0.72 = 1,088.64 million units from repeat customers."
+    },
+    {
+        "id": 12,
+        "subtest": "numerical",
+        "question": "A pipeline carries 180 m³/h of crude oil. What is the flow in litres per second?",
+        "options": [
+            "50 L/s",
+            "500 L/s",
+            "5 L/s",
+            "180 L/s"
+        ],
+        "correctAnswer": 0,
+        "explanation": "180 m³/h = 180,000 L/h. 180,000 ÷ 3,600 = 50 L/s."
+    },
+    {
+        "id": 13,
+        "subtest": "numerical",
+        "question": "On-Line sales were 2,232 million units with 23% repeat customer transactions. How many units came from new customers (77%)?",
+        "options": [
+            "1,718.64 million",
+            "513.36 million",
+            "1,116 million",
+            "2,000 million"
+        ],
+        "correctAnswer": 0,
+        "explanation": "2,232 × 0.77 = 1,718.64 million from new customers."
+    },
+    {
+        "id": 14,
+        "subtest": "numerical",
+        "question": "Telephone had 972 million units sold with average 270 units per transaction. How many transactions occurred?",
+        "options": [
+            "3.6 million",
+            "36 million",
+            "360,000",
+            "2.7 million"
+        ],
+        "correctAnswer": 0,
+        "explanation": "972,000,000 ÷ 270 = 3,600,000 = 3.6 million transactions."
+    },
+    {
+        "id": 15,
+        "subtest": "numerical",
+        "question": "If On-Line sales grew by 15% year-on-year from 2,232 million units, what would the projected sales be?",
+        "options": [
+            "2,566.8 million",
+            "2,345.8 million",
+            "2,678.4 million",
+            "2,900 million"
+        ],
+        "correctAnswer": 0,
+        "explanation": "2,232 × 1.15 = 2,566.8 million units."
+    },
+    {
+        "id": 16,
+        "subtest": "numerical",
+        "question": "What percentage of total sales came from Retail Outlets? (Total: 4,380 + 2,232 + 1,512 + 972 = 9,096 million)",
+        "options": [
+            "48.2%",
+            "52.3%",
+            "38.5%",
+            "44.0%"
+        ],
+        "correctAnswer": 0,
+        "explanation": "4,380 ÷ 9,096 × 100 = 48.15%, approximately 48.2%."
+    },
+    {
+        "id": 17,
+        "subtest": "diagrammatic",
+        "question": "Operator T changes shading of all figures. Operator U swaps 1st and 3rd figures. Operator V changes 1st figure. Input: [dark triangle, dark circle, light square]. Process: T. What is the output?",
+        "options": [
+            "Light triangle, light circle, dark square",
+            "Dark triangle, dark circle, dark square",
+            "Light square, light circle, dark triangle",
+            "Light triangle, dark circle, light square"
+        ],
+        "correctAnswer": 0,
+        "explanation": "T changes all shading: dark→light, dark→light, light→dark. Result: light triangle, light circle, dark square."
+    },
+    {
+        "id": 18,
+        "subtest": "diagrammatic",
+        "question": "Operator T changes shading. Operator U swaps 1st and 3rd. Operator V changes 1st figure's shape. Input: [triangle, circle]. Process: U then T. What sequence of operations was applied?",
+        "options": [
+            "First swap positions, then change all shading",
+            "First change shading, then swap positions",
+            "Only swap positions",
+            "Only change shading"
+        ],
+        "correctAnswer": 0,
+        "explanation": "U swaps 1st and 3rd positions first, then T changes the shading of all figures."
+    },
+    {
+        "id": 19,
+        "subtest": "diagrammatic",
+        "question": "If the input is [circle, triangle, square] and operator U is applied (swap 1st and 3rd), what is the output?",
+        "options": [
+            "Square, triangle, circle",
+            "Circle, square, triangle",
+            "Triangle, circle, square",
+            "Circle, triangle, square"
+        ],
+        "correctAnswer": 0,
+        "explanation": "U swaps 1st and 3rd positions: circle↔square. Result: square, triangle, circle."
+    },
+    {
+        "id": 20,
+        "subtest": "diagrammatic",
+        "question": "Input: [dark circle, light triangle, dark square]. Apply V (changes 1st figure) then T (changes all shading). What is the 1st figure in the output?",
+        "options": [
+            "Light version of the changed 1st figure",
+            "Dark version of the changed 1st figure",
+            "Original dark circle",
+            "Light circle"
+        ],
+        "correctAnswer": 0,
+        "explanation": "V changes the 1st figure first, then T inverts all shading. The 1st figure would be light after T is applied."
+    },
+    {
+        "id": 21,
+        "subtest": "diagrammatic",
+        "question": "Which operator would you apply to [A, B, C] to get [C, B, A]?",
+        "options": [
+            "T (change shading)",
+            "U (swap 1st and 3rd)",
+            "V (change 1st figure)",
+            "T then V"
+        ],
+        "correctAnswer": 1,
+        "explanation": "U swaps the 1st and 3rd positions, giving [C, B, A]."
+    },
+    {
+        "id": 22,
+        "subtest": "diagrammatic",
+        "question": "If T is applied twice to a set of figures, what is the net effect?",
+        "options": [
+            "All shading is twice as dark",
+            "Figures return to original shading",
+            "Only the first figure changes",
+            "All figures disappear"
+        ],
+        "correctAnswer": 1,
+        "explanation": "T inverts shading. Applying T twice inverts then inverts again = back to original."
+    },
+    {
+        "id": 23,
+        "subtest": "diagrammatic",
+        "question": "Input: [light square, dark circle, light triangle]. Apply U. What is the output?",
+        "options": [
+            "Light triangle, dark circle, light square",
+            "Dark circle, light square, light triangle",
+            "Light square, light triangle, dark circle",
+            "Light triangle, light square, dark circle"
+        ],
+        "correctAnswer": 0,
+        "explanation": "U swaps 1st and 3rd: light square ↔ light triangle. Middle stays. Result: light triangle, dark circle, light square."
+    },
+    {
+        "id": 24,
+        "subtest": "diagrammatic",
+        "question": "What series of operators transforms [dark circle, dark triangle, dark square] into [light square, light triangle, light circle]?",
+        "options": [
+            "U then T",
+            "T then U",
+            "U only",
+            "T only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "U swaps 1st and 3rd: [dark square, dark triangle, dark circle]. Then T changes shading: [light square, light triangle, light circle]."
+    }
+]

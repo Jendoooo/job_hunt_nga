@@ -1,0 +1,2017 @@
+[
+    {
+        "id": 1,
+        "section": "vle",
+        "question": "What is the cricondenbar on a phase envelope diagram?",
+        "options": [
+            "The lowest pressure at which two phases can exist",
+            "The maximum pressure on the phase envelope",
+            "The critical pressure of the mixture",
+            "The bubble point at standard conditions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cricondenbar is the point of maximum pressure on the phase envelope where liquid and vapor can coexist."
+    },
+    {
+        "id": 2,
+        "section": "vle",
+        "question": "A reservoir fluid has a GOR of 2000 scf/bbl. How would you classify this fluid?",
+        "options": [
+            "Dry gas",
+            "Wet gas",
+            "Light oil (volatile oil)",
+            "Heavy oil"
+        ],
+        "correctAnswer": 2,
+        "explanation": "GOR 2000-3000 scf/bbl typically indicates light/volatile oil. Wet gas has GOR > 3000, heavy oil < 200."
+    },
+    {
+        "id": 3,
+        "section": "vle",
+        "question": "What happens when reservoir pressure drops below the bubble point?",
+        "options": [
+            "All liquid converts to gas",
+            "Gas comes out of solution in the reservoir",
+            "Water begins to condense",
+            "Temperature increases automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Below bubble point, dissolved gas is released from oil, forming free gas in the reservoir, which can reduce oil mobility."
+    },
+    {
+        "id": 4,
+        "section": "vle",
+        "question": "On a phase diagram, what region lies between the bubble point and dew point curves?",
+        "options": [
+            "Single-phase liquid region",
+            "Single-phase gas region",
+            "Two-phase region",
+            "Critical region"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The two-phase envelope bounded by bubble and dew point curves represents conditions where liquid and gas coexist."
+    },
+    {
+        "id": 5,
+        "section": "vle",
+        "question": "Which type of hydrocarbon system exhibits retrograde condensation?",
+        "options": [
+            "Black oil",
+            "Dry gas",
+            "Gas condensate",
+            "Heavy oil"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Gas condensates exhibit retrograde behavior where liquid condenses as pressure drops in certain P-T ranges."
+    },
+    {
+        "id": 6,
+        "section": "vle",
+        "question": "What is the cricondentherm?",
+        "options": [
+            "The critical temperature of the mixture",
+            "The maximum temperature on the phase envelope",
+            "The temperature at which all liquid vaporizes",
+            "The bubble point at atmospheric pressure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cricondentherm is the highest temperature at which liquid and vapor phases can coexist in equilibrium."
+    },
+    {
+        "id": 7,
+        "section": "vle",
+        "question": "A fluid with GOR above 3,000 scf/bbl is classified as:",
+        "options": [
+            "Heavy oil",
+            "Light oil",
+            "Wet gas",
+            "Dry gas"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Wet gas has very high GOR (>3000) and produces some liquid condensate at surface conditions."
+    },
+    {
+        "id": 8,
+        "section": "vle",
+        "question": "What do quality lines on a phase diagram represent?",
+        "options": [
+            "The purity of the hydrocarbon mixture",
+            "The percentage of liquid phase at given P-T conditions",
+            "The quality of oil produced",
+            "The efficiency of separation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Quality lines show the volume fraction of liquid in the two-phase region at different pressures and temperatures."
+    },
+    {
+        "id": 9,
+        "section": "vle",
+        "question": "Black oil typically has a GOR in the range of:",
+        "options": [
+            "Less than 200 scf/bbl",
+            "200-2000 scf/bbl",
+            "2000-3000 scf/bbl",
+            "Above 3000 scf/bbl"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Black oils have moderate GOR (200-2000 scf/bbl), are dark colored, and have relatively low shrinkage."
+    },
+    {
+        "id": 10,
+        "section": "vle",
+        "question": "At conditions inside the two-phase envelope, what exists?",
+        "options": [
+            "Only gas phase",
+            "Only liquid phase",
+            "Both gas and liquid phases",
+            "Solid hydrates"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Inside the phase envelope (between bubble and dew point curves), liquid and gas phases coexist."
+    },
+    {
+        "id": 11,
+        "section": "vle",
+        "question": "What happens to reservoir fluid as it travels from reservoir to surface?",
+        "options": [
+            "Pressure increases, temperature decreases",
+            "Pressure decreases, temperature decreases",
+            "Pressure increases, temperature increases",
+            "Pressure decreases, temperature increases"
+        ],
+        "correctAnswer": 1,
+        "explanation": "As fluid flows from reservoir to surface, both pressure and temperature decrease, potentially crossing phase boundaries."
+    },
+    {
+        "id": 12,
+        "section": "vle",
+        "question": "The dew point curve represents:",
+        "options": [
+            "Conditions where the first liquid droplet forms from gas",
+            "Conditions where the last gas bubble disappears into liquid",
+            "Maximum liquid content",
+            "Critical point of the mixture"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The dew point line shows P-T conditions where gas begins to condense into liquid."
+    },
+    {
+        "id": 13,
+        "section": "vle",
+        "question": "The bubble point curve represents:",
+        "options": [
+            "Conditions where liquid starts to vaporize",
+            "Maximum pressure conditions",
+            "Critical temperature line",
+            "Hydrate formation boundary"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The bubble point line shows P-T conditions where the first gas bubble forms from liquid."
+    },
+    {
+        "id": 14,
+        "section": "vle",
+        "question": "Dry gas reservoirs remain in what phase?",
+        "options": [
+            "Liquid in reservoir, liquid at surface",
+            "Gas in reservoir, gas at surface",
+            "Gas in reservoir, liquid at surface",
+            "Two-phase in reservoir, gas at surface"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dry gas stays in the gas phase throughout production and produces no liquid condensate."
+    },
+    {
+        "id": 15,
+        "section": "vle",
+        "question": "What factor does NOT affect phase behavior of reservoir fluids?",
+        "options": [
+            "Pressure",
+            "Temperature",
+            "Composition",
+            "Time of day"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Phase behavior depends on thermodynamic properties (P, T, composition), not arbitrary time factors."
+    },
+    {
+        "id": 16,
+        "section": "vle",
+        "question": "In the retrograde region, what happens during pressure depletion?",
+        "options": [
+            "Liquid vaporizes continuously",
+            "Liquid condenses out in the reservoir",
+            "No phase change occurs",
+            "Water separates from oil"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In retrograde region, decreasing pressure causes liquid to condense, trapping valuable condensate in reservoir."
+    },
+    {
+        "id": 17,
+        "section": "vle",
+        "question": "The critical point on a phase diagram is where:",
+        "options": [
+            "Bubble point and dew point curves meet",
+            "Maximum pressure occurs",
+            "Maximum temperature occurs",
+            "Gas and liquid properties become identical"
+        ],
+        "correctAnswer": 3,
+        "explanation": "At the critical point, liquid and gas phases have identical properties and there is no distinction between them."
+    },
+    {
+        "id": 18,
+        "section": "vle",
+        "question": "Volatile oil is characterized by:",
+        "options": [
+            "Very low GOR and dark color",
+            "High GOR (2000-3000) and significant shrinkage",
+            "No gas production",
+            "Solid state at reservoir conditions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Volatile oils have high GOR, light color, low viscosity, and exhibit significant volume shrinkage from reservoir to surface."
+    },
+    {
+        "id": 19,
+        "section": "vle",
+        "question": "Flash calculations are used to:",
+        "options": [
+            "Determine how fast fluid flows",
+            "Calculate gas and liquid amounts at given P-T conditions",
+            "Measure explosion risks",
+            "Determine fluid color"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Flash calculations determine vapor-liquid equilibrium, predicting how much gas and liquid exist at specified P-T."
+    },
+    {
+        "id": 20,
+        "section": "vle",
+        "question": "Why is understanding phase behavior important?",
+        "options": [
+            "It determines equipment color coding",
+            "It helps design separators and predict production rates",
+            "It is required by law but has no practical use",
+            "It only matters for gas wells"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Phase behavior knowledge is critical for separator design, production forecasting, and optimizing recovery."
+    },
+    {
+        "id": 21,
+        "section": "vle",
+        "question": "What is the typical GOR range for dry gas?",
+        "options": [
+            "Less than 200 scf/bbl",
+            "200-2000 scf/bbl",
+            "2000-10,000 scf/bbl",
+            "Above 100,000 scf/bbl (essentially infinite)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Dry gas produces essentially no liquid, so GOR is extremely high or considered infinite."
+    },
+    {
+        "id": 22,
+        "section": "vle",
+        "question": "Heavy oil is characterized by:",
+        "options": [
+            "High GOR and light color",
+            "Low GOR (<200) and high viscosity",
+            "High GOR and low viscosity",
+            "No water content"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Heavy oils have low GOR, high viscosity, high density, and are typically dark colored."
+    },
+    {
+        "id": 23,
+        "section": "vle",
+        "question": "What happens at conditions to the left of the phase envelope?",
+        "options": [
+            "Two-phase region",
+            "Gas phase only",
+            "Liquid phase only",
+            "Solid phase"
+        ],
+        "correctAnswer": 2,
+        "explanation": "To the left (high pressure, low temperature) of the envelope is the single-phase liquid region."
+    },
+    {
+        "id": 24,
+        "section": "vle",
+        "question": "What happens at conditions to the right of the phase envelope?",
+        "options": [
+            "Two-phase region",
+            "Gas phase only",
+            "Liquid phase only",
+            "Critical region"
+        ],
+        "correctAnswer": 1,
+        "explanation": "To the right (low pressure, high temperature) of the envelope is the single-phase gas region."
+    },
+    {
+        "id": 25,
+        "section": "vle",
+        "question": "The separator operating conditions should be:",
+        "options": [
+            "Inside the two-phase envelope",
+            "At the critical point",
+            "Outside the phase envelope",
+            "At the cricondenbar"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Separators operate inside the two-phase envelope to allow gravity separation of gas and liquid phases."
+    },
+    {
+        "id": 26,
+        "section": "vle",
+        "question": "Stock tank oil is measured at:",
+        "options": [
+            "Reservoir conditions",
+            "Separator conditions",
+            "Standard conditions (60°F, 14.7 psia)",
+            "Any convenient conditions"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Stock tank oil is measured at standard conditions for consistent reporting and sales measurements."
+    },
+    {
+        "id": 27,
+        "section": "vle",
+        "question": "What is the formation volume factor (Bo)?",
+        "options": [
+            "The volume of reservoir oil needed to produce 1 bbl of stock tank oil",
+            "The volume of gas at standard conditions",
+            "The density of oil",
+            "The GOR value"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Bo relates reservoir oil volume to stock tank oil volume, accounting for dissolved gas and thermal effects."
+    },
+    {
+        "id": 28,
+        "section": "vle",
+        "question": "Gas formation volume factor (Bg) typically:",
+        "options": [
+            "Stays constant with pressure",
+            "Increases as pressure decreases",
+            "Decreases as pressure decreases",
+            "Is always equal to 1"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Bg increases as pressure decreases because gas expands at lower pressures."
+    },
+    {
+        "id": 29,
+        "section": "vle",
+        "question": "Solution GOR (Rs) is:",
+        "options": [
+            "The total GOR from the well",
+            "The amount of gas dissolved in oil at given conditions",
+            "The separator gas production",
+            "Always constant"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rs represents cubic feet of gas dissolved in one barrel of oil at specific pressure and temperature."
+    },
+    {
+        "id": 30,
+        "section": "vle",
+        "question": "Above the bubble point, solution GOR:",
+        "options": [
+            "Increases with decreasing pressure",
+            "Decreases with decreasing pressure",
+            "Remains constant",
+            "Becomes zero"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Above bubble point, all gas remains dissolved in oil, so Rs stays constant until bubble point is reached."
+    },
+    {
+        "id": 31,
+        "section": "equipment",
+        "question": "When would you install a pump in a production system?",
+        "options": [
+            "To increase gas pressure",
+            "To boost liquid pressure when reservoir pressure is insufficient",
+            "To separate oil and water",
+            "To measure flow rates"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pumps increase liquid pressure for transportation or when reservoir pressure declines."
+    },
+    {
+        "id": 32,
+        "section": "equipment",
+        "question": "What is the primary purpose of a choke valve?",
+        "options": [
+            "To completely shut off flow",
+            "To control flow rate and wellhead pressure",
+            "To separate gas from liquid",
+            "To measure temperature"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Choke valves regulate production rate and control pressure drops from reservoir to surface."
+    },
+    {
+        "id": 33,
+        "section": "equipment",
+        "question": "Why install a compressor in a gas system?",
+        "options": [
+            "To cool the gas",
+            "To remove water from gas",
+            "To increase gas pressure for transportation",
+            "To convert gas to liquid"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Compressors boost gas pressure for pipeline transport or sales gas specifications."
+    },
+    {
+        "id": 34,
+        "section": "equipment",
+        "question": "Centrifugal vs reciprocating compressor - main difference:",
+        "options": [
+            "Centrifugal uses rotating impellers; reciprocating uses pistons",
+            "Centrifugal is for liquids only",
+            "No significant difference",
+            "Reciprocating is always better"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Centrifugal uses dynamic principles with impellers; reciprocating uses positive displacement with pistons."
+    },
+    {
+        "id": 35,
+        "section": "equipment",
+        "question": "When should you install a heater in the process?",
+        "options": [
+            "After separation to cool products",
+            "Before separation to prevent hydrates and improve efficiency",
+            "After compression",
+            "Only for emergencies"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Heaters are placed upstream of separators to prevent hydrates and reduce viscosity."
+    },
+    {
+        "id": 36,
+        "section": "equipment",
+        "question": "What does NPSH stand for?",
+        "options": [
+            "Net Positive Suction Head",
+            "Nominal Pressure Safety Height",
+            "New Pump Service Hours",
+            "Normal Process Safety Hazard"
+        ],
+        "correctAnswer": 0,
+        "explanation": "NPSH prevents cavitation - it's the pressure available at pump suction above vapor pressure."
+    },
+    {
+        "id": 37,
+        "section": "equipment",
+        "question": "Primary function of a separator:",
+        "options": [
+            "To increase pressure",
+            "To separate gas, oil, and water using gravity",
+            "To heat fluids",
+            "To store production"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Separators use gravity settling and retention time to separate phases."
+    },
+    {
+        "id": 38,
+        "section": "equipment",
+        "question": "Two-phase vs three-phase separator:",
+        "options": [
+            "Two-phase separates oil and gas; three-phase also separates water",
+            "Two-phase is always horizontal",
+            "No difference",
+            "Three-phase is for gas only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Three-phase separators additionally separate oil from water."
+    },
+    {
+        "id": 39,
+        "section": "equipment",
+        "question": "What is a check valve used for?",
+        "options": [
+            "To check flow rates",
+            "To prevent backflow",
+            "To control pressure",
+            "To measure temperature"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Check valves allow one-way flow only, preventing reverse flow."
+    },
+    {
+        "id": 40,
+        "section": "equipment",
+        "question": "Most important parameter when sizing a control valve:",
+        "options": [
+            "Valve color",
+            "Cv (flow coefficient)",
+            "Valve weight",
+            "Installation cost"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cv relates flow rate to pressure drop and is critical for proper valve sizing."
+    },
+    {
+        "id": 41,
+        "section": "equipment",
+        "question": "Equipment to remove water vapor from natural gas:",
+        "options": [
+            "Separator",
+            "Dehydration unit (glycol or molecular sieves)",
+            "Compressor",
+            "Pump"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dehydration units use glycol absorption or molecular sieves to remove water vapor."
+    },
+    {
+        "id": 42,
+        "section": "equipment",
+        "question": "Purpose of a knock-out drum before a compressor:",
+        "options": [
+            "To increase gas temperature",
+            "To remove liquid droplets that could damage the compressor",
+            "To add chemicals",
+            "To measure flow"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Knock-out drums remove entrained liquids to protect compressors from damage."
+    },
+    {
+        "id": 43,
+        "section": "equipment",
+        "question": "Best separator type for high gas-liquid ratios:",
+        "options": [
+            "Horizontal separator",
+            "Vertical separator",
+            "Spherical separator",
+            "All equally suitable"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Vertical separators handle high gas-liquid ratios better due to longer gas travel path."
+    },
+    {
+        "id": 44,
+        "section": "equipment",
+        "question": "Purpose of a demister in a separator:",
+        "options": [
+            "To add moisture to gas",
+            "To remove small liquid droplets from gas",
+            "To measure gas flow",
+            "To control pressure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Demisters coalesce and remove fine liquid droplets from gas to meet product specs."
+    },
+    {
+        "id": 45,
+        "section": "equipment",
+        "question": "When to use an ESP (Electric Submersible Pump)?",
+        "options": [
+            "For gas wells only",
+            "When reservoir pressure is insufficient to lift liquids",
+            "To increase gas production",
+            "For emergency shutdown"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ESPs are artificial lift devices when reservoir pressure declines."
+    },
+    {
+        "id": 46,
+        "section": "equipment",
+        "question": "Advantage of horizontal separators:",
+        "options": [
+            "Better for handling high liquid rates and foam",
+            "Cheaper to build",
+            "Require less maintenance",
+            "Better for gas-only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Horizontal separators have larger liquid surface area, better for liquid surges and foaming."
+    },
+    {
+        "id": 47,
+        "section": "equipment",
+        "question": "Equipment to heat well fluids before separation:",
+        "options": [
+            "Cooler",
+            "Heater or heat exchanger",
+            "Compressor",
+            "Dehydrator"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Heaters raise fluid temperature to prevent hydrates and improve separation."
+    },
+    {
+        "id": 48,
+        "section": "equipment",
+        "question": "Function of a scrubber:",
+        "options": [
+            "To clean pipe exteriors",
+            "To remove liquids and solids from gas",
+            "To add chemicals",
+            "To compress gas"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Scrubbers remove liquid droplets and solid contaminants from gas streams."
+    },
+    {
+        "id": 49,
+        "section": "equipment",
+        "question": "Best valve type for throttling (flow control):",
+        "options": [
+            "Gate valve",
+            "Globe valve",
+            "Ball valve",
+            "Check valve"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Globe valves are designed for throttling; gate valves are for on/off service."
+    },
+    {
+        "id": 50,
+        "section": "equipment",
+        "question": "Purpose of a weir in a three-phase separator:",
+        "options": [
+            "To control the oil-water interface level",
+            "To measure flow rates",
+            "To add chemicals",
+            "To control gas pressure"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Weirs create overflow points that maintain proper oil and water levels."
+    },
+    {
+        "id": 51,
+        "section": "equipment",
+        "question": "Equipment to protect pipeline from overpressure:",
+        "options": [
+            "Check valve",
+            "Pressure safety valve (PSV)",
+            "Control valve",
+            "Gate valve"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PSVs automatically open at set pressure to prevent equipment rupture."
+    },
+    {
+        "id": 52,
+        "section": "equipment",
+        "question": "What is retention time in a separator?",
+        "options": [
+            "Time to clean the separator",
+            "Average time fluid spends in vessel for separation",
+            "Time between maintenance",
+            "Operating hours per day"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Retention time allows sufficient duration for gravity separation; typical oil: 3-5 minutes."
+    },
+    {
+        "id": 53,
+        "section": "equipment",
+        "question": "Which compressor for high flow, lower pressure ratio?",
+        "options": [
+            "Reciprocating compressor",
+            "Centrifugal compressor",
+            "Both equal",
+            "Neither"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Centrifugal excels at high flow with moderate ratios; reciprocating better for low flow, high ratios."
+    },
+    {
+        "id": 54,
+        "section": "equipment",
+        "question": "Purpose of a level controller (LC) on separator:",
+        "options": [
+            "To control pressure",
+            "To maintain proper liquid levels",
+            "To measure gas flow",
+            "To control temperature"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Level controllers regulate liquid outlet valves to maintain optimal levels."
+    },
+    {
+        "id": 55,
+        "section": "equipment",
+        "question": "What is a slug catcher used for?",
+        "options": [
+            "To catch debris",
+            "To handle intermittent liquid slugs in gas pipelines",
+            "To measure flow",
+            "To add inhibitors"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Slug catchers are large vessels that handle liquid slugs arriving intermittently."
+    },
+    {
+        "id": 56,
+        "section": "equipment",
+        "question": "Typical oil retention time in separator:",
+        "options": [
+            "10-30 seconds",
+            "1-2 minutes",
+            "3-5 minutes",
+            "30-60 minutes"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Oil typically needs 3-5 minutes retention for adequate gravity separation."
+    },
+    {
+        "id": 57,
+        "section": "equipment",
+        "question": "Gas retention time in separator (for liquid dropout):",
+        "options": [
+            "10-30 seconds",
+            "5-10 minutes",
+            "30-60 minutes",
+            "Several hours"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Gas requires much shorter retention (seconds) for liquid droplets to settle out."
+    },
+    {
+        "id": 58,
+        "section": "equipment",
+        "question": "What is a boot in separator design?",
+        "options": [
+            "A safety device",
+            "An extended bottom section for water collection",
+            "A type of valve",
+            "A measurement instrument"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A boot is a cylindrical extension at the bottom of horizontal separators for water settling."
+    },
+    {
+        "id": 59,
+        "section": "equipment",
+        "question": "Purpose of a vortex breaker in a separator:",
+        "options": [
+            "To increase turbulence",
+            "To prevent vortexing at liquid outlet",
+            "To measure flow",
+            "To heat the liquid"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Vortex breakers prevent swirling that could cause gas entrainment in liquid outlet."
+    },
+    {
+        "id": 60,
+        "section": "equipment",
+        "question": "Typical separator operating pressure range:",
+        "options": [
+            "Atmospheric (0 psig)",
+            "50-1500 psig",
+            "5000-10000 psig",
+            "Vacuum conditions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Separators typically operate from low pressure (50 psig) to high pressure (1500 psig) depending on stage."
+    },
+    {
+        "id": 61,
+        "section": "equipment",
+        "question": "What is a mist extractor pad made of?",
+        "options": [
+            "Concrete",
+            "Wire mesh or vanes",
+            "Rubber",
+            "Wood"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mist extractors use wire mesh or vane-type elements to coalesce liquid droplets."
+    },
+    {
+        "id": 62,
+        "section": "equipment",
+        "question": "Minimum recommended separator size:",
+        "options": [
+            "As small as possible to save cost",
+            "Large enough to provide adequate retention time",
+            "Always 10 feet diameter",
+            "Size doesn't matter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Separator must be sized to provide required retention time and vapor/liquid disengagement."
+    },
+    {
+        "id": 63,
+        "section": "equipment",
+        "question": "What is the purpose of a baffle in a separator?",
+        "options": [
+            "To reduce turbulence and promote settling",
+            "To increase flow rate",
+            "To add chemicals",
+            "To measure pressure"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Baffles reduce turbulence and help distribute flow for better phase separation."
+    },
+    {
+        "id": 64,
+        "section": "equipment",
+        "question": "Typical water retention time in 3-phase separator:",
+        "options": [
+            "Same as oil (3-5 min)",
+            "Longer than oil (10-30 min)",
+            "Shorter than oil (1 min)",
+            "No specific requirement"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Water needs longer retention time (10-30 min) due to smaller density difference with oil."
+    },
+    {
+        "id": 65,
+        "section": "equipment",
+        "question": "What causes foaming in separators?",
+        "options": [
+            "High pressure only",
+            "Surfactants, impurities, or rapid pressure drop",
+            "Low temperature",
+            "Clean fluids"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Foaming is caused by surfactants, contaminants, or sudden pressure reduction creating stable foam."
+    },
+    {
+        "id": 66,
+        "section": "equipment",
+        "question": "Best separator type for foamy crude:",
+        "options": [
+            "Vertical separator",
+            "Horizontal separator with large liquid surface area",
+            "Spherical separator",
+            "Any type works equally"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Horizontal separators provide large liquid surface for foam breaking."
+    },
+    {
+        "id": 67,
+        "section": "equipment",
+        "question": "Purpose of a pressure control valve on separator gas outlet:",
+        "options": [
+            "To increase pressure",
+            "To maintain constant separator pressure",
+            "To measure flow",
+            "To add chemicals"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PCV on gas outlet throttles to maintain desired separator pressure."
+    },
+    {
+        "id": 68,
+        "section": "equipment",
+        "question": "What is the typical L/D ratio for horizontal separators?",
+        "options": [
+            "1:1",
+            "3:1 to 5:1",
+            "10:1",
+            "1:10"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Horizontal separators typically have length-to-diameter ratios of 3:1 to 5:1 for optimal performance."
+    },
+    {
+        "id": 69,
+        "section": "equipment",
+        "question": "Purpose of a level alarm high-high (LAHH) on separator:",
+        "options": [
+            "To measure liquid density",
+            "To trigger emergency shutdown if liquid level too high",
+            "To control normal operation",
+            "To measure temperature"
+        ],
+        "correctAnswer": 1,
+        "explanation": "LAHH triggers ESD to prevent liquid carryover to downstream equipment."
+    },
+    {
+        "id": 70,
+        "section": "equipment",
+        "question": "What is interface level in a 3-phase separator?",
+        "options": [
+            "The boundary between gas and liquid",
+            "The boundary between oil and water",
+            "The separator wall",
+            "The inlet nozzle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Interface level is the oil-water boundary, critical for proper separation in 3-phase separators."
+    },
+    {
+        "id": 71,
+        "section": "pid",
+        "question": "Gate valve symbol on P&ID:",
+        "options": [
+            "Circle with two horizontal lines",
+            "Circle with globe inside",
+            "Triangle",
+            "Diamond"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Gate valves shown as circle with two parallel lines; used for on/off service."
+    },
+    {
+        "id": 72,
+        "section": "pid",
+        "question": "\"FT\" in instrument tag means:",
+        "options": [
+            "Flow Transmitter",
+            "Fuel Tank",
+            "Filter Type",
+            "Foot valve"
+        ],
+        "correctAnswer": 0,
+        "explanation": "ISA 5.1: F=Flow (measured variable), T=Transmitter (function)."
+    },
+    {
+        "id": 73,
+        "section": "pid",
+        "question": "Triangle on a line represents:",
+        "options": [
+            "Valve",
+            "Pump",
+            "Flow direction",
+            "Temperature point"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Triangles (arrows) indicate direction of flow in process lines."
+    },
+    {
+        "id": 74,
+        "section": "pid",
+        "question": "\"PIC\" stands for:",
+        "options": [
+            "Pressure Indicator Controller",
+            "Pump Inlet Connection",
+            "Process Isolation Chamber",
+            "Pneumatic Instrument"
+        ],
+        "correctAnswer": 0,
+        "explanation": "P=Pressure, I=Indicator, C=Controller."
+    },
+    {
+        "id": 75,
+        "section": "pid",
+        "question": "Dashed line to a valve indicates:",
+        "options": [
+            "Pneumatic/hydraulic signal",
+            "Electrical signal",
+            "Manual operation",
+            "Bypass line"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Dashed lines represent pneumatic/hydraulic signals; solid lines are electrical."
+    },
+    {
+        "id": 76,
+        "section": "pid",
+        "question": "\"LG\" on P&ID means:",
+        "options": [
+            "Level Glass (sight glass)",
+            "Liquid Gas separator",
+            "Low Grade vessel",
+            "Large Gauge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "LG = Level Glass, visual indicator for liquid level."
+    },
+    {
+        "id": 77,
+        "section": "pid",
+        "question": "\"PSV\" stands for:",
+        "options": [
+            "Pressure Safety Valve",
+            "Process Service Valve",
+            "Pneumatic Solenoid Valve",
+            "Primary Shutoff Valve"
+        ],
+        "correctAnswer": 0,
+        "explanation": "PSV = Pressure Safety Valve (relief valve) for overpressure protection."
+    },
+    {
+        "id": 78,
+        "section": "pid",
+        "question": "First letter in instrument tag represents:",
+        "options": [
+            "The function",
+            "The measured variable",
+            "The location",
+            "Manufacturer code"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Per ISA 5.1, first letter = measured variable (P, T, F, L, etc.)."
+    },
+    {
+        "id": 79,
+        "section": "pid",
+        "question": "\"TIC\" represents:",
+        "options": [
+            "Temperature Indicator Controller",
+            "Tank Inlet Connection",
+            "Thermal Insulation Coating",
+            "Time Interval Counter"
+        ],
+        "correctAnswer": 0,
+        "explanation": "T=Temperature, I=Indicator, C=Controller."
+    },
+    {
+        "id": 80,
+        "section": "pid",
+        "question": "Solid line connection to control valve indicates:",
+        "options": [
+            "Pneumatic signal",
+            "Electric signal",
+            "Hydraulic signal",
+            "Manual operation"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Solid lines = electrical signals; dashed = pneumatic/hydraulic."
+    },
+    {
+        "id": 81,
+        "section": "pid",
+        "question": "\"LAHH\" means:",
+        "options": [
+            "Level Alarm High High",
+            "Liquid Analysis Hydrogen",
+            "Line Assembly Hardware",
+            "Low Accuracy High Hazard"
+        ],
+        "correctAnswer": 0,
+        "explanation": "L=Level, A=Alarm, HH=High High (critical high alarm)."
+    },
+    {
+        "id": 82,
+        "section": "pid",
+        "question": "Pump symbol on P&ID:",
+        "options": [
+            "Circle with X",
+            "Circle with arrow/impeller symbol",
+            "Square box",
+            "Triangle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pumps shown as circles with internal symbols indicating pump type."
+    },
+    {
+        "id": 83,
+        "section": "pid",
+        "question": "Globe valve symbol shows:",
+        "options": [
+            "Two horizontal lines",
+            "Internal obstruction/plug shape",
+            "Triangle",
+            "Diamond"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Globe valves show internal obstruction representing throttling element."
+    },
+    {
+        "id": 84,
+        "section": "pid",
+        "question": "\"FIC\" stands for:",
+        "options": [
+            "Flow Indicator Controller",
+            "Filter Inlet Connection",
+            "Flame Ionization Chromatography",
+            "Facility Isolation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "F=Flow, I=Indicator, C=Controller."
+    },
+    {
+        "id": 85,
+        "section": "pid",
+        "question": "Check valve symbol typically shows:",
+        "options": [
+            "Circle with two lines",
+            "Spring-loaded flapper or ball",
+            "Diamond shape",
+            "Square"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Check valves depicted with internal elements showing one-way flow."
+    },
+    {
+        "id": 86,
+        "section": "pid",
+        "question": "\"TE\" represents:",
+        "options": [
+            "Temperature Element (sensor)",
+            "Tank Elevation",
+            "Test Equipment",
+            "Thermal Efficiency"
+        ],
+        "correctAnswer": 0,
+        "explanation": "T=Temperature, E=Element/Sensor (primary measuring device)."
+    },
+    {
+        "id": 87,
+        "section": "pid",
+        "question": "Horizontal cylinder on P&ID typically represents:",
+        "options": [
+            "Storage tank",
+            "Horizontal separator or pressure vessel",
+            "Reactor",
+            "Mixer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Horizontal cylinders represent separators or horizontal pressure vessels."
+    },
+    {
+        "id": 88,
+        "section": "pid",
+        "question": "\"PDT\" stands for:",
+        "options": [
+            "Pressure Differential Transmitter",
+            "Product Delivery Tank",
+            "Process Design Temperature",
+            "Pump Discharge Throttle"
+        ],
+        "correctAnswer": 0,
+        "explanation": "P=Pressure, D=Differential, T=Transmitter."
+    },
+    {
+        "id": 89,
+        "section": "pid",
+        "question": "Heat exchanger on P&ID shown as:",
+        "options": [
+            "Circle with cross",
+            "Rectangular box with tube/shell indication",
+            "Triangle",
+            "Oval"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Heat exchangers drawn as rectangles with internal elements."
+    },
+    {
+        "id": 90,
+        "section": "pid",
+        "question": "\"LAL\" means:",
+        "options": [
+            "Level Alarm Low",
+            "Liquid Analysis Laboratory",
+            "Line Assembly Length",
+            "Low Accuracy Limit"
+        ],
+        "correctAnswer": 0,
+        "explanation": "L=Level, A=Alarm, L=Low."
+    },
+    {
+        "id": 91,
+        "section": "pid",
+        "question": "Control valve with \"FC\" signal receives input from:",
+        "options": [
+            "Pressure transmitter",
+            "Flow controller",
+            "Temperature controller",
+            "Level controller"
+        ],
+        "correctAnswer": 1,
+        "explanation": "FC = Flow Controller, which would control a valve based on flow measurement."
+    },
+    {
+        "id": 92,
+        "section": "pid",
+        "question": "\"PT\" stands for:",
+        "options": [
+            "Pressure Transmitter",
+            "Process Temperature",
+            "Pump Type",
+            "Pipe Thread"
+        ],
+        "correctAnswer": 0,
+        "explanation": "P=Pressure, T=Transmitter."
+    },
+    {
+        "id": 93,
+        "section": "pid",
+        "question": "Ball valve symbol on P&ID:",
+        "options": [
+            "Circle with two lines",
+            "Circle with ball/sphere inside",
+            "Diamond",
+            "Triangle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ball valves shown as circle with spherical element inside."
+    },
+    {
+        "id": 94,
+        "section": "pid",
+        "question": "\"LT\" stands for:",
+        "options": [
+            "Level Transmitter",
+            "Low Temperature",
+            "Line Type",
+            "Liquid Tank"
+        ],
+        "correctAnswer": 0,
+        "explanation": "L=Level, T=Transmitter."
+    },
+    {
+        "id": 95,
+        "section": "pid",
+        "question": "\"ESD\" valve means:",
+        "options": [
+            "Extra Safety Device",
+            "Emergency Shutdown valve",
+            "Electrical Signal Detector",
+            "Equipment Safety Design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ESD = Emergency Shutdown, automatically closes/opens during emergency."
+    },
+    {
+        "id": 96,
+        "section": "pid",
+        "question": "Butterfly valve symbol shows:",
+        "options": [
+            "Circle with two lines",
+            "Circle with disc inside",
+            "Triangle",
+            "Square"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Butterfly valves shown as circle with rotating disc element."
+    },
+    {
+        "id": 97,
+        "section": "pid",
+        "question": "\"TT\" stands for:",
+        "options": [
+            "Temperature Transmitter",
+            "Tank Type",
+            "Test Terminal",
+            "Thermal Treatment"
+        ],
+        "correctAnswer": 0,
+        "explanation": "T=Temperature, T=Transmitter."
+    },
+    {
+        "id": 98,
+        "section": "pid",
+        "question": "Orifice plate on P&ID shown as:",
+        "options": [
+            "Circle",
+            "Two vertical lines with restriction",
+            "Diamond",
+            "Triangle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Orifice plates shown as restriction in line with two vertical marks."
+    },
+    {
+        "id": 99,
+        "section": "pid",
+        "question": "\"AI\" in instrument tag means:",
+        "options": [
+            "Analog Input",
+            "Alarm Indicator",
+            "Analysis Indicator",
+            "Automatic Isolation"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A=Analysis, I=Indicator (for composition/quality measurement)."
+    },
+    {
+        "id": 100,
+        "section": "pid",
+        "question": "Compressor symbol on P&ID:",
+        "options": [
+            "Circle with arrow",
+            "Circle with compression symbol or 'C'",
+            "Square",
+            "Triangle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Compressors shown as circle with internal compression indication."
+    },
+    {
+        "id": 101,
+        "section": "safety",
+        "question": "Primary purpose of PSV:",
+        "options": [
+            "To regulate normal pressure",
+            "To automatically relieve overpressure",
+            "To measure pressure",
+            "To isolate equipment"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PSVs automatically open at set pressure to prevent equipment rupture."
+    },
+    {
+        "id": 102,
+        "section": "safety",
+        "question": "\"ESD\" stands for:",
+        "options": [
+            "Emergency Safety Device",
+            "Emergency Shutdown",
+            "Electrical Safety Disconnect",
+            "Equipment Safety Design"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ESD systems automatically isolate and depressurize during abnormal conditions."
+    },
+    {
+        "id": 103,
+        "section": "safety",
+        "question": "HAZOP guide word \"MORE\" examines:",
+        "options": [
+            "Equipment cost increases",
+            "Quantitative increases in parameters",
+            "Additional personnel",
+            "More equipment"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"MORE\" examines deviations like more flow, pressure, temperature than design."
+    },
+    {
+        "id": 104,
+        "section": "safety",
+        "question": "\"Inherent safety\" means:",
+        "options": [
+            "Adding more safety devices",
+            "Eliminating hazards by design",
+            "Inheriting procedures from similar plants",
+            "Manufacturer-built safety"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inherent safety designs out hazards rather than adding protective systems."
+    },
+    {
+        "id": 105,
+        "section": "safety",
+        "question": "\"ALARP\" means:",
+        "options": [
+            "All Levels Are Reasonably Protected",
+            "As Low As Reasonably Practicable",
+            "Automated Level and Pressure Response",
+            "Always Limit All Risky Practices"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ALARP = reducing risk to lowest reasonably practicable level."
+    },
+    {
+        "id": 106,
+        "section": "safety",
+        "question": "\"SIS\" is:",
+        "options": [
+            "Safety training system",
+            "Safety Instrumented System to prevent/mitigate hazards",
+            "Safety inspection software",
+            "Standard instrument calibration"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SIS are independent protection layers that bring process to safe state."
+    },
+    {
+        "id": 107,
+        "section": "safety",
+        "question": "In hierarchy of controls, most effective is:",
+        "options": [
+            "PPE",
+            "Administrative controls",
+            "Elimination of hazard",
+            "Engineering controls"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Hierarchy: Elimination > Substitution > Engineering > Administrative > PPE."
+    },
+    {
+        "id": 108,
+        "section": "safety",
+        "question": "\"HAZOP\" stands for:",
+        "options": [
+            "Hazard Analysis Zone Operating Procedure",
+            "Hazard and Operability study",
+            "High Altitude Zone Operation",
+            "Hazard Authorization Process"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HAZOP = systematic study to identify process hazards and operability problems."
+    },
+    {
+        "id": 109,
+        "section": "safety",
+        "question": "HAZOP guide word \"LESS\" examines:",
+        "options": [
+            "Cost reduction",
+            "Quantitative decreases in parameters",
+            "Fewer personnel",
+            "Smaller equipment"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"LESS\" examines deviations like less flow, pressure, temperature."
+    },
+    {
+        "id": 110,
+        "section": "safety",
+        "question": "HAZOP guide word \"NO\" examines:",
+        "options": [
+            "Negative results",
+            "Complete absence of intended result",
+            "Denial of access",
+            "No personnel"
+        ],
+        "correctAnswer": 1,
+        "explanation": "\"NO\" examines complete absence like no flow, no pressure."
+    },
+    {
+        "id": 111,
+        "section": "safety",
+        "question": "\"LOPA\" stands for:",
+        "options": [
+            "Layer of Protection Analysis",
+            "Low Operating Pressure Alarm",
+            "List of Process Accessories",
+            "Level Operating Point Adjustment"
+        ],
+        "correctAnswer": 0,
+        "explanation": "LOPA is a semi-quantitative risk assessment method."
+    },
+    {
+        "id": 112,
+        "section": "safety",
+        "question": "PSV set pressure should be:",
+        "options": [
+            "Below normal operating pressure",
+            "At or below equipment MAWP",
+            "As high as possible",
+            "Doesn't matter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PSV set at/below MAWP to protect equipment from exceeding design limits."
+    },
+    {
+        "id": 113,
+        "section": "safety",
+        "question": "\"SIL\" in safety systems means:",
+        "options": [
+            "Safety Integrity Level",
+            "System Isolation Lock",
+            "Standard Industry Limit",
+            "Safety Inspection List"
+        ],
+        "correctAnswer": 0,
+        "explanation": "SIL (Safety Integrity Level) rates probability of SIS failure on demand."
+    },
+    {
+        "id": 114,
+        "section": "safety",
+        "question": "Typical SIL levels range from:",
+        "options": [
+            "1 to 10",
+            "1 to 4",
+            "A to D",
+            "Low to High"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SIL 1 (lowest) to SIL 4 (highest integrity/lowest failure probability)."
+    },
+    {
+        "id": 115,
+        "section": "safety",
+        "question": "\"PTR\" stands for:",
+        "options": [
+            "Pressure Temperature Rating",
+            "Pre-startup Technical Review",
+            "Process Thermal Reactor",
+            "Pump Test Report"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PTR ensures all safety, operating, maintenance, and emergency procedures are in place before startup."
+    },
+    {
+        "id": 116,
+        "section": "safety",
+        "question": "HAZOP guide word \"REVERSE\" examines:",
+        "options": [
+            "Backward flow",
+            "Opposite of intended result",
+            "Process reversal",
+            "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "\"REVERSE\" examines flow reversal, opposite reactions, backward processes."
+    },
+    {
+        "id": 117,
+        "section": "safety",
+        "question": "Fire triangle consists of:",
+        "options": [
+            "Fuel, oxygen, ignition source",
+            "Pressure, temperature, flow",
+            "Gas, oil, water",
+            "Alarm, shutdown, relief"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Fire requires fuel, oxidizer (oxygen), and ignition source; remove any to prevent fire."
+    },
+    {
+        "id": 118,
+        "section": "safety",
+        "question": "\"BLEVE\" stands for:",
+        "options": [
+            "Boiling Liquid Expanding Vapor Explosion",
+            "Basic Level Emergency Valve Equipment",
+            "Bursting Line Emergency Vent",
+            "Below Limit Explosion Velocity"
+        ],
+        "correctAnswer": 0,
+        "explanation": "BLEVE is catastrophic rupture of vessel containing liquid above its boiling point."
+    },
+    {
+        "id": 119,
+        "section": "safety",
+        "question": "Lower Explosive Limit (LEL) is:",
+        "options": [
+            "Minimum concentration for combustion",
+            "Maximum safe concentration",
+            "Average explosive value",
+            "Legal exposure limit"
+        ],
+        "correctAnswer": 0,
+        "explanation": "LEL is minimum gas/air concentration that can ignite; below LEL is 'too lean' to burn."
+    },
+    {
+        "id": 120,
+        "section": "safety",
+        "question": "Upper Explosive Limit (UEL) is:",
+        "options": [
+            "Minimum concentration for combustion",
+            "Maximum concentration for combustion",
+            "Legal exposure limit",
+            "Ultimate equipment limit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "UEL is maximum concentration that can ignite; above UEL is 'too rich' to burn."
+    },
+    {
+        "id": 121,
+        "section": "safety",
+        "question": "Flammable range is:",
+        "options": [
+            "Distance flames can travel",
+            "Between LEL and UEL",
+            "Temperature range for combustion",
+            "Pressure range for ignition"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Flammable range is concentrations between LEL and UEL where ignition is possible."
+    },
+    {
+        "id": 122,
+        "section": "safety",
+        "question": "H2S is hazardous because it is:",
+        "options": [
+            "Toxic and flammable",
+            "Only flammable",
+            "Only toxic",
+            "Inert and safe"
+        ],
+        "correctAnswer": 0,
+        "explanation": "H2S (hydrogen sulfide) is both highly toxic and flammable."
+    },
+    {
+        "id": 123,
+        "section": "safety",
+        "question": "\"MSDS\" or \"SDS\" provides:",
+        "options": [
+            "Equipment operating procedures",
+            "Chemical safety and hazard information",
+            "Maintenance schedules",
+            "Production data sheets"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Material Safety Data Sheet provides chemical properties, hazards, handling precautions."
+    },
+    {
+        "id": 124,
+        "section": "safety",
+        "question": "Confined space hazards include:",
+        "options": [
+            "Only oxygen deficiency",
+            "Oxygen deficiency, toxic gases, engulfment",
+            "Only high temperature",
+            "No specific hazards"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Confined spaces have multiple hazards: poor ventilation, toxic atmosphere, engulfment, etc."
+    },
+    {
+        "id": 125,
+        "section": "safety",
+        "question": "\"PPE\" stands for:",
+        "options": [
+            "Process Protection Equipment",
+            "Personal Protective Equipment",
+            "Pressure Protection Element",
+            "Primary Prevention Engineering"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PPE = Personal Protective Equipment (last line of defense in hierarchy of controls)."
+    },
+    {
+        "id": 126,
+        "section": "safety",
+        "question": "\"HAZID\" stands for:",
+        "options": [
+            "Hazard Identification study",
+            "Hazard Analysis Zone ID",
+            "High Altitude Zone Investigation",
+            "Hazardous Area Zoning"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HAZID is preliminary hazard identification study in early project phases."
+    },
+    {
+        "id": 127,
+        "section": "safety",
+        "question": "Pressure relief device sizing is based on:",
+        "options": [
+            "Arbitrary selection",
+            "Credible overpressure scenarios",
+            "Pipe size only",
+            "Cost considerations"
+        ],
+        "correctAnswer": 1,
+        "explanation": "PSV must be sized for worst credible overpressure scenario (fire, blocked outlet, etc.)."
+    },
+    {
+        "id": 128,
+        "section": "safety",
+        "question": "\"SIMOPS\" means:",
+        "options": [
+            "Simple Operations",
+            "Simultaneous Operations",
+            "Simulation of Operations",
+            "Site Maintenance Operational Procedures"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SIMOPS manages safety risks when multiple activities occur simultaneously."
+    },
+    {
+        "id": 129,
+        "section": "safety",
+        "question": "Process safety barrier is:",
+        "options": [
+            "Physical fence around facility",
+            "Any measure that prevents/mitigates hazardous events",
+            "Only alarm systems",
+            "Security personnel"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Barriers include design features, procedures, alarms, shutdown systems preventing/mitigating incidents."
+    },
+    {
+        "id": 130,
+        "section": "safety",
+        "question": "\"QRA\" stands for:",
+        "options": [
+            "Quick Response Action",
+            "Quantitative Risk Assessment",
+            "Quality Requirements Analysis",
+            "Quarterly Review Audit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "QRA uses numerical methods to estimate risks and consequences of hazardous events."
+    },
+    {
+        "id": 131,
+        "section": "fundamentals",
+        "question": "Purpose of three-phase separator:",
+        "options": [
+            "To separate oil, gas, and water",
+            "To separate three types of crude",
+            "To operate in three modes",
+            "To handle three pressure stages"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Three-phase separators use gravity to separate oil, gas, and water."
+    },
+    {
+        "id": 132,
+        "section": "fundamentals",
+        "question": "Why is gas dehydration important?",
+        "options": [
+            "To increase heating value",
+            "To prevent hydrates and corrosion",
+            "To make gas flow faster",
+            "To reduce density"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Water removal prevents hydrate plugs and reduces corrosion."
+    },
+    {
+        "id": 133,
+        "section": "fundamentals",
+        "question": "\"Water cut\" is:",
+        "options": [
+            "Process of separating water",
+            "Percentage of water in total liquid production",
+            "Equipment for water removal",
+            "Reduction in water usage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Water cut = (water production / total liquid) × 100%."
+    },
+    {
+        "id": 134,
+        "section": "fundamentals",
+        "question": "\"Retention time\" in separator refers to:",
+        "options": [
+            "How long equipment can be stored",
+            "Time fluids remain in vessel for separation",
+            "Valve closing time",
+            "Employee shift duration"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Average time fluid spends in separator allowing phases to separate by gravity."
+    },
+    {
+        "id": 135,
+        "section": "fundamentals",
+        "question": "\"Turndown ratio\" is:",
+        "options": [
+            "Ratio of maximum to minimum operating capacity",
+            "Time to shut down equipment",
+            "Failure to success ratio",
+            "Percentage of offline time"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Indicates operational flexibility; 10:1 means 10% to 100% of design."
+    },
+    {
+        "id": 136,
+        "section": "fundamentals",
+        "question": "Hydrate formation conditions:",
+        "options": [
+            "High temperature, low pressure",
+            "Low temperature, high pressure, presence of water and light HC",
+            "High temperature, high pressure",
+            "Only at atmospheric conditions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hydrates form when water and light hydrocarbons combine under high pressure and low temperature."
+    },
+    {
+        "id": 137,
+        "section": "fundamentals",
+        "question": "Hydrate prevention methods include:",
+        "options": [
+            "Heating only",
+            "Chemical injection (methanol/glycol), heating, dehydration",
+            "Pressure increase only",
+            "No prevention possible"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multiple methods: inhibitors, maintain temperature above hydrate point, remove water."
+    },
+    {
+        "id": 138,
+        "section": "fundamentals",
+        "question": "TEG in gas dehydration is:",
+        "options": [
+            "Temperature Elevation Gas",
+            "Triethylene Glycol",
+            "Total Equipment Grade",
+            "Thermal Energy Generator"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TEG (Triethylene Glycol) is common liquid desiccant for gas dehydration."
+    },
+    {
+        "id": 139,
+        "section": "fundamentals",
+        "question": "Corrosion inhibitor works by:",
+        "options": [
+            "Removing all water",
+            "Forming protective film on metal surfaces",
+            "Increasing pressure",
+            "Cooling the fluid"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Inhibitors create protective barrier preventing corrosive agents from contacting metal."
+    },
+    {
+        "id": 140,
+        "section": "fundamentals",
+        "question": "\"Sweet\" corrosion caused by:",
+        "options": [
+            "H2S",
+            "CO2 dissolving in water",
+            "Oxygen",
+            "Sugar"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CO2 + water forms carbonic acid causing 'sweet' corrosion."
+    },
+    {
+        "id": 141,
+        "section": "fundamentals",
+        "question": "\"Sour\" corrosion caused by:",
+        "options": [
+            "CO2",
+            "H2S (hydrogen sulfide)",
+            "Oxygen",
+            "Nitrogen"
+        ],
+        "correctAnswer": 1,
+        "explanation": "H2S presence causes more severe 'sour' corrosion."
+    },
+    {
+        "id": 142,
+        "section": "fundamentals",
+        "question": "Typical separator stages in production:",
+        "options": [
+            "Only one stage needed",
+            "Multiple stages (2-4) for pressure reduction",
+            "Always 10 stages",
+            "Stages not important"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Multi-stage separation optimizes oil recovery and gas quality through progressive pressure reduction."
+    },
+    {
+        "id": 143,
+        "section": "fundamentals",
+        "question": "First stage separator pressure typically:",
+        "options": [
+            "Lowest in the system",
+            "Highest in the system",
+            "Same as stock tank",
+            "Atmospheric"
+        ],
+        "correctAnswer": 1,
+        "explanation": "First stage operates at highest pressure, subsequent stages progressively lower."
+    },
+    {
+        "id": 144,
+        "section": "fundamentals",
+        "question": "Stock tank pressure is typically:",
+        "options": [
+            "High pressure (1000 psig)",
+            "Atmospheric or slightly above",
+            "Vacuum",
+            "Same as separator"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Stock tank operates at atmospheric or low pressure for final gas separation."
+    },
+    {
+        "id": 145,
+        "section": "fundamentals",
+        "question": "Purpose of test separator:",
+        "options": [
+            "To test new equipment",
+            "To measure individual well production",
+            "For emergency backup",
+            "For water storage"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Test separator measures oil, gas, water from individual wells for allocation and monitoring."
+    },
+    {
+        "id": 146,
+        "section": "fundamentals",
+        "question": "Manifold in production system:",
+        "options": [
+            "Collection of pipes and valves directing flow",
+            "Type of compressor",
+            "Separator component",
+            "Measurement device"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Manifold routes production from multiple wells to separators or test separator."
+    },
+    {
+        "id": 147,
+        "section": "fundamentals",
+        "question": "Flowline connects:",
+        "options": [
+            "Separator to tank",
+            "Wellhead to first production facility",
+            "Pump to compressor",
+            "Two separators"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Flowline is pipeline from wellhead to GOSP (Gas Oil Separator Plant)."
+    },
+    {
+        "id": 148,
+        "section": "fundamentals",
+        "question": "GOSP stands for:",
+        "options": [
+            "Gas Oil Storage Plant",
+            "Gas Oil Separator Plant",
+            "General Operations Service Platform",
+            "Gathering Operations System Process"
+        ],
+        "correctAnswer": 1,
+        "explanation": "GOSP is central facility where well fluids are separated into oil, gas, water."
+    },
+    {
+        "id": 149,
+        "section": "fundamentals",
+        "question": "Produced water treatment is needed because:",
+        "options": [
+            "Water has value",
+            "Environmental regulations require treatment before disposal",
+            "Water can be sold",
+            "Not needed, water is clean"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Produced water must be treated to remove oil/contaminants before disposal or reinjection."
+    },
+    {
+        "id": 150,
+        "section": "fundamentals",
+        "question": "API gravity measures:",
+        "options": [
+            "Weight of oil",
+            "Oil density relative to water (higher API = lighter oil)",
+            "Gas composition",
+            "Water content"
+        ],
+        "correctAnswer": 1,
+        "explanation": "API gravity is inverse density scale; higher API means lighter (less dense) oil."
+    },
+    {
+        "id": 151,
+        "section": "fundamentals",
+        "question": "Typical API gravity for light crude:",
+        "options": [
+            "10-20 °API",
+            "30-40 °API",
+            "Over 40 °API",
+            "Below 10 °API"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Light crude typically >30 °API; very light >40 °API; heavy <20 °API."
+    },
+    {
+        "id": 152,
+        "section": "fundamentals",
+        "question": "BSW stands for:",
+        "options": [
+            "Basic Sediment and Water",
+            "Bottom Storage Well",
+            "Bypass Safety Waste",
+            "Barrel Standard Weight"
+        ],
+        "correctAnswer": 0,
+        "explanation": "BS&W measures sediment and water content in crude oil (quality indicator)."
+    },
+    {
+        "id": 153,
+        "section": "fundamentals",
+        "question": "RVP (Reid Vapor Pressure) indicates:",
+        "options": [
+            "Reservoir pressure",
+            "Oil volatility (tendency to vaporize)",
+            "Relief valve pressure",
+            "Rotating vane pressure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "RVP measures crude oil volatility; important for safety and transportation."
+    },
+    {
+        "id": 154,
+        "section": "fundamentals",
+        "question": "Flash point is:",
+        "options": [
+            "Ignition temperature of oil",
+            "Lowest temperature where vapors ignite",
+            "Maximum operating temperature",
+            "Separator temperature"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Flash point is minimum temperature at which vapors form and ignite with ignition source."
+    },
+    {
+        "id": 155,
+        "section": "fundamentals",
+        "question": "Pour point is:",
+        "options": [
+            "Maximum flow temperature",
+            "Lowest temperature where oil still flows",
+            "Separator operating point",
+            "Pump discharge pressure"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pour point is lowest temperature at which oil remains pourable (flows)."
+    }
+]
