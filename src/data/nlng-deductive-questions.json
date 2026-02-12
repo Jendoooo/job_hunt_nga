@@ -461,7 +461,7 @@
       "8",
       "12"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 2,
     "explanation": ""
   },
   {
@@ -491,7 +491,7 @@
       "80 tablets",
       "600 tablets"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 2,
     "explanation": "24 times 3 is 72"
   },
   {
@@ -521,7 +521,7 @@
       "A client that generates £167,000 in yearly revenue with a 9 month contract.",
       "A client that generates £1 million in yearly revenue with a 3 month contract."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": ""
   },
   {
@@ -566,7 +566,7 @@
       "Lauren, Maria, Logan, Matthew",
       "Matthew, Maria, Lauren, Logan"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": ""
   },
   {
@@ -581,7 +581,7 @@
       "No one is taking French.",
       "Oscar is the only one taking Weightlifting."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": ""
   },
   {
@@ -596,7 +596,7 @@
       "Ashley does not work night shifts.",
       "Ashley worked in City C last Wednesday."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 2,
     "explanation": ""
   },
   {
@@ -608,7 +608,7 @@
       "100",
       "102.5"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 2,
     "explanation": "200\n210\n300"
   },
   {
@@ -623,7 +623,7 @@
       "G, L, M, O",
       "I, J, K, L"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 1,
     "explanation": ""
   },
   {
@@ -638,7 +638,7 @@
       "Olivia packed exactly five cartons.",
       "Brandon packed exactly nine cartons."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 1,
     "explanation": ""
   },
   {
@@ -653,7 +653,7 @@
       "Andrew finishes immediately ahead of Brianna.",
       "Cecilia finishes third."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 5,
     "explanation": "Brianna finishes third.\nBrandon finishes third.\nBrandon finishes sixth."
   },
   {
@@ -668,7 +668,7 @@
       "Sales to clients in the morning are worth more than those in the afternoon.",
       "Ian is a better salesperson than Hayden."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 0,
     "explanation": ""
   },
   {
@@ -683,7 +683,7 @@
       "Shop D is cleaned less frequently than is Shop A.",
       "Shop B is cleaned more frequently than Shop L."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 1,
     "explanation": ""
   },
   {
@@ -698,7 +698,7 @@
       "Airplane 45 and Airplane 67 are kept in the same airport.",
       "Airplane 67 does not have a hangar at Airport A."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 4,
     "explanation": ""
   },
   {
@@ -710,7 +710,7 @@
       "99",
       "110"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 1,
     "explanation": "120\n121\n132"
   },
   {
@@ -725,7 +725,7 @@
       "Ashley worked in City C last Wednesday.",
       "Ashley works in City D but Brandon does not."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 1,
     "explanation": ""
   },
   {
@@ -737,7 +737,7 @@
       "2",
       "9"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 2,
     "explanation": "16\n23\n30"
   },
   {
@@ -752,7 +752,7 @@
       "Ethan works in the human resource department.",
       "Felicia is bilingual."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": ""
   },
   {
@@ -764,7 +764,7 @@
       "210, 215, 220, 510, 515",
       "220, 510, 515"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 0,
     "explanation": "215, 220, 120, 420, 510\n215, 220, 510, 515\n210, 215, 220, 420, 515"
   },
   {
@@ -779,7 +779,7 @@
       "€190, paid with credit card.",
       "€12, paid with a credit card."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 0,
     "explanation": ""
   },
   {
@@ -791,7 +791,7 @@
       "20, 305 (Inferred from table column headers, possibly incomplete option text)",
       "10, 101-10, 201-75 16"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": "10, 201-25 17\n101-50, 310 18\n30, 201-75 19\n(Note: The options provided in the source image are fragmented segments of codes rather than full sequences. The question asks to identify an incorrect series based on the order: Account -> Credit -> Overdraft -> Insurance.)"
   },
   {
@@ -806,7 +806,7 @@
       "Erin finishes third. 25",
       "Felicia finishes third."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 5,
     "explanation": "Felicia finishes sixth."
   },
   {
@@ -821,7 +821,7 @@
       "F to G",
       "G to H"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": "H to I\nH to F\nJ to E\nI to E\nJ to I\nJ to G\nJ to H"
   },
   {
@@ -836,7 +836,7 @@
       "More contracts are always faxed to clients in the morning than in the afternoon. 31",
       "More contracts will be faxed to clients tomorrow. 32"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 0,
     "explanation": ""
   },
   {
@@ -851,7 +851,7 @@
       "Only crates weighing more than 1000 kilograms contain engine parts. 39",
       "Crate C contains airplane engine parts."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 1,
     "explanation": ""
   },
   {
@@ -866,7 +866,7 @@
       "Gabriel, Hannah, Hayden.",
       "Gabriel, Hannah."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 4,
     "explanation": ""
   },
   {
@@ -881,7 +881,7 @@
       "If an employee handbook is fourth, then a computer manual is fifth. 53",
       "If a computer manual is fourth, then a computer manual is fifth. 54"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 3,
     "explanation": ""
   },
   {
@@ -896,7 +896,7 @@
       "Ken's class begins at 8 am or earlier. 59",
       "Jessica's class begins after Ken's class. 60"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 5,
     "explanation": "Jessica's class begins before Javier's."
   },
   {
@@ -911,7 +911,7 @@
       "Ashley's appointment is the day immediately after Brianna's appointment.",
       "Andrew's appointment is on Wednesday. 64"
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 0,
     "explanation": ""
   },
   {
@@ -926,7 +926,7 @@
       "Cecilia finishes fifth.",
       "Brandon finishes sixth."
     ],
-    "correctAnswer": -1,
+    "correctAnswer": 0,
     "explanation": ""
   }
 ]
