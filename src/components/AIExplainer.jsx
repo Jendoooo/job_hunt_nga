@@ -6,6 +6,21 @@ import 'katex/dist/katex.min.css'
 import { explainAnswer } from '../services/deepseek'
 import { Sparkles, X, Bot } from 'lucide-react'
 
+function normalizeModelOutput(value) {
+    if (!value) return ''
+
+    return String(value)
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<\/p>/gi, '\n\n')
+        .replace(/<p[^>]*>/gi, '')
+        .replace(/<strong>(.*?)<\/strong>/gi, '**$1**')
+        .replace(/<b>(.*?)<\/b>/gi, '**$1**')
+        .replace(/<em>(.*?)<\/em>/gi, '*$1*')
+        .replace(/<i>(.*?)<\/i>/gi, '*$1*')
+        .replace(/<[^>]+>/g, '')
+        .trim()
+}
+
 export default function AIExplainer({ question }) {
     const [explanation, setExplanation] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -98,7 +113,7 @@ export default function AIExplainer({ question }) {
                                 ),
                             }}
                         >
-                            {explanation}
+                            {normalizeModelOutput(explanation)}
                         </ReactMarkdown>
                     </div>
                 )}

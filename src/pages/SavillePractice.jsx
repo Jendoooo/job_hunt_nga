@@ -6,6 +6,7 @@ import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
 import AIExplainer from '../components/AIExplainer'
 import practiceQuestions from '../data/saville-practice-questions.json'
+import { selectUniqueSessionQuestions } from '../utils/questionSession'
 import {
     Wrench,
     ArrowLeft,
@@ -18,15 +19,6 @@ const QUESTION_OPTIONS = [10, 15, 20, 30]
 const TIME_OPTIONS_MINUTES = [15, 30, 45, 60]
 const DEFAULT_QUESTION_COUNT = 20
 const DEFAULT_TIME_MINUTES = 30
-
-function shuffleQuestions(items) {
-    const next = [...items]
-    for (let i = next.length - 1; i > 0; i -= 1) {
-        const randomIndex = Math.floor(Math.random() * (i + 1))
-        ;[next[i], next[randomIndex]] = [next[randomIndex], next[i]]
-    }
-    return next
-}
 
 export default function SavillePractice() {
     const navigate = useNavigate()
@@ -45,7 +37,7 @@ export default function SavillePractice() {
     const totalTimeSeconds = timeLimitMinutes * 60
 
     function startTest() {
-        const selectedQuestions = shuffleQuestions(practiceQuestions).slice(0, Math.min(questionCount, practiceQuestions.length))
+        const selectedQuestions = selectUniqueSessionQuestions(practiceQuestions, questionCount)
 
         setSessionQuestions(selectedQuestions)
         setCurrentQuestion(0)

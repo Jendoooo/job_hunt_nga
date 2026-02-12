@@ -12,11 +12,14 @@ Date: 2026-02-12
 - [x] Remove React/lint blockers in auth, report, and test modules
 - [x] Improve result-save reliability and dashboard refresh trigger after test completion
 - [x] Prevent duplicate attempt inserts in development (StrictMode-safe save guard)
+- [x] Add browser-session fingerprint guard to further prevent duplicate attempt inserts
 - [x] Harden dashboard fetch + sign-out handling + visible error states
 - [x] Add sign-out fallback to local scope when global revocation fails
 - [x] Fix HTML explanation rendering in score review mode
 - [x] Add timeout protection so result save cannot block dashboard navigation
 - [x] Add Supabase env fallback guard to avoid deployment hard-crash
+- [x] De-duplicate dashboard attempts before KPI/recent-activity calculations
+- [x] Align dashboard pass-rate threshold with score-report pass threshold (50%)
 
 ## Phase 2: Design System Refactor (Light Theme)
 - [x] Consolidate core visual tokens and shared UI primitives in `src/index.css`
@@ -50,7 +53,10 @@ Date: 2026-02-12
 
 ## Phase 5: SHL Data Scope
 - [x] NLNG Set 1 wired and accessible in product flow
-- [ ] Expand `src/data/nlng-deductive-questions.json` with Sets 2-4
+- [x] Expand NLNG bank from 18 to 30 questions (additional chunks integrated)
+- [x] Fix incorrect validated answer keys/explanations for NLNG IDs 20, 22, 23
+- [x] Add missing NLNG question ID 28
+- [ ] Complete full Sets 2-4 ingestion beyond current 30-question bank
 - [ ] Run and review `scripts/validate-shl.js` output before merging new sets
 
 ## Phase 6: Verification Status
@@ -60,6 +66,6 @@ Date: 2026-02-12
 
 ## Next Actions
 1. Run manual UX/accessibility checks on all target breakpoints and log defects.
-2. Execute SHL Sets 2-4 validation pipeline and QA generated explanations.
+2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
 3. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
 4. Optionally split large frontend bundle if payload size reduction is required.

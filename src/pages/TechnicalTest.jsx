@@ -6,6 +6,7 @@ import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
 import AIExplainer from '../components/AIExplainer'
 import technicalQuestions from '../data/technical-questions.json'
+import { dedupeQuestionsByContent, selectUniqueSessionQuestions } from '../utils/questionSession'
 import {
     Settings,
     ArrowLeft,
@@ -23,15 +24,6 @@ const SECTIONS = [
     { key: 'safety', name: 'Process Safety', color: '#f59e0b' },
     { key: 'fundamentals', name: 'Process Fundamentals', color: '#ef4444' },
 ]
-
-function shuffleQuestions(items) {
-    const next = [...items]
-    for (let i = next.length - 1; i > 0; i -= 1) {
-        const randomIndex = Math.floor(Math.random() * (i + 1))
-        ;[next[i], next[randomIndex]] = [next[randomIndex], next[i]]
-    }
-    return next
-}
 
 export default function TechnicalTest() {
     const navigate = useNavigate()
@@ -68,9 +60,10 @@ export default function TechnicalTest() {
     function startTest() {
         if (availableQuestions.length === 0) return
 
-        let questionsToUse = [...availableQuestions]
+        const uniqueAvailable = dedupeQuestionsByContent(availableQuestions)
+        let questionsToUse = [...uniqueAvailable]
         if (mode === 'exam') {
-            questionsToUse = shuffleQuestions(questionsToUse).slice(0, questionCount)
+            questionsToUse = selectUniqueSessionQuestions(uniqueAvailable, questionCount)
         }
 
         setActiveQuestions(questionsToUse)

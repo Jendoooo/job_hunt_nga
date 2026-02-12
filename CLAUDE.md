@@ -23,13 +23,16 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Score and persistence: `src/components/ScoreReport.jsx`
   - Saves attempts to Supabase `test_attempts`
   - Displays save progress/error and emits `attempt-saved` browser event
+  - Uses short-lived session fingerprint cache + latest-attempt check to reduce duplicate inserts
   - Score review explanation supports formatted HTML content
+- Session question selection: `src/utils/questionSession.js`
+  - Dedupes by normalized question signature before session sampling
 
 ## Data Modules
 - `src/data/aptitude-questions.json`
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
-- `src/data/nlng-deductive-questions.json` (Set 1 live)
+- `src/data/nlng-deductive-questions.json` (30 questions live; Set 1 + additional chunks)
 
 ## Dashboard Module Status
 - TotalEnergies:
@@ -48,6 +51,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.
 - Dashboard surfaces runtime errors for attempt loading and AI generation.
+- Dashboard KPIs are computed from de-duplicated attempts and include pass rate, tests taken, average score, and practice sessions.
 - Deployment uses SPA rewrite via `vercel.json`.
 
 ## Verification Snapshot (2026-02-12)
@@ -55,7 +59,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `npm run build`: pass
 
 ## Pending Work
-- Expand NLNG SHL dataset with Sets 2-4 and validate with `scripts/validate-shl.js`.
+- Complete NLNG SHL ingestion for full Sets 2-4 beyond current 30-question bank and QA each addition.
 - Run complete manual QA across breakpoints 320/375/768/1024/1280+.
 - Optional: optimize bundle splitting to reduce large chunk warning.
 - Validate Supabase production schema/policies in live environment for insert/select parity.

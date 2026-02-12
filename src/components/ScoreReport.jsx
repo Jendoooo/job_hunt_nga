@@ -20,6 +20,8 @@ import {
 
 const SAVE_TIMEOUT_MS = 7000
 const LEAVE_WAIT_MS = 1500
+const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
+const RECENT_ATTEMPT_TTL_MS = 120000
 
 function withTimeout(promise, timeoutMs, message) {
     return Promise.race([
@@ -49,6 +51,49 @@ function normalizeForComparison(value) {
 
 function stableSerialize(value) {
     return JSON.stringify(normalizeForComparison(value))
+}
+
+function readRecentAttemptCache() {
+    if (typeof window === 'undefined') return {}
+
+    try {
+        const raw = window.sessionStorage.getItem(RECENT_ATTEMPT_CACHE_KEY)
+        const parsed = raw ? JSON.parse(raw) : {}
+        return parsed && typeof parsed === 'object' ? parsed : {}
+    } catch {
+        return {}
+    }
+}
+
+function writeRecentAttemptCache(cache) {
+    if (typeof window === 'undefined') return
+    try {
+        window.sessionStorage.setItem(RECENT_ATTEMPT_CACHE_KEY, JSON.stringify(cache))
+    } catch {
+        // Ignore storage write errors and continue with server-side duplicate checks.
+    }
+}
+
+function pruneRecentAttemptCache(cache) {
+    const now = Date.now()
+    return Object.entries(cache).reduce((accumulator, [key, timestamp]) => {
+        if (typeof timestamp === 'number' && now - timestamp <= RECENT_ATTEMPT_TTL_MS) {
+            accumulator[key] = timestamp
+        }
+        return accumulator
+    }, {})
+}
+
+function isFingerprintRecentlySaved(fingerprint) {
+    const cache = pruneRecentAttemptCache(readRecentAttemptCache())
+    writeRecentAttemptCache(cache)
+    return Boolean(cache[fingerprint])
+}
+
+function markFingerprintAsSaved(fingerprint) {
+    const cache = pruneRecentAttemptCache(readRecentAttemptCache())
+    cache[fingerprint] = Date.now()
+    writeRecentAttemptCache(cache)
 }
 
 function isLikelyDuplicateAttempt(latestAttempt, payload) {
@@ -114,6 +159,13 @@ export default function ScoreReport({
                 mode,
                 answers,
             }
+            const attemptFingerprint = stableSerialize(payload)
+
+            if (isFingerprintRecentlySaved(attemptFingerprint)) {
+                setSaved(true)
+                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
+                return true
+            }
 
             const { data: latestAttempt, error: latestError } = await withTimeout(
                 supabase
@@ -131,19 +183,26 @@ export default function ScoreReport({
 
             if (isLikelyDuplicateAttempt(latestAttempt, payload)) {
                 setSaved(true)
+                markFingerprintAsSaved(attemptFingerprint)
+                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: latestAttempt }))
                 return true
             }
 
-            const { error } = await withTimeout(
-                supabase.from('test_attempts').insert(payload),
+            const { data: insertedAttempt, error } = await withTimeout(
+                supabase
+                    .from('test_attempts')
+                    .insert(payload)
+                    .select('*')
+                    .single(),
                 SAVE_TIMEOUT_MS,
                 'Timed out while saving result to Supabase.'
             )
             if (error) throw error
             setSaved(true)
+            markFingerprintAsSaved(attemptFingerprint)
 
             // Notify dashboard to refresh attempts even without a full page reload.
-            window.dispatchEvent(new Event('attempt-saved'))
+            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
             return true
         } catch (err) {
             console.error('Failed to save results:', err)

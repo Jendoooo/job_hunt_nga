@@ -21,6 +21,74 @@ import {
     Construction,
 } from 'lucide-react'
 
+const PASS_RATIO_THRESHOLD = 0.5
+const DUPLICATE_WINDOW_MS = 45000
+
+function normalizeForComparison(value) {
+    if (value === null || typeof value !== 'object') return value
+
+    if (Array.isArray(value)) {
+        return value.map((item) => normalizeForComparison(item))
+    }
+
+    return Object.keys(value)
+        .sort()
+        .reduce((accumulator, key) => {
+            accumulator[key] = normalizeForComparison(value[key])
+            return accumulator
+        }, {})
+}
+
+function stableSerialize(value) {
+    return JSON.stringify(normalizeForComparison(value))
+}
+
+function attemptRatio(attempt) {
+    const score = Number(attempt?.score)
+    const total = Number(attempt?.total_questions)
+    if (!Number.isFinite(score) || !Number.isFinite(total) || total <= 0) return 0
+    return score / total
+}
+
+function dedupeAttempts(attempts) {
+    const deduped = []
+    const latestBySignature = new Map()
+
+    for (const attempt of attempts || []) {
+        const signature = [
+            attempt.user_id,
+            attempt.assessment_type,
+            attempt.module_name,
+            attempt.score,
+            attempt.total_questions,
+            attempt.time_taken_seconds,
+            attempt.mode,
+            stableSerialize(attempt.answers || {}),
+        ].join('::')
+
+        const createdAtMs = Date.parse(attempt.created_at || '')
+        const previous = latestBySignature.get(signature)
+
+        if (!previous) {
+            latestBySignature.set(signature, {
+                createdAtMs: Number.isNaN(createdAtMs) ? Number.MIN_SAFE_INTEGER : createdAtMs,
+            })
+            deduped.push(attempt)
+            continue
+        }
+
+        const currentTime = Number.isNaN(createdAtMs) ? Number.MIN_SAFE_INTEGER : createdAtMs
+        const diff = Math.abs(currentTime - previous.createdAtMs)
+
+        if (diff > DUPLICATE_WINDOW_MS) {
+            latestBySignature.set(signature, { createdAtMs: currentTime })
+            deduped.push(attempt)
+        }
+    }
+
+    return deduped
+}
+
 export default function Dashboard() {
     const { user, profile, signOut } = useAuth()
     const navigate = useNavigate()
@@ -38,6 +106,8 @@ export default function Dashboard() {
 
     const [testsTaken, setTestsTaken] = useState(0)
     const [passRate, setPassRate] = useState(null)
+    const [averageScore, setAverageScore] = useState(null)
+    const [practiceSessions, setPracticeSessions] = useState(0)
 
     const fetchRecentAttempts = useCallback(async () => {
         if (!user) return
@@ -52,12 +122,22 @@ export default function Dashboard() {
                 .order('created_at', { ascending: false })
 
             if (error) throw error
-            const attempts = data || []
-            const passCount = attempts.filter((attempt) => (attempt.score / attempt.total_questions) >= 0.7).length
+            const attempts = dedupeAttempts(data || [])
+            const examAttempts = attempts.filter((attempt) => attempt.mode === 'exam')
+            const passRateSource = examAttempts.length > 0 ? examAttempts : attempts
+            const passCount = passRateSource.filter((attempt) => attemptRatio(attempt) >= PASS_RATIO_THRESHOLD).length
+            const averageSource = passRateSource.length > 0 ? passRateSource : attempts
+            const averagePercent = averageSource.length > 0
+                ? Math.round(
+                    averageSource.reduce((sum, attempt) => sum + attemptRatio(attempt), 0) / averageSource.length * 100
+                )
+                : null
 
             setRecentAttempts(attempts.slice(0, 8))
             setTestsTaken(attempts.length)
-            setPassRate(attempts.length > 0 ? Math.round((passCount / attempts.length) * 100) : null)
+            setPracticeSessions(attempts.filter((attempt) => attempt.mode === 'practice').length)
+            setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
+            setAverageScore(averagePercent)
         } catch (err) {
             console.error('Error fetching attempts:', err)
             setAttemptsError('Could not load recent activity from Supabase.')
@@ -73,12 +153,18 @@ export default function Dashboard() {
             fetchRecentAttempts()
         }
 
+        function handleWindowFocus() {
+            fetchRecentAttempts()
+        }
+
         const intervalId = setInterval(fetchRecentAttempts, 20000)
 
         window.addEventListener('attempt-saved', handleAttemptSaved)
+        window.addEventListener('focus', handleWindowFocus)
         return () => {
             clearInterval(intervalId)
             window.removeEventListener('attempt-saved', handleAttemptSaved)
+            window.removeEventListener('focus', handleWindowFocus)
         }
     }, [fetchRecentAttempts])
 
@@ -158,8 +244,8 @@ export default function Dashboard() {
                     subtitle: 'Logic and inference',
                     description: 'Timed deductive module modeled after SHL format.',
                     icon: Lightbulb,
-                    stat: '18 Qs',
-                    type: 'Exam',
+                    stat: '30 Qs',
+                    type: 'Practice + Exam',
                     status: 'active',
                     path: '/test/nlng',
                     accent: 'sky',
@@ -266,12 +352,20 @@ export default function Dashboard() {
                     </div>
                     <div className="dashboard-hero__metrics">
                         <article className="metric-card">
-                            <span className="metric-card__label">Pass Rate</span>
+                            <span className="metric-card__label">Pass Rate (50%+)</span>
                             <strong className="metric-card__value">{passRate !== null ? `${passRate}%` : '--'}</strong>
                         </article>
                         <article className="metric-card">
                             <span className="metric-card__label">Tests Taken</span>
                             <strong className="metric-card__value">{testsTaken}</strong>
+                        </article>
+                        <article className="metric-card">
+                            <span className="metric-card__label">Average Score</span>
+                            <strong className="metric-card__value">{averageScore !== null ? `${averageScore}%` : '--'}</strong>
+                        </article>
+                        <article className="metric-card">
+                            <span className="metric-card__label">Practice Sessions</span>
+                            <strong className="metric-card__value">{practiceSessions}</strong>
                         </article>
                     </div>
                 </section>
@@ -426,8 +520,8 @@ export default function Dashboard() {
                                     </div>
                                 )}
                                 {recentAttempts.map(attempt => {
-                                    const percentage = Math.round((attempt.score / attempt.total_questions) * 100)
-                                    const passed = percentage >= 70
+                                    const percentage = Math.round(attemptRatio(attempt) * 100)
+                                    const passed = percentage >= PASS_RATIO_THRESHOLD * 100
                                     return (
                                         <article className="activity-item" key={attempt.id}>
                                             <div className="activity-item__text">

@@ -5,6 +5,7 @@ import QuestionCard from '../components/QuestionCard'
 import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
 import deductiveQuestions from '../data/nlng-deductive-questions.json'
+import { selectUniqueSessionQuestions } from '../utils/questionSession'
 import {
     Lightbulb,
     ArrowLeft,
@@ -14,19 +15,10 @@ import {
     Timer as TimerIcon,
 } from 'lucide-react'
 
-const QUESTION_OPTIONS = [10, 15, 18]
-const TIME_OPTIONS_MINUTES = [10, 15, 18, 25]
+const QUESTION_OPTIONS = [10, 15, 18, 24, 30]
+const TIME_OPTIONS_MINUTES = [10, 15, 18, 25, 30]
 const DEFAULT_QUESTION_COUNT = 18
 const DEFAULT_TIME_MINUTES = 18
-
-function shuffleQuestions(items) {
-    const next = [...items]
-    for (let i = next.length - 1; i > 0; i -= 1) {
-        const randomIndex = Math.floor(Math.random() * (i + 1))
-        ;[next[i], next[randomIndex]] = [next[randomIndex], next[i]]
-    }
-    return next
-}
 
 export default function NLNGTest() {
     const navigate = useNavigate()
@@ -46,8 +38,7 @@ export default function NLNGTest() {
     const isExamMode = mode === 'exam'
 
     function startTest() {
-        const maxQuestions = Math.min(questionCount, availableQuestions.length)
-        const selectedQuestions = shuffleQuestions(availableQuestions).slice(0, maxQuestions)
+        const selectedQuestions = selectUniqueSessionQuestions(availableQuestions, questionCount)
 
         setActiveQuestions(selectedQuestions)
         setCurrentQuestion(0)

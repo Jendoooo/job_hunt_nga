@@ -4,6 +4,7 @@ import Timer from '../components/Timer'
 import QuestionCard from '../components/QuestionCard'
 import ScoreReport from '../components/ScoreReport'
 import aptitudeQuestions from '../data/aptitude-questions.json'
+import { selectUniqueSessionQuestions } from '../utils/questionSession'
 import {
     Brain,
     ArrowLeft,
@@ -26,15 +27,6 @@ const QUESTION_OPTIONS = [8, 10, 15, 20]
 const TIME_OPTIONS_MINUTES = [4, 6, 8, 10]
 const DEFAULT_QUESTIONS = 10
 const DEFAULT_TIME_MINUTES = 6
-
-function shuffleQuestions(items) {
-    const next = [...items]
-    for (let i = next.length - 1; i > 0; i -= 1) {
-        const randomIndex = Math.floor(Math.random() * (i + 1))
-        ;[next[i], next[randomIndex]] = [next[randomIndex], next[i]]
-    }
-    return next
-}
 
 export default function AptitudeTest() {
     const navigate = useNavigate()
@@ -64,7 +56,7 @@ export default function AptitudeTest() {
     function startTest() {
         const nextSessionQuestions = SUBTESTS.reduce((accumulator, subtest) => {
             const pool = aptitudeQuestions.filter((question) => question.subtest === subtest.key)
-            accumulator[subtest.key] = shuffleQuestions(pool).slice(0, Math.min(questionsPerSubtest, pool.length))
+            accumulator[subtest.key] = selectUniqueSessionQuestions(pool, questionsPerSubtest)
             return accumulator
         }, {})
 

@@ -49,7 +49,13 @@
     "subtest": "deductive",
     "context": "<p style='margin-bottom:0.75rem'>A call centre requires that agents take breaks <strong>no longer than 15 minutes</strong>. Agents are also only given <strong>3 minutes to type notes</strong> after a call. The supervisor must note anyone breaking these rules.</p><table class='q-table'><thead><tr><th>Agent</th><th>Current Activity</th><th>Time on Activity</th></tr></thead><tbody><tr><td>Amy</td><td>On a call</td><td>10:01</td></tr><tr><td>Andrew</td><td>On a call</td><td>3:25</td></tr><tr><td>Beth</td><td>On break</td><td>14:59</td></tr><tr><td>Chloe</td><td>On a call</td><td>9:23</td></tr><tr><td>Benjamin</td><td>Typing call notes</td><td>3:07</td></tr><tr><td>Christopher</td><td>On break</td><td>16:23</td></tr><tr><td>David</td><td>On break</td><td>15:58</td></tr><tr><td>Daisy</td><td>On a call</td><td>21:46</td></tr><tr><td>Edward</td><td>On a call</td><td>2:01</td></tr><tr><td>Emily</td><td>Typing call notes</td><td>4:43</td></tr><tr><td>Frank</td><td>Typing call notes</td><td>2:45</td></tr><tr><td>Fiona</td><td>On a call</td><td>3:09</td></tr><tr><td>Gemma</td><td>Typing call notes</td><td>14:23</td></tr><tr><td>George</td><td>On break</td><td>15:58</td></tr></tbody></table>",
     "question": "The supervisor will need to write notes on how many people?",
-    "options": ["3", "4", "6", "8", "12"],
+    "options": [
+      "3",
+      "4",
+      "6",
+      "8",
+      "12"
+    ],
     "correctAnswer": 2,
     "explanation": "Only note agents exceeding their time limits: <strong>Benjamin</strong> (typing notes 3:07 &gt; 3:00 ✓), <strong>Christopher</strong> (break 16:23 &gt; 15:00 ✓), <strong>David</strong> (break 15:58 &gt; 15:00 ✓), <strong>Emily</strong> (typing notes 4:43 &gt; 3:00 ✓), <strong>Gemma</strong> (typing notes 14:23 &gt; 3:00 ✓), <strong>George</strong> (break 15:58 &gt; 15:00 ✓). Frank is 2:45 (under limit). Beth is 14:59 (under limit). Total = 6."
   },
@@ -73,7 +79,13 @@
     "subtest": "deductive",
     "context": "<table class='q-table'><thead><tr><th>Promotion</th><th>Start Date</th><th>Length</th><th>Min. Purchase</th><th>Rate</th></tr></thead><tbody><tr><td>Retailer Discount</td><td>June 1</td><td>60 days</td><td>£200.00</td><td>5%</td></tr><tr><td>Cash-Back Bonus</td><td>June 1</td><td>60 days</td><td>£100.00</td><td>2.5%</td></tr></tbody></table><p style='margin-top:0.75rem'><strong>Today's Date:</strong> July 21</p><p style='margin-top:0.5rem'><strong>Past Customer Transactions:</strong></p><table class='q-table'><thead><tr><th>Date</th><th>Amount</th></tr></thead><tbody><tr><td>May 12</td><td>£310.12</td></tr><tr><td>June 9</td><td>£278.45</td></tr><tr><td>June 22</td><td>£55.75</td></tr><tr><td>July 3</td><td>£98.15</td></tr><tr><td>July 10</td><td>£115.35</td></tr><tr><td>July 20</td><td>£34.25</td></tr></tbody></table>",
     "question": "How many customer transactions are eligible for the Retailer Cash-Back Bonus?",
-    "options": ["0", "1", "2", "4", "5"],
+    "options": [
+      "0",
+      "1",
+      "2",
+      "4",
+      "5"
+    ],
     "correctAnswer": 2,
     "explanation": "The Cash-Back Bonus runs 60 days from June 1. 60 days before July 21 = May 22, so eligible dates are <strong>May 22 – July 21</strong>. Transactions in this window: June 9 (£278.45 ≥ £100 ✓), June 22 (£55.75 &lt; £100 ✗), July 3 (£98.15 &lt; £100 ✗), July 10 (£115.35 ≥ £100 ✓), July 20 (£34.25 &lt; £100 ✗). May 12 is before May 22 — ineligible. Total eligible = <strong>2</strong>."
   },
@@ -142,7 +154,13 @@
     "subtest": "deductive",
     "context": "<table class='q-table'><thead><tr><th>Field</th><th>Detail</th></tr></thead><tbody><tr><td>Prescription No.</td><td>0654854-0654</td></tr><tr><td>Medication</td><td>Medication X</td></tr><tr><td>Doctor</td><td>Javier Lee</td></tr><tr><td>Patient</td><td>Jessica Brown</td></tr><tr><td>Dosage per Tablet</td><td>600 mg</td></tr><tr><td>Tablets per Bottle</td><td>24</td></tr><tr><td>Refills Remaining</td><td>2 (not including this bottle)</td></tr></tbody></table><p style='margin-top:0.5rem'><strong>Directions:</strong> Take one tablet by mouth 3 to 4 times daily as needed for pain.</p>",
     "question": "If Jessica refills her prescription as many times as allowed, how many tablets will she have received altogether?",
-    "options": ["24 tablets", "36 tablets", "72 tablets", "80 tablets", "600 tablets"],
+    "options": [
+      "24 tablets",
+      "36 tablets",
+      "72 tablets",
+      "80 tablets",
+      "600 tablets"
+    ],
     "correctAnswer": 2,
     "explanation": "Jessica has the current bottle + 2 refills = <strong>3 bottles total</strong>. Each bottle contains 24 tablets. Total = 24 × 3 = <strong>72 tablets</strong>."
   },
@@ -166,7 +184,13 @@
     "subtest": "deductive",
     "context": "<table class='q-table'><thead><tr><th>Service Plan</th><th>Manager Points</th></tr></thead><tbody><tr><td>Basic</td><td>2</td></tr><tr><td>Expanded</td><td>5</td></tr><tr><td>Expanded Plus</td><td>7.5</td></tr><tr><td>Premium</td><td>20</td></tr></tbody></table><p style='margin-top:0.75rem'>At the end of the week, a team sells: <strong>5 Basic, 12 Expanded, 6 Expanded Plus, 20 Premium</strong>.</p>",
     "question": "How many points did the manager earn?",
-    "options": ["450", "500", "515", "565", "600"],
+    "options": [
+      "450",
+      "500",
+      "515",
+      "565",
+      "600"
+    ],
     "correctAnswer": 2,
     "explanation": "(5 × 2) + (12 × 5) + (6 × 7.5) + (20 × 20) = 10 + 60 + 45 + 400 = <strong>515 points</strong>."
   },
@@ -244,5 +268,185 @@
     ],
     "correctAnswer": 4,
     "explanation": "Nathan and all his co-workers refuel airplanes. If Maria worked with Nathan, she would be a co-worker and would also refuel airplanes — but Maria does NOT refuel airplanes. Therefore <strong>Maria cannot be Nathan's co-worker</strong>, meaning Maria does not work with Nathan."
+  },
+  {
+    "id": 19,
+    "subtest": "deductive",
+    "context": "Client Response Priority Table:\nYearly Revenue: <£50k, Contract <1yr → Priority 6\nYearly Revenue: <£50k, Contract ≥1yr → Priority 5\nYearly Revenue: £50k-£100k, Contract <1yr → Priority 5\nYearly Revenue: £50k-£100k, Contract ≥1yr → Priority 4\nYearly Revenue: £100k-£250k, Contract <1yr → Priority 4\nYearly Revenue: £100k-£250k, Contract ≥1yr → Priority 3\nYearly Revenue: £250k-£500k, Contract <1yr → Priority 3\nYearly Revenue: £250k-£500k, Contract ≥1yr → Priority 2\nYearly Revenue: >£500k, Contract <1yr → Priority 2\nYearly Revenue: >£500k, Contract ≥1yr → Priority 1",
+    "question": "Which is a priority level 4 client?",
+    "options": [
+      "A client that generates £252,000 in yearly revenue with an 18-month contract.",
+      "A client that generates £52,000 in yearly revenue with a 6-month contract.",
+      "A client that generates £225,000 in yearly revenue with a 2-year contract.",
+      "A client that generates £167,000 in yearly revenue with a 9-month contract.",
+      "A client that generates £1 million in yearly revenue with a 3-month contract."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Option D (£167k revenue, 9-month contract) falls in the £100k-£250k revenue band with a contract <1 year, which corresponds to Priority 4 per the table. Option A is Priority 3 (£250k-£500k, contract ≥1yr). Option B is Priority 5 (£50k-£100k, contract <1yr). Option C is Priority 3 (£100k-£250k, contract ≥1yr). Option E is Priority 2 (>£500k, contract <1yr)."
+  },
+  {
+    "id": 20,
+    "subtest": "deductive",
+    "context": "Every afternoon, a company has four 1-hour meetings beginning at 1 pm.\n• The sales team does not meet first.\n• The engineering meeting starts later than the sales meeting.\n• The human resources meeting starts later than the production meeting.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Production meets before engineering.",
+      "Human resources meets last.",
+      "Human resources meets at 3 p.m.",
+      "Engineering meets at 2 p.m.",
+      "Sales meets before human resources."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Sales cannot meet first, and engineering must be later than sales, so sales can only be at 2 p.m. or 3 p.m. Human resources must be later than production, which forces production into the earliest remaining slot (1 p.m.). In every valid schedule, production is before engineering, so option A must be true. The other options vary by schedule and are not guaranteed."
+  },
+  {
+    "id": 21,
+    "subtest": "deductive",
+    "context": "• Lauren has more meetings than Logan.\n• Logan has more meetings than Matthew.\n• Maria has more meetings than Matthew.",
+    "question": "How does the number of meetings Lauren has compare to the number Maria has?",
+    "options": [
+      "Lauren has more meetings than Maria.",
+      "Maria has more meetings than Lauren.",
+      "Lauren and Maria have the same number of meetings.",
+      "Lauren has twice as many meetings as Maria.",
+      "The answer cannot be determined from the information given."
+    ],
+    "correctAnswer": 4,
+    "explanation": "We know Lauren > Logan > Matthew and Maria > Matthew. However, we have no direct or transitive relationship linking Lauren and Maria. Maria could have more, fewer, or the same number of meetings as Lauren, as long as both exceed Matthew. Therefore, the relationship cannot be determined."
+  },
+  {
+    "id": 22,
+    "subtest": "deductive",
+    "context": "• Company A is a top customer.\n• Company B purchased 100 units.\n• Company C received a five percent discount with a 50-unit purchase.\n• Only top customers and customers that purchase at least 75 units receive a five percent discount.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Company B received a five percent discount.",
+      "Top customers always purchase at least 75 units.",
+      "A customer must be a top customer to receive a five percent discount.",
+      "Company A must purchase at least 75 units to receive a five percent discount.",
+      "Company A always purchases at least 75 units."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Company B purchased 100 units, which meets the at-least-75-units condition for receiving the 5% discount in this policy setup. Therefore, B received the discount (option A). The other options make stronger universal claims about top customers or required purchases that are not stated."
+  },
+  {
+    "id": 23,
+    "subtest": "deductive",
+    "context": "• Lauren has 5 years of seniority over Logan.\n• Lauren has been with the company twice as long as Matthew.\n• Lauren had her 10-year service anniversary 4 years ago.\n• Maria started with the company 2 years after Lauren.",
+    "question": "From most to least seniority, who is the correct order?",
+    "options": [
+      "Lauren, Logan, Matthew, Maria",
+      "Lauren, Logan, Maria, Matthew",
+      "Lauren, Maria, Matthew, Logan",
+      "Lauren, Maria, Logan, Matthew",
+      "Matthew, Maria, Lauren, Logan"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Lauren's 10-year anniversary was 4 years ago, so she has 14 years of seniority. Logan has 5 fewer years than Lauren (9), Matthew has half of Lauren's tenure (7), and Maria started 2 years after Lauren (12). Ordering from most to least gives Lauren (14), Maria (12), Logan (9), Matthew (7), which is option D."
+  },
+  {
+    "id": 24,
+    "subtest": "deductive",
+    "context": "All cars are blue.\nSome toys are cars.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Some toys are blue.",
+      "Some cars are not toys.",
+      "All blue things are cars.",
+      "Some blue things are not cars.",
+      "All cars are toys."
+    ],
+    "correctAnswer": 0,
+    "explanation": "Since all cars are blue and some toys are cars, the toys that are cars must also be blue. Therefore, it must be true that some toys are blue. Option B is false because we only know some toys are cars, not that any cars are excluded from being toys. Option C is false because being blue does not guarantee something is a car. Option D is not necessarily true from the given statements. Option E is false because the statements do not say all cars are toys, only that some toys are cars."
+  },
+  {
+    "id": 25,
+    "subtest": "deductive",
+    "context": "• David is issued a Brand A computer.\n• Erin is issued a Brand B computer.\n• All the laptop computers issued are Brand A computers.\n• Some of the desktop computers issued are Brand B computers.\n• All of the Brand B computers issued are desktops.\n• Each manager is issued a laptop computer.",
+    "question": "Which statement must be true?",
+    "options": [
+      "All desktops are Brand A computers.",
+      "David received a desktop computer.",
+      "Erin received a laptop computer.",
+      "Each manager received a Brand A computer.",
+      "Erin and David are managers."
+    ],
+    "correctAnswer": 3,
+    "explanation": "From the statements: all managers are issued laptops, and all laptops are Brand A. Therefore, every manager must have received a Brand A computer, making option D necessarily true. Option A is false because some desktops are Brand B. Option B is false because David has Brand A, which could be a laptop or desktop, but not necessarily a desktop. Option C is false because Erin has Brand B, and all Brand B computers are desktops, so Erin cannot have a laptop. Option E is false because we only know David has Brand A (could be a laptop, so he might be a manager), but Erin has a desktop Brand B, so Erin cannot be a manager (since managers get laptops)."
+  },
+  {
+    "id": 26,
+    "subtest": "deductive",
+    "context": "• Cargo weighing over 1,000 kg is shipped on type A cargo planes.\n• Cargo weighing 500–999 kg is shipped on type B cargo planes.\n• Cargo weighing 500–999 kg often contains airplane engine parts.\n• Crate C weighs 1,175 kg.\n• Type A cargo planes are only flown on Mondays.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Airplane engine parts must be shipped on type A cargo planes.",
+      "Crate C should be shipped on a type A cargo plane.",
+      "Crate C cannot be shipped on Monday.",
+      "Crate C contains airplane engine parts.",
+      "All crates containing airplane engine parts weigh over 500 kg."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Crate C weighs 1,175 kg, which is over 1,000 kg, so it must be shipped on a type A cargo plane per the first rule. Option A is false because engine parts (500–999 kg) go on type B planes. Option C is false; type A planes fly only on Mondays, so Crate C could be shipped then. Option D is false; weight alone doesn't imply contents. Option E is false; the rule says engine parts often weigh 500–999 kg, not all do, and some could weigh outside that range."
+  },
+  {
+    "id": 27,
+    "subtest": "deductive",
+    "context": "• Hannah and Javier live in the same city.\n• Javier works in the fabrication department at Company A.\n• Everyone who works in the fabrication department at Company A lives in City B.\n• Isabel lives in City C.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Isabel works in the fabrication department at Company A.",
+      "Hannah works in the fabrication department of Company A.",
+      "Isabel works in City B.",
+      "Hannah lives in City B.",
+      "Javier lives in City C."
+    ],
+    "correctAnswer": 3,
+    "explanation": "From the premises: Javier works in fabrication at Company A, and everyone in that department lives in City B. Therefore, Javier must live in City B. Since Hannah and Javier live in the same city, Hannah must also live in City B. Option D states this correctly. Option A is false because Isabel lives in City C, not City B. Option B is unsupported—we only know Hannah lives in City B, not her department. Option C is false—Isabel lives in City C. Option E is false—Javier lives in City B."
+  },
+  {
+    "id": 28,
+    "subtest": "deductive",
+    "context": "Cecilia spends 5 hours a week performing maintenance duties.\nLast week, Daniela spent 6 hours performing maintenance duties.\nBrandon spends less time every week performing maintenance duties than Cecilia does.\nLast week, Carlos spent more than 3 hours performing maintenance duties.\nCecilia spends more time every week performing maintenance duties than Carlos does.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Daniela spends more time performing maintenance duties than Cecilia every week.",
+      "Carlos spends less than 5 hours performing maintenance duties every week.",
+      "Last week, Brandon spent more time performing maintenance duties than Daniela.",
+      "Last week, Brandon spent less than 4 hours performing maintenance duties.",
+      "Last week, Carlos spent more time performing maintenance duties than Brandon."
+    ],
+    "correctAnswer": 1,
+    "explanation": "Cecilia always spends 5 hours per week, and she spends more time than Carlos each week, so Carlos must spend less than 5 hours per week (option B). Daniela's 6 hours is only stated for last week, not every week. Brandon is only constrained to be under 5 each week, which does not force options C, D, or E."
+  },
+  {
+    "id": 29,
+    "subtest": "deductive",
+    "context": "Customer relationship management (CRM) is a process used to track customers. CRM initiatives often fail because implementation was limited to software installation without support for employees. Thus, CRM providers who include training as an integral part of implementation often find that over time, they dominate the market.",
+    "question": "Which statement, if true, strengthens the argument?",
+    "options": [
+      "CRM training programs vary widely in duration and quality.",
+      "Many CRM providers have successfully partnered with training firms who deliver training for them.",
+      "More CRM training materials can be found online for free.",
+      "Most employees need to be sold on the benefits of CRM before becoming avid users.",
+      "Almost all past CRM failures were due to lack of solid training programs or poor customer support after implementation."
+    ],
+    "correctAnswer": 4,
+    "explanation": "The argument states that CRM initiatives often fail due to lack of employee support and that providers who include training dominate the market. Option E directly strengthens this by showing that past failures were specifically due to lack of training or poor support, establishing a clear causal link. The other options either weaken the argument (C), are irrelevant (A, B), or address a different prerequisite (D) rather than reinforcing the core link between training and market success."
+  },
+  {
+    "id": 30,
+    "subtest": "deductive",
+    "context": "In order to curtail traffic congestion, the City Council has suggested imposing a fee on all passenger cars coming into the city from outside the city limits. The rationale is that such a surcharge will encourage many people to begin using mass transit.",
+    "question": "Which statement, if true, indicates a serious flaw in the suggestion?",
+    "options": [
+      "The fee on passenger vehicles will exceed the cost of round-trip mass transit fare.",
+      "The percent of private vehicles that comprise traffic congestion is just under 40 percent.",
+      "Gas prices are projected to rise, increasing the cost of driving.",
+      "The mass transit system is not easily accessible outside the city, so most outside commuters cannot use it.",
+      "Current parking fees are high, making private vehicles more expensive than public transit."
+    ],
+    "correctAnswer": 3,
+    "explanation": "Option D identifies a serious flaw because if commuters from outside the city cannot access mass transit, the proposed fee cannot encourage them to switch, undermining the plan's core rationale. Options A, C, and E actually support the suggestion by making driving relatively more expensive. Option B is irrelevant, as even a 40% reduction in private vehicles could still meaningfully reduce congestion."
   }
 ]

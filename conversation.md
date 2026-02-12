@@ -145,3 +145,45 @@
 ## Verification
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - Dashboard KPI Reliability + NLNG Expansion + Session De-Dupe
+
+## User Report
+- Dashboard pass rate still not updating reliably.
+- Requested NLNG additional chunks and no duplicate questions in a session.
+- Requested meaningful dashboard improvements.
+- Reported AI explanation output sometimes showed raw tags like `<strong>`.
+
+## Changes Applied
+- `src/pages/Dashboard.jsx`
+  - Added attempt de-duplication before computing KPI/recent activity.
+  - KPI calculations now avoid duplicate rows and align pass threshold to 50%.
+  - Added `Average Score` and `Practice Sessions` metric cards.
+  - Added focus refresh listener so dashboard re-syncs when tab regains focus.
+- `src/components/ScoreReport.jsx`
+  - Added session-storage fingerprint cache to suppress duplicate inserts from repeat save triggers.
+  - Keeps existing timeout + duplicate checks and dashboard refresh event emission.
+- `src/utils/questionSession.js` (new)
+  - Added shared helpers to dedupe by content/signature, shuffle, and select unique session questions.
+- `src/pages/NLNGTest.jsx`
+  - Now uses shared unique-session selection (no duplicate questions per run).
+  - Expanded selectable question/time options to support the larger NLNG bank.
+- `src/pages/AptitudeTest.jsx`
+  - Uses shared unique-session selection per subtest.
+- `src/pages/SavillePractice.jsx`
+  - Uses shared unique-session selection for configured sessions.
+- `src/pages/TechnicalTest.jsx`
+  - Deduplicates available questions before session build.
+  - Uses shared unique-session selection in exam mode.
+- `src/services/deepseek.js`
+  - Strips HTML before including base explanation in AI prompt.
+- `src/components/AIExplainer.jsx`
+  - Normalizes model output so HTML tags are converted/stripped before markdown rendering.
+- `src/data/nlng-deductive-questions.json`
+  - Expanded to 30 questions.
+  - Added missing question ID `28`.
+  - Corrected answer keys/explanations for IDs `20`, `22`, and `23`.
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS

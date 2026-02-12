@@ -18,15 +18,28 @@ function parseJsonContent(content) {
     return JSON.parse(normalized)
 }
 
+function stripHtml(value = '') {
+    return String(value)
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/&lt;/gi, '<')
+        .replace(/&gt;/gi, '>')
+        .replace(/&amp;/gi, '&')
+        .replace(/\s+/g, ' ')
+        .trim()
+}
+
 export async function explainAnswer(question, options, correctAnswer, explanation) {
     assertApiKey()
+    const cleanExplanation = stripHtml(explanation || '')
 
     const prompt = `You are a process engineering tutor helping a graduate prepare for an assessment. 
 
 Question: ${question}
 Options: ${options.map((o, i) => `${String.fromCharCode(65 + i)}. ${o}`).join(', ')}
 Correct Answer: ${correctAnswer}
-Brief Explanation: ${explanation}
+Brief Explanation: ${cleanExplanation}
 
 Provide a detailed, clear explanation of why this is the correct answer. Include:
 1. Why the correct answer is right (with any relevant formulas, principles, or real-world context)
