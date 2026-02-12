@@ -127,6 +127,20 @@ Date: 2026-02-12
 - [x] Create `supabase/migrations/20260212000000_initial_schema.sql` (tables, trigger, RLS, index)
 - [x] Create `supabase/migrations/20260212000001_cascade_constraints.sql` (CASCADE FK constraints)
 
+## Phase 9: SHL Visual Overhaul + End Test + Production Fix (2026-02-12)
+- [x] **Visual** — Sharp bar corners: `rx: 0` on `.interactive-segment` in `src/index.css`
+- [x] **Visual** — Invisible drag handles: `opacity: 0` + `r="20"` hit area in `SHLAdjustableBarWidget.jsx` + CSS
+- [x] **Visual** — Remove stacked-bar footer text summary (`interactive-bar-meta` div) from `SHLAdjustableBarWidget.jsx`
+- [x] **Visual** — Add percentage labels inside bar segments (white bold text, only when segment height ≥ 18px)
+- [x] **Visual** — Chart background changed to `#f8f9fa` (light grey) in `src/index.css`
+- [x] **Visual** — `question-card__rules` changed to dark background (#1e293b) with light text for SHL info blocks
+- [x] **UX** — End Test button added to `NLNGInteractiveTest.jsx` (header, visible on all questions)
+- [x] **UX** — End Test button added to `NLNGTest.jsx` (header, visible on all questions)
+- [x] **UX** — End Test button added to `AptitudeTest.jsx` (calls `completeAssessment()`, header, visible on all questions)
+- [x] **Infra** — Add `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY` to Vercel production env vars
+- [x] `npm run lint` passes
+- [x] `npm run build` passes
+
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
@@ -136,10 +150,9 @@ Date: 2026-02-12
 - [ ] Full manual end-to-end smoke test across every module in browser
 
 ## Next Actions
-1. Run manual UX/accessibility checks on all target breakpoints and log defects.
-2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
-3. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
-4. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
-5. Confirm Supabase live policies allow `profiles` read and `test_attempts` insert/select for authenticated users.
-6. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
-7. Optionally split large frontend bundle if payload size reduction is required.
+1. Test production deployment: verify results save to Supabase (not "saved locally") after env vars set.
+2. Run manual UX/accessibility checks on all target breakpoints and log defects.
+3. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
+4. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
+5. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
+6. Optionally split large frontend bundle if payload size reduction is required.

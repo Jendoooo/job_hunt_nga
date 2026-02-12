@@ -317,19 +317,38 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                         />
                         <text x={bar.centerX} y={PLOT_BOTTOM + X_AXIS_LABEL_OFFSET} className="interactive-axis-caption">{bar.label}</text>
 
+                        {bar.primaryHeight >= 18 && (
+                            <text
+                                x={bar.centerX}
+                                y={PLOT_BOTTOM - bar.primaryHeight / 2}
+                                className="interactive-segment-label"
+                            >
+                                {Math.round(bar.splitPct)}%
+                            </text>
+                        )}
+                        {bar.secondaryHeight >= 18 && (
+                            <text
+                                x={bar.centerX}
+                                y={bar.topY + bar.secondaryHeight / 2}
+                                className="interactive-segment-label"
+                            >
+                                {Math.max(0, 100 - Math.round(bar.splitPct))}%
+                            </text>
+                        )}
+
                         {bar.interactive && (
                             <>
                                 <circle
                                     cx={bar.centerX}
                                     cy={bar.topY}
-                                    r="8"
+                                    r="20"
                                     className={`interactive-handle ${dragMode?.barId === bar.id && dragMode.kind === 'total' ? 'interactive-handle--active' : ''}`}
                                     onPointerDown={() => !disabled && setDragMode({ barId: bar.id, kind: 'total' })}
                                 />
                                 <circle
                                     cx={bar.centerX}
                                     cy={bar.splitY}
-                                    r="8"
+                                    r="20"
                                     className={`interactive-handle ${dragMode?.barId === bar.id && dragMode.kind === 'split' ? 'interactive-handle--active' : ''}`}
                                     onPointerDown={() => !disabled && setDragMode({ barId: bar.id, kind: 'split' })}
                                 />
@@ -351,17 +370,6 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                 )}
             </svg>
 
-            <div className="interactive-bar-meta">
-                {chartBars.filter((bar) => bar.interactive).map((bar) => (
-                    <div key={bar.id}>
-                        <strong>{bar.label}:</strong> {Math.round(bar.total)} total
-                        {' | '}
-                        {config.primaryLabel} {Math.round(bar.splitPct)}%
-                        {' | '}
-                        {config.secondaryLabel} {Math.max(0, 100 - Math.round(bar.splitPct))}%
-                    </div>
-                ))}
-            </div>
         </section>
     )
 }

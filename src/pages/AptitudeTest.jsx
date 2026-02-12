@@ -14,6 +14,7 @@ import {
     AlertCircle,
     CheckCircle2,
     Play,
+    StopCircle,
     Timer as TimerIcon,
 } from 'lucide-react'
 
@@ -315,6 +316,9 @@ export default function AptitudeTest() {
                             Practice Mode
                         </span>
                     )}
+                    <button className="btn btn--secondary btn--sm flex items-center gap-1" onClick={completeAssessment}>
+                        <StopCircle size={14} /> End Test
+                    </button>
                 </div>
             </header>
 

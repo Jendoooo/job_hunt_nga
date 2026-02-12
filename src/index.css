@@ -1084,10 +1084,10 @@ select:focus-visible {
 .question-card__rules {
   margin: 0;
   padding: 0.75rem 0.95rem;
-  border: 1px solid #dbeafe;
+  border: none;
   border-radius: var(--radius-md);
-  background: #f7fbff;
-  color: #0c4a6e;
+  background: #1e293b;
+  color: #f1f5f9;
   font-size: 0.83rem;
   display: grid;
   gap: 0.35rem;
@@ -1096,6 +1096,7 @@ select:focus-visible {
 .question-card__rules li {
   margin-left: 0.95rem;
   line-height: 1.45;
+  color: #cbd5e1;
 }
 
 .question-card__interactive {
@@ -1381,7 +1382,7 @@ select:focus-visible {
   height: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  background: #fff;
+  background: #f8f9fa;
   display: block;
   margin-bottom: 0.45rem;
   padding-bottom: 30px;
@@ -1418,7 +1419,7 @@ select:focus-visible {
 }
 
 .interactive-segment {
-  rx: 7px;
+  rx: 0;
 }
 
 .interactive-segment--service {
@@ -1435,14 +1436,22 @@ select:focus-visible {
 }
 
 .interactive-handle {
-  fill: #fff;
-  stroke: #0369a1;
-  stroke-width: 2;
+  opacity: 0;
   cursor: ns-resize;
 }
 
 .interactive-handle--active {
-  fill: #dbeafe;
+  opacity: 0;
+}
+
+.interactive-segment-label {
+  fill: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  user-select: none;
 }
 
 .interactive-bar-meta {

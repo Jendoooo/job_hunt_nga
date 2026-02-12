@@ -13,6 +13,7 @@ import {
     ChartNoAxesCombined,
     Hand,
     Play,
+    StopCircle,
     Timer as TimerIcon,
 } from 'lucide-react'
 
@@ -370,6 +371,9 @@ export default function NLNGInteractiveTest() {
                             Practice Mode
                         </span>
                     )}
+                    <button className="btn btn--secondary btn--sm flex items-center gap-1" onClick={finishTest}>
+                        <StopCircle size={14} /> End Test
+                    </button>
                 </div>
             </header>
 
