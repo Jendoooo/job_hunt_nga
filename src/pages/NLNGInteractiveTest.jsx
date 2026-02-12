@@ -144,7 +144,7 @@ export default function NLNGInteractiveTest() {
                     <div className="test-setup__card">
                         <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Interactive Session</h2>
                         <p className="test-setup__description">
-                            Tackle drag-table, pie-ratio, and stacked-bar adjustment tasks in one mixed set.
+                            Tackle drag-table, pie, stacked-bar, tabbed evaluation, and point-graph tasks in one mixed set.
                         </p>
 
                         <div className="test-setup__mode">
@@ -259,6 +259,8 @@ export default function NLNGInteractiveTest() {
                                 <li>Drag table labels into result cells.</li>
                                 <li>Resize pie allocations by increment controls.</li>
                                 <li>Adjust stacked-bar total and internal split.</li>
+                                <li>Approve or reject each tabbed expense request.</li>
+                                <li>Drag daily points on a numeric line graph.</li>
                                 <li>{isExamMode ? 'Timed under exam pressure.' : 'Practice with immediate correctness.'}</li>
                             </ul>
                         </div>

@@ -97,3 +97,24 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Optional: optimize bundle splitting to reduce large chunk warning.
 - Validate Supabase production schema/policies in live environment for insert/select parity.
 - Decide whether to route AI calls through a backend proxy/edge function in production.
+
+## Update Snapshot (2026-02-12 - Interactive Expansion)
+- Interactive widget set now includes five question types:
+  - `interactive_drag_table`
+  - `interactive_pie_chart`
+  - `interactive_stacked_bar`
+  - `interactive_tabbed_evaluation`
+  - `interactive_point_graph`
+- Question routing is handled in `src/components/QuestionCard.jsx` for all five types.
+- Scoring coverage in `src/utils/questionScoring.js` now includes completion + correctness logic for tabbed and point-graph interactions.
+- Gold-source data (`src/data/shl-gold-standard.json`) now includes real-style records for:
+  - travel meal tabbed evaluation
+  - stock account point graph
+  - customer contact pie ratios
+- Generator (`scripts/generate_shl_module.js`) normalizes and carries these new types into `src/data/shl-interactive-questions.json`.
+- Save reliability update:
+  - `src/components/ScoreReport.jsx` duplicate-check SELECT and INSERT no longer use inner timeouts; they are controlled by AbortController + global failsafe timing.
+
+## Pending Work Addendum
+- Manual browser QA specifically for the two new widget types on desktop + mobile pointer interactions.
+- Optional: expand tabbed and point-graph gold-source coverage beyond the current seed scenarios.

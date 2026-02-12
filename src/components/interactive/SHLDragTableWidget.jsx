@@ -5,10 +5,11 @@ import { useState } from 'react'
 function resolvePillColor(color) {
     if (!color) return null
     const palette = {
-        green: '#16a34a',
-        red: '#dc2626',
-        blue: '#2563eb',
-        amber: '#d97706',
+        green: '#63b209',
+        red: '#f73c33',
+        blue: '#007ab3',
+        orange: '#f68016',
+        amber: '#f68016',
         slate: '#475569',
     }
 

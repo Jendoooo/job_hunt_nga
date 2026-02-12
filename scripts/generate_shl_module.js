@@ -60,6 +60,14 @@ function inferDifficulty(question, index = 0) {
         }
     }
 
+    if (question?.type === 'interactive_tabbed_evaluation') {
+        return 'medium'
+    }
+
+    if (question?.type === 'interactive_point_graph') {
+        return 'hard'
+    }
+
     return index % 6 === 0 ? 'easy' : 'medium'
 }
 
@@ -165,6 +173,52 @@ function normalizeGoldQuestion(question, index) {
         normalized.widget_data = widgetData
         if (!normalized.tolerance) {
             normalized.tolerance = { total: 5, split_pct: 2 }
+        }
+    }
+
+    if (normalized.type === 'interactive_tabbed_evaluation') {
+        const widgetData = normalized.widget_data || {}
+        const tabs = Array.isArray(widgetData.tabs) ? widgetData.tabs : []
+        const expected = normalized.correct_answer && typeof normalized.correct_answer === 'object'
+            ? normalized.correct_answer
+            : {}
+        const hasOptions = Array.isArray(widgetData.options) && widgetData.options.length > 0
+
+        const optionIds = hasOptions
+            ? widgetData.options.map((option) => String(option.id))
+            : [...new Set(Object.values(expected).map((value) => String(value)))]
+
+        normalized.widget_data = {
+            tabs,
+            options: hasOptions
+                ? widgetData.options
+                : optionIds.map((id) => ({ id, label: titleCase(id) })),
+        }
+    }
+
+    if (normalized.type === 'interactive_point_graph') {
+        const widgetData = normalized.widget_data || {}
+        const xAxisLabels = Array.isArray(widgetData.x_axis_labels) ? widgetData.x_axis_labels : []
+        const yAxis = widgetData.y_axis && typeof widgetData.y_axis === 'object'
+            ? widgetData.y_axis
+            : { min: 0, max: 100, step: 10, label: '' }
+        const initialValues = Array.isArray(widgetData.initial_values)
+            ? widgetData.initial_values
+            : Array.from({ length: xAxisLabels.length }, () => yAxis.min)
+
+        normalized.widget_data = {
+            x_axis_labels: xAxisLabels,
+            y_axis: {
+                min: Number(yAxis.min ?? 0),
+                max: Number(yAxis.max ?? 100),
+                step: Number(yAxis.step ?? 10),
+                label: String(yAxis.label ?? ''),
+            },
+            initial_values: initialValues,
+        }
+
+        if (!normalized.tolerance) {
+            normalized.tolerance = { value: 1 }
         }
     }
 

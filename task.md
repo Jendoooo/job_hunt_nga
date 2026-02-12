@@ -156,3 +156,25 @@ Date: 2026-02-12
 4. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
 5. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
 6. Optionally split large frontend bundle if payload size reduction is required.
+
+## Phase 10: Interactive Expansion + Save Stabilization (2026-02-12)
+- [x] Add new interactive widgets:
+  - [x] `src/components/interactive/SHLTabbedEvalWidget.jsx`
+  - [x] `src/components/interactive/SHLPointGraphWidget.jsx`
+- [x] Extend `src/components/QuestionCard.jsx` routing for:
+  - [x] `interactive_tabbed_evaluation`
+  - [x] `interactive_point_graph`
+- [x] Extend `src/utils/questionScoring.js` for:
+  - [x] tabbed evaluation correctness + completion checks
+  - [x] point graph tolerance scoring + completion checks
+- [x] Remove inner SELECT/INSERT timeouts in `src/components/ScoreReport.jsx` so global fail-safe handles slow Supabase responses consistently
+- [x] Update SHL widget colors to exact palette (`#007ab3`, `#63b209`, `#f73c33`, `#f68016`)
+- [x] Add SHL gold-standard scenarios:
+  - [x] `tab_travel_meal_allowance_real` (`interactive_tabbed_evaluation`)
+  - [x] `graph_stock_account_value_real` (`interactive_point_graph`)
+  - [x] `pie_customer_contacts_real` (`interactive_pie_chart`)
+- [x] Update `scripts/generate_shl_module.js` normalization for new interactive types
+- [x] Regenerate `src/data/shl-interactive-questions.json` with new type coverage
+- [x] Verification:
+  - [x] `npm run lint`
+  - [x] `npm run build`

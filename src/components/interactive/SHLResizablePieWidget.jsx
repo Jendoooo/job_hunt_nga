@@ -9,14 +9,14 @@ function toNumber(value, fallback = 0) {
 
 function resolveColor(color, fallback) {
     const named = {
-        blue: '#2563eb',
-        green: '#16a34a',
-        orange: '#ea580c',
-        amber: '#d97706',
-        red: '#dc2626',
+        blue: '#007ab3',
+        green: '#63b209',
+        red: '#f73c33',
+        orange: '#f68016',
+        amber: '#f68016',
         purple: '#7c3aed',
         teal: '#0d9488',
-        sky: '#0284c7',
+        sky: '#007ab3',
         slate: '#475569',
         indigo: '#4f46e5',
     }
@@ -118,7 +118,7 @@ export default function SHLResizablePieWidget({ data, value, onAnswer, disabled 
             ...segment,
             percentage,
             value: Math.round(totalValue * (percentage / 100)),
-            fill: resolveColor(segment.color, ['#2563eb', '#16a34a', '#ea580c', '#7c3aed', '#0d9488'][index % 5]),
+            fill: resolveColor(segment.color, ['#007ab3', '#63b209', '#f73c33', '#f68016', '#7c3aed'][index % 5]),
         }
     })
 

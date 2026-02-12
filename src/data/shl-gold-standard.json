@@ -455,7 +455,7 @@
           "id": "store_a",
           "label": "Store A",
           "values": [
-            "?6.46",
+            "$6.46",
             "60",
             "10% off",
             "-"
@@ -483,7 +483,7 @@
     "correct_answer": {
       "store_a": "low"
     },
-    "explanation": "?6.46 x 0.9 x 60 = ?348.84 (<350)."
+    "explanation": "$6.46 x 0.9 x 60 = $348.84 (<350)."
   },
   {
     "id": "store_c_1",
@@ -509,9 +509,9 @@
           "id": "store_c1",
           "label": "Store C",
           "values": [
-            "?17.25",
+            "$17.25",
             "90",
-            "?2 off",
+            "$2 off",
             "6%"
           ]
         }
@@ -563,7 +563,7 @@
           "id": "store_c2",
           "label": "Store C",
           "values": [
-            "?6.89",
+            "$6.89",
             "50",
             "-",
             "6%"
@@ -617,7 +617,7 @@
           "id": "store_d",
           "label": "Store D",
           "values": [
-            "?17.97",
+            "$17.97",
             "80",
             "-",
             "8%"
@@ -671,7 +671,7 @@
           "id": "pa",
           "label": "Person A",
           "values": [
-            "?390",
+            "$390",
             "20",
             "2"
           ]
@@ -721,7 +721,7 @@
           "id": "pb",
           "label": "Person B",
           "values": [
-            "?670",
+            "$670",
             "15",
             "1"
           ]
@@ -771,7 +771,7 @@
           "id": "pc",
           "label": "Person C",
           "values": [
-            "?1,440",
+            "$1,440",
             "31",
             "4"
           ]
@@ -821,7 +821,7 @@
           "id": "pd",
           "label": "Person D",
           "values": [
-            "?1,120",
+            "$1,120",
             "55",
             "5"
           ]
@@ -1345,7 +1345,7 @@
           "id": "store_e",
           "label": "Store E",
           "values": [
-            "?10.00",
+            "$10.00",
             "40",
             "10% off",
             "5%"
@@ -1373,7 +1373,7 @@
     "correct_answer": {
       "store_e": "medium"
     },
-    "explanation": "?10 x 0.9 x 40 x 1.05 = ?378 => Medium."
+    "explanation": "$10 x 0.9 x 40 x 1.05 = $378 => Medium."
   },
   {
     "id": "store_f",
@@ -1399,7 +1399,7 @@
           "id": "store_f",
           "label": "Store F",
           "values": [
-            "?5.00",
+            "$5.00",
             "60",
             "-",
             "10%"
@@ -1427,7 +1427,7 @@
     "correct_answer": {
       "store_f": "low"
     },
-    "explanation": "?5 x 60 x 1.10 = ?330 => Low."
+    "explanation": "$5 x 60 x 1.10 = $330 => Low."
   },
   {
     "id": "comm_person_e",
@@ -1453,7 +1453,7 @@
           "id": "pe",
           "label": "Person E",
           "values": [
-            "?2,000",
+            "$2,000",
             "40",
             "3"
           ]
@@ -1503,7 +1503,7 @@
           "id": "pf",
           "label": "Person F",
           "values": [
-            "?5,000",
+            "$5,000",
             "55",
             "1"
           ]
@@ -1784,12 +1784,1248 @@
     "widget_data": {
       "axis_max": 160,
       "axis_step": 40,
-      "labels": { "bottom": "West", "top": "East" },
-      "bar_1": { "label": "Quarter 1", "total": 120, "split_pct": 35 },
-      "bar_2_initial": { "label": "Quarter 2", "total": 120, "split_pct": 50 }
+      "labels": {
+        "bottom": "West",
+        "top": "East"
+      },
+      "bar_1": {
+        "label": "Quarter 1",
+        "total": 120,
+        "split_pct": 35
+      },
+      "bar_2_initial": {
+        "label": "Quarter 2",
+        "total": 120,
+        "split_pct": 50
+      }
     },
-    "correct_answer": { "total": 110, "split_pct": 80 },
-    "tolerance": { "total": 5, "split_pct": 2 },
-    "explanation": "Q2 total = 120 − 10 = $110m. West grew from $42m to $42m + $46m = $88m. East = $110m − $88m = $22m. West share = 88/110 ≈ 80%."
+    "correct_answer": {
+      "total": 110,
+      "split_pct": 80
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Q2 total = 120 - 10 = $110m. West grew from $42m to $42m + $46m = $88m. East = $110m - $88m = $22m. West share = 88/110 ~= 80%."
+  },
+  {
+    "id": "tab_travel_meal_allowance_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_tabbed_evaluation",
+    "difficulty": "medium",
+    "instruction": "Decide if each total meal reimbursement request should be approved.",
+    "question": "Review each employee table and assign Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee meals: Breakfast $12, Lunch $15, Dinner $28 per person.",
+      "Meals with clients: Breakfast $20, Lunch $30, Dinner $56 per person.",
+      "Total request must not exceed the allowed amount from these rates."
+    ],
+    "widget_data": {
+      "tabs": [
+        {
+          "id": "andrew",
+          "label": "Andrew",
+          "rows": [
+            {
+              "item": "Employee Breakfast",
+              "count": 2,
+              "cost": 26.53
+            },
+            {
+              "item": "Client Lunch",
+              "count": 3,
+              "cost": 75.45
+            },
+            {
+              "item": "Client Dinner",
+              "count": 3,
+              "cost": 150.04
+            },
+            {
+              "item": "Total",
+              "count": null,
+              "cost": 252.02
+            }
+          ]
+        },
+        {
+          "id": "brianna",
+          "label": "Brianna",
+          "rows": [
+            {
+              "item": "Client Breakfast",
+              "count": 6,
+              "cost": 119.78
+            },
+            {
+              "item": "Client Lunch",
+              "count": 5,
+              "cost": 137.87
+            },
+            {
+              "item": "Dinner",
+              "count": null,
+              "cost": null
+            },
+            {
+              "item": "Total",
+              "count": null,
+              "cost": 257.65
+            }
+          ]
+        },
+        {
+          "id": "carlos",
+          "label": "Carlos",
+          "rows": [
+            {
+              "item": "Employee Lunch",
+              "count": 4,
+              "cost": 66
+            },
+            {
+              "item": "Client Dinner",
+              "count": 2,
+              "cost": 124
+            },
+            {
+              "item": "Client Breakfast",
+              "count": 3,
+              "cost": 63
+            },
+            {
+              "item": "Total",
+              "count": null,
+              "cost": 253
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "id": "approved",
+          "label": "Approved"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved"
+        }
+      ]
+    },
+    "correct_answer": {
+      "andrew": "approved",
+      "brianna": "approved",
+      "carlos": "not_approved"
+    },
+    "explanation": "Andrew and Brianna are within allowance limits. Carlos exceeds the rate-based allowance and should be rejected."
+  },
+  {
+    "id": "graph_stock_account_value_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the value of the stock account at the end of each day.",
+    "question": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Cheryl invested $1,000 on Monday.",
+      "Each day after Monday, the account increases by 1% of the original value ($10).",
+      "On Wednesday, an administrative fee of $10 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 1000,
+        "max": 1060,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        1000,
+        1010,
+        1010,
+        1020,
+        1030
+      ]
+    },
+    "tolerance": {
+      "value": 0
+    },
+    "explanation": "Daily gain is fixed at $10. Wednesday applies +$10 growth and -$10 fee, so Wednesday remains $1,010."
+  },
+  {
+    "id": "pie_customer_contacts_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent the source of customer contacts.",
+    "question": "Resize each segment so the chart matches all relationship rules.",
+    "prompt_rules": [
+      "500 customers contacted the company today.",
+      "Phone = 250 customers.",
+      "Email = 50% of Phone.",
+      "Webchat = 4 x Social Media."
+    ],
+    "widget_data": {
+      "total_value": 500,
+      "segments": [
+        {
+          "id": "phone",
+          "label": "Phone",
+          "color": "blue",
+          "initial_pct": 27
+        },
+        {
+          "id": "email",
+          "label": "Email",
+          "color": "green",
+          "initial_pct": 32
+        },
+        {
+          "id": "webchat",
+          "label": "Webchat",
+          "color": "red",
+          "initial_pct": 36
+        },
+        {
+          "id": "social_media",
+          "label": "Social Media",
+          "color": "orange",
+          "initial_pct": 5
+        }
+      ]
+    },
+    "correct_answer": {
+      "phone": 50,
+      "email": 25,
+      "webchat": 20,
+      "social_media": 5
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Phone is 250 (50%), Email is 125 (25%), remaining 125 is split 4:1 -> Webchat 100 (20%), Social 25 (5%)."
+  },
+  {
+    "id": "sample_bar_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "medium",
+    "instruction": "Arrange the sales revenue by quarter and region.",
+    "question": "Adjust Quarter 2 to satisfy all statements.",
+    "prompt_rules": [
+      "Total sales revenue was 120 in Quarter 1.",
+      "Total sales revenue in Quarter 2 decreased by 10 compared to Quarter 1.",
+      "East revenue was 78 in Quarter 1.",
+      "West revenue increased by 46 from Quarter 1 to Quarter 2."
+    ],
+    "widget_data": {
+      "axis_max": 160,
+      "bar_1": {
+        "id": "q1",
+        "label": "Quarter 1",
+        "total": 120,
+        "split_pct": 65
+      },
+      "bar_2_initial": {
+        "id": "q2",
+        "label": "Quarter 2",
+        "total": 110,
+        "split_pct": 50
+      },
+      "segment_labels": {
+        "primary": "East",
+        "secondary": "West"
+      }
+    },
+    "correct_answer": {
+      "total": 110,
+      "split_pct": 20
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Q1 West = 120 - 78 = 42. Q2 West = 42 + 46 = 88. Q2 total = 110, so Q2 East = 22. East share = 22/110 = 20%."
+  },
+  {
+    "id": "sample_bar_02",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "medium",
+    "instruction": "Arrange the complaints by month and type.",
+    "question": "Adjust Month 2 to satisfy the growth and decline rules.",
+    "prompt_rules": [
+      "Month 1 total complaints: 200 (80 Service / 120 Product).",
+      "Month 2: Service increased by 15%.",
+      "Month 2: Product decreased by 10%."
+    ],
+    "widget_data": {
+      "axis_max": 260,
+      "bar_1": {
+        "id": "m1",
+        "label": "Month 1",
+        "total": 200,
+        "split_pct": 40
+      },
+      "bar_2_initial": {
+        "id": "m2",
+        "label": "Month 2",
+        "total": 200,
+        "split_pct": 50
+      },
+      "segment_labels": {
+        "primary": "Service",
+        "secondary": "Product"
+      }
+    },
+    "correct_answer": {
+      "total": 200,
+      "split_pct": 46
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Service: 80 x 1.15 = 92. Product: 120 x 0.90 = 108. Total = 200. Service share = 92/200 = 46%."
+  },
+  {
+    "id": "sample_bar_03",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "medium",
+    "instruction": "Arrange Week 2 energy demand by customer segment.",
+    "question": "Adjust Week 2 total and split based on the given changes.",
+    "prompt_rules": [
+      "Week 1 total demand: 300 (180 Residential / 120 Commercial).",
+      "Week 2: Residential decreased by 20%.",
+      "Week 2: Commercial increased by 25%."
+    ],
+    "widget_data": {
+      "axis_max": 360,
+      "bar_1": {
+        "id": "w1",
+        "label": "Week 1",
+        "total": 300,
+        "split_pct": 60
+      },
+      "bar_2_initial": {
+        "id": "w2",
+        "label": "Week 2",
+        "total": 300,
+        "split_pct": 50
+      },
+      "segment_labels": {
+        "primary": "Residential",
+        "secondary": "Commercial"
+      }
+    },
+    "correct_answer": {
+      "total": 294,
+      "split_pct": 49
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Residential: 180 x 0.80 = 144. Commercial: 120 x 1.25 = 150. Total = 294. Residential share = 144/294 = 49% (rounded)."
+  },
+  {
+    "id": "sample_bar_04",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "medium",
+    "instruction": "Arrange Day 2 delivery performance.",
+    "question": "Adjust Day 2 according to on-time and delayed movement.",
+    "prompt_rules": [
+      "Day 1 total deliveries: 450 (270 On-Time / 180 Delayed).",
+      "Day 2: On-Time increased by 10%.",
+      "Day 2: Delayed decreased by 20%."
+    ],
+    "widget_data": {
+      "axis_max": 520,
+      "bar_1": {
+        "id": "d1",
+        "label": "Day 1",
+        "total": 450,
+        "split_pct": 60
+      },
+      "bar_2_initial": {
+        "id": "d2",
+        "label": "Day 2",
+        "total": 450,
+        "split_pct": 50
+      },
+      "segment_labels": {
+        "primary": "On-Time",
+        "secondary": "Delayed"
+      }
+    },
+    "correct_answer": {
+      "total": 441,
+      "split_pct": 67
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "On-Time: 270 x 1.10 = 297. Delayed: 180 x 0.80 = 144. Total = 441. On-Time share = 297/441 = 67% (rounded)."
+  },
+  {
+    "id": "sample_bar_05",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange Batch 2 defect profile.",
+    "question": "Adjust Batch 2 total and split from the reduction rates.",
+    "prompt_rules": [
+      "Batch 1 total defects: 500 (125 Critical / 375 Non-Critical).",
+      "Batch 2: Critical decreased by 36%.",
+      "Batch 2: Non-Critical decreased by 12%."
+    ],
+    "widget_data": {
+      "axis_max": 600,
+      "bar_1": {
+        "id": "b1",
+        "label": "Batch 1",
+        "total": 500,
+        "split_pct": 25
+      },
+      "bar_2_initial": {
+        "id": "b2",
+        "label": "Batch 2",
+        "total": 450,
+        "split_pct": 30
+      },
+      "segment_labels": {
+        "primary": "Critical",
+        "secondary": "Non-Critical"
+      }
+    },
+    "correct_answer": {
+      "total": 410,
+      "split_pct": 20
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Critical: 125 x 0.64 = 80. Non-Critical: 375 x 0.88 = 330. Total = 410. Critical share = 80/410 = 19.5% (~20%)."
+  },
+  {
+    "id": "sample_bar_06",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange Week 2 support ticket profile.",
+    "question": "Adjust Week 2 based on resolved and unresolved shifts.",
+    "prompt_rules": [
+      "Week 1 total tickets: 320 (224 Resolved / 96 Unresolved).",
+      "Week 2: Resolved decreased by 25%.",
+      "Week 2: Unresolved increased by 50%."
+    ],
+    "widget_data": {
+      "axis_max": 400,
+      "bar_1": {
+        "id": "wk1",
+        "label": "Week 1",
+        "total": 320,
+        "split_pct": 70
+      },
+      "bar_2_initial": {
+        "id": "wk2",
+        "label": "Week 2",
+        "total": 320,
+        "split_pct": 50
+      },
+      "segment_labels": {
+        "primary": "Resolved",
+        "secondary": "Unresolved"
+      }
+    },
+    "correct_answer": {
+      "total": 312,
+      "split_pct": 54
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Resolved: 224 x 0.75 = 168. Unresolved: 96 x 1.50 = 144. Total = 312. Resolved share = 168/312 = 53.8% (~54%)."
+  },
+  {
+    "id": "sample_pie_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "easy",
+    "instruction": "Adjust the pie chart to represent customer contact sources.",
+    "question": "Set each source segment using the rules provided.",
+    "prompt_rules": [
+      "Total contacts = 500.",
+      "Phone = 250 contacts.",
+      "Email = 50% of Phone.",
+      "Webchat = 4 x Social Media."
+    ],
+    "widget_data": {
+      "total_value": 500,
+      "segments": [
+        {
+          "id": "phone",
+          "label": "Phone",
+          "color": "blue",
+          "initial_pct": 27
+        },
+        {
+          "id": "email",
+          "label": "Email",
+          "color": "green",
+          "initial_pct": 32
+        },
+        {
+          "id": "social",
+          "label": "Social Media",
+          "color": "orange",
+          "initial_pct": 5
+        },
+        {
+          "id": "webchat",
+          "label": "Webchat",
+          "color": "red",
+          "initial_pct": 36
+        }
+      ]
+    },
+    "correct_answer": {
+      "phone": 50,
+      "email": 25,
+      "social": 5,
+      "webchat": 20
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Phone 250 (50%), Email 125 (25%). Remaining 125 split in ratio 1:4 gives Social 25 (5%) and Webchat 100 (20%)."
+  },
+  {
+    "id": "sample_pie_02",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent regional staffing.",
+    "question": "Resize each region to satisfy the dependency rules.",
+    "prompt_rules": [
+      "Total staff = 1000.",
+      "East = 100 staff.",
+      "North = 2 x East.",
+      "West = 1.5 x North.",
+      "South = remainder."
+    ],
+    "widget_data": {
+      "total_value": 1000,
+      "segments": [
+        {
+          "id": "east",
+          "label": "East",
+          "color": "red",
+          "initial_pct": 20
+        },
+        {
+          "id": "north",
+          "label": "North",
+          "color": "blue",
+          "initial_pct": 30
+        },
+        {
+          "id": "west",
+          "label": "West",
+          "color": "orange",
+          "initial_pct": 25
+        },
+        {
+          "id": "south",
+          "label": "South",
+          "color": "green",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "east": 10,
+      "north": 20,
+      "west": 30,
+      "south": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "East=100 (10%), North=200 (20%), West=300 (30%), South=400 (40%)."
+  },
+  {
+    "id": "sample_pie_03",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent marketing spend.",
+    "question": "Resize budget segments using multiplier constraints.",
+    "prompt_rules": [
+      "Total budget = 1500.",
+      "Events = 120.",
+      "Digital = 3 x Events.",
+      "TV = 2 x Digital.",
+      "Print = remainder."
+    ],
+    "widget_data": {
+      "total_value": 1500,
+      "segments": [
+        {
+          "id": "events",
+          "label": "Events",
+          "color": "orange",
+          "initial_pct": 20
+        },
+        {
+          "id": "digital",
+          "label": "Digital",
+          "color": "blue",
+          "initial_pct": 30
+        },
+        {
+          "id": "tv",
+          "label": "TV",
+          "color": "green",
+          "initial_pct": 35
+        },
+        {
+          "id": "print",
+          "label": "Print",
+          "color": "red",
+          "initial_pct": 15
+        }
+      ]
+    },
+    "correct_answer": {
+      "events": 8,
+      "digital": 24,
+      "tv": 48,
+      "print": 20
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Events=120 (8%), Digital=360 (24%), TV=720 (48%), Print=300 (20%)."
+  },
+  {
+    "id": "sample_pie_04",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent shipment modes.",
+    "question": "Set each mode based on relative transport rules.",
+    "prompt_rules": [
+      "Total shipments = 1000.",
+      "Rail = 100 shipments.",
+      "Air = 2 x Rail.",
+      "Road = Air + Rail.",
+      "Sea = remainder."
+    ],
+    "widget_data": {
+      "total_value": 1000,
+      "segments": [
+        {
+          "id": "rail",
+          "label": "Rail",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "air",
+          "label": "Air",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "road",
+          "label": "Road",
+          "color": "orange",
+          "initial_pct": 25
+        },
+        {
+          "id": "sea",
+          "label": "Sea",
+          "color": "green",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "rail": 10,
+      "air": 20,
+      "road": 30,
+      "sea": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Rail=100 (10%), Air=200 (20%), Road=300 (30%), Sea=400 (40%)."
+  },
+  {
+    "id": "sample_pie_05",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent support ticket categories.",
+    "question": "Resize each category to satisfy all constraints.",
+    "prompt_rules": [
+      "Total tickets = 900.",
+      "Account = 90.",
+      "Billing = 2 x Account.",
+      "Technical = Billing + Account.",
+      "General = remainder."
+    ],
+    "widget_data": {
+      "total_value": 900,
+      "segments": [
+        {
+          "id": "account",
+          "label": "Account",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "billing",
+          "label": "Billing",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "technical",
+          "label": "Technical",
+          "color": "orange",
+          "initial_pct": 25
+        },
+        {
+          "id": "general",
+          "label": "General",
+          "color": "green",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "account": 10,
+      "billing": 20,
+      "technical": 30,
+      "general": 40
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Account=90 (10%), Billing=180 (20%), Technical=270 (30%), General=360 (40%)."
+  },
+  {
+    "id": "sample_pie_06",
+    "subtype": "interactive_numerical_hard",
+    "type": "interactive_pie_chart",
+    "difficulty": "hard",
+    "instruction": "Adjust the pie chart to satisfy all equation clues.",
+    "question": "Solve the budget split with simultaneous constraints.",
+    "prompt_rules": [
+      "A + B = 50%",
+      "2C + D = 68%",
+      "B + C + D = 78%",
+      "A + B + C + D = 100%"
+    ],
+    "widget_data": {
+      "total_value": 1000,
+      "segments": [
+        {
+          "id": "a",
+          "label": "Dept A",
+          "color": "blue",
+          "initial_pct": 28
+        },
+        {
+          "id": "b",
+          "label": "Dept B",
+          "color": "green",
+          "initial_pct": 22
+        },
+        {
+          "id": "c",
+          "label": "Dept C",
+          "color": "orange",
+          "initial_pct": 26
+        },
+        {
+          "id": "d",
+          "label": "Dept D",
+          "color": "red",
+          "initial_pct": 24
+        }
+      ]
+    },
+    "correct_answer": {
+      "a": 22,
+      "b": 28,
+      "c": 18,
+      "d": 32
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "From equations: B=28, C=18, D=32, A=22."
+  },
+  {
+    "id": "sample_drag_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Decide if each meal reimbursement request should be approved.",
+    "question": "Classify each employee as Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee Breakfast = $12 per person.",
+      "Client Lunch = $30 per person.",
+      "Client Dinner = $56 per person.",
+      "Approve only if Claimed Total <= Allowed Total."
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee Breakfast",
+        "Client Lunch",
+        "Client Dinner",
+        "Claimed Total",
+        "Approval"
+      ],
+      "rows": [
+        {
+          "id": "sdr1_andrew",
+          "label": "Andrew",
+          "values": [
+            "2",
+            "3",
+            "3",
+            "$252.02"
+          ]
+        },
+        {
+          "id": "sdr1_brianna",
+          "label": "Brianna",
+          "values": [
+            "4",
+            "2",
+            "1",
+            "$138.00"
+          ]
+        },
+        {
+          "id": "sdr1_carlos",
+          "label": "Carlos",
+          "values": [
+            "1",
+            "4",
+            "2",
+            "$247.00"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "green"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "sdr1_andrew": "approved",
+      "sdr1_brianna": "approved",
+      "sdr1_carlos": "not_approved"
+    },
+    "explanation": "Allowed totals: Andrew 282, Brianna 164, Carlos 244."
+  },
+  {
+    "id": "sample_drag_02",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Decide if each meal reimbursement request should be approved.",
+    "question": "Classify each employee as Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee Breakfast = $12 per person.",
+      "Client Lunch = $30 per person.",
+      "Client Dinner = $56 per person.",
+      "Approve only if Claimed Total <= Allowed Total."
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee Breakfast",
+        "Client Lunch",
+        "Client Dinner",
+        "Claimed Total",
+        "Approval"
+      ],
+      "rows": [
+        {
+          "id": "sdr2_ada",
+          "label": "Ada",
+          "values": [
+            "3",
+            "3",
+            "2",
+            "$238.00"
+          ]
+        },
+        {
+          "id": "sdr2_bola",
+          "label": "Bola",
+          "values": [
+            "5",
+            "1",
+            "1",
+            "$146.00"
+          ]
+        },
+        {
+          "id": "sdr2_chika",
+          "label": "Chika",
+          "values": [
+            "2",
+            "2",
+            "2",
+            "$197.00"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "green"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "sdr2_ada": "approved",
+      "sdr2_bola": "approved",
+      "sdr2_chika": "not_approved"
+    },
+    "explanation": "Allowed totals: Ada 238, Bola 146, Chika 196."
+  },
+  {
+    "id": "sample_drag_03",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Decide if each meal reimbursement request should be approved.",
+    "question": "Classify each employee as Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee Breakfast = $12 per person.",
+      "Client Lunch = $30 per person.",
+      "Client Dinner = $56 per person.",
+      "Approve only if Claimed Total <= Allowed Total."
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee Breakfast",
+        "Client Lunch",
+        "Client Dinner",
+        "Claimed Total",
+        "Approval"
+      ],
+      "rows": [
+        {
+          "id": "sdr3_dara",
+          "label": "Dara",
+          "values": [
+            "6",
+            "5",
+            "0",
+            "$219.78"
+          ]
+        },
+        {
+          "id": "sdr3_emeka",
+          "label": "Emeka",
+          "values": [
+            "1",
+            "0",
+            "4",
+            "$236.20"
+          ]
+        },
+        {
+          "id": "sdr3_femi",
+          "label": "Femi",
+          "values": [
+            "2",
+            "4",
+            "1",
+            "$201.00"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "green"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "sdr3_dara": "approved",
+      "sdr3_emeka": "approved",
+      "sdr3_femi": "not_approved"
+    },
+    "explanation": "Allowed totals: Dara 222, Emeka 236, Femi 200."
+  },
+  {
+    "id": "sample_drag_04",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Decide if each meal reimbursement request should be approved.",
+    "question": "Classify each employee as Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee Breakfast = $12 per person.",
+      "Client Lunch = $30 per person.",
+      "Client Dinner = $56 per person.",
+      "Approve only if Claimed Total <= Allowed Total."
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee Breakfast",
+        "Client Lunch",
+        "Client Dinner",
+        "Claimed Total",
+        "Approval"
+      ],
+      "rows": [
+        {
+          "id": "sdr4_gina",
+          "label": "Gina",
+          "values": [
+            "0",
+            "6",
+            "3",
+            "$348.00"
+          ]
+        },
+        {
+          "id": "sdr4_hassan",
+          "label": "Hassan",
+          "values": [
+            "7",
+            "2",
+            "2",
+            "$261.50"
+          ]
+        },
+        {
+          "id": "sdr4_ife",
+          "label": "Ife",
+          "values": [
+            "4",
+            "4",
+            "1",
+            "$224.00"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "green"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "sdr4_gina": "approved",
+      "sdr4_hassan": "not_approved",
+      "sdr4_ife": "approved"
+    },
+    "explanation": "Allowed totals: Gina 348, Hassan 256, Ife 224."
+  },
+  {
+    "id": "sample_drag_05",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Decide if each meal reimbursement request should be approved.",
+    "question": "Classify each employee as Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee Breakfast = $12 per person.",
+      "Client Lunch = $30 per person.",
+      "Client Dinner = $56 per person.",
+      "Approve only if Claimed Total <= Allowed Total."
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee Breakfast",
+        "Client Lunch",
+        "Client Dinner",
+        "Claimed Total",
+        "Approval"
+      ],
+      "rows": [
+        {
+          "id": "sdr5_jane",
+          "label": "Jane",
+          "values": [
+            "8",
+            "0",
+            "0",
+            "$95.00"
+          ]
+        },
+        {
+          "id": "sdr5_kunle",
+          "label": "Kunle",
+          "values": [
+            "3",
+            "5",
+            "2",
+            "$301.00"
+          ]
+        },
+        {
+          "id": "sdr5_lara",
+          "label": "Lara",
+          "values": [
+            "1",
+            "1",
+            "1",
+            "$98.00"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "green"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "sdr5_jane": "approved",
+      "sdr5_kunle": "not_approved",
+      "sdr5_lara": "approved"
+    },
+    "explanation": "Allowed totals: Jane 96, Kunle 298, Lara 98."
+  },
+  {
+    "id": "sample_drag_06",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Decide if each meal reimbursement request should be approved.",
+    "question": "Classify each employee as Approved or Not Approved.",
+    "prompt_rules": [
+      "Employee Breakfast = $12 per person.",
+      "Client Lunch = $30 per person.",
+      "Client Dinner = $56 per person.",
+      "Approve only if Claimed Total <= Allowed Total."
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee Breakfast",
+        "Client Lunch",
+        "Client Dinner",
+        "Claimed Total",
+        "Approval"
+      ],
+      "rows": [
+        {
+          "id": "sdr6_musa",
+          "label": "Musa",
+          "values": [
+            "2",
+            "6",
+            "1",
+            "$260.00"
+          ]
+        },
+        {
+          "id": "sdr6_nneka",
+          "label": "Nneka",
+          "values": [
+            "5",
+            "3",
+            "2",
+            "$262.00"
+          ]
+        },
+        {
+          "id": "sdr6_ola",
+          "label": "Ola",
+          "values": [
+            "3",
+            "2",
+            "3",
+            "$264.50"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "green"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "sdr6_musa": "approved",
+      "sdr6_nneka": "not_approved",
+      "sdr6_ola": "approved"
+    },
+    "explanation": "Allowed totals: Musa 260, Nneka 262, Ola 264."
   }
 ]

@@ -462,3 +462,56 @@
 - Vercel CLI authenticated and usable.
 - Supabase CLI authenticated and linked to `job_hunt_nga`.
 - Backend changes (tables, policies, migrations) can now be applied directly from this terminal.
+
+## 2026-02-12 - Continue-From-Claude Batch: New SHL Widgets + Save Timeout Fix
+
+## User Direction
+- Continue from the interrupted implementation run.
+- Fix production save instability symptoms and SHL interactive rendering gaps.
+- Complete new SHL-style interaction types and keep docs synchronized.
+
+## Changes Applied
+- `src/components/ScoreReport.jsx`
+  - Removed inner timeout wrappers around both latest-attempt SELECT and INSERT queries.
+  - Save flow now relies on shared AbortController/failsafe timing, avoiding false timeout errors during Supabase cold starts and preferring local-save fallback when network is slow.
+- `src/components/QuestionCard.jsx`
+  - Added rendering routes for:
+    - `interactive_tabbed_evaluation`
+    - `interactive_point_graph`
+  - Interactive answered-state check now uses question-aware completion logic.
+- `src/utils/questionScoring.js`
+  - Added interactive type support:
+    - `interactive_tabbed_evaluation`
+    - `interactive_point_graph`
+  - Added question-aware `hasAnsweredValue(answer, question)` for strict completion checks.
+  - Added tabbed-evaluation exact-map scorer.
+  - Added point-graph tolerance scorer (`tolerance.value` / fallbacks).
+- New widgets added:
+  - `src/components/interactive/SHLTabbedEvalWidget.jsx`
+  - `src/components/interactive/SHLPointGraphWidget.jsx`
+- `src/components/interactive/SHLDragTableWidget.jsx`
+  - Updated drag token colors to SHL palette.
+- `src/components/interactive/SHLResizablePieWidget.jsx`
+  - Updated segment color mapping/fallbacks to SHL palette.
+- `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - Increased chart left plotting margin so Y-axis labels are visible and not clipped.
+- `src/index.css`
+  - Added full styling blocks for new tabbed-evaluation and point-graph widgets.
+  - Updated rule panel and interactive segment colors to SHL visual palette.
+- `src/data/shl-gold-standard.json`
+  - Added gold-standard records:
+    - `tab_travel_meal_allowance_real` (`interactive_tabbed_evaluation`)
+    - `graph_stock_account_value_real` (`interactive_point_graph`)
+    - `pie_customer_contacts_real` (`interactive_pie_chart`)
+- `scripts/generate_shl_module.js`
+  - Extended normalization/inference support for the new interactive types.
+- Regenerated output:
+  - `src/data/shl-interactive-questions.json`
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS
+
+## Notes
+- Generated interactive pool now includes the two new widget types in addition to drag-table, pie, and stacked-bar.
+- New widget files were rewritten cleanly to remove encoding corruption from the interrupted run.

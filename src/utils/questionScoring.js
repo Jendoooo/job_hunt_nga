@@ -36,11 +36,74 @@ export function isInteractiveQuestionType(type) {
         'interactive_drag_table',
         'interactive_pie_chart',
         'interactive_stacked_bar',
+        'interactive_tabbed_evaluation',
+        'interactive_point_graph',
     ].includes(type)
 }
 
-export function hasAnsweredValue(answer) {
+function hasNonEmptyString(value) {
+    return typeof value === 'string' && value.trim().length > 0
+}
+
+function getTabbedExpectedMap(question) {
+    const raw = question?.correct_answer || question?.correctAnswer || {}
+    if (raw && typeof raw === 'object' && raw.answers && typeof raw.answers === 'object') {
+        return raw.answers
+    }
+    return raw && typeof raw === 'object' ? raw : {}
+}
+
+function getPointGraphExpectedValues(question) {
+    const raw = question?.correct_answer || question?.correctAnswer || {}
+
+    if (Array.isArray(raw)) return raw
+    if (raw && typeof raw === 'object' && Array.isArray(raw.values)) return raw.values
+
+    if (raw && typeof raw === 'object') {
+        const labels = Array.isArray(question?.widget_data?.x_axis_labels)
+            ? question.widget_data.x_axis_labels
+            : []
+
+        if (labels.length > 0 && labels.every((label) => raw[label] !== undefined)) {
+            return labels.map((label) => raw[label])
+        }
+
+        return Object.values(raw)
+    }
+
+    return []
+}
+
+export function hasAnsweredValue(answer, question = null) {
     if (answer === null || answer === undefined) return false
+
+    if (question?.type === 'interactive_tabbed_evaluation') {
+        if (typeof answer !== 'object') return false
+
+        const tabs = Array.isArray(question?.widget_data?.tabs) ? question.widget_data.tabs : []
+        const tabIds = tabs.map((tab) => tab?.id).filter(Boolean)
+
+        if (tabIds.length === 0) {
+            return Object.keys(answer).length > 0
+        }
+
+        return tabIds.every((tabId) => hasNonEmptyString(answer[tabId]))
+    }
+
+    if (question?.type === 'interactive_point_graph') {
+        const values = Array.isArray(answer)
+            ? answer
+            : (answer && typeof answer === 'object' ? answer.values : null)
+
+        if (!Array.isArray(values) || values.length === 0) return false
+
+        const labels = Array.isArray(question?.widget_data?.x_axis_labels)
+            ? question.widget_data.x_axis_labels
+            : []
+
+        return labels.length > 0 ? values.length === labels.length : values.length > 0
+    }
+
     if (typeof answer === 'string') return answer.trim().length > 0
     if (typeof answer === 'object') return Object.keys(answer).length > 0
     return true
@@ -100,6 +163,44 @@ function evaluateStackedBar(question, answer) {
     })
 }
 
+function evaluateTabbedEvaluation(question, answer) {
+    if (!answer || typeof answer !== 'object') return false
+
+    const expectedMap = getTabbedExpectedMap(question)
+    const tabIds = Array.isArray(question?.widget_data?.tabs)
+        ? question.widget_data.tabs.map((tab) => tab?.id).filter(Boolean)
+        : []
+    const keys = tabIds.length > 0 ? tabIds : Object.keys(expectedMap)
+
+    if (keys.length === 0) return false
+
+    return keys.every((key) => {
+        const expected = expectedMap[key]
+        if (!hasNonEmptyString(expected)) return false
+        return String(answer[key] || '').trim() === String(expected).trim()
+    })
+}
+
+function evaluatePointGraph(question, answer) {
+    const actualValues = Array.isArray(answer)
+        ? answer
+        : (answer && typeof answer === 'object' && Array.isArray(answer.values) ? answer.values : null)
+    if (!Array.isArray(actualValues) || actualValues.length === 0) return false
+
+    const expectedValues = getPointGraphExpectedValues(question)
+    if (!Array.isArray(expectedValues) || expectedValues.length === 0) return false
+    if (actualValues.length !== expectedValues.length) return false
+
+    const tolerance = question?.tolerance?.value
+        ?? question?.tolerance?.point
+        ?? question?.tolerance?.y
+        ?? 1
+
+    return expectedValues.every((expected, index) =>
+        compareWithTolerance(actualValues[index], expected, tolerance)
+    )
+}
+
 function evaluateStandardQuestion(question, answer) {
     const expected = question.correctAnswer
     if (expected === undefined) return false
@@ -114,7 +215,7 @@ function evaluateStandardQuestion(question, answer) {
 export function evaluateQuestionAnswer(question, answer) {
     if (!question) return false
 
-    if (!hasAnsweredValue(answer)) return false
+    if (!hasAnsweredValue(answer, question)) return false
 
     switch (question.type) {
         case 'interactive_drag_table':
@@ -123,6 +224,10 @@ export function evaluateQuestionAnswer(question, answer) {
             return evaluatePieChart(question, answer)
         case 'interactive_stacked_bar':
             return evaluateStackedBar(question, answer)
+        case 'interactive_tabbed_evaluation':
+            return evaluateTabbedEvaluation(question, answer)
+        case 'interactive_point_graph':
+            return evaluatePointGraph(question, answer)
         default:
             return evaluateStandardQuestion(question, answer)
     }
@@ -131,7 +236,7 @@ export function evaluateQuestionAnswer(question, answer) {
 export function buildQuestionResults(questions, answers) {
     return (questions || []).map((question, index) => {
         const answer = answers[index]
-        const answered = hasAnsweredValue(answer)
+        const answered = hasAnsweredValue(answer, question)
         const correct = evaluateQuestionAnswer(question, answer)
 
         return {

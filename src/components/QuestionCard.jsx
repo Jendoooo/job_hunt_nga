@@ -2,6 +2,8 @@ import { Flag, CheckCircle2, XCircle } from 'lucide-react'
 import SHLDragTableWidget from './interactive/SHLDragTableWidget'
 import SHLResizablePieWidget from './interactive/SHLResizablePieWidget'
 import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
+import SHLTabbedEvalWidget from './interactive/SHLTabbedEvalWidget'
+import SHLPointGraphWidget from './interactive/SHLPointGraphWidget'
 import { evaluateQuestionAnswer, hasAnsweredValue, isInteractiveQuestionType } from '../utils/questionScoring'
 
 export default function QuestionCard({
@@ -17,7 +19,7 @@ export default function QuestionCard({
 }) {
     const optionLetters = ['A', 'B', 'C', 'D', 'E', 'F']
     const isInteractive = isInteractiveQuestionType(question?.type)
-    const hasInteractionAnswer = hasAnsweredValue(selectedAnswer)
+    const hasInteractionAnswer = hasAnsweredValue(selectedAnswer, question)
     const interactiveResult = isInteractive && hasInteractionAnswer
         ? evaluateQuestionAnswer(question, selectedAnswer)
         : null
@@ -60,6 +62,24 @@ export default function QuestionCard({
             case 'interactive_stacked_bar':
                 return (
                     <SHLAdjustableBarWidget
+                        key={widgetKey}
+                        data={question.widget_data}
+                        value={selectedAnswer}
+                        onAnswer={onSelectAnswer}
+                    />
+                )
+            case 'interactive_tabbed_evaluation':
+                return (
+                    <SHLTabbedEvalWidget
+                        key={widgetKey}
+                        data={question.widget_data}
+                        value={selectedAnswer}
+                        onAnswer={onSelectAnswer}
+                    />
+                )
+            case 'interactive_point_graph':
+                return (
+                    <SHLPointGraphWidget
                         key={widgetKey}
                         data={question.widget_data}
                         value={selectedAnswer}

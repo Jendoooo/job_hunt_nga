@@ -19,19 +19,9 @@ import {
     Check,
 } from 'lucide-react'
 
-const SAVE_TIMEOUT_MS = 6000
 const SAVE_FAILSAFE_MS = 8000
 const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
 const RECENT_ATTEMPT_TTL_MS = 120000
-
-function withTimeout(promise, timeoutMs, message) {
-    return Promise.race([
-        promise,
-        new Promise((_, reject) => {
-            setTimeout(() => reject(new Error(message)), timeoutMs)
-        }),
-    ])
-}
 
 function isAbortLikeError(error) {
     const message = typeof error?.message === 'string'
@@ -200,13 +190,15 @@ export default function ScoreReport({
                 selectQuery = selectQuery.abortSignal(signal)
             }
 
-            const { data: latestAttempt, error: latestError } = await withTimeout(
-                selectQuery,
-                SAVE_TIMEOUT_MS,
-                'Timed out while checking latest saved result.'
-            )
+            // No inner timeout on the SELECT - governed by AbortController + SAVE_FAILSAFE_MS.
+            // Using withTimeout here caused false "timed out" errors on Supabase cold starts.
+            const { data: latestAttempt, error: latestError } = await selectQuery
 
-            if (latestError) throw latestError
+            if (signal?.aborted) return { status: 'aborted' }
+            if (latestError) {
+                if (isAbortLikeError(latestError)) return { status: 'aborted' }
+                throw latestError
+            }
 
             if (isLikelyDuplicateAttempt(latestAttempt, payload)) {
                 markFingerprintAsSaved(attemptFingerprint)
@@ -224,13 +216,12 @@ export default function ScoreReport({
                 insertQuery = insertQuery.abortSignal(signal)
             }
 
-            const { data: insertedAttempt, error } = await withTimeout(
-                insertQuery,
-                SAVE_TIMEOUT_MS,
-                'Timed out while saving result to Supabase.'
-            )
-
-            if (error) throw error
+            const { data: insertedAttempt, error } = await insertQuery
+            if (signal?.aborted) return { status: 'aborted' }
+            if (error) {
+                if (isAbortLikeError(error)) return { status: 'aborted' }
+                throw error
+            }
 
             markFingerprintAsSaved(attemptFingerprint)
             window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
