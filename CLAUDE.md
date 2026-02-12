@@ -25,6 +25,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Saves attempts to Supabase `test_attempts`
   - Displays save progress/error and emits `attempt-saved` browser event
   - Uses short-lived session fingerprint cache + latest-attempt check to reduce duplicate inserts
+  - Uses AbortController for cancellation-safe save flow during unmount/strict re-renders
   - Score review explanation supports formatted HTML content
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
@@ -41,6 +42,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (30 questions live; Set 1 + additional chunks)
+- `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
 - `src/data/shl-interactive-questions.json` (50 interactive numerical questions; mixed `interactive_numerical` + `interactive_numerical_hard`)
   - Hard models included:
     - Tiered progressive drag-table verification
@@ -64,6 +66,8 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Core shells/components are standardized across dashboard, auth, tests, and score report.
 - Question card supports typed widget rendering for interactive numerical questions.
 - Interactive stacked-bar widget supports both legacy two-bar tasks and multi-target historical tasks.
+- Interactive stacked-bar drag updates are throttled with `requestAnimationFrame` for smoother pointer handling.
+- NLNG Interactive setup includes a difficulty selector (`easy` / `medium` / `hard`) that filters question pool.
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.
 - Dashboard surfaces runtime errors for attempt loading and AI generation.

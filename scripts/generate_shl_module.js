@@ -1,10 +1,11 @@
-import { writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
 const OUTPUT_FILE = resolve(ROOT, 'src/data/shl-interactive-questions.json')
+const GOLD_STANDARD_FILE = resolve(ROOT, 'src/data/shl-gold-standard.json')
 const QUESTION_COUNT = 50
 
 function createSeededRandom(seed = 20260212) {
@@ -21,6 +22,71 @@ const random = createSeededRandom()
 
 function pick(list) {
     return list[Math.floor(random() * list.length)]
+}
+
+function normalizeDifficulty(value, fallback = 'medium') {
+    const normalized = String(value || '').trim().toLowerCase()
+    if (normalized === 'easy' || normalized === 'medium' || normalized === 'hard') {
+        return normalized
+    }
+    return fallback
+}
+
+function inferDifficulty(question, index = 0) {
+    const explicit = normalizeDifficulty(question?.difficulty, '')
+    if (explicit) return explicit
+
+    if (question?.subtype === 'interactive_numerical_hard') return 'hard'
+
+    if (question?.type === 'interactive_drag_table') {
+        const rules = Array.isArray(question?.prompt_rules) ? question.prompt_rules : []
+        if (rules.length <= 2) return 'easy'
+    }
+
+    if (question?.type === 'interactive_pie_chart') {
+        const segmentCount = Array.isArray(question?.widget_data?.segments) ? question.widget_data.segments.length : 0
+        if (segmentCount > 0 && segmentCount <= 3) return 'easy'
+    }
+
+    if (question?.type === 'interactive_stacked_bar') {
+        const growthLine = (Array.isArray(question?.prompt_rules) ? question.prompt_rules : [])
+            .find((line) => String(line).toLowerCase().includes('month 2'))
+        if (growthLine) {
+            const growthRates = String(growthLine).match(/\+(\d+)%/g) || []
+            const numericRates = growthRates
+                .map((token) => Number(token.replace(/\D/g, '')))
+                .filter((value) => Number.isFinite(value))
+            if (numericRates.length >= 2 && Math.max(...numericRates) <= 15) return 'easy'
+        }
+    }
+
+    return index % 6 === 0 ? 'easy' : 'medium'
+}
+
+function loadGoldStandardQuestions() {
+    if (!existsSync(GOLD_STANDARD_FILE)) {
+        console.warn(`Gold standard source not found at ${GOLD_STANDARD_FILE}. Using generated fallback set only.`)
+        return []
+    }
+
+    try {
+        const raw = JSON.parse(readFileSync(GOLD_STANDARD_FILE, 'utf8'))
+        if (!Array.isArray(raw)) {
+            console.warn(`Gold standard source is not an array. Using generated fallback set only.`)
+            return []
+        }
+
+        return raw
+            .map((question, index) => ({
+                ...question,
+                subtype: question?.subtype || 'interactive_numerical',
+                difficulty: normalizeDifficulty(question?.difficulty, inferDifficulty(question, index)),
+            }))
+            .filter((question) => question?.subtype === 'interactive_numerical')
+    } catch (error) {
+        console.warn(`Failed to parse gold standard source. Using generated fallback set only.`, error?.message || error)
+        return []
+    }
 }
 
 function randomInt(min, max) {
@@ -154,6 +220,7 @@ function createStandardTableQuestion(id) {
             id,
             type: 'interactive_drag_table',
             subtype: 'interactive_numerical',
+            difficulty: 'medium',
             instruction: 'Classify each row using the commission rule.',
             question: 'Drag the correct outcome label for each sales rep.',
             prompt_rules: [
@@ -194,6 +261,7 @@ function createStandardTableQuestion(id) {
             id,
             type: 'interactive_drag_table',
             subtype: 'interactive_numerical',
+            difficulty: 'easy',
             instruction: 'Classify each project based on revenue-to-investment coverage.',
             question: 'Assign the right funding category for each project.',
             prompt_rules: [
@@ -235,6 +303,7 @@ function createStandardTableQuestion(id) {
         id,
         type: 'interactive_drag_table',
         subtype: 'interactive_numerical',
+        difficulty: 'medium',
         instruction: 'Determine each operator eligibility status.',
         question: 'Classify each operator as Eligible or Not Eligible.',
         prompt_rules: [
@@ -301,6 +370,7 @@ function createTieredTableQuestion(id) {
         id,
         type: 'interactive_drag_table',
         subtype: 'interactive_numerical_hard',
+        difficulty: 'hard',
         instruction: 'Verify if each travel expense claim is correct.',
         question: 'Use the tiered mileage policy and classify each claim.',
         prompt_rules: ruleLines,
@@ -363,6 +433,7 @@ function createStandardPieQuestion(id) {
         id,
         type: 'interactive_pie_chart',
         subtype: 'interactive_numerical',
+        difficulty: 'medium',
         instruction: 'Adjust the pie chart to satisfy the ratio model.',
         question: 'Resize segments to match the office ratio rules.',
         prompt_rules: [
@@ -438,6 +509,7 @@ function createEquationPieQuestion(id) {
         id,
         type: 'interactive_pie_chart',
         subtype: 'interactive_numerical_hard',
+        difficulty: 'hard',
         instruction: 'Approximate the pie slices that satisfy all equation constraints.',
         question: 'Resize each budget slice to satisfy the system of equations.',
         prompt_rules: equations,
@@ -480,6 +552,7 @@ function createStandardBarQuestion(id) {
         id,
         type: 'interactive_stacked_bar',
         subtype: 'interactive_numerical',
+        difficulty: 'medium',
         instruction: 'Adjust Month 2 total and Service/Product split.',
         question: 'Move the handles until Month 2 matches the growth rules.',
         prompt_rules: [
@@ -546,6 +619,7 @@ function createHistoricalBarQuestion(id) {
         id,
         type: 'interactive_stacked_bar',
         subtype: 'interactive_numerical_hard',
+        difficulty: 'hard',
         instruction: 'Use Year 1 as the historical baseline, then build Year 2 and Year 3.',
         question: 'Adjust Year 2 and Year 3 bars to satisfy all historical rules.',
         prompt_rules: [
@@ -614,10 +688,10 @@ function createBarQuestion(id, hardMode = false) {
     return hardMode ? createHistoricalBarQuestion(id) : createStandardBarQuestion(id)
 }
 
-function main() {
+function createFallbackQuestions(targetCount = QUESTION_COUNT) {
     const questions = []
 
-    for (let id = 1; id <= QUESTION_COUNT; id += 1) {
+    for (let id = 1; id <= targetCount; id += 1) {
         if (id % 3 === 1) {
             questions.push(createTableQuestion(id, id % 6 === 1))
         } else if (id % 3 === 2) {
@@ -627,8 +701,55 @@ function main() {
         }
     }
 
+    return questions
+}
+
+function normalizeGoldQuestionIds(goldQuestions) {
+    return goldQuestions.map((question, index) => {
+        const normalized = {
+            ...question,
+            id: index + 1,
+            subtype: 'interactive_numerical',
+            difficulty: normalizeDifficulty(question?.difficulty, inferDifficulty(question, index)),
+        }
+        if (question?.id !== undefined) {
+            normalized.source_id = question.id
+        }
+        return normalized
+    })
+}
+
+function createHardFillQuestions(startId, count) {
+    const fillQuestions = []
+    for (let index = 0; index < count; index += 1) {
+        const id = startId + index
+        if (index % 3 === 0) {
+            fillQuestions.push(createTableQuestion(id, true))
+        } else if (index % 3 === 1) {
+            fillQuestions.push(createPieQuestion(id, true))
+        } else {
+            fillQuestions.push(createBarQuestion(id, true))
+        }
+    }
+    return fillQuestions
+}
+
+function main() {
+    const goldQuestions = normalizeGoldQuestionIds(loadGoldStandardQuestions())
+    let questions = []
+
+    if (goldQuestions.length === 0) {
+        questions = createFallbackQuestions(QUESTION_COUNT)
+    } else {
+        questions = [...goldQuestions]
+        const remaining = Math.max(0, QUESTION_COUNT - questions.length)
+        if (remaining > 0) {
+            questions.push(...createHardFillQuestions(questions.length + 1, remaining))
+        }
+    }
+
     writeFileSync(OUTPUT_FILE, `${JSON.stringify(questions, null, 2)}\n`)
-    console.log(`Generated ${questions.length} interactive numerical questions -> ${OUTPUT_FILE}`)
+    console.log(`Generated ${questions.length} interactive numerical questions -> ${OUTPUT_FILE} (gold source: ${goldQuestions.length})`)
 }
 
 main()

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import AIExplainer from './AIExplainer'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
@@ -130,6 +130,7 @@ export default function ScoreReport({
     onBackToDashboard,
 }) {
     const { user } = useAuth()
+    const isMountedRef = useRef(false)
     const [reviewMode, setReviewMode] = useState(false)
     const [currentReview, setCurrentReview] = useState(0)
     const [saved, setSaved] = useState(false)
@@ -143,10 +144,19 @@ export default function ScoreReport({
     const skipped = questionResults.filter((result) => !result.answered).length
     const incorrectAnswers = questionResults.filter((result) => result.answered && !result.correct)
 
-    const saveResults = useCallback(async () => {
+    useEffect(() => {
+        isMountedRef.current = true
+        return () => {
+            isMountedRef.current = false
+        }
+    }, [])
+
+    const saveResults = useCallback(async (signal) => {
         if (!user || saved || saving) return saved
-        setSaving(true)
-        setSaveError('')
+        if (isMountedRef.current) {
+            setSaving(true)
+            setSaveError('')
+        }
 
         try {
             const payload = {
@@ -162,19 +172,28 @@ export default function ScoreReport({
             const attemptFingerprint = stableSerialize(payload)
 
             if (isFingerprintRecentlySaved(attemptFingerprint)) {
-                setSaved(true)
+                if (isMountedRef.current) {
+                    setSaved(true)
+                }
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return true
             }
 
+            // Check for duplicate recent attempts
+            let selectQuery = supabase
+                .from('test_attempts')
+                .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(1)
+                .maybeSingle()
+
+            if (signal) {
+                selectQuery = selectQuery.abortSignal(signal)
+            }
+
             const { data: latestAttempt, error: latestError } = await withTimeout(
-                supabase
-                    .from('test_attempts')
-                    .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
-                    .eq('user_id', user.id)
-                    .order('created_at', { ascending: false })
-                    .limit(1)
-                    .maybeSingle(),
+                selectQuery,
                 SAVE_TIMEOUT_MS,
                 'Timed out while checking latest saved result.'
             )
@@ -182,34 +201,55 @@ export default function ScoreReport({
             if (latestError) throw latestError
 
             if (isLikelyDuplicateAttempt(latestAttempt, payload)) {
-                setSaved(true)
+                if (isMountedRef.current) {
+                    setSaved(true)
+                }
                 markFingerprintAsSaved(attemptFingerprint)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: latestAttempt }))
                 return true
             }
 
+            // Insert new attempt
+            let insertQuery = supabase
+                .from('test_attempts')
+                .insert(payload)
+                .select('*')
+                .single()
+
+            if (signal) {
+                insertQuery = insertQuery.abortSignal(signal)
+            }
+
             const { data: insertedAttempt, error } = await withTimeout(
-                supabase
-                    .from('test_attempts')
-                    .insert(payload)
-                    .select('*')
-                    .single(),
+                insertQuery,
                 SAVE_TIMEOUT_MS,
                 'Timed out while saving result to Supabase.'
             )
-            if (error) throw error
-            setSaved(true)
-            markFingerprintAsSaved(attemptFingerprint)
 
-            // Notify dashboard to refresh attempts even without a full page reload.
-            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
+            if (error) throw error
+
+            if (!signal?.aborted && isMountedRef.current) {
+                setSaved(true)
+                markFingerprintAsSaved(attemptFingerprint)
+                // Notify dashboard to refresh attempts even without a full page reload.
+                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
+            }
             return true
         } catch (err) {
+            // Ignore abort errors as they happen on unmount or strict mode re-runs
+            if (err.name === 'AbortError' || signal?.aborted) {
+                return false
+            }
+
             console.error('Failed to save results:', err)
-            setSaveError(err?.message || 'Unable to save results right now.')
+            if (isMountedRef.current) {
+                setSaveError(err?.message || 'Unable to save results right now.')
+            }
             return false
         } finally {
-            setSaving(false)
+            if (isMountedRef.current) {
+                setSaving(false)
+            }
         }
     }, [
         user,
@@ -225,7 +265,9 @@ export default function ScoreReport({
     ])
 
     useEffect(() => {
-        saveResults()
+        const controller = new AbortController()
+        saveResults(controller.signal)
+        return () => controller.abort()
     }, [saveResults])
 
     async function handleBackToDashboard() {

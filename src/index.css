@@ -833,6 +833,18 @@ select:focus-visible {
   color: var(--text-3);
 }
 
+.test-setup__select {
+  width: 100%;
+  max-width: 260px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--text-2);
+  padding: 0.48rem 0.6rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
 .test-setup__time-options {
   display: flex;
   gap: 0.45rem;
@@ -1415,6 +1427,7 @@ select:focus-visible {
 
 .interactive-segment--interactive {
   opacity: 0.9;
+  will-change: transform, height, y;
 }
 
 .interactive-handle {

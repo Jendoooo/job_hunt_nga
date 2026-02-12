@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Timer from '../components/Timer'
 import QuestionCard from '../components/QuestionCard'
@@ -17,13 +17,35 @@ import {
 
 const QUESTION_OPTIONS = [5, 10, 15, 20, 30, 40, 50]
 const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30, 40]
+const DIFFICULTY_OPTIONS = [
+    { value: 'easy', label: 'Easy' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'hard', label: 'Hard' },
+]
 const DEFAULT_QUESTION_COUNT = 15
 const DEFAULT_TIME_MINUTES = 20
+
+function normalizeDifficulty(value) {
+    const normalized = String(value || '').trim().toLowerCase()
+    if (normalized === 'easy' || normalized === 'medium' || normalized === 'hard') {
+        return normalized
+    }
+    return null
+}
+
+function getQuestionDifficulty(question) {
+    const explicit = normalizeDifficulty(question?.difficulty)
+    if (explicit) return explicit
+
+    if (question?.subtype === 'interactive_numerical_hard') return 'hard'
+    return 'medium'
+}
 
 export default function NLNGInteractiveTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
     const [mode, setMode] = useState('exam')
+    const [difficulty, setDifficulty] = useState('medium')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
     const [activeQuestions, setActiveQuestions] = useState([])
@@ -33,11 +55,16 @@ export default function NLNGInteractiveTest() {
     const [timeTaken, setTimeTaken] = useState(0)
     const startTimeRef = useRef(null)
 
-    const availableQuestions = interactiveQuestions.filter((question) =>
-        typeof question?.subtype === 'string' && question.subtype.startsWith('interactive_numerical')
-    )
+    const availableQuestions = useMemo(() => (
+        interactiveQuestions.filter((question) =>
+            typeof question?.subtype === 'string' &&
+            question.subtype.startsWith('interactive_numerical') &&
+            getQuestionDifficulty(question) === difficulty
+        )
+    ), [difficulty])
     const totalTimeSeconds = timeLimitMinutes * 60
     const isExamMode = mode === 'exam'
+    const difficultyLabel = DIFFICULTY_OPTIONS.find((option) => option.value === difficulty)?.label || 'Medium'
 
     function startTest() {
         const selected = selectUniqueSessionQuestions(availableQuestions, questionCount)
@@ -116,6 +143,27 @@ export default function NLNGInteractiveTest() {
                         </div>
 
                         <div className="test-setup__mode">
+                            <h3>Difficulty</h3>
+                            <div className="max-w-xs">
+                                <select
+                                    className="test-setup__select"
+                                    value={difficulty}
+                                    onChange={(event) => setDifficulty(event.target.value)}
+                                    aria-label="Select difficulty level"
+                                >
+                                    {DIFFICULTY_OPTIONS.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <p className="text-xs text-slate-500 mt-2">
+                                {availableQuestions.length} questions available for {difficultyLabel.toLowerCase()} mode.
+                            </p>
+                        </div>
+
+                        <div className="test-setup__mode">
                             <h3>Question Count</h3>
                             <div className="test-setup__time-options">
                                 {QUESTION_OPTIONS.map((count) => (
@@ -188,7 +236,7 @@ export default function NLNGInteractiveTest() {
                     timeTaken={timeTaken || (isExamMode ? totalTimeSeconds : 0)}
                     totalTime={isExamMode ? totalTimeSeconds : 0}
                     assessmentType="nlng-interactive-numerical"
-                    moduleName={`NLNG Interactive Numerical (${mode}, ${activeQuestions.length}Q${isExamMode ? ` / ${timeLimitMinutes}m` : ''})`}
+                    moduleName={`NLNG Interactive Numerical (${difficulty}, ${mode}, ${activeQuestions.length}Q${isExamMode ? ` / ${timeLimitMinutes}m` : ''})`}
                     mode={mode}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}

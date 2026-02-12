@@ -59,6 +59,7 @@ npm run build
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json`
+- `src/data/shl-gold-standard.json` (source-of-truth for standard interactive numerical records)
 - `src/data/shl-interactive-questions.json`
 
 ## Interactive Numerical Generation
@@ -71,6 +72,11 @@ Hard-mode generation patterns are included:
 - Tiered progressive drag-table verification
 - Reverse-engineered equation-system pie constraints
 - Historical-reference stacked bars (Year 1 locked, Year 2/3 interactive)
+
+Interactive NLNG setup also supports difficulty filtering:
+- `Easy`
+- `Medium`
+- `Hard`
 
 ## Next Planned Work
 1. Expand NLNG SHL Sets 2-4 using `scripts/validate-shl.js`.

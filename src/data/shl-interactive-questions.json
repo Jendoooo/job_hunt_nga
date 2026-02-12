@@ -1,131 +1,6 @@
 [
   {
     "id": 1,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-250 miles: $0.11/mile",
-      "251-500 miles: $0.10/mile",
-      "501+ miles: $0.05/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q1_r1",
-          "values": [
-            "Alice",
-            "433",
-            "$32.55"
-          ]
-        },
-        {
-          "id": "q1_r2",
-          "values": [
-            "Binta",
-            "473",
-            "$49.80"
-          ]
-        },
-        {
-          "id": "q1_r3",
-          "values": [
-            "Chidi",
-            "247",
-            "$33.67"
-          ]
-        },
-        {
-          "id": "q1_r4",
-          "values": [
-            "Daniel",
-            "170",
-            "$14.45"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q1_r1": "incorrect",
-      "q1_r2": "correct",
-      "q1_r3": "incorrect",
-      "q1_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 2,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Engineering + 2 x Finance + 2 x Product = 160%",
-      "Product + 3 x Marketing = 90%",
-      "2 x Marketing + 3 x Finance = 97%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 600,
-      "segments": [
-        {
-          "id": "seg_2_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 34
-        },
-        {
-          "id": "seg_2_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 39
-        },
-        {
-          "id": "seg_2_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 14
-        },
-        {
-          "id": "seg_2_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 13
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_2_eng": 31,
-      "seg_2_prd": 30,
-      "seg_2_fin": 19,
-      "seg_2_mkt": 20
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 3,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -161,10 +36,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "easy",
+    "source_id": 1
   },
   {
-    "id": 4,
+    "id": 2,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -231,10 +108,12 @@
       "q4_r3": "watchlist",
       "q4_r4": "priority"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 2
   },
   {
-    "id": 5,
+    "id": 3,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -281,200 +160,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "medium",
+    "source_id": 3
   },
   {
-    "id": 6,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 180 total (63 smartphones / 117 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 50",
-      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
-      "Year 3 non-smartphones dropped by 25% vs Year 1",
-      "Year 3 smartphones increased by 30% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 260,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 180,
-        "split_pct": 35
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 228,
-          "split_pct": 66
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 160,
-          "split_pct": 36
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 210,
-        "split_pct": 54
-      },
-      "year3": {
-        "total": 170,
-        "split_pct": 48
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 7,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-200 miles: $0.50/mile",
-      "201+ miles: $0.25/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q7_r1",
-          "values": [
-            "Alice",
-            "452",
-            "$163.00"
-          ]
-        },
-        {
-          "id": "q7_r2",
-          "values": [
-            "Binta",
-            "204",
-            "$92.25"
-          ]
-        },
-        {
-          "id": "q7_r3",
-          "values": [
-            "Chidi",
-            "177",
-            "$88.50"
-          ]
-        },
-        {
-          "id": "q7_r4",
-          "values": [
-            "Daniel",
-            "753",
-            "$249.25"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q7_r1": "correct",
-      "q7_r2": "incorrect",
-      "q7_r3": "correct",
-      "q7_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 8,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Finance + 2 x Marketing + 3 x Product = 172%",
-      "2 x Product + Marketing = 71%",
-      "Finance + 3 x Engineering = 101%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 420,
-      "segments": [
-        {
-          "id": "seg_8_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 28
-        },
-        {
-          "id": "seg_8_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 27
-        },
-        {
-          "id": "seg_8_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 23
-        },
-        {
-          "id": "seg_8_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 22
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_8_eng": 25,
-      "seg_8_prd": 22,
-      "seg_8_fin": 26,
-      "seg_8_mkt": 27
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 9,
+    "id": 4,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -510,10 +201,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 4
   },
   {
-    "id": 10,
+    "id": 5,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -580,10 +273,12 @@
       "q10_r3": "watchlist",
       "q10_r4": "watchlist"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 5
   },
   {
-    "id": 11,
+    "id": 6,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -630,201 +325,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "medium",
+    "source_id": 6
   },
   {
-    "id": 12,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 220 total (77 smartphones / 143 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 60",
-      "Year 2 non-smartphones = Year 1 non-smartphones + 0",
-      "Year 3 non-smartphones dropped by 15% vs Year 1",
-      "Year 3 smartphones increased by 30% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 350,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 220,
-        "split_pct": 35
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 270,
-          "split_pct": 57
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 204,
-          "split_pct": 53
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 280,
-        "split_pct": 49
-      },
-      "year3": {
-        "total": 222,
-        "split_pct": 45
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 13,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-180 miles: $0.65/mile",
-      "181-420 miles: $0.40/mile",
-      "421+ miles: $0.20/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q13_r1",
-          "values": [
-            "Alice",
-            "539",
-            "$228.05"
-          ]
-        },
-        {
-          "id": "q13_r2",
-          "values": [
-            "Binta",
-            "705",
-            "$256.75"
-          ]
-        },
-        {
-          "id": "q13_r3",
-          "values": [
-            "Chidi",
-            "168",
-            "$109.20"
-          ]
-        },
-        {
-          "id": "q13_r4",
-          "values": [
-            "Daniel",
-            "694",
-            "$272.05"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q13_r1": "incorrect",
-      "q13_r2": "incorrect",
-      "q13_r3": "correct",
-      "q13_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 14,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "Product + Finance = 56%",
-      "3 x Marketing + Engineering = 88%",
-      "Finance + Engineering = 52%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_14_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 25
-        },
-        {
-          "id": "seg_14_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 28
-        },
-        {
-          "id": "seg_14_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 21
-        },
-        {
-          "id": "seg_14_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 26
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_14_eng": 22,
-      "seg_14_prd": 26,
-      "seg_14_fin": 30,
-      "seg_14_mkt": 22
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 15,
+    "id": 7,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -860,10 +366,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 7
   },
   {
-    "id": 16,
+    "id": 8,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -930,10 +438,12 @@
       "q16_r3": "priority",
       "q16_r4": "watchlist"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 8
   },
   {
-    "id": 17,
+    "id": 9,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -973,201 +483,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "easy",
+    "source_id": 9
   },
   {
-    "id": 18,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 200 total (70 smartphones / 130 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 40",
-      "Year 2 non-smartphones = Year 1 non-smartphones + 20",
-      "Year 3 non-smartphones dropped by 20% vs Year 1",
-      "Year 3 smartphones increased by 25% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 300,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 200,
-        "split_pct": 35
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 270,
-          "split_pct": 50
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 202,
-          "split_pct": 42
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 260,
-        "split_pct": 42
-      },
-      "year3": {
-        "total": 192,
-        "split_pct": 46
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 19,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-250 miles: $0.11/mile",
-      "251-500 miles: $0.10/mile",
-      "501+ miles: $0.05/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q19_r1",
-          "values": [
-            "Alice",
-            "446",
-            "$42.85"
-          ]
-        },
-        {
-          "id": "q19_r2",
-          "values": [
-            "Binta",
-            "206",
-            "$22.66"
-          ]
-        },
-        {
-          "id": "q19_r3",
-          "values": [
-            "Chidi",
-            "425",
-            "$53.75"
-          ]
-        },
-        {
-          "id": "q19_r4",
-          "values": [
-            "Daniel",
-            "438",
-            "$37.55"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q19_r1": "incorrect",
-      "q19_r2": "correct",
-      "q19_r3": "incorrect",
-      "q19_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 20,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "Product + Engineering = 60%",
-      "2 x Engineering + Product = 94%",
-      "3 x Product + 2 x Finance = 108%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_20_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 38
-        },
-        {
-          "id": "seg_20_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 21
-        },
-        {
-          "id": "seg_20_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 11
-        },
-        {
-          "id": "seg_20_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 30
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_20_eng": 34,
-      "seg_20_prd": 26,
-      "seg_20_fin": 15,
-      "seg_20_mkt": 25
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 21,
+    "id": 10,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -1203,10 +524,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 10
   },
   {
-    "id": 22,
+    "id": 11,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -1273,10 +596,12 @@
       "q22_r3": "priority",
       "q22_r4": "watchlist"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 11
   },
   {
-    "id": 23,
+    "id": 12,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -1323,201 +648,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "medium",
+    "source_id": 12
   },
   {
-    "id": 24,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 220 total (66 smartphones / 154 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 60",
-      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
-      "Year 3 non-smartphones dropped by 15% vs Year 1",
-      "Year 3 smartphones increased by 20% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 300,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 220,
-        "split_pct": 30
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 250,
-          "split_pct": 40
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 228,
-          "split_pct": 30
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 260,
-        "split_pct": 48
-      },
-      "year3": {
-        "total": 210,
-        "split_pct": 38
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 25,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-180 miles: $0.65/mile",
-      "181-420 miles: $0.40/mile",
-      "421+ miles: $0.20/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q25_r1",
-          "values": [
-            "Alice",
-            "481",
-            "$225.20"
-          ]
-        },
-        {
-          "id": "q25_r2",
-          "values": [
-            "Binta",
-            "377",
-            "$200.05"
-          ]
-        },
-        {
-          "id": "q25_r3",
-          "values": [
-            "Chidi",
-            "698",
-            "$268.60"
-          ]
-        },
-        {
-          "id": "q25_r4",
-          "values": [
-            "Daniel",
-            "201",
-            "$116.65"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q25_r1": "correct",
-      "q25_r2": "incorrect",
-      "q25_r3": "correct",
-      "q25_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 26,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "Marketing + 2 x Engineering = 59%",
-      "Marketing + 2 x Product + Finance + Engineering = 132%",
-      "3 x Marketing + 3 x Finance + 3 x Engineering = 204%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 600,
-      "segments": [
-        {
-          "id": "seg_26_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 14
-        },
-        {
-          "id": "seg_26_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 37
-        },
-        {
-          "id": "seg_26_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 19
-        },
-        {
-          "id": "seg_26_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 30
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_26_eng": 16,
-      "seg_26_prd": 32,
-      "seg_26_fin": 25,
-      "seg_26_mkt": 27
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 27,
+    "id": 13,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -1553,10 +689,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 13
   },
   {
-    "id": 28,
+    "id": 14,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -1623,10 +761,12 @@
       "q28_r3": "priority",
       "q28_r4": "priority"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 14
   },
   {
-    "id": 29,
+    "id": 15,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -1673,201 +813,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "medium",
+    "source_id": 15
   },
   {
-    "id": 30,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 220 total (110 smartphones / 110 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 40",
-      "Year 2 non-smartphones = Year 1 non-smartphones + 0",
-      "Year 3 non-smartphones dropped by 15% vs Year 1",
-      "Year 3 smartphones increased by 35% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 300,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 220,
-        "split_pct": 50
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 278,
-          "split_pct": 62
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 233,
-          "split_pct": 73
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 260,
-        "split_pct": 58
-      },
-      "year3": {
-        "total": 243,
-        "split_pct": 61
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 31,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-250 miles: $0.11/mile",
-      "251-500 miles: $0.10/mile",
-      "501+ miles: $0.05/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q31_r1",
-          "values": [
-            "Alice",
-            "191",
-            "$16.76"
-          ]
-        },
-        {
-          "id": "q31_r2",
-          "values": [
-            "Binta",
-            "378",
-            "$44.55"
-          ]
-        },
-        {
-          "id": "q31_r3",
-          "values": [
-            "Chidi",
-            "436",
-            "$59.35"
-          ]
-        },
-        {
-          "id": "q31_r4",
-          "values": [
-            "Daniel",
-            "773",
-            "$66.15"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q31_r1": "incorrect",
-      "q31_r2": "incorrect",
-      "q31_r3": "incorrect",
-      "q31_r4": "correct"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 32,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Finance + 2 x Marketing + 3 x Product = 185%",
-      "2 x Engineering + 2 x Marketing = 92%",
-      "3 x Product + 3 x Engineering + 2 x Marketing + 2 x Finance = 242%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_32_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 17
-        },
-        {
-          "id": "seg_32_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 32
-        },
-        {
-          "id": "seg_32_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 28
-        },
-        {
-          "id": "seg_32_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 23
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_32_eng": 19,
-      "seg_32_prd": 23,
-      "seg_32_fin": 31,
-      "seg_32_mkt": 27
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 33,
+    "id": 16,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -1903,10 +854,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 16
   },
   {
-    "id": 34,
+    "id": 17,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -1973,10 +926,12 @@
       "q34_r3": "watchlist",
       "q34_r4": "watchlist"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 17
   },
   {
-    "id": 35,
+    "id": 18,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -2023,201 +978,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "medium",
+    "source_id": 18
   },
   {
-    "id": 36,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 220 total (77 smartphones / 143 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 50",
-      "Year 2 non-smartphones = Year 1 non-smartphones + 10",
-      "Year 3 non-smartphones dropped by 25% vs Year 1",
-      "Year 3 smartphones increased by 35% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 350,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 220,
-        "split_pct": 35
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 270,
-          "split_pct": 41
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 229,
-          "split_pct": 37
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 280,
-        "split_pct": 45
-      },
-      "year3": {
-        "total": 211,
-        "split_pct": 49
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 37,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-180 miles: $0.65/mile",
-      "181-420 miles: $0.40/mile",
-      "421+ miles: $0.20/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q37_r1",
-          "values": [
-            "Alice",
-            "576",
-            "$244.20"
-          ]
-        },
-        {
-          "id": "q37_r2",
-          "values": [
-            "Binta",
-            "588",
-            "$242.35"
-          ]
-        },
-        {
-          "id": "q37_r3",
-          "values": [
-            "Chidi",
-            "612",
-            "$247.15"
-          ]
-        },
-        {
-          "id": "q37_r4",
-          "values": [
-            "Daniel",
-            "635",
-            "$256.00"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q37_r1": "correct",
-      "q37_r2": "incorrect",
-      "q37_r3": "incorrect",
-      "q37_r4": "correct"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 38,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Finance + 3 x Marketing = 121%",
-      "3 x Engineering + Finance + 2 x Marketing + 3 x Product = 233%",
-      "3 x Finance + 2 x Product = 98%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_38_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 27
-        },
-        {
-          "id": "seg_38_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 23
-        },
-        {
-          "id": "seg_38_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 22
-        },
-        {
-          "id": "seg_38_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 28
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_38_eng": 34,
-      "seg_38_prd": 19,
-      "seg_38_fin": 20,
-      "seg_38_mkt": 27
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 39,
+    "id": 19,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -2253,10 +1019,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 19
   },
   {
-    "id": 40,
+    "id": 20,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -2323,10 +1091,12 @@
       "q40_r3": "watchlist",
       "q40_r4": "watchlist"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 20
   },
   {
-    "id": 41,
+    "id": 21,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -2373,201 +1143,12 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "medium",
+    "source_id": 21
   },
   {
-    "id": 42,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 180 total (54 smartphones / 126 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 40",
-      "Year 2 non-smartphones = Year 1 non-smartphones + 0",
-      "Year 3 non-smartphones dropped by 20% vs Year 1",
-      "Year 3 smartphones increased by 35% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 300,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 180,
-        "split_pct": 30
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 210,
-          "split_pct": 51
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 164,
-          "split_pct": 54
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 220,
-        "split_pct": 43
-      },
-      "year3": {
-        "total": 174,
-        "split_pct": 42
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 43,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-180 miles: $0.65/mile",
-      "181-420 miles: $0.40/mile",
-      "421+ miles: $0.20/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q43_r1",
-          "values": [
-            "Alice",
-            "488",
-            "$217.85"
-          ]
-        },
-        {
-          "id": "q43_r2",
-          "values": [
-            "Binta",
-            "651",
-            "$259.20"
-          ]
-        },
-        {
-          "id": "q43_r3",
-          "values": [
-            "Chidi",
-            "155",
-            "$114.00"
-          ]
-        },
-        {
-          "id": "q43_r4",
-          "values": [
-            "Daniel",
-            "296",
-            "$169.90"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q43_r1": "incorrect",
-      "q43_r2": "correct",
-      "q43_r3": "incorrect",
-      "q43_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 44,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "3 x Product + 3 x Finance + 3 x Marketing = 237%",
-      "2 x Marketing + 2 x Finance = 98%",
-      "2 x Engineering + Product + 2 x Marketing = 112%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 540,
-      "segments": [
-        {
-          "id": "seg_44_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 15
-        },
-        {
-          "id": "seg_44_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 31
-        },
-        {
-          "id": "seg_44_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 32
-        },
-        {
-          "id": "seg_44_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 22
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_44_eng": 21,
-      "seg_44_prd": 30,
-      "seg_44_fin": 29,
-      "seg_44_mkt": 20
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 45,
+    "id": 22,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
     "instruction": "Adjust Month 2 total and Service/Product split.",
@@ -2603,10 +1184,12 @@
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage."
+    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "difficulty": "medium",
+    "source_id": 22
   },
   {
-    "id": 46,
+    "id": 23,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
     "instruction": "Classify each project based on revenue-to-investment coverage.",
@@ -2673,10 +1256,12 @@
       "q46_r3": "watchlist",
       "q46_r4": "priority"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue."
+    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
+    "difficulty": "easy",
+    "source_id": 23
   },
   {
-    "id": 47,
+    "id": 24,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
     "instruction": "Adjust the pie chart to satisfy the ratio model.",
@@ -2716,19 +1301,1311 @@
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum."
+    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
+    "difficulty": "easy",
+    "source_id": 24
   },
   {
-    "id": 48,
+    "id": 25,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-250 miles: $0.11/mile",
+      "251-500 miles: $0.10/mile",
+      "501+ miles: $0.05/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q25_r1",
+          "values": [
+            "Alice",
+            "433",
+            "$32.55"
+          ]
+        },
+        {
+          "id": "q25_r2",
+          "values": [
+            "Binta",
+            "473",
+            "$49.80"
+          ]
+        },
+        {
+          "id": "q25_r3",
+          "values": [
+            "Chidi",
+            "247",
+            "$33.67"
+          ]
+        },
+        {
+          "id": "q25_r4",
+          "values": [
+            "Daniel",
+            "170",
+            "$14.45"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q25_r1": "incorrect",
+      "q25_r2": "correct",
+      "q25_r3": "incorrect",
+      "q25_r4": "incorrect"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 26,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "2 x Engineering + 2 x Finance + 2 x Product = 160%",
+      "Product + 3 x Marketing = 90%",
+      "2 x Marketing + 3 x Finance = 97%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 600,
+      "segments": [
+        {
+          "id": "seg_26_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 34
+        },
+        {
+          "id": "seg_26_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 39
+        },
+        {
+          "id": "seg_26_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 14
+        },
+        {
+          "id": "seg_26_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 13
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_26_eng": 31,
+      "seg_26_prd": 30,
+      "seg_26_fin": 19,
+      "seg_26_mkt": 20
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 27,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
     "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
     "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
     "prompt_rules": [
-      "Year 1 baseline: 180 total (63 smartphones / 117 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 60",
+      "Year 1 baseline: 240 total (96 smartphones / 144 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 50",
       "Year 2 non-smartphones = Year 1 non-smartphones - 10",
       "Year 3 non-smartphones dropped by 25% vs Year 1",
+      "Year 3 smartphones increased by 30% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 240,
+        "split_pct": 40
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 290,
+          "split_pct": 60
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 251,
+          "split_pct": 50
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 280,
+        "split_pct": 52
+      },
+      "year3": {
+        "total": 233,
+        "split_pct": 54
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 28,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-180 miles: $0.65/mile",
+      "181-420 miles: $0.40/mile",
+      "421+ miles: $0.20/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q28_r1",
+          "values": [
+            "Alice",
+            "546",
+            "$244.70"
+          ]
+        },
+        {
+          "id": "q28_r2",
+          "values": [
+            "Binta",
+            "709",
+            "$279.55"
+          ]
+        },
+        {
+          "id": "q28_r3",
+          "values": [
+            "Chidi",
+            "541",
+            "$230.70"
+          ]
+        },
+        {
+          "id": "q28_r4",
+          "values": [
+            "Daniel",
+            "211",
+            "$129.40"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q28_r1": "incorrect",
+      "q28_r2": "incorrect",
+      "q28_r3": "incorrect",
+      "q28_r4": "correct"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 29,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "Finance + Product + Marketing + 2 x Engineering = 133%",
+      "3 x Finance + Product + 2 x Marketing = 122%",
+      "Finance + Engineering + Product + 2 x Marketing = 117%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 600,
+      "segments": [
+        {
+          "id": "seg_29_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 35
+        },
+        {
+          "id": "seg_29_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 33
+        },
+        {
+          "id": "seg_29_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 24
+        },
+        {
+          "id": "seg_29_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 8
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_29_eng": 33,
+      "seg_29_prd": 31,
+      "seg_29_fin": 19,
+      "seg_29_mkt": 17
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 30,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 200 total (60 smartphones / 140 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 50",
+      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
+      "Year 3 non-smartphones dropped by 15% vs Year 1",
+      "Year 3 smartphones increased by 30% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 200,
+        "split_pct": 30
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 212,
+          "split_pct": 36
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 179,
+          "split_pct": 52
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 230,
+        "split_pct": 48
+      },
+      "year3": {
+        "total": 197,
+        "split_pct": 40
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 31,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-250 miles: $0.11/mile",
+      "251-500 miles: $0.10/mile",
+      "501+ miles: $0.05/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q31_r1",
+          "values": [
+            "Alice",
+            "612",
+            "$51.60"
+          ]
+        },
+        {
+          "id": "q31_r2",
+          "values": [
+            "Binta",
+            "160",
+            "$17.60"
+          ]
+        },
+        {
+          "id": "q31_r3",
+          "values": [
+            "Chidi",
+            "426",
+            "$45.10"
+          ]
+        },
+        {
+          "id": "q31_r4",
+          "values": [
+            "Daniel",
+            "177",
+            "$19.47"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q31_r1": "incorrect",
+      "q31_r2": "correct",
+      "q31_r3": "correct",
+      "q31_r4": "correct"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 32,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "2 x Product + 2 x Finance + Engineering + 3 x Marketing = 199%",
+      "2 x Finance + Marketing + 2 x Engineering = 125%",
+      "Finance + 3 x Engineering + Product = 131%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 420,
+      "segments": [
+        {
+          "id": "seg_32_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 38
+        },
+        {
+          "id": "seg_32_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 18
+        },
+        {
+          "id": "seg_32_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 11
+        },
+        {
+          "id": "seg_32_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 33
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_32_eng": 30,
+      "seg_32_prd": 23,
+      "seg_32_fin": 18,
+      "seg_32_mkt": 29
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 33,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 240 total (72 smartphones / 168 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 40",
+      "Year 2 non-smartphones = Year 1 non-smartphones + 0",
+      "Year 3 non-smartphones dropped by 20% vs Year 1",
+      "Year 3 smartphones increased by 30% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 240,
+        "split_pct": 30
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 298,
+          "split_pct": 32
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 210,
+          "split_pct": 29
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 280,
+        "split_pct": 40
+      },
+      "year3": {
+        "total": 228,
+        "split_pct": 41
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 34,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-200 miles: $0.50/mile",
+      "201+ miles: $0.25/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q34_r1",
+          "values": [
+            "Alice",
+            "141",
+            "$79.25"
+          ]
+        },
+        {
+          "id": "q34_r2",
+          "values": [
+            "Binta",
+            "307",
+            "$113.50"
+          ]
+        },
+        {
+          "id": "q34_r3",
+          "values": [
+            "Chidi",
+            "671",
+            "$211.25"
+          ]
+        },
+        {
+          "id": "q34_r4",
+          "values": [
+            "Daniel",
+            "299",
+            "$138.00"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q34_r1": "incorrect",
+      "q34_r2": "incorrect",
+      "q34_r3": "incorrect",
+      "q34_r4": "incorrect"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 35,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "Marketing + 2 x Finance + 3 x Product + Engineering = 183%",
+      "3 x Marketing + Finance + 2 x Engineering = 145%",
+      "2 x Finance + Product + Marketing = 101%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 540,
+      "segments": [
+        {
+          "id": "seg_35_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "seg_35_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 28
+        },
+        {
+          "id": "seg_35_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 17
+        },
+        {
+          "id": "seg_35_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 30
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_35_eng": 20,
+      "seg_35_prd": 31,
+      "seg_35_fin": 21,
+      "seg_35_mkt": 28
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 36,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 220 total (88 smartphones / 132 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 50",
+      "Year 2 non-smartphones = Year 1 non-smartphones + 0",
+      "Year 3 non-smartphones dropped by 15% vs Year 1",
+      "Year 3 smartphones increased by 20% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 220,
+        "split_pct": 40
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 260,
+          "split_pct": 39
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 236,
+          "split_pct": 57
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 270,
+        "split_pct": 51
+      },
+      "year3": {
+        "total": 218,
+        "split_pct": 49
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 37,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-250 miles: $0.11/mile",
+      "251-500 miles: $0.10/mile",
+      "501+ miles: $0.05/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q37_r1",
+          "values": [
+            "Alice",
+            "162",
+            "$6.82"
+          ]
+        },
+        {
+          "id": "q37_r2",
+          "values": [
+            "Binta",
+            "153",
+            "$12.58"
+          ]
+        },
+        {
+          "id": "q37_r3",
+          "values": [
+            "Chidi",
+            "244",
+            "$26.84"
+          ]
+        },
+        {
+          "id": "q37_r4",
+          "values": [
+            "Daniel",
+            "549",
+            "$65.95"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q37_r1": "incorrect",
+      "q37_r2": "incorrect",
+      "q37_r3": "correct",
+      "q37_r4": "incorrect"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 38,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "2 x Product + 2 x Finance = 116%",
+      "3 x Finance + Product = 120%",
+      "2 x Finance + Product + Marketing + 3 x Engineering = 175%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 540,
+      "segments": [
+        {
+          "id": "seg_38_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 20
+        },
+        {
+          "id": "seg_38_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 26
+        },
+        {
+          "id": "seg_38_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 40
+        },
+        {
+          "id": "seg_38_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 14
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_38_eng": 22,
+      "seg_38_prd": 27,
+      "seg_38_fin": 31,
+      "seg_38_mkt": 20
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 39,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 240 total (84 smartphones / 156 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 60",
+      "Year 2 non-smartphones = Year 1 non-smartphones - 10",
+      "Year 3 non-smartphones dropped by 15% vs Year 1",
+      "Year 3 smartphones increased by 20% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 240,
+        "split_pct": 35
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 272,
+          "split_pct": 46
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 216,
+          "split_pct": 31
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 290,
+        "split_pct": 50
+      },
+      "year3": {
+        "total": 234,
+        "split_pct": 43
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 40,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-200 miles: $0.50/mile",
+      "201+ miles: $0.25/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q40_r1",
+          "values": [
+            "Alice",
+            "525",
+            "$181.25"
+          ]
+        },
+        {
+          "id": "q40_r2",
+          "values": [
+            "Binta",
+            "409",
+            "$152.25"
+          ]
+        },
+        {
+          "id": "q40_r3",
+          "values": [
+            "Chidi",
+            "249",
+            "$112.25"
+          ]
+        },
+        {
+          "id": "q40_r4",
+          "values": [
+            "Daniel",
+            "212",
+            "$94.25"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q40_r1": "correct",
+      "q40_r2": "correct",
+      "q40_r3": "correct",
+      "q40_r4": "incorrect"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 41,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "Engineering + Product + 2 x Marketing = 91%",
+      "Finance + 2 x Engineering = 92%",
+      "2 x Product + Finance + Marketing + 3 x Engineering = 180%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 540,
+      "segments": [
+        {
+          "id": "seg_41_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 35
+        },
+        {
+          "id": "seg_41_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 21
+        },
+        {
+          "id": "seg_41_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 19
+        },
+        {
+          "id": "seg_41_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_41_eng": 31,
+      "seg_41_prd": 18,
+      "seg_41_fin": 30,
+      "seg_41_mkt": 21
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 42,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 200 total (100 smartphones / 100 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 40",
+      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
+      "Year 3 non-smartphones dropped by 15% vs Year 1",
+      "Year 3 smartphones increased by 30% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 200,
+        "split_pct": 50
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 202,
+          "split_pct": 76
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 233,
+          "split_pct": 68
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 220,
+        "split_pct": 64
+      },
+      "year3": {
+        "total": 215,
+        "split_pct": 60
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 43,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-250 miles: $0.11/mile",
+      "251-500 miles: $0.10/mile",
+      "501+ miles: $0.05/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q43_r1",
+          "values": [
+            "Alice",
+            "590",
+            "$52.75"
+          ]
+        },
+        {
+          "id": "q43_r2",
+          "values": [
+            "Binta",
+            "287",
+            "$37.70"
+          ]
+        },
+        {
+          "id": "q43_r3",
+          "values": [
+            "Chidi",
+            "723",
+            "$63.65"
+          ]
+        },
+        {
+          "id": "q43_r4",
+          "values": [
+            "Daniel",
+            "608",
+            "$66.65"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q43_r1": "incorrect",
+      "q43_r2": "incorrect",
+      "q43_r3": "correct",
+      "q43_r4": "incorrect"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 44,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "2 x Product + 3 x Finance + Engineering = 167%",
+      "Product + Marketing + 2 x Finance = 99%",
+      "3 x Engineering + Product + 2 x Marketing = 147%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 480,
+      "segments": [
+        {
+          "id": "seg_44_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 20
+        },
+        {
+          "id": "seg_44_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 30
+        },
+        {
+          "id": "seg_44_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 34
+        },
+        {
+          "id": "seg_44_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 16
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_44_eng": 30,
+      "seg_44_prd": 25,
+      "seg_44_fin": 29,
+      "seg_44_mkt": 16
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 45,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 240 total (96 smartphones / 144 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 40",
+      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
+      "Year 3 non-smartphones dropped by 15% vs Year 1",
       "Year 3 smartphones increased by 25% vs Year 1"
     ],
     "widget_data": {
@@ -2740,32 +2617,226 @@
       "reference_bar": {
         "id": "year1",
         "label": "Year 1",
-        "total": 180,
-        "split_pct": 35
+        "total": 240,
+        "split_pct": 40
       },
       "interactive_bars": [
         {
           "id": "year2",
           "label": "Year 2",
-          "total": 220,
-          "split_pct": 41
+          "total": 250,
+          "split_pct": 44
         },
         {
           "id": "year3",
           "label": "Year 3",
-          "total": 149,
-          "split_pct": 51
+          "total": 224,
+          "split_pct": 58
         }
       ]
     },
     "correct_answer": {
       "year2": {
-        "total": 230,
-        "split_pct": 53
+        "total": 260,
+        "split_pct": 52
       },
       "year3": {
-        "total": 167,
-        "split_pct": 47
+        "total": 242,
+        "split_pct": 50
+      }
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2,
+      "bars": {
+        "year2": {
+          "total": 5,
+          "split_pct": 2
+        },
+        "year3": {
+          "total": 5,
+          "split_pct": 2
+        }
+      }
+    },
+    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
+  },
+  {
+    "id": 46,
+    "type": "interactive_drag_table",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Verify if each travel expense claim is correct.",
+    "question": "Use the tiered mileage policy and classify each claim.",
+    "prompt_rules": [
+      "0-250 miles: $0.11/mile",
+      "251-500 miles: $0.10/mile",
+      "501+ miles: $0.05/mile"
+    ],
+    "widget_data": {
+      "columns": [
+        "Employee",
+        "Total Miles",
+        "Claimed Amount",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "q46_r1",
+          "values": [
+            "Alice",
+            "171",
+            "$18.81"
+          ]
+        },
+        {
+          "id": "q46_r2",
+          "values": [
+            "Binta",
+            "773",
+            "$66.15"
+          ]
+        },
+        {
+          "id": "q46_r3",
+          "values": [
+            "Chidi",
+            "409",
+            "$43.40"
+          ]
+        },
+        {
+          "id": "q46_r4",
+          "values": [
+            "Daniel",
+            "338",
+            "$36.30"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
+        },
+        {
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "q46_r1": "correct",
+      "q46_r2": "correct",
+      "q46_r3": "correct",
+      "q46_r4": "correct"
+    },
+    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
+  },
+  {
+    "id": 47,
+    "type": "interactive_pie_chart",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
+    "question": "Resize each budget slice to satisfy the system of equations.",
+    "prompt_rules": [
+      "2 x Finance + 2 x Marketing + 3 x Product = 185%",
+      "2 x Engineering + 2 x Marketing = 92%",
+      "3 x Product + 3 x Engineering + 2 x Marketing + 2 x Finance = 242%",
+      "Engineering + Product + Finance + Marketing = 100%"
+    ],
+    "widget_data": {
+      "total_value": 480,
+      "segments": [
+        {
+          "id": "seg_47_eng",
+          "label": "Engineering",
+          "color": "blue",
+          "initial_pct": 17
+        },
+        {
+          "id": "seg_47_prd",
+          "label": "Product",
+          "color": "green",
+          "initial_pct": 32
+        },
+        {
+          "id": "seg_47_fin",
+          "label": "Finance",
+          "color": "orange",
+          "initial_pct": 28
+        },
+        {
+          "id": "seg_47_mkt",
+          "label": "Marketing",
+          "color": "purple",
+          "initial_pct": 23
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_47_eng": 19,
+      "seg_47_prd": 23,
+      "seg_47_fin": 31,
+      "seg_47_mkt": 27
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
+  },
+  {
+    "id": 48,
+    "type": "interactive_stacked_bar",
+    "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
+    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
+    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
+    "prompt_rules": [
+      "Year 1 baseline: 240 total (72 smartphones / 168 non-smartphones)",
+      "Year 2 smartphones = Year 1 smartphones + 50",
+      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
+      "Year 3 non-smartphones dropped by 20% vs Year 1",
+      "Year 3 smartphones increased by 35% vs Year 1"
+    ],
+    "widget_data": {
+      "axis_max": 350,
+      "segment_labels": {
+        "primary": "Smartphones",
+        "secondary": "Non-smartphones"
+      },
+      "reference_bar": {
+        "id": "year1",
+        "label": "Year 1",
+        "total": 240,
+        "split_pct": 30
+      },
+      "interactive_bars": [
+        {
+          "id": "year2",
+          "label": "Year 2",
+          "total": 252,
+          "split_pct": 37
+        },
+        {
+          "id": "year3",
+          "label": "Year 3",
+          "total": 221,
+          "split_pct": 38
+        }
+      ]
+    },
+    "correct_answer": {
+      "year2": {
+        "total": 270,
+        "split_pct": 45
+      },
+      "year3": {
+        "total": 231,
+        "split_pct": 42
       }
     },
     "tolerance": {
@@ -2788,11 +2859,13 @@
     "id": 49,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
     "instruction": "Verify if each travel expense claim is correct.",
     "question": "Use the tiered mileage policy and classify each claim.",
     "prompt_rules": [
-      "0-200 miles: $0.50/mile",
-      "201+ miles: $0.25/mile"
+      "0-250 miles: $0.11/mile",
+      "251-500 miles: $0.10/mile",
+      "501+ miles: $0.05/mile"
     ],
     "widget_data": {
       "columns": [
@@ -2806,32 +2879,32 @@
           "id": "q49_r1",
           "values": [
             "Alice",
-            "419",
-            "$154.75"
+            "363",
+            "$45.30"
           ]
         },
         {
           "id": "q49_r2",
           "values": [
             "Binta",
-            "315",
-            "$139.75"
+            "555",
+            "$55.25"
           ]
         },
         {
           "id": "q49_r3",
           "values": [
             "Chidi",
-            "376",
-            "$144.00"
+            "269",
+            "$20.65"
           ]
         },
         {
           "id": "q49_r4",
           "values": [
             "Daniel",
-            "368",
-            "$142.00"
+            "499",
+            "$52.40"
           ]
         }
       ],
@@ -2849,9 +2922,9 @@
       ]
     },
     "correct_answer": {
-      "q49_r1": "correct",
-      "q49_r2": "incorrect",
-      "q49_r3": "correct",
+      "q49_r1": "incorrect",
+      "q49_r2": "correct",
+      "q49_r3": "incorrect",
       "q49_r4": "correct"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
@@ -2860,48 +2933,49 @@
     "id": 50,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
+    "difficulty": "hard",
     "instruction": "Approximate the pie slices that satisfy all equation constraints.",
     "question": "Resize each budget slice to satisfy the system of equations.",
     "prompt_rules": [
-      "2 x Marketing + 2 x Product + Finance + 3 x Engineering = 194%",
-      "3 x Product + 3 x Finance + 2 x Engineering + 3 x Marketing = 282%",
-      "2 x Marketing + Product = 84%",
+      "2 x Finance + Product + 2 x Engineering + Marketing = 153%",
+      "Finance + Product = 43%",
+      "Product + 2 x Engineering + Finance + 2 x Marketing = 157%",
       "Engineering + Product + Finance + Marketing = 100%"
     ],
     "widget_data": {
-      "total_value": 420,
+      "total_value": 480,
       "segments": [
         {
           "id": "seg_50_eng",
           "label": "Engineering",
           "color": "blue",
-          "initial_pct": 22
+          "initial_pct": 30
         },
         {
           "id": "seg_50_prd",
           "label": "Product",
           "color": "green",
-          "initial_pct": 33
+          "initial_pct": 18
         },
         {
           "id": "seg_50_fin",
           "label": "Finance",
           "color": "orange",
-          "initial_pct": 16
+          "initial_pct": 19
         },
         {
           "id": "seg_50_mkt",
           "label": "Marketing",
           "color": "purple",
-          "initial_pct": 29
+          "initial_pct": 33
         }
       ]
     },
     "correct_answer": {
-      "seg_50_eng": 18,
-      "seg_50_prd": 32,
-      "seg_50_fin": 24,
-      "seg_50_mkt": 26
+      "seg_50_eng": 32,
+      "seg_50_prd": 22,
+      "seg_50_fin": 21,
+      "seg_50_mkt": 25
     },
     "tolerance": {
       "pct": 2

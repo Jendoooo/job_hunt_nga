@@ -84,6 +84,15 @@ Date: 2026-02-12
 - [x] Add colorized drag-table tokens for hard verification tasks
 - [x] Ensure interactive pie answers are emitted only on user interaction (not auto-submitted on mount)
 - [x] Add stacked-bar active-handle tooltip styling and rendering support
+- [x] Add difficulty selector to `src/pages/NLNGInteractiveTest.jsx` (Easy/Medium/Hard)
+- [x] Filter interactive question pool by selected difficulty
+- [x] Add shared select style for setup controls in `src/index.css`
+- [x] Refactor stacked-bar drag loop with `requestAnimationFrame` throttling
+- [x] Add `src/data/shl-gold-standard.json` as source-of-truth bank for subtype `interactive_numerical`
+- [x] Update `scripts/generate_shl_module.js` to load gold-standard source and top-up with hard variants as needed
+- [x] Add `difficulty` tagging to generated interactive records
+- [x] Merge AbortController-based save cancellation handling in `src/components/ScoreReport.jsx`
+- [x] Guard save state updates to suppress unmount/abort noise without hiding real errors
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
@@ -95,7 +104,7 @@ Date: 2026-02-12
 ## Next Actions
 1. Run manual UX/accessibility checks on all target breakpoints and log defects.
 2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
-3. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
-4. Add optional difficulty filter (Standard vs Hard vs Mixed) to `NLNGInteractiveTest` setup.
+3. Replace interim `src/data/shl-gold-standard.json` contents with full screenshot-extracted gold block once supplied.
+4. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
 5. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
 6. Optionally split large frontend bundle if payload size reduction is required.

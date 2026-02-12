@@ -274,3 +274,44 @@
   - hard stacked-bar schema shape valid (`reference_bar` + two `interactive_bars`)
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - Gold-Source Wiring + Difficulty Selector + Drag Performance
+
+## User Direction
+- Integrate a gold-standard SHL data file as source of truth for `interactive_numerical`.
+- Fix stacked-bar drag flicker/performance.
+- Add setup-level difficulty selector (Easy/Medium/Hard).
+- Include parallel-agent `ScoreReport.jsx` abort-handling fix in this batch.
+
+## Changes Applied
+- `src/data/shl-gold-standard.json` (new)
+  - Added as the source data file for standard subtype `interactive_numerical`.
+  - Includes explicit `difficulty` labels for setup filtering.
+- `scripts/generate_shl_module.js`
+  - Now reads from `src/data/shl-gold-standard.json` first.
+  - Treats gold data as source of truth for standard subtype records.
+  - Preserves/generates `difficulty` for all output records.
+  - Tops up remaining slots with hard-mode generators when gold count is below target.
+  - Regenerated `src/data/shl-interactive-questions.json`.
+- `src/pages/NLNGInteractiveTest.jsx`
+  - Added Difficulty selector (`Easy`, `Medium`, `Hard`) on setup screen.
+  - Question pool now filters by selected difficulty before session selection.
+  - Module label in score report now includes selected difficulty.
+- `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - Refactored pointer drag updates to use `requestAnimationFrame` throttling.
+  - Prevents per-pixel synchronous state thrash and reduces visible flicker.
+  - Skips no-op updates when computed values do not change.
+- `src/index.css`
+  - Added `.test-setup__select` style for setup dropdown consistency.
+  - Added `will-change` hint on interactive stacked-bar segments.
+- `src/components/ScoreReport.jsx`
+  - Integrated AbortController-aware save flow.
+  - Added abort-signal support for select/insert queries.
+  - Ignores expected abort cancellations while still surfacing real save failures.
+  - Guarded save-state updates for aborted requests.
+
+## Verification
+- `npm run generate:shl-interactive`: PASS
+- `npm run lint`: PASS
+- `npm run build`: PASS
+- Generated set now includes difficulty distribution (`easy`, `medium`, `hard`) and mixed subtype coverage.

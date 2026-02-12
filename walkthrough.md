@@ -46,6 +46,9 @@ This project is a React + Vite assessment platform for graduate candidate prepar
   - `src/utils/questionSession.js`
   - `src/utils/questionScoring.js`
 - Styling system: `src/index.css`
+- Interactive data sources:
+  - `src/data/shl-gold-standard.json` (standard source-of-truth pool)
+  - `src/data/shl-interactive-questions.json` (session-ready generated mix)
 
 ## Setup
 
@@ -72,12 +75,14 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    ```bash
    npm run generate:shl-interactive
    ```
+   This pulls standard questions from `src/data/shl-gold-standard.json` and fills remaining capacity with generated hard-mode items.
 
 ## Current Status
 
 - NLNG route and dashboard entry are active.
 - NLNG setup supports exam/practice modes and selectable question/time profiles.
 - NLNG Interactive Numerical route (`/test/nlng-interactive`) is active and linked from dashboard.
+- NLNG Interactive setup now supports difficulty filtering (`Easy`, `Medium`, `Hard`).
 - Interactive numerical question types are supported through `QuestionCard` type routing.
 - Aptitude setup supports exam/practice modes and selectable questions/time per subtest.
 - Saville setup supports exam/practice modes and selectable question/time profiles.

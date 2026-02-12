@@ -101,6 +101,8 @@ function normalizeOutput(stateById, interactiveBars, multiOutput) {
 
 export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled = false }) {
     const svgRef = useRef(null)
+    const rafIdRef = useRef(null)
+    const pendingClientYRef = useRef(null)
     const [dragMode, setDragMode] = useState(null)
     const config = useMemo(() => buildWidgetConfig(data, value), [data, value])
     const [barState, setBarState] = useState(() => config.initialState)
@@ -121,8 +123,8 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
     useEffect(() => {
         if (!dragMode || disabled) return
 
-        function onPointerMove(event) {
-            const chartY = getSvgY(event.clientY)
+        function applyPointerMove(clientY) {
+            const chartY = getSvgY(clientY)
             if (chartY === null) return
 
             setBarState((previous) => {
@@ -148,6 +150,10 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                     }
                 }
 
+                if (nextEntry.total === current.total && nextEntry.split_pct === current.split_pct) {
+                    return previous
+                }
+
                 const nextState = {
                     ...previous,
                     [dragMode.barId]: nextEntry,
@@ -157,14 +163,42 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
             })
         }
 
+        function flushPendingMove() {
+            if (pendingClientYRef.current === null) return
+            const clientY = pendingClientYRef.current
+            pendingClientYRef.current = null
+            applyPointerMove(clientY)
+        }
+
+        function onPointerMove(event) {
+            pendingClientYRef.current = event.clientY
+            if (rafIdRef.current !== null) return
+
+            rafIdRef.current = window.requestAnimationFrame(() => {
+                rafIdRef.current = null
+                flushPendingMove()
+            })
+        }
+
         function onPointerUp() {
+            if (rafIdRef.current !== null) {
+                window.cancelAnimationFrame(rafIdRef.current)
+                rafIdRef.current = null
+            }
+            flushPendingMove()
             setDragMode(null)
         }
 
+        pendingClientYRef.current = null
         window.addEventListener('pointermove', onPointerMove)
         window.addEventListener('pointerup', onPointerUp)
 
         return () => {
+            if (rafIdRef.current !== null) {
+                window.cancelAnimationFrame(rafIdRef.current)
+                rafIdRef.current = null
+            }
+            pendingClientYRef.current = null
             window.removeEventListener('pointermove', onPointerMove)
             window.removeEventListener('pointerup', onPointerUp)
         }
