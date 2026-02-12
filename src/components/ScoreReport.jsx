@@ -200,7 +200,7 @@ export default function ScoreReport({
                     {q.explanation && (
                         <div className="score-review__explanation">
                             <h4>Explanation</h4>
-                            <p>{q.explanation}</p>
+                            <div dangerouslySetInnerHTML={{ __html: q.explanation }} />
                         </div>
                     )}
 

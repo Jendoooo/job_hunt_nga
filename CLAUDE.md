@@ -14,6 +14,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 
 ## Core Shared Contracts
 - Auth provider: `src/context/AuthContext.jsx`
+  - Sign-out attempts global then local fallback for reliability
 - Auth hook/context: `src/context/useAuth.js`
 - Test timer: `src/components/Timer.jsx`
   - Uses urgency classes `timer--urgent`, `timer--critical`
@@ -22,6 +23,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Score and persistence: `src/components/ScoreReport.jsx`
   - Saves attempts to Supabase `test_attempts`
   - Displays save progress/error and emits `attempt-saved` browser event
+  - Score review explanation supports formatted HTML content
 
 ## Data Modules
 - `src/data/aptitude-questions.json`

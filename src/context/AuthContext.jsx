@@ -94,8 +94,23 @@ export function AuthProvider({ children }) {
     }
 
     async function signOut() {
-        const { error } = await supabase.auth.signOut()
-        if (error) throw error
+        // Prefer global sign-out, but gracefully fallback to local session clear
+        // if network conditions block token revocation.
+        let signOutError = null
+
+        try {
+            const { error } = await supabase.auth.signOut({ scope: 'global' })
+            signOutError = error
+        } catch (error) {
+            signOutError = error
+        }
+
+        if (signOutError) {
+            console.warn('Global sign-out failed, falling back to local sign-out:', signOutError)
+            const { error: localError } = await supabase.auth.signOut({ scope: 'local' })
+            if (localError) throw localError
+        }
+
         setUser(null)
         setProfile(null)
         setLoading(false)

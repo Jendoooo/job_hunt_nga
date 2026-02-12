@@ -64,3 +64,7 @@ npm run build
 3. Validate live Supabase schema/policies against current insert/query contract.
 4. Decide backend proxy strategy for AI generation/explanation requests.
 5. Optional bundle chunk optimization.
+
+## Notes
+- Sign-out includes a local fallback strategy when global token revocation fails.
+- Score review explanation supports inline HTML formatting from trusted local question data.

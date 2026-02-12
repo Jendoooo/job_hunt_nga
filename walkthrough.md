@@ -65,5 +65,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
 - Dragnet appears as Coming Soon.
 - Score report now surfaces save progress/errors and triggers dashboard refresh event after successful save.
 - Dashboard now surfaces AI generation and activity-load errors.
+- Sign-out now has global->local fallback for reliability on unstable networks.
+- Score review explanation now renders HTML emphasis content properly.
 - Core lint/build checks pass.
 - SHL Sets 2-4 data expansion is pending.

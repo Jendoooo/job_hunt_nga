@@ -97,3 +97,20 @@
 ## Verification
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - Sign-Out and Explanation Rendering Fixes
+
+## User Report
+- Sign-out button changed state but did not complete logout.
+- Score review explanation rendered raw HTML tags like `<strong>`.
+
+## Changes Applied
+- `src/context/AuthContext.jsx`
+  - Updated `signOut()` to attempt global sign-out first and fallback to local sign-out.
+  - Keeps local auth/profile state clear on successful sign-out.
+- `src/components/ScoreReport.jsx`
+  - Review explanation now renders HTML-formatted explanation content using `dangerouslySetInnerHTML`.
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS

@@ -13,6 +13,8 @@ Date: 2026-02-12
 - [x] Improve result-save reliability and dashboard refresh trigger after test completion
 - [x] Prevent duplicate attempt inserts in development (StrictMode-safe save guard)
 - [x] Harden dashboard fetch + sign-out handling + visible error states
+- [x] Add sign-out fallback to local scope when global revocation fails
+- [x] Fix HTML explanation rendering in score review mode
 
 ## Phase 2: Design System Refactor (Light Theme)
 - [x] Consolidate core visual tokens and shared UI primitives in `src/index.css`
