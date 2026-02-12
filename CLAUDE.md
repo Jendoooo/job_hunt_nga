@@ -85,6 +85,8 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 ## Verification Snapshot (2026-02-12)
 - `npm run lint`: pass
 - `npm run build`: pass
+- Local cloud CLIs installed: `vercel` and `supabase`
+- Vercel CLI authenticated in this workspace environment; Supabase CLI requires token login in non-TTY mode
 
 ## Pending Work
 - Complete NLNG SHL ingestion for full Sets 2-4 beyond current 30-question bank and QA each addition.

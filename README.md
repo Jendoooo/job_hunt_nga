@@ -38,6 +38,21 @@ Light-theme, employer-aligned assessment practice platform built with React + Vi
    npm run dev
    ```
 
+## Optional Cloud CLIs
+- Vercel CLI and Supabase CLI are available as local dev dependencies:
+  ```bash
+  npx vercel --version
+  npx supabase --version
+  ```
+- Vercel auth:
+  ```bash
+  npx vercel login
+  ```
+- Supabase auth (required in non-interactive shells):
+  ```bash
+  npx supabase login --token <SUPABASE_PERSONAL_ACCESS_TOKEN>
+  ```
+
 ## Validation
 ```bash
 npm run lint

@@ -421,3 +421,24 @@
 ## Verification
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - Cloud CLI Setup (Vercel + Supabase)
+
+## User Direction
+- Install Supabase and Vercel CLIs so cloud tasks can be executed directly from this workspace.
+- Proceed with login flow to grant operational access.
+
+## Changes Applied
+- Installed local dev CLIs in project:
+  - `vercel`
+  - `supabase`
+- Verified versions:
+  - `vercel` 50.15.1
+  - `supabase` 2.76.8
+- Auth status:
+  - Vercel login completed successfully in this environment (`whoami` resolves to `jendoooo`).
+  - Supabase automatic web login is blocked in this non-TTY environment; requires token-based login via:
+    - `npx supabase login --token <SUPABASE_PERSONAL_ACCESS_TOKEN>`
+
+## Notes
+- Once Supabase token is provided, database/project actions can be run directly from this terminal session.

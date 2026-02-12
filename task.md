@@ -107,6 +107,9 @@ Date: 2026-02-12
 - [x] Append extracted eligibility variants (`elig_person_b_v2`, `elig_person_d_v2`) to gold source and regenerate session bank
 - [x] Add stacked-bar visual hardening: dynamic Y-axis buffer + extra label spacing to prevent overlap
 - [x] Harden sign-out to force local session cleanup even when Supabase network calls fail
+- [x] Install local CLI tooling for cloud ops: `vercel` and `supabase`
+- [x] Authenticate Vercel CLI for this machine/session
+- [ ] Authenticate Supabase CLI with personal access token (`npx supabase login --token ...`)
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes

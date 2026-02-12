@@ -72,6 +72,11 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    npm run lint
    npm run build
    ```
+5. Optional cloud CLI setup:
+   ```bash
+   npx vercel login
+   npx supabase login --token <SUPABASE_PERSONAL_ACCESS_TOKEN>
+   ```
 5. Regenerate interactive numerical dataset (optional):
    ```bash
    npm run generate:shl-interactive
