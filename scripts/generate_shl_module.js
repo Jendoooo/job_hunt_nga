@@ -63,6 +63,114 @@ function inferDifficulty(question, index = 0) {
     return index % 6 === 0 ? 'easy' : 'medium'
 }
 
+function titleCase(value) {
+    return String(value || '')
+        .replace(/[_-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .split(' ')
+        .filter(Boolean)
+        .map((word) => word[0].toUpperCase() + word.slice(1))
+        .join(' ')
+}
+
+function parseGoldSource(rawText) {
+    const trimmed = String(rawText || '').trim()
+    const startIndex = trimmed.indexOf('[')
+    const endIndex = trimmed.lastIndexOf(']')
+    const candidate = startIndex >= 0 && endIndex > startIndex
+        ? trimmed.slice(startIndex, endIndex + 1)
+        : trimmed
+
+    try {
+        return JSON.parse(candidate)
+    } catch {
+        // Fallback for JSON-like arrays with inline comments/trailing commas.
+        return Function(`"use strict"; return (${candidate});`)()
+    }
+}
+
+function defaultPieColor(index) {
+    return ['blue', 'green', 'orange', 'red', 'teal', 'indigo'][index % 6]
+}
+
+function defaultDraggablesFromAnswer(correctAnswer) {
+    const ids = [...new Set(Object.values(correctAnswer || {}).map((value) => String(value)))]
+    return ids.map((id) => ({ id, label: titleCase(id) }))
+}
+
+function normalizeGoldQuestion(question, index) {
+    if (!question || typeof question !== 'object' || !question.type) return null
+
+    const normalized = {
+        ...question,
+        subtype: 'interactive_numerical',
+        difficulty: normalizeDifficulty(question?.difficulty, inferDifficulty(question, index)),
+        question: question?.question || question?.instruction || `Interactive Question ${index + 1}`,
+    }
+
+    if (!Array.isArray(normalized.prompt_rules) && Array.isArray(question?.prompt_data?.rules)) {
+        normalized.prompt_rules = question.prompt_data.rules.map((rule) => rule?.text).filter(Boolean)
+    }
+
+    if (normalized.type === 'interactive_drag_table') {
+        const widgetData = normalized.widget_data || {}
+        const rows = Array.isArray(widgetData.rows) ? widgetData.rows : []
+        const draggables = Array.isArray(widgetData.draggables) && widgetData.draggables.length > 0
+            ? widgetData.draggables
+            : defaultDraggablesFromAnswer(normalized.correct_answer)
+
+        normalized.widget_data = {
+            columns: Array.isArray(widgetData.columns) ? widgetData.columns : [],
+            rows,
+            draggables,
+        }
+    }
+
+    if (normalized.type === 'interactive_pie_chart') {
+        const answer = normalized.correct_answer && typeof normalized.correct_answer === 'object'
+            ? normalized.correct_answer
+            : {}
+        const answerKeys = Object.keys(answer)
+        const widgetData = normalized.widget_data || {}
+        const hasSegments = Array.isArray(widgetData.segments) && widgetData.segments.length > 0
+
+        if (!hasSegments && answerKeys.length > 0) {
+            const initialSplit = Math.max(1, Math.floor(100 / answerKeys.length))
+            const segments = answerKeys.map((key, segmentIndex) => ({
+                id: key,
+                label: titleCase(key),
+                color: defaultPieColor(segmentIndex),
+                initial_pct: initialSplit,
+            }))
+
+            normalized.widget_data = {
+                total_value: Number(question?.prompt_data?.total_value || widgetData.total_value || 100),
+                segments,
+            }
+        } else {
+            normalized.widget_data = {
+                total_value: Number(widgetData.total_value || question?.prompt_data?.total_value || 100),
+                segments: widgetData.segments,
+            }
+        }
+
+        if (!normalized.tolerance) {
+            normalized.tolerance = { pct: 2 }
+        }
+    }
+
+    if (normalized.type === 'interactive_stacked_bar') {
+        const widgetData = normalized.widget_data || {}
+        normalized.widget_data = widgetData
+        if (!normalized.tolerance) {
+            normalized.tolerance = { total: 5, split_pct: 2 }
+        }
+    }
+
+    return normalized
+}
+
 function loadGoldStandardQuestions() {
     if (!existsSync(GOLD_STANDARD_FILE)) {
         console.warn(`Gold standard source not found at ${GOLD_STANDARD_FILE}. Using generated fallback set only.`)
@@ -70,19 +178,15 @@ function loadGoldStandardQuestions() {
     }
 
     try {
-        const raw = JSON.parse(readFileSync(GOLD_STANDARD_FILE, 'utf8'))
+        const raw = parseGoldSource(readFileSync(GOLD_STANDARD_FILE, 'utf8'))
         if (!Array.isArray(raw)) {
             console.warn(`Gold standard source is not an array. Using generated fallback set only.`)
             return []
         }
 
         return raw
-            .map((question, index) => ({
-                ...question,
-                subtype: question?.subtype || 'interactive_numerical',
-                difficulty: normalizeDifficulty(question?.difficulty, inferDifficulty(question, index)),
-            }))
-            .filter((question) => question?.subtype === 'interactive_numerical')
+            .map((question, index) => normalizeGoldQuestion(question, index))
+            .filter((question) => question && question?.subtype === 'interactive_numerical')
     } catch (error) {
         console.warn(`Failed to parse gold standard source. Using generated fallback set only.`, error?.message || error)
         return []

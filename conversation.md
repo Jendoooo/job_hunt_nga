@@ -315,3 +315,42 @@
 - `npm run lint`: PASS
 - `npm run build`: PASS
 - Generated set now includes difficulty distribution (`easy`, `medium`, `hard`) and mixed subtype coverage.
+
+## 2026-02-12 - Interactive Blank-Screen Hardening + SHL Real Preset + Gold Data Expansion
+
+## User Report
+- Interactive section occasionally ended on a blank screen.
+- Requested confidence pass on routing/page loading/session completion.
+- Requested SHL-format realism for deductive mode (real attempt format).
+- Provided a gold-standard interactive dataset block + expansion content.
+
+## Changes Applied
+- `src/data/shl-gold-standard.json`
+  - Replaced interim set with normalized SHL-style gold set plus expansion entries.
+  - Added explicit `difficulty` labels and standardized schemas.
+  - Corrected ambiguous/contradictory answer keys where needed (e.g., strict-boundary and tier-threshold cases).
+- `scripts/generate_shl_module.js`
+  - Added tolerant parser fallback to accept JSON-like array blocks with comments/trailing commas.
+  - Added normalization guardrails for gold records:
+    - derives prompt rules from `prompt_data.rules` when needed
+    - auto-derives drag labels from `correct_answer` when draggables are missing
+    - auto-builds pie widget segments from `correct_answer` when not present
+    - enforces default tolerances on pie/bar records
+  - Regenerated `src/data/shl-interactive-questions.json` with gold-first strategy (32 standard + 18 hard fill).
+- `src/pages/NLNGInteractiveTest.jsx`
+  - Added explicit no-question session guard (prevents entering test stage with empty selection).
+  - Added in-flow recovery screen when question index/state is invalid.
+  - Wrapped question renderer in `RenderErrorBoundary` so a widget render failure shows actionable fallback instead of blank page.
+- `src/components/RenderErrorBoundary.jsx` (new)
+  - Catches runtime render errors and presents controlled fallback UI.
+- `src/pages/NLNGTest.jsx`
+  - Added SHL Real preset (`16 questions / 18 minutes`) for deductive simulation.
+  - Real preset is exam-locked; switching to practice mode auto-switches to custom preset.
+- `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - Kept rAF-throttled drag handling for smoother bar interaction (no per-pixel state flood).
+
+## Verification
+- `npm run generate:shl-interactive`: PASS
+- `npm run lint`: PASS
+- `npm run build`: PASS
+- Interactive schema checks on generated bank: PASS (no missing required widget structures)

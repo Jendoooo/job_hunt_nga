@@ -18,6 +18,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    - Question navigator
    - Flagging and review
    - Interactive widgets for numerical items (table, pie, stacked bar), including hard-mode variants
+   - Interactive render safety fallback (error boundary + session recovery path)
 4. View score report and save attempt to Supabase.
 
 ## Key Files
@@ -81,6 +82,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
 
 - NLNG route and dashboard entry are active.
 - NLNG setup supports exam/practice modes and selectable question/time profiles.
+- NLNG deductive setup includes an SHL-style real attempt preset (16 questions in 18 minutes).
 - NLNG Interactive Numerical route (`/test/nlng-interactive`) is active and linked from dashboard.
 - NLNG Interactive setup now supports difficulty filtering (`Easy`, `Medium`, `Hard`).
 - Interactive numerical question types are supported through `QuestionCard` type routing.
@@ -99,3 +101,4 @@ This project is a React + Vite assessment platform for graduate candidate prepar
   - tiered progressive table verification
   - equation-system pie constraints
   - historical-reference stacked bars (Year 1 locked, Year 2/3 adjustable)
+- Gold-source generation now uses `src/data/shl-gold-standard.json` (with normalization guardrails) before hard-mode top-up.

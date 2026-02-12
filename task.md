@@ -93,18 +93,25 @@ Date: 2026-02-12
 - [x] Add `difficulty` tagging to generated interactive records
 - [x] Merge AbortController-based save cancellation handling in `src/components/ScoreReport.jsx`
 - [x] Guard save state updates to suppress unmount/abort noise without hiding real errors
+- [x] Replace interim gold dataset with user-provided SHL-style set + expansion pack (normalized and corrected)
+- [x] Add parser fallback for JSON-like gold source blocks with inline comments/trailing commas
+- [x] Add runtime render boundary for interactive question card to prevent blank-screen dead ends
+- [x] Add explicit session recovery UI when question state becomes invalid
+- [x] Add SHL deductive real-attempt preset in `src/pages/NLNGTest.jsx` (16Q / 18m)
+- [x] Lock real-attempt preset to exam mode; custom mode remains editable
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 - [x] `npm run generate:shl-interactive` passes
 - [x] Hard-mode data integrity checks pass (pie sums, bounds, schema shape)
+- [x] Interactive dataset schema validation passes (no missing rows/draggables/segments/bar config)
 - [ ] Full manual end-to-end smoke test across every module in browser
 
 ## Next Actions
 1. Run manual UX/accessibility checks on all target breakpoints and log defects.
 2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
-3. Replace interim `src/data/shl-gold-standard.json` contents with full screenshot-extracted gold block once supplied.
+3. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
 4. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
 5. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
 6. Optionally split large frontend bundle if payload size reduction is required.

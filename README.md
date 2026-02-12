@@ -7,7 +7,7 @@ Light-theme, employer-aligned assessment practice platform built with React + Vi
   - Swift Analysis Aptitude (exam + practice, custom questions/time)
   - Process Technical Assessment (exam + practice)
 - NLNG:
-  - SHL Deductive Reasoning (exam + practice, custom question count/time)
+  - SHL Deductive Reasoning (exam + practice, includes real preset: 16Q / 18m)
   - SHL Interactive Numerical (exam + practice; drag-table, pie, stacked bar, plus hard-mode logic variants)
 - Drills:
   - Engineering Math Practice (exam + practice, custom question count/time)
@@ -77,6 +77,8 @@ Interactive NLNG setup also supports difficulty filtering:
 - `Easy`
 - `Medium`
 - `Hard`
+
+The interactive flow also includes runtime render recovery to avoid blank-screen dead ends if a malformed question slips in.
 
 ## Next Planned Work
 1. Expand NLNG SHL Sets 2-4 using `scripts/validate-shl.js`.

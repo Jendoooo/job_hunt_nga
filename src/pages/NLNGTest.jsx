@@ -15,14 +15,17 @@ import {
     Timer as TimerIcon,
 } from 'lucide-react'
 
-const QUESTION_OPTIONS = [10, 15, 18, 24, 30]
+const QUESTION_OPTIONS = [10, 15, 16, 18, 24, 30]
 const TIME_OPTIONS_MINUTES = [10, 15, 18, 25, 30]
-const DEFAULT_QUESTION_COUNT = 18
-const DEFAULT_TIME_MINUTES = 18
+const REAL_SHL_QUESTION_COUNT = 16
+const REAL_SHL_TIME_MINUTES = 18
+const DEFAULT_QUESTION_COUNT = REAL_SHL_QUESTION_COUNT
+const DEFAULT_TIME_MINUTES = REAL_SHL_TIME_MINUTES
 
 export default function NLNGTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
+    const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
@@ -36,6 +39,17 @@ export default function NLNGTest() {
     const availableQuestions = deductiveQuestions.filter((question) => question.subtest === 'deductive')
     const totalTimeSeconds = timeLimitMinutes * 60
     const isExamMode = mode === 'exam'
+
+    function applyRealPreset() {
+        setSessionPreset('real')
+        setMode('exam')
+        setQuestionCount(Math.min(REAL_SHL_QUESTION_COUNT, availableQuestions.length || REAL_SHL_QUESTION_COUNT))
+        setTimeLimitMinutes(REAL_SHL_TIME_MINUTES)
+    }
+
+    function applyCustomPreset() {
+        setSessionPreset('custom')
+    }
 
     function startTest() {
         const selectedQuestions = selectUniqueSessionQuestions(availableQuestions, questionCount)
@@ -91,6 +105,24 @@ export default function NLNGTest() {
                         </p>
 
                         <div className="test-setup__mode">
+                            <h3>Session Preset</h3>
+                            <div className="test-setup__time-options">
+                                <button
+                                    className={`test-setup__time-btn ${sessionPreset === 'real' ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={applyRealPreset}
+                                >
+                                    SHL Real (16Q / 18m)
+                                </button>
+                                <button
+                                    className={`test-setup__time-btn ${sessionPreset === 'custom' ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={applyCustomPreset}
+                                >
+                                    Custom
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="test-setup__mode">
                             <h3>Mode</h3>
                             <div className="test-setup__mode-options">
                                 <button
@@ -103,7 +135,11 @@ export default function NLNGTest() {
                                 </button>
                                 <button
                                     className={`test-setup__mode-btn ${mode === 'practice' ? 'test-setup__mode-btn--active' : ''}`}
-                                    onClick={() => setMode('practice')}
+                                    onClick={() => {
+                                        setMode('practice')
+                                        setSessionPreset('custom')
+                                    }}
+                                    disabled={sessionPreset === 'real'}
                                 >
                                     <BookOpen className={`mb-2 ${mode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
                                     <span className="test-setup__mode-label">Practice Mode</span>
@@ -119,7 +155,10 @@ export default function NLNGTest() {
                                     <button
                                         key={count}
                                         className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
-                                        onClick={() => setQuestionCount(count)}
+                                        onClick={() => {
+                                            setSessionPreset('custom')
+                                            setQuestionCount(count)
+                                        }}
                                         disabled={count > availableQuestions.length}
                                     >
                                         {count} Qs
@@ -135,7 +174,11 @@ export default function NLNGTest() {
                                     <button
                                         key={minutes}
                                         className={`test-setup__time-btn ${timeLimitMinutes === minutes ? 'test-setup__time-btn--active' : ''}`}
-                                        onClick={() => setTimeLimitMinutes(minutes)}
+                                        onClick={() => {
+                                            setSessionPreset('custom')
+                                            setTimeLimitMinutes(minutes)
+                                        }}
+                                        disabled={sessionPreset === 'real'}
                                     >
                                         {minutes} min
                                     </button>
@@ -159,8 +202,9 @@ export default function NLNGTest() {
                             <AlertCircle className="text-amber-600 shrink-0 mt-0.5" size={18} />
                             <div className="text-sm text-amber-800">
                                 <strong className="block mb-1">Session Summary</strong>
-                                {questionCount} questions
-                                {isExamMode ? ` in ${timeLimitMinutes} minutes.` : ' in untimed practice mode.'}
+                                {sessionPreset === 'real'
+                                    ? `${questionCount} questions in ${timeLimitMinutes} minutes (SHL-style timed run).`
+                                    : `${questionCount} questions${isExamMode ? ` in ${timeLimitMinutes} minutes.` : ' in untimed practice mode.'}`}
                             </div>
                         </div>
 

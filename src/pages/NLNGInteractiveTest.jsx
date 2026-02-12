@@ -4,6 +4,7 @@ import Timer from '../components/Timer'
 import QuestionCard from '../components/QuestionCard'
 import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
+import RenderErrorBoundary from '../components/RenderErrorBoundary'
 import interactiveQuestions from '../data/shl-interactive-questions.json'
 import { selectUniqueSessionQuestions } from '../utils/questionSession'
 import {
@@ -53,6 +54,7 @@ export default function NLNGInteractiveTest() {
     const [answers, setAnswers] = useState({})
     const [flagged, setFlagged] = useState([])
     const [timeTaken, setTimeTaken] = useState(0)
+    const [sessionError, setSessionError] = useState('')
     const startTimeRef = useRef(null)
 
     const availableQuestions = useMemo(() => (
@@ -68,6 +70,12 @@ export default function NLNGInteractiveTest() {
 
     function startTest() {
         const selected = selectUniqueSessionQuestions(availableQuestions, questionCount)
+        if (selected.length === 0) {
+            setSessionError('No questions are available for this difficulty right now. Change difficulty and try again.')
+            return
+        }
+
+        setSessionError('')
         setActiveQuestions(selected)
         setCurrentQuestion(0)
         setAnswers({})
@@ -214,6 +222,12 @@ export default function NLNGInteractiveTest() {
                         >
                             <Play size={18} /> Start {isExamMode ? 'Assessment' : 'Practice'}
                         </button>
+
+                        {sessionError && (
+                            <div className="auth-form__message auth-form__message--error mt-3">
+                                {sessionError}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -246,7 +260,33 @@ export default function NLNGInteractiveTest() {
     }
 
     const question = activeQuestions[currentQuestion]
-    if (!question) return null
+    if (!question) {
+        return (
+            <div className="test-page">
+                <header className="test-page__header">
+                    <button className="btn btn--ghost flex items-center gap-2" onClick={() => navigate('/')}>
+                        <ArrowLeft size={18} /> Dashboard
+                    </button>
+                    <div className="flex items-center gap-2">
+                        <ChartNoAxesCombined className="text-sky-600" size={20} />
+                        <h1 className="text-lg font-bold text-slate-800">NLNG Interactive Numerical</h1>
+                    </div>
+                </header>
+                <div className="test-setup">
+                    <div className="test-setup__card">
+                        <h2 className="text-xl font-bold text-slate-800">Session Error</h2>
+                        <p className="test-setup__description">
+                            This session could not load the next question. Return to setup and start a fresh run.
+                        </p>
+                        <div className="flex gap-3">
+                            <button className="btn btn--secondary" onClick={() => setStage('setup')}>Back to Setup</button>
+                            <button className="btn btn--primary" onClick={() => navigate('/')}>Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="test-page">
@@ -290,17 +330,49 @@ export default function NLNGInteractiveTest() {
 
                 <div className="test-page__content">
                     <div className="max-w-3xl mx-auto w-full">
-                        <QuestionCard
-                            question={question}
-                            questionNumber={currentQuestion + 1}
-                            totalQuestions={activeQuestions.length}
-                            selectedAnswer={answers[currentQuestion]}
-                            onSelectAnswer={handleAnswer}
-                            showResult={!isExamMode && answers[currentQuestion] !== undefined}
-                            correctAnswer={question.correctAnswer}
-                            isFlagged={flagged.includes(currentQuestion)}
-                            onToggleFlag={toggleFlag}
-                        />
+                        <RenderErrorBoundary
+                            resetKey={`${question?.id}-${currentQuestion}`}
+                            fallback={({ message }) => (
+                                <div className="auth-form__message auth-form__message--error">
+                                    Could not render this question: {message}
+                                    <div className="mt-3 flex gap-2">
+                                        <button
+                                            type="button"
+                                            className="btn btn--secondary btn--sm"
+                                            onClick={() => setCurrentQuestion((prev) => Math.max(0, prev - 1))}
+                                        >
+                                            Previous
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn--primary btn--sm"
+                                            onClick={() => setCurrentQuestion((prev) => Math.min(activeQuestions.length - 1, prev + 1))}
+                                        >
+                                            Next
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn--ghost btn--sm"
+                                            onClick={() => setStage('setup')}
+                                        >
+                                            Restart
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        >
+                            <QuestionCard
+                                question={question}
+                                questionNumber={currentQuestion + 1}
+                                totalQuestions={activeQuestions.length}
+                                selectedAnswer={answers[currentQuestion]}
+                                onSelectAnswer={handleAnswer}
+                                showResult={!isExamMode && answers[currentQuestion] !== undefined}
+                                correctAnswer={question.correctAnswer}
+                                isFlagged={flagged.includes(currentQuestion)}
+                                onToggleFlag={toggleFlag}
+                            />
+                        </RenderErrorBoundary>
 
                         <div className="test-page__nav-buttons mt-6">
                             <button

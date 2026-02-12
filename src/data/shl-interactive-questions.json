@@ -1,996 +1,297 @@
 [
   {
     "id": 1,
-    "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Work out the correct penalty for Mike.",
+    "question": "Classify Mike's penalty status.",
     "prompt_rules": [
-      "Month 1: 280 total (126 Service / 154 Product)",
-      "Month 2: Service +15%, Product +15%"
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
     ],
     "widget_data": {
-      "axis_max": 400,
-      "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 280,
-        "split_pct": 45
-      },
-      "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 300,
-        "split_pct": 53
-      },
-      "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
-      }
+      "columns": [
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "mike",
+          "label": "Mike",
+          "values": [
+            "24",
+            "10",
+            "1"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
     },
     "correct_answer": {
-      "total": 322,
-      "split_pct": 45
+      "mike": "yellow"
     },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2
-    },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
-    "difficulty": "easy",
-    "source_id": 1
+    "explanation": "Returned 10/24 = 41.7% (<75%) so Yellow applies. Damaged 1/24 = 4.2% (<5%) so no Red.",
+    "source_id": "lib_mike"
   },
   {
     "id": 2,
-    "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out the correct penalty for Tim.",
+    "question": "Classify Tim's penalty status.",
     "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
     ],
     "widget_data": {
       "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
       ],
       "rows": [
         {
-          "id": "q4_r1",
+          "id": "tim",
+          "label": "Tim",
           "values": [
-            "Plant Retrofit",
-            "114",
-            "213"
-          ]
-        },
-        {
-          "id": "q4_r2",
-          "values": [
-            "Tank Farm",
-            "142",
-            "156"
-          ]
-        },
-        {
-          "id": "q4_r3",
-          "values": [
-            "Pipeline",
-            "145",
-            "202"
-          ]
-        },
-        {
-          "id": "q4_r4",
-          "values": [
-            "Controls Upgrade",
-            "65",
-            "131"
+            "90",
+            "44",
+            "9"
           ]
         }
       ],
       "draggables": [
         {
-          "id": "priority",
-          "label": "Priority"
+          "id": "none",
+          "label": "None"
         },
         {
-          "id": "watchlist",
-          "label": "Watchlist"
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
         }
       ]
     },
     "correct_answer": {
-      "q4_r1": "watchlist",
-      "q4_r2": "watchlist",
-      "q4_r3": "watchlist",
-      "q4_r4": "priority"
+      "tim": "both"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 2
+    "explanation": "Returned 44/90 = 48.9% (<75%) and Damaged 9/90 = 10% (>=5%).",
+    "source_id": "lib_tim"
   },
   {
     "id": 3,
-    "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Work out the correct penalty for Angela.",
+    "question": "Classify Angela's penalty status.",
     "prompt_rules": [
-      "Total value = 360",
-      "Ratio units -> Office A:1 | Office B:2 | Office C:2 | Office D:5"
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
     ],
     "widget_data": {
-      "total_value": 360,
-      "segments": [
+      "columns": [
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
         {
-          "id": "seg_5_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 4
+          "id": "angela",
+          "label": "Angela",
+          "values": [
+            "150",
+            "60",
+            "2"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
         },
         {
-          "id": "seg_5_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 18
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
         },
         {
-          "id": "seg_5_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 25
+          "id": "red",
+          "label": "Red",
+          "color": "red"
         },
         {
-          "id": "seg_5_4",
-          "label": "Office D",
-          "color": "purple",
-          "initial_pct": 53
+          "id": "both",
+          "label": "Both",
+          "color": "green"
         }
       ]
     },
     "correct_answer": {
-      "seg_5_1": 10,
-      "seg_5_2": 20,
-      "seg_5_3": 20,
-      "seg_5_4": 50
+      "angela": "yellow"
     },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "medium",
-    "source_id": 3
+    "explanation": "Returned 60/150 = 40% (<75%) so Yellow only. Damage 2/150 = 1.3% (<5%).",
+    "source_id": "lib_angela"
   },
   {
     "id": 4,
-    "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Work out the correct penalty for Tina.",
+    "question": "Classify Tina's penalty status.",
     "prompt_rules": [
-      "Month 1: 160 total (112 Service / 48 Product)",
-      "Month 2: Service +25%, Product +20%"
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
     ],
     "widget_data": {
-      "axis_max": 250,
-      "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 160,
-        "split_pct": 70
-      },
-      "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 180,
-        "split_pct": 74
-      },
-      "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
-      }
+      "columns": [
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "tina",
+          "label": "Tina",
+          "values": [
+            "16",
+            "15",
+            "2"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
     },
     "correct_answer": {
-      "total": 198,
-      "split_pct": 71
+      "tina": "red"
     },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2
-    },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
-    "difficulty": "medium",
-    "source_id": 4
+    "explanation": "Returned 15/16 = 93.8% (no Yellow). Damaged 2/16 = 12.5% (Red).",
+    "source_id": "lib_tina"
   },
   {
     "id": 5,
-    "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent office sizes.",
+    "question": "Set each office slice to match the given relationships.",
     "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
+      "Total = 480 employees",
+      "Office A = 2 x Office C",
+      "Office C = 24 employees",
+      "Office D = 12 x Office C",
+      "Office B = remainder"
     ],
     "widget_data": {
-      "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
-      ],
-      "rows": [
+      "total_value": 480,
+      "segments": [
         {
-          "id": "q10_r1",
-          "values": [
-            "Plant Retrofit",
-            "55",
-            "181"
-          ]
+          "id": "off_a",
+          "label": "Office A",
+          "color": "blue",
+          "initial_pct": 25
         },
         {
-          "id": "q10_r2",
-          "values": [
-            "Tank Farm",
-            "84",
-            "137"
-          ]
+          "id": "off_b",
+          "label": "Office B",
+          "color": "green",
+          "initial_pct": 25
         },
         {
-          "id": "q10_r3",
-          "values": [
-            "Pipeline",
-            "95",
-            "86"
-          ]
+          "id": "off_c",
+          "label": "Office C",
+          "color": "red",
+          "initial_pct": 25
         },
         {
-          "id": "q10_r4",
-          "values": [
-            "Controls Upgrade",
-            "133",
-            "162"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "priority",
-          "label": "Priority"
-        },
-        {
-          "id": "watchlist",
-          "label": "Watchlist"
+          "id": "off_d",
+          "label": "Office D",
+          "color": "orange",
+          "initial_pct": 25
         }
       ]
     },
     "correct_answer": {
-      "q10_r1": "priority",
-      "q10_r2": "watchlist",
-      "q10_r3": "watchlist",
-      "q10_r4": "watchlist"
+      "off_c": 5,
+      "off_a": 10,
+      "off_d": 60,
+      "off_b": 25
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 5
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "C=24 (5%), A=48 (10%), D=288 (60%), B=120 (25%).",
+    "source_id": "pie_offices"
   },
   {
     "id": 6,
-    "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
-    "prompt_rules": [
-      "Total value = 360",
-      "Ratio units -> Office A:1 | Office B:2 | Office C:3 | Office D:4"
-    ],
-    "widget_data": {
-      "total_value": 360,
-      "segments": [
-        {
-          "id": "seg_11_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 4
-        },
-        {
-          "id": "seg_11_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 15
-        },
-        {
-          "id": "seg_11_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 35
-        },
-        {
-          "id": "seg_11_4",
-          "label": "Office D",
-          "color": "purple",
-          "initial_pct": 46
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_11_1": 10,
-      "seg_11_2": 20,
-      "seg_11_3": 30,
-      "seg_11_4": 40
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "medium",
-    "source_id": 6
-  },
-  {
-    "id": 7,
     "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
-    "prompt_rules": [
-      "Month 1: 160 total (88 Service / 72 Product)",
-      "Month 2: Service +25%, Product +30%"
-    ],
-    "widget_data": {
-      "axis_max": 250,
-      "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 160,
-        "split_pct": 55
-      },
-      "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 150,
-        "split_pct": 51
-      },
-      "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
-      }
-    },
-    "correct_answer": {
-      "total": 204,
-      "split_pct": 54
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2
-    },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
     "difficulty": "medium",
-    "source_id": 7
-  },
-  {
-    "id": 8,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
+    "instruction": "Arrange the complaints per month.",
+    "question": "Adjust Month 2 to satisfy the growth rules.",
     "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
-    ],
-    "widget_data": {
-      "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
-      ],
-      "rows": [
-        {
-          "id": "q16_r1",
-          "values": [
-            "Plant Retrofit",
-            "157",
-            "104"
-          ]
-        },
-        {
-          "id": "q16_r2",
-          "values": [
-            "Tank Farm",
-            "77",
-            "111"
-          ]
-        },
-        {
-          "id": "q16_r3",
-          "values": [
-            "Pipeline",
-            "68",
-            "155"
-          ]
-        },
-        {
-          "id": "q16_r4",
-          "values": [
-            "Controls Upgrade",
-            "148",
-            "140"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "priority",
-          "label": "Priority"
-        },
-        {
-          "id": "watchlist",
-          "label": "Watchlist"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q16_r1": "watchlist",
-      "q16_r2": "watchlist",
-      "q16_r3": "priority",
-      "q16_r4": "watchlist"
-    },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 8
-  },
-  {
-    "id": 9,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
-    "prompt_rules": [
-      "Total value = 120",
-      "Ratio units -> Office A:2 | Office B:3 | Office C:5"
-    ],
-    "widget_data": {
-      "total_value": 120,
-      "segments": [
-        {
-          "id": "seg_17_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 15
-        },
-        {
-          "id": "seg_17_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 36
-        },
-        {
-          "id": "seg_17_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 49
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_17_1": 20,
-      "seg_17_2": 30,
-      "seg_17_3": 50
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "easy",
-    "source_id": 9
-  },
-  {
-    "id": 10,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
-    "prompt_rules": [
-      "Month 1: 220 total (165 Service / 55 Product)",
-      "Month 2: Service +10%, Product +30%"
-    ],
-    "widget_data": {
-      "axis_max": 300,
-      "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 220,
-        "split_pct": 75
-      },
-      "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 240,
-        "split_pct": 67
-      },
-      "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
-      }
-    },
-    "correct_answer": {
-      "total": 254,
-      "split_pct": 72
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2
-    },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
-    "difficulty": "medium",
-    "source_id": 10
-  },
-  {
-    "id": 11,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
-    "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
-    ],
-    "widget_data": {
-      "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
-      ],
-      "rows": [
-        {
-          "id": "q22_r1",
-          "values": [
-            "Plant Retrofit",
-            "131",
-            "117"
-          ]
-        },
-        {
-          "id": "q22_r2",
-          "values": [
-            "Tank Farm",
-            "52",
-            "113"
-          ]
-        },
-        {
-          "id": "q22_r3",
-          "values": [
-            "Pipeline",
-            "66",
-            "163"
-          ]
-        },
-        {
-          "id": "q22_r4",
-          "values": [
-            "Controls Upgrade",
-            "51",
-            "86"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "priority",
-          "label": "Priority"
-        },
-        {
-          "id": "watchlist",
-          "label": "Watchlist"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q22_r1": "watchlist",
-      "q22_r2": "priority",
-      "q22_r3": "priority",
-      "q22_r4": "watchlist"
-    },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 11
-  },
-  {
-    "id": 12,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
-    "prompt_rules": [
-      "Total value = 300",
-      "Ratio units -> Office A:1 | Office B:1 | Office C:2 | Office D:6"
-    ],
-    "widget_data": {
-      "total_value": 300,
-      "segments": [
-        {
-          "id": "seg_23_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 12
-        },
-        {
-          "id": "seg_23_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 14
-        },
-        {
-          "id": "seg_23_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 16
-        },
-        {
-          "id": "seg_23_4",
-          "label": "Office D",
-          "color": "purple",
-          "initial_pct": 58
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_23_1": 10,
-      "seg_23_2": 10,
-      "seg_23_3": 20,
-      "seg_23_4": 60
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "medium",
-    "source_id": 12
-  },
-  {
-    "id": 13,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
-    "prompt_rules": [
-      "Month 1: 260 total (143 Service / 117 Product)",
-      "Month 2: Service +30%, Product +30%"
-    ],
-    "widget_data": {
-      "axis_max": 400,
-      "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 260,
-        "split_pct": 55
-      },
-      "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 250,
-        "split_pct": 43
-      },
-      "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
-      }
-    },
-    "correct_answer": {
-      "total": 338,
-      "split_pct": 55
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2
-    },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
-    "difficulty": "medium",
-    "source_id": 13
-  },
-  {
-    "id": 14,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
-    "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
-    ],
-    "widget_data": {
-      "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
-      ],
-      "rows": [
-        {
-          "id": "q28_r1",
-          "values": [
-            "Plant Retrofit",
-            "121",
-            "199"
-          ]
-        },
-        {
-          "id": "q28_r2",
-          "values": [
-            "Tank Farm",
-            "145",
-            "83"
-          ]
-        },
-        {
-          "id": "q28_r3",
-          "values": [
-            "Pipeline",
-            "45",
-            "213"
-          ]
-        },
-        {
-          "id": "q28_r4",
-          "values": [
-            "Controls Upgrade",
-            "81",
-            "179"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "priority",
-          "label": "Priority"
-        },
-        {
-          "id": "watchlist",
-          "label": "Watchlist"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q28_r1": "watchlist",
-      "q28_r2": "watchlist",
-      "q28_r3": "priority",
-      "q28_r4": "priority"
-    },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 14
-  },
-  {
-    "id": 15,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
-    "prompt_rules": [
-      "Total value = 180",
-      "Ratio units -> Office A:1 | Office B:2 | Office C:3 | Office D:4"
-    ],
-    "widget_data": {
-      "total_value": 180,
-      "segments": [
-        {
-          "id": "seg_29_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 7
-        },
-        {
-          "id": "seg_29_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 21
-        },
-        {
-          "id": "seg_29_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 31
-        },
-        {
-          "id": "seg_29_4",
-          "label": "Office D",
-          "color": "purple",
-          "initial_pct": 41
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_29_1": 10,
-      "seg_29_2": 20,
-      "seg_29_3": 30,
-      "seg_29_4": 40
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "medium",
-    "source_id": 15
-  },
-  {
-    "id": 16,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
-    "prompt_rules": [
-      "Month 1: 260 total (78 Service / 182 Product)",
-      "Month 2: Service +20%, Product +15%"
-    ],
-    "widget_data": {
-      "axis_max": 350,
-      "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 260,
-        "split_pct": 30
-      },
-      "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 270,
-        "split_pct": 42
-      },
-      "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
-      }
-    },
-    "correct_answer": {
-      "total": 303,
-      "split_pct": 31
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2
-    },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
-    "difficulty": "medium",
-    "source_id": 16
-  },
-  {
-    "id": 17,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
-    "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
-    ],
-    "widget_data": {
-      "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
-      ],
-      "rows": [
-        {
-          "id": "q34_r1",
-          "values": [
-            "Plant Retrofit",
-            "73",
-            "112"
-          ]
-        },
-        {
-          "id": "q34_r2",
-          "values": [
-            "Tank Farm",
-            "80",
-            "135"
-          ]
-        },
-        {
-          "id": "q34_r3",
-          "values": [
-            "Pipeline",
-            "100",
-            "141"
-          ]
-        },
-        {
-          "id": "q34_r4",
-          "values": [
-            "Controls Upgrade",
-            "94",
-            "145"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "priority",
-          "label": "Priority"
-        },
-        {
-          "id": "watchlist",
-          "label": "Watchlist"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q34_r1": "watchlist",
-      "q34_r2": "watchlist",
-      "q34_r3": "watchlist",
-      "q34_r4": "watchlist"
-    },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 17
-  },
-  {
-    "id": 18,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
-    "prompt_rules": [
-      "Total value = 300",
-      "Ratio units -> Office A:1 | Office B:2 | Office C:2 | Office D:5"
-    ],
-    "widget_data": {
-      "total_value": 300,
-      "segments": [
-        {
-          "id": "seg_35_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 14
-        },
-        {
-          "id": "seg_35_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 17
-        },
-        {
-          "id": "seg_35_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 17
-        },
-        {
-          "id": "seg_35_4",
-          "label": "Office D",
-          "color": "purple",
-          "initial_pct": 52
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_35_1": 10,
-      "seg_35_2": 20,
-      "seg_35_3": 20,
-      "seg_35_4": 50
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "medium",
-    "source_id": 18
-  },
-  {
-    "id": 19,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
-    "prompt_rules": [
-      "Month 1: 200 total (50 Service / 150 Product)",
-      "Month 2: Service +15%, Product +35%"
+      "Month 1: 200 total (80 Service / 120 Product)",
+      "Month 2: Service +5%, Product +30%"
     ],
     "widget_data": {
       "axis_max": 300,
@@ -998,13 +299,13 @@
         "id": "month_1",
         "label": "Month 1",
         "total": 200,
-        "split_pct": 25
+        "split_pct": 40
       },
       "bar_2_initial": {
         "id": "month_2",
         "label": "Month 2",
-        "total": 180,
-        "split_pct": 37
+        "total": 200,
+        "split_pct": 50
       },
       "segment_labels": {
         "primary": "Service",
@@ -1012,301 +313,1398 @@
       }
     },
     "correct_answer": {
-      "total": 260,
-      "split_pct": 22
+      "total": 240,
+      "split_pct": 35
     },
     "tolerance": {
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
+    "explanation": "Service: 80 -> 84. Product: 120 -> 156. Total 240. Service share = 84/240 = 35%.",
+    "source_id": "bar_complaints"
+  },
+  {
+    "id": 7,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
     "difficulty": "medium",
-    "source_id": 19
+    "instruction": "Determine funding status for Project A.",
+    "question": "Classify Project A as Funded, Deferred, or Rejected.",
+    "prompt_rules": [
+      "Funded: Rev >= 2 x Investment",
+      "Deferred: Rev >= Investment",
+      "Rejected: Rev < Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Investment",
+        "Rev Y1",
+        "Rev Y2",
+        "Rev Y3",
+        "Rev Y4",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "proj_a",
+          "label": "Project A",
+          "values": [
+            "$8,000",
+            "$1,800",
+            "$2,000",
+            "$4,300",
+            "$2,800"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "funded",
+          "label": "Funded",
+          "color": "green"
+        },
+        {
+          "id": "deferred",
+          "label": "Deferred",
+          "color": "amber"
+        },
+        {
+          "id": "rejected",
+          "label": "Rejected",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "proj_a": "deferred"
+    },
+    "explanation": "Total revenue 10,900 is >=8,000 but <16,000.",
+    "source_id": "fund_proj_a"
+  },
+  {
+    "id": 8,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine funding status for Project B.",
+    "question": "Classify Project B as Funded, Deferred, or Rejected.",
+    "prompt_rules": [
+      "Funded: Rev >= 2 x Investment",
+      "Deferred: Rev >= Investment",
+      "Rejected: Rev < Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Investment",
+        "Rev Y1",
+        "Rev Y2",
+        "Rev Y3",
+        "Rev Y4",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "proj_b",
+          "label": "Project B",
+          "values": [
+            "$17,500",
+            "$500",
+            "$5,000",
+            "$10,000",
+            "$20,000"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "funded",
+          "label": "Funded",
+          "color": "green"
+        },
+        {
+          "id": "deferred",
+          "label": "Deferred",
+          "color": "amber"
+        },
+        {
+          "id": "rejected",
+          "label": "Rejected",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "proj_b": "funded"
+    },
+    "explanation": "Total revenue 35,500 >= 35,000 (2 x investment).",
+    "source_id": "fund_proj_b"
+  },
+  {
+    "id": 9,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Classify Store A.",
+    "question": "Classify the revenue volume for Store A.",
+    "prompt_rules": [
+      "Revenue = (Price - Discount) x Units x (1 + Fee)",
+      "High > 1500, Low < 350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Price",
+        "Units",
+        "Discount",
+        "Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "store_a",
+          "label": "Store A",
+          "values": [
+            "?6.46",
+            "60",
+            "10% off",
+            "-"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "store_a": "low"
+    },
+    "explanation": "?6.46 x 0.9 x 60 = ?348.84 (<350).",
+    "source_id": "store_a"
+  },
+  {
+    "id": 10,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store C (Scenario 1).",
+    "question": "Classify the revenue volume for Store C scenario 1.",
+    "prompt_rules": [
+      "Revenue = (Price - Discount) x Units x (1 + Fee)",
+      "High > 1500, Low < 350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Price",
+        "Units",
+        "Discount",
+        "Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "store_c1",
+          "label": "Store C",
+          "values": [
+            "?17.25",
+            "90",
+            "?2 off",
+            "6%"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "store_c1": "medium"
+    },
+    "explanation": "Base 15.25 x 90 = 1,372.5; with 6% fee => 1,454.85.",
+    "source_id": "store_c_1"
+  },
+  {
+    "id": 11,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store C (Scenario 2).",
+    "question": "Classify the revenue volume for Store C scenario 2.",
+    "prompt_rules": [
+      "Revenue = (Price - Discount) x Units x (1 + Fee)",
+      "High > 1500, Low < 350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Price",
+        "Units",
+        "Discount",
+        "Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "store_c2",
+          "label": "Store C",
+          "values": [
+            "?6.89",
+            "50",
+            "-",
+            "6%"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "store_c2": "medium"
+    },
+    "explanation": "Base 344.5; with 6% fee => 365.17.",
+    "source_id": "store_c_2"
+  },
+  {
+    "id": 12,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store D.",
+    "question": "Classify the revenue volume for Store D.",
+    "prompt_rules": [
+      "Revenue = (Price - Discount) x Units x (1 + Fee)",
+      "High > 1500, Low < 350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Price",
+        "Units",
+        "Discount",
+        "Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "store_d",
+          "label": "Store D",
+          "values": [
+            "?17.97",
+            "80",
+            "-",
+            "8%"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "store_d": "high"
+    },
+    "explanation": "Base 1,437.6; with 8% fee => 1,552.6 (>1500).",
+    "source_id": "store_d"
+  },
+  {
+    "id": 13,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Commission for Person A.",
+    "question": "Determine Person A commission tier.",
+    "prompt_rules": [
+      "Net Sales = Sales - (Cancel x 5)",
+      "Avg = Rev / Net Sales",
+      "0-40: None, 41-100: 5%, 101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Rev",
+        "Sales",
+        "Cancel/Day",
+        "Comm"
+      ],
+      "rows": [
+        {
+          "id": "pa",
+          "label": "Person A",
+          "values": [
+            "?390",
+            "20",
+            "2"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pa": "none"
+    },
+    "explanation": "Net=10; Avg=39 => None.",
+    "source_id": "comm_person_a"
+  },
+  {
+    "id": 14,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Commission for Person B.",
+    "question": "Determine Person B commission tier.",
+    "prompt_rules": [
+      "Net Sales = Sales - (Cancel x 5)",
+      "Avg = Rev / Net Sales",
+      "0-40: None, 41-100: 5%, 101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Rev",
+        "Sales",
+        "Cancel/Day",
+        "Comm"
+      ],
+      "rows": [
+        {
+          "id": "pb",
+          "label": "Person B",
+          "values": [
+            "?670",
+            "15",
+            "1"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pb": "5%"
+    },
+    "explanation": "Net=10; Avg=67 => 5%.",
+    "source_id": "comm_person_b"
+  },
+  {
+    "id": 15,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Commission for Person C.",
+    "question": "Determine Person C commission tier.",
+    "prompt_rules": [
+      "Net Sales = Sales - (Cancel x 5)",
+      "Avg = Rev / Net Sales",
+      "0-40: None, 41-100: 5%, 101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Rev",
+        "Sales",
+        "Cancel/Day",
+        "Comm"
+      ],
+      "rows": [
+        {
+          "id": "pc",
+          "label": "Person C",
+          "values": [
+            "?1,440",
+            "31",
+            "4"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pc": "10%"
+    },
+    "explanation": "Net=11; Avg=130.9 => 10%.",
+    "source_id": "comm_person_c"
+  },
+  {
+    "id": 16,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Commission for Person D.",
+    "question": "Determine Person D commission tier.",
+    "prompt_rules": [
+      "Net Sales = Sales - (Cancel x 5)",
+      "Avg = Rev / Net Sales",
+      "0-40: None, 41-100: 5%, 101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Rev",
+        "Sales",
+        "Cancel/Day",
+        "Comm"
+      ],
+      "rows": [
+        {
+          "id": "pd",
+          "label": "Person D",
+          "values": [
+            "?1,120",
+            "55",
+            "5"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pd": "none"
+    },
+    "explanation": "Net=30; Avg=37.3 => None.",
+    "source_id": "comm_person_d"
+  },
+  {
+    "id": 17,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Eligibility for Person A.",
+    "question": "Determine if Person A is eligible.",
+    "prompt_rules": [
+      "Flag if Late > 1.5% OR Attendance < 93%",
+      "Any flag => Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "epa",
+          "label": "Person A",
+          "values": [
+            "205",
+            "235",
+            "2",
+            "20"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "epa": "eligible"
+    },
+    "explanation": "Late 0.85% and attendance 95.3% after holiday adjustment.",
+    "source_id": "elig_person_a"
+  },
+  {
+    "id": 18,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Eligibility for Person B.",
+    "question": "Determine if Person B is eligible.",
+    "prompt_rules": [
+      "Flag if Late > 1.5% OR Attendance < 93%",
+      "Any flag => Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "epb",
+          "label": "Person B",
+          "values": [
+            "109",
+            "125",
+            "10",
+            "15"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "epb": "not_eligible"
+    },
+    "explanation": "Late 8% (>1.5%), fails.",
+    "source_id": "elig_person_b"
+  },
+  {
+    "id": 19,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Eligibility for Person C.",
+    "question": "Determine if Person C is eligible.",
+    "prompt_rules": [
+      "Flag if Late > 1.5% OR Attendance < 93%",
+      "Any flag => Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "epc",
+          "label": "Person C",
+          "values": [
+            "199",
+            "227",
+            "3",
+            "10"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "epc": "not_eligible"
+    },
+    "explanation": "Attendance 199/(227-10)=91.7%, fails.",
+    "source_id": "elig_person_c"
   },
   {
     "id": 20,
-    "type": "interactive_drag_table",
     "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Eligibility for Person D.",
+    "question": "Determine if Person D is eligible.",
     "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
+      "Flag if Late > 1.5% OR Attendance < 93%",
+      "Any flag => Not Eligible"
     ],
     "widget_data": {
       "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Status"
       ],
       "rows": [
         {
-          "id": "q40_r1",
+          "id": "epd",
+          "label": "Person D",
           "values": [
-            "Plant Retrofit",
-            "94",
-            "67"
-          ]
-        },
-        {
-          "id": "q40_r2",
-          "values": [
-            "Tank Farm",
-            "141",
-            "120"
-          ]
-        },
-        {
-          "id": "q40_r3",
-          "values": [
-            "Pipeline",
-            "160",
-            "231"
-          ]
-        },
-        {
-          "id": "q40_r4",
-          "values": [
-            "Controls Upgrade",
-            "144",
-            "143"
+            "67",
+            "71",
+            "1",
+            "0"
           ]
         }
       ],
       "draggables": [
         {
-          "id": "priority",
-          "label": "Priority"
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
         },
         {
-          "id": "watchlist",
-          "label": "Watchlist"
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
         }
       ]
     },
     "correct_answer": {
-      "q40_r1": "watchlist",
-      "q40_r2": "watchlist",
-      "q40_r3": "watchlist",
-      "q40_r4": "watchlist"
+      "epd": "eligible"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 20
+    "explanation": "Late 1.4% and attendance 94.4%, passes both checks.",
+    "source_id": "elig_person_d"
   },
   {
     "id": 21,
-    "type": "interactive_pie_chart",
     "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Work out the correct penalty for Sarah.",
+    "question": "Classify Sarah's penalty status.",
     "prompt_rules": [
-      "Total value = 300",
-      "Ratio units -> Office A:1 | Office B:2 | Office C:2 | Office D:5"
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
     ],
     "widget_data": {
-      "total_value": 300,
-      "segments": [
+      "columns": [
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
         {
-          "id": "seg_41_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 4
+          "id": "sarah",
+          "label": "Sarah",
+          "values": [
+            "40",
+            "35",
+            "0"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
         },
         {
-          "id": "seg_41_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 26
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
         },
         {
-          "id": "seg_41_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 14
+          "id": "red",
+          "label": "Red",
+          "color": "red"
         },
         {
-          "id": "seg_41_4",
-          "label": "Office D",
-          "color": "purple",
-          "initial_pct": 56
+          "id": "both",
+          "label": "Both",
+          "color": "green"
         }
       ]
     },
     "correct_answer": {
-      "seg_41_1": 10,
-      "seg_41_2": 20,
-      "seg_41_3": 20,
-      "seg_41_4": 50
+      "sarah": "none"
+    },
+    "explanation": "Return 87.5%, damage 0%; no penalties.",
+    "source_id": "lib_sarah"
+  },
+  {
+    "id": 22,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out the correct penalty for David.",
+    "question": "Classify David's penalty status.",
+    "prompt_rules": [
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "david",
+          "label": "David",
+          "values": [
+            "50",
+            "30",
+            "4"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
+    },
+    "correct_answer": {
+      "david": "both"
+    },
+    "explanation": "Return 60% and damage 8% => both penalties.",
+    "source_id": "lib_david"
+  },
+  {
+    "id": 23,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out the correct penalty for Jess.",
+    "question": "Classify Jess's penalty status.",
+    "prompt_rules": [
+      "Yellow: Return < 75%",
+      "Red: Damage >= 5%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "jess",
+          "label": "Jess",
+          "values": [
+            "200",
+            "140",
+            "15"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
+    },
+    "correct_answer": {
+      "jess": "both"
+    },
+    "explanation": "Return 70% and damage 7.5% => both penalties.",
+    "source_id": "lib_jess"
+  },
+  {
+    "id": 24,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine funding status for Project Alpha.",
+    "question": "Classify Project Alpha.",
+    "prompt_rules": [
+      "Funded: Rev >= 2 x Investment",
+      "Deferred: Rev >= Investment",
+      "Rejected: Rev < Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Investment",
+        "Rev Y1",
+        "Rev Y2",
+        "Rev Y3",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "proj_c",
+          "label": "Project Alpha",
+          "values": [
+            "$12,000",
+            "$4,000",
+            "$8,000",
+            "$15,000"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "funded",
+          "label": "Funded",
+          "color": "green"
+        },
+        {
+          "id": "deferred",
+          "label": "Deferred",
+          "color": "amber"
+        },
+        {
+          "id": "rejected",
+          "label": "Rejected",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "proj_c": "funded"
+    },
+    "explanation": "27,000 >= 2 x 12,000.",
+    "source_id": "fund_proj_c"
+  },
+  {
+    "id": 25,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Determine funding status for Project Beta.",
+    "question": "Classify Project Beta.",
+    "prompt_rules": [
+      "Funded: Rev >= 2 x Investment",
+      "Deferred: Rev >= Investment",
+      "Rejected: Rev < Investment"
+    ],
+    "widget_data": {
+      "columns": [
+        "Investment",
+        "Rev Y1",
+        "Rev Y2",
+        "Rev Y3",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "proj_d",
+          "label": "Project Beta",
+          "values": [
+            "$50,000",
+            "$10,000",
+            "$15,000",
+            "$20,000"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "funded",
+          "label": "Funded",
+          "color": "green"
+        },
+        {
+          "id": "deferred",
+          "label": "Deferred",
+          "color": "amber"
+        },
+        {
+          "id": "rejected",
+          "label": "Rejected",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "proj_d": "rejected"
+    },
+    "explanation": "45,000 < 50,000.",
+    "source_id": "fund_proj_d"
+  },
+  {
+    "id": 26,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store E.",
+    "question": "Classify Store E volume band.",
+    "prompt_rules": [
+      "Revenue = (Price - Discount) x Units x (1 + Fee)",
+      "High > 1500, Low < 350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Price",
+        "Units",
+        "Discount",
+        "Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "store_e",
+          "label": "Store E",
+          "values": [
+            "?10.00",
+            "40",
+            "10% off",
+            "5%"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "store_e": "medium"
+    },
+    "explanation": "?10 x 0.9 x 40 x 1.05 = ?378 => Medium.",
+    "source_id": "store_e"
+  },
+  {
+    "id": 27,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Classify Store F.",
+    "question": "Classify Store F volume band.",
+    "prompt_rules": [
+      "Revenue = (Price - Discount) x Units x (1 + Fee)",
+      "High > 1500, Low < 350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Price",
+        "Units",
+        "Discount",
+        "Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "store_f",
+          "label": "Store F",
+          "values": [
+            "?5.00",
+            "60",
+            "-",
+            "10%"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "store_f": "low"
+    },
+    "explanation": "?5 x 60 x 1.10 = ?330 => Low.",
+    "source_id": "store_f"
+  },
+  {
+    "id": 28,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Commission for Person E.",
+    "question": "Determine Person E commission tier.",
+    "prompt_rules": [
+      "Net Sales = Sales - (Cancel x 5)",
+      "Avg = Rev / Net Sales",
+      "0-40: None, 41-100: 5%, 101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Rev",
+        "Sales",
+        "Cancel/Day",
+        "Comm"
+      ],
+      "rows": [
+        {
+          "id": "pe",
+          "label": "Person E",
+          "values": [
+            "?2,000",
+            "40",
+            "3"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pe": "5%"
+    },
+    "explanation": "Net=25; Avg=80 => 5%.",
+    "source_id": "comm_person_e"
+  },
+  {
+    "id": 29,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Commission for Person F.",
+    "question": "Determine Person F commission tier.",
+    "prompt_rules": [
+      "Net Sales = Sales - (Cancel x 5)",
+      "Avg = Rev / Net Sales",
+      "0-40: None, 41-100: 5%, 101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Rev",
+        "Sales",
+        "Cancel/Day",
+        "Comm"
+      ],
+      "rows": [
+        {
+          "id": "pf",
+          "label": "Person F",
+          "values": [
+            "?5,000",
+            "55",
+            "1"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pf": "5%"
+    },
+    "explanation": "Net=50; Avg=100 => 5% (10% starts above 100).",
+    "source_id": "comm_person_f"
+  },
+  {
+    "id": 30,
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust chart for Regional Logistics.",
+    "question": "Set each region slice to satisfy the rules.",
+    "prompt_rules": [
+      "Total = 1000 units",
+      "North = 3 x East",
+      "East = 100 units",
+      "West = 4 x East",
+      "South = remainder"
+    ],
+    "widget_data": {
+      "total_value": 1000,
+      "segments": [
+        {
+          "id": "east",
+          "label": "East",
+          "color": "red",
+          "initial_pct": 20
+        },
+        {
+          "id": "north",
+          "label": "North",
+          "color": "blue",
+          "initial_pct": 20
+        },
+        {
+          "id": "west",
+          "label": "West",
+          "color": "orange",
+          "initial_pct": 30
+        },
+        {
+          "id": "south",
+          "label": "South",
+          "color": "green",
+          "initial_pct": 30
+        }
+      ]
+    },
+    "correct_answer": {
+      "east": 10,
+      "north": 30,
+      "west": 40,
+      "south": 20
     },
     "tolerance": {
       "pct": 2
     },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "medium",
-    "source_id": 21
+    "explanation": "East 100, North 300, West 400, South 200.",
+    "source_id": "pie_logistics"
   },
   {
-    "id": 22,
-    "type": "interactive_stacked_bar",
+    "id": 31,
     "subtype": "interactive_numerical",
-    "instruction": "Adjust Month 2 total and Service/Product split.",
-    "question": "Move the handles until Month 2 matches the growth rules.",
+    "type": "interactive_stacked_bar",
+    "difficulty": "medium",
+    "instruction": "Arrange sales for Q1 vs Q2.",
+    "question": "Adjust Q2 bar to match growth rates.",
     "prompt_rules": [
-      "Month 1: 260 total (182 Service / 78 Product)",
-      "Month 2: Service +5%, Product +25%"
+      "Q1: 400 total (200 Online / 200 Store)",
+      "Q2: Online +50%, Store +10%"
     ],
     "widget_data": {
-      "axis_max": 350,
+      "axis_max": 600,
       "bar_1": {
-        "id": "month_1",
-        "label": "Month 1",
-        "total": 260,
-        "split_pct": 70
+        "id": "q1",
+        "label": "Q1",
+        "total": 400,
+        "split_pct": 50
       },
       "bar_2_initial": {
-        "id": "month_2",
-        "label": "Month 2",
-        "total": 270,
-        "split_pct": 58
+        "id": "q2",
+        "label": "Q2",
+        "total": 400,
+        "split_pct": 50
       },
       "segment_labels": {
-        "primary": "Service",
-        "secondary": "Product"
+        "primary": "Online",
+        "secondary": "Store"
       }
     },
     "correct_answer": {
-      "total": 289,
-      "split_pct": 66
+      "total": 520,
+      "split_pct": 58
     },
     "tolerance": {
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Apply each growth rate to Month 1 segment values, then recompute total and Service percentage.",
-    "difficulty": "medium",
-    "source_id": 22
+    "explanation": "Online 300, Store 220, total 520 => Online share 57.7% (~58%).",
+    "source_id": "bar_sales"
   },
   {
-    "id": 23,
-    "type": "interactive_drag_table",
+    "id": 32,
     "subtype": "interactive_numerical",
-    "instruction": "Classify each project based on revenue-to-investment coverage.",
-    "question": "Assign the right funding category for each project.",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Verify the invoice amount.",
+    "question": "Mark the invoice as Correct or Incorrect.",
     "prompt_rules": [
-      "Priority if Revenue >= 2 x Investment",
-      "Watchlist if Revenue < 2 x Investment"
+      "0-100 units: $10",
+      "101-200 units: $8",
+      "201+ units: $5"
     ],
     "widget_data": {
       "columns": [
-        "Project",
-        "Investment (M)",
-        "Revenue (M)",
-        "Category"
+        "Client",
+        "Units Used",
+        "Invoice Amt",
+        "Status"
       ],
       "rows": [
         {
-          "id": "q46_r1",
+          "id": "cli_a",
+          "label": "Client A",
           "values": [
-            "Plant Retrofit",
-            "144",
-            "176"
-          ]
-        },
-        {
-          "id": "q46_r2",
-          "values": [
-            "Tank Farm",
-            "146",
-            "202"
-          ]
-        },
-        {
-          "id": "q46_r3",
-          "values": [
-            "Pipeline",
-            "143",
-            "246"
-          ]
-        },
-        {
-          "id": "q46_r4",
-          "values": [
-            "Controls Upgrade",
-            "73",
-            "218"
+            "Client A",
+            "250",
+            "$2,050"
           ]
         }
       ],
       "draggables": [
         {
-          "id": "priority",
-          "label": "Priority"
+          "id": "correct",
+          "label": "Correct",
+          "color": "green"
         },
         {
-          "id": "watchlist",
-          "label": "Watchlist"
+          "id": "incorrect",
+          "label": "Incorrect",
+          "color": "red"
         }
       ]
     },
     "correct_answer": {
-      "q46_r1": "watchlist",
-      "q46_r2": "watchlist",
-      "q46_r3": "watchlist",
-      "q46_r4": "priority"
+      "cli_a": "correct"
     },
-    "explanation": "Compute 2 x Investment and compare it directly with Revenue.",
-    "difficulty": "easy",
-    "source_id": 23
+    "explanation": "(100 x 10) + (100 x 8) + (50 x 5) = 2,050.",
+    "source_id": "tier_tax_1"
   },
   {
-    "id": 24,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical",
-    "instruction": "Adjust the pie chart to satisfy the ratio model.",
-    "question": "Resize segments to match the office ratio rules.",
-    "prompt_rules": [
-      "Total value = 120",
-      "Ratio units -> Office A:2 | Office B:3 | Office C:5"
-    ],
-    "widget_data": {
-      "total_value": 120,
-      "segments": [
-        {
-          "id": "seg_47_1",
-          "label": "Office A",
-          "color": "blue",
-          "initial_pct": 15
-        },
-        {
-          "id": "seg_47_2",
-          "label": "Office B",
-          "color": "green",
-          "initial_pct": 38
-        },
-        {
-          "id": "seg_47_3",
-          "label": "Office C",
-          "color": "orange",
-          "initial_pct": 47
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_47_1": 20,
-      "seg_47_2": 30,
-      "seg_47_3": 50
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Convert each ratio part into a percentage of the total ratio sum.",
-    "difficulty": "easy",
-    "source_id": 24
-  },
-  {
-    "id": 25,
+    "id": 33,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1326,7 +1724,7 @@
       ],
       "rows": [
         {
-          "id": "q25_r1",
+          "id": "q33_r1",
           "values": [
             "Alice",
             "433",
@@ -1334,7 +1732,7 @@
           ]
         },
         {
-          "id": "q25_r2",
+          "id": "q33_r2",
           "values": [
             "Binta",
             "473",
@@ -1342,7 +1740,7 @@
           ]
         },
         {
-          "id": "q25_r3",
+          "id": "q33_r3",
           "values": [
             "Chidi",
             "247",
@@ -1350,7 +1748,7 @@
           ]
         },
         {
-          "id": "q25_r4",
+          "id": "q33_r4",
           "values": [
             "Daniel",
             "170",
@@ -1372,15 +1770,15 @@
       ]
     },
     "correct_answer": {
-      "q25_r1": "incorrect",
-      "q25_r2": "correct",
-      "q25_r3": "incorrect",
-      "q25_r4": "incorrect"
+      "q33_r1": "incorrect",
+      "q33_r2": "correct",
+      "q33_r3": "incorrect",
+      "q33_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 26,
+    "id": 34,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1396,25 +1794,25 @@
       "total_value": 600,
       "segments": [
         {
-          "id": "seg_26_eng",
+          "id": "seg_34_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 34
         },
         {
-          "id": "seg_26_prd",
+          "id": "seg_34_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 39
         },
         {
-          "id": "seg_26_fin",
+          "id": "seg_34_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 14
         },
         {
-          "id": "seg_26_mkt",
+          "id": "seg_34_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 13
@@ -1422,10 +1820,10 @@
       ]
     },
     "correct_answer": {
-      "seg_26_eng": 31,
-      "seg_26_prd": 30,
-      "seg_26_fin": 19,
-      "seg_26_mkt": 20
+      "seg_34_eng": 31,
+      "seg_34_prd": 30,
+      "seg_34_fin": 19,
+      "seg_34_mkt": 20
     },
     "tolerance": {
       "pct": 2
@@ -1433,7 +1831,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 27,
+    "id": 35,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1500,7 +1898,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 28,
+    "id": 36,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1520,7 +1918,7 @@
       ],
       "rows": [
         {
-          "id": "q28_r1",
+          "id": "q36_r1",
           "values": [
             "Alice",
             "546",
@@ -1528,7 +1926,7 @@
           ]
         },
         {
-          "id": "q28_r2",
+          "id": "q36_r2",
           "values": [
             "Binta",
             "709",
@@ -1536,7 +1934,7 @@
           ]
         },
         {
-          "id": "q28_r3",
+          "id": "q36_r3",
           "values": [
             "Chidi",
             "541",
@@ -1544,7 +1942,7 @@
           ]
         },
         {
-          "id": "q28_r4",
+          "id": "q36_r4",
           "values": [
             "Daniel",
             "211",
@@ -1566,15 +1964,15 @@
       ]
     },
     "correct_answer": {
-      "q28_r1": "incorrect",
-      "q28_r2": "incorrect",
-      "q28_r3": "incorrect",
-      "q28_r4": "correct"
+      "q36_r1": "incorrect",
+      "q36_r2": "incorrect",
+      "q36_r3": "incorrect",
+      "q36_r4": "correct"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 29,
+    "id": 37,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1590,25 +1988,25 @@
       "total_value": 600,
       "segments": [
         {
-          "id": "seg_29_eng",
+          "id": "seg_37_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 35
         },
         {
-          "id": "seg_29_prd",
+          "id": "seg_37_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 33
         },
         {
-          "id": "seg_29_fin",
+          "id": "seg_37_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 24
         },
         {
-          "id": "seg_29_mkt",
+          "id": "seg_37_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 8
@@ -1616,10 +2014,10 @@
       ]
     },
     "correct_answer": {
-      "seg_29_eng": 33,
-      "seg_29_prd": 31,
-      "seg_29_fin": 19,
-      "seg_29_mkt": 17
+      "seg_37_eng": 33,
+      "seg_37_prd": 31,
+      "seg_37_fin": 19,
+      "seg_37_mkt": 17
     },
     "tolerance": {
       "pct": 2
@@ -1627,7 +2025,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 30,
+    "id": 38,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1694,7 +2092,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 31,
+    "id": 39,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1714,7 +2112,7 @@
       ],
       "rows": [
         {
-          "id": "q31_r1",
+          "id": "q39_r1",
           "values": [
             "Alice",
             "612",
@@ -1722,7 +2120,7 @@
           ]
         },
         {
-          "id": "q31_r2",
+          "id": "q39_r2",
           "values": [
             "Binta",
             "160",
@@ -1730,7 +2128,7 @@
           ]
         },
         {
-          "id": "q31_r3",
+          "id": "q39_r3",
           "values": [
             "Chidi",
             "426",
@@ -1738,7 +2136,7 @@
           ]
         },
         {
-          "id": "q31_r4",
+          "id": "q39_r4",
           "values": [
             "Daniel",
             "177",
@@ -1760,15 +2158,15 @@
       ]
     },
     "correct_answer": {
-      "q31_r1": "incorrect",
-      "q31_r2": "correct",
-      "q31_r3": "correct",
-      "q31_r4": "correct"
+      "q39_r1": "incorrect",
+      "q39_r2": "correct",
+      "q39_r3": "correct",
+      "q39_r4": "correct"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 32,
+    "id": 40,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1784,25 +2182,25 @@
       "total_value": 420,
       "segments": [
         {
-          "id": "seg_32_eng",
+          "id": "seg_40_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 38
         },
         {
-          "id": "seg_32_prd",
+          "id": "seg_40_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 18
         },
         {
-          "id": "seg_32_fin",
+          "id": "seg_40_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 11
         },
         {
-          "id": "seg_32_mkt",
+          "id": "seg_40_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 33
@@ -1810,10 +2208,10 @@
       ]
     },
     "correct_answer": {
-      "seg_32_eng": 30,
-      "seg_32_prd": 23,
-      "seg_32_fin": 18,
-      "seg_32_mkt": 29
+      "seg_40_eng": 30,
+      "seg_40_prd": 23,
+      "seg_40_fin": 18,
+      "seg_40_mkt": 29
     },
     "tolerance": {
       "pct": 2
@@ -1821,7 +2219,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 33,
+    "id": 41,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1888,7 +2286,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 34,
+    "id": 42,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1907,7 +2305,7 @@
       ],
       "rows": [
         {
-          "id": "q34_r1",
+          "id": "q42_r1",
           "values": [
             "Alice",
             "141",
@@ -1915,7 +2313,7 @@
           ]
         },
         {
-          "id": "q34_r2",
+          "id": "q42_r2",
           "values": [
             "Binta",
             "307",
@@ -1923,7 +2321,7 @@
           ]
         },
         {
-          "id": "q34_r3",
+          "id": "q42_r3",
           "values": [
             "Chidi",
             "671",
@@ -1931,7 +2329,7 @@
           ]
         },
         {
-          "id": "q34_r4",
+          "id": "q42_r4",
           "values": [
             "Daniel",
             "299",
@@ -1953,15 +2351,15 @@
       ]
     },
     "correct_answer": {
-      "q34_r1": "incorrect",
-      "q34_r2": "incorrect",
-      "q34_r3": "incorrect",
-      "q34_r4": "incorrect"
+      "q42_r1": "incorrect",
+      "q42_r2": "incorrect",
+      "q42_r3": "incorrect",
+      "q42_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 35,
+    "id": 43,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1977,25 +2375,25 @@
       "total_value": 540,
       "segments": [
         {
-          "id": "seg_35_eng",
+          "id": "seg_43_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 25
         },
         {
-          "id": "seg_35_prd",
+          "id": "seg_43_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 28
         },
         {
-          "id": "seg_35_fin",
+          "id": "seg_43_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 17
         },
         {
-          "id": "seg_35_mkt",
+          "id": "seg_43_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 30
@@ -2003,10 +2401,10 @@
       ]
     },
     "correct_answer": {
-      "seg_35_eng": 20,
-      "seg_35_prd": 31,
-      "seg_35_fin": 21,
-      "seg_35_mkt": 28
+      "seg_43_eng": 20,
+      "seg_43_prd": 31,
+      "seg_43_fin": 21,
+      "seg_43_mkt": 28
     },
     "tolerance": {
       "pct": 2
@@ -2014,7 +2412,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 36,
+    "id": 44,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2081,7 +2479,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 37,
+    "id": 45,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2101,7 +2499,7 @@
       ],
       "rows": [
         {
-          "id": "q37_r1",
+          "id": "q45_r1",
           "values": [
             "Alice",
             "162",
@@ -2109,7 +2507,7 @@
           ]
         },
         {
-          "id": "q37_r2",
+          "id": "q45_r2",
           "values": [
             "Binta",
             "153",
@@ -2117,7 +2515,7 @@
           ]
         },
         {
-          "id": "q37_r3",
+          "id": "q45_r3",
           "values": [
             "Chidi",
             "244",
@@ -2125,7 +2523,7 @@
           ]
         },
         {
-          "id": "q37_r4",
+          "id": "q45_r4",
           "values": [
             "Daniel",
             "549",
@@ -2147,15 +2545,15 @@
       ]
     },
     "correct_answer": {
-      "q37_r1": "incorrect",
-      "q37_r2": "incorrect",
-      "q37_r3": "correct",
-      "q37_r4": "incorrect"
+      "q45_r1": "incorrect",
+      "q45_r2": "incorrect",
+      "q45_r3": "correct",
+      "q45_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 38,
+    "id": 46,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2171,25 +2569,25 @@
       "total_value": 540,
       "segments": [
         {
-          "id": "seg_38_eng",
+          "id": "seg_46_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 20
         },
         {
-          "id": "seg_38_prd",
+          "id": "seg_46_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 26
         },
         {
-          "id": "seg_38_fin",
+          "id": "seg_46_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 40
         },
         {
-          "id": "seg_38_mkt",
+          "id": "seg_46_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 14
@@ -2197,10 +2595,10 @@
       ]
     },
     "correct_answer": {
-      "seg_38_eng": 22,
-      "seg_38_prd": 27,
-      "seg_38_fin": 31,
-      "seg_38_mkt": 20
+      "seg_46_eng": 22,
+      "seg_46_prd": 27,
+      "seg_46_fin": 31,
+      "seg_46_mkt": 20
     },
     "tolerance": {
       "pct": 2
@@ -2208,7 +2606,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 39,
+    "id": 47,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2275,7 +2673,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 40,
+    "id": 48,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2294,7 +2692,7 @@
       ],
       "rows": [
         {
-          "id": "q40_r1",
+          "id": "q48_r1",
           "values": [
             "Alice",
             "525",
@@ -2302,7 +2700,7 @@
           ]
         },
         {
-          "id": "q40_r2",
+          "id": "q48_r2",
           "values": [
             "Binta",
             "409",
@@ -2310,7 +2708,7 @@
           ]
         },
         {
-          "id": "q40_r3",
+          "id": "q48_r3",
           "values": [
             "Chidi",
             "249",
@@ -2318,7 +2716,7 @@
           ]
         },
         {
-          "id": "q40_r4",
+          "id": "q48_r4",
           "values": [
             "Daniel",
             "212",
@@ -2340,15 +2738,15 @@
       ]
     },
     "correct_answer": {
-      "q40_r1": "correct",
-      "q40_r2": "correct",
-      "q40_r3": "correct",
-      "q40_r4": "incorrect"
+      "q48_r1": "correct",
+      "q48_r2": "correct",
+      "q48_r3": "correct",
+      "q48_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 41,
+    "id": 49,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2364,25 +2762,25 @@
       "total_value": 540,
       "segments": [
         {
-          "id": "seg_41_eng",
+          "id": "seg_49_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 35
         },
         {
-          "id": "seg_41_prd",
+          "id": "seg_49_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 21
         },
         {
-          "id": "seg_41_fin",
+          "id": "seg_49_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 19
         },
         {
-          "id": "seg_41_mkt",
+          "id": "seg_49_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 25
@@ -2390,10 +2788,10 @@
       ]
     },
     "correct_answer": {
-      "seg_41_eng": 31,
-      "seg_41_prd": 18,
-      "seg_41_fin": 30,
-      "seg_41_mkt": 21
+      "seg_49_eng": 31,
+      "seg_49_prd": 18,
+      "seg_49_fin": 30,
+      "seg_49_mkt": 21
     },
     "tolerance": {
       "pct": 2
@@ -2401,7 +2799,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 42,
+    "id": 50,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2466,520 +2864,5 @@
       }
     },
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 43,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-250 miles: $0.11/mile",
-      "251-500 miles: $0.10/mile",
-      "501+ miles: $0.05/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q43_r1",
-          "values": [
-            "Alice",
-            "590",
-            "$52.75"
-          ]
-        },
-        {
-          "id": "q43_r2",
-          "values": [
-            "Binta",
-            "287",
-            "$37.70"
-          ]
-        },
-        {
-          "id": "q43_r3",
-          "values": [
-            "Chidi",
-            "723",
-            "$63.65"
-          ]
-        },
-        {
-          "id": "q43_r4",
-          "values": [
-            "Daniel",
-            "608",
-            "$66.65"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q43_r1": "incorrect",
-      "q43_r2": "incorrect",
-      "q43_r3": "correct",
-      "q43_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 44,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Product + 3 x Finance + Engineering = 167%",
-      "Product + Marketing + 2 x Finance = 99%",
-      "3 x Engineering + Product + 2 x Marketing = 147%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_44_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 20
-        },
-        {
-          "id": "seg_44_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 30
-        },
-        {
-          "id": "seg_44_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 34
-        },
-        {
-          "id": "seg_44_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 16
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_44_eng": 30,
-      "seg_44_prd": 25,
-      "seg_44_fin": 29,
-      "seg_44_mkt": 16
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 45,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 240 total (96 smartphones / 144 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 40",
-      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
-      "Year 3 non-smartphones dropped by 15% vs Year 1",
-      "Year 3 smartphones increased by 25% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 300,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 240,
-        "split_pct": 40
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 250,
-          "split_pct": 44
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 224,
-          "split_pct": 58
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 260,
-        "split_pct": 52
-      },
-      "year3": {
-        "total": 242,
-        "split_pct": 50
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 46,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-250 miles: $0.11/mile",
-      "251-500 miles: $0.10/mile",
-      "501+ miles: $0.05/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q46_r1",
-          "values": [
-            "Alice",
-            "171",
-            "$18.81"
-          ]
-        },
-        {
-          "id": "q46_r2",
-          "values": [
-            "Binta",
-            "773",
-            "$66.15"
-          ]
-        },
-        {
-          "id": "q46_r3",
-          "values": [
-            "Chidi",
-            "409",
-            "$43.40"
-          ]
-        },
-        {
-          "id": "q46_r4",
-          "values": [
-            "Daniel",
-            "338",
-            "$36.30"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q46_r1": "correct",
-      "q46_r2": "correct",
-      "q46_r3": "correct",
-      "q46_r4": "correct"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 47,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Finance + 2 x Marketing + 3 x Product = 185%",
-      "2 x Engineering + 2 x Marketing = 92%",
-      "3 x Product + 3 x Engineering + 2 x Marketing + 2 x Finance = 242%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_47_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 17
-        },
-        {
-          "id": "seg_47_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 32
-        },
-        {
-          "id": "seg_47_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 28
-        },
-        {
-          "id": "seg_47_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 23
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_47_eng": 19,
-      "seg_47_prd": 23,
-      "seg_47_fin": 31,
-      "seg_47_mkt": 27
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
-  },
-  {
-    "id": 48,
-    "type": "interactive_stacked_bar",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Use Year 1 as the historical baseline, then build Year 2 and Year 3.",
-    "question": "Adjust Year 2 and Year 3 bars to satisfy all historical rules.",
-    "prompt_rules": [
-      "Year 1 baseline: 240 total (72 smartphones / 168 non-smartphones)",
-      "Year 2 smartphones = Year 1 smartphones + 50",
-      "Year 2 non-smartphones = Year 1 non-smartphones - 20",
-      "Year 3 non-smartphones dropped by 20% vs Year 1",
-      "Year 3 smartphones increased by 35% vs Year 1"
-    ],
-    "widget_data": {
-      "axis_max": 350,
-      "segment_labels": {
-        "primary": "Smartphones",
-        "secondary": "Non-smartphones"
-      },
-      "reference_bar": {
-        "id": "year1",
-        "label": "Year 1",
-        "total": 240,
-        "split_pct": 30
-      },
-      "interactive_bars": [
-        {
-          "id": "year2",
-          "label": "Year 2",
-          "total": 252,
-          "split_pct": 37
-        },
-        {
-          "id": "year3",
-          "label": "Year 3",
-          "total": 221,
-          "split_pct": 38
-        }
-      ]
-    },
-    "correct_answer": {
-      "year2": {
-        "total": 270,
-        "split_pct": 45
-      },
-      "year3": {
-        "total": 231,
-        "split_pct": 42
-      }
-    },
-    "tolerance": {
-      "total": 5,
-      "split_pct": 2,
-      "bars": {
-        "year2": {
-          "total": 5,
-          "split_pct": 2
-        },
-        "year3": {
-          "total": 5,
-          "split_pct": 2
-        }
-      }
-    },
-    "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 49,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-250 miles: $0.11/mile",
-      "251-500 miles: $0.10/mile",
-      "501+ miles: $0.05/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q49_r1",
-          "values": [
-            "Alice",
-            "363",
-            "$45.30"
-          ]
-        },
-        {
-          "id": "q49_r2",
-          "values": [
-            "Binta",
-            "555",
-            "$55.25"
-          ]
-        },
-        {
-          "id": "q49_r3",
-          "values": [
-            "Chidi",
-            "269",
-            "$20.65"
-          ]
-        },
-        {
-          "id": "q49_r4",
-          "values": [
-            "Daniel",
-            "499",
-            "$52.40"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q49_r1": "incorrect",
-      "q49_r2": "correct",
-      "q49_r3": "incorrect",
-      "q49_r4": "correct"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
-  },
-  {
-    "id": 50,
-    "type": "interactive_pie_chart",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Approximate the pie slices that satisfy all equation constraints.",
-    "question": "Resize each budget slice to satisfy the system of equations.",
-    "prompt_rules": [
-      "2 x Finance + Product + 2 x Engineering + Marketing = 153%",
-      "Finance + Product = 43%",
-      "Product + 2 x Engineering + Finance + 2 x Marketing = 157%",
-      "Engineering + Product + Finance + Marketing = 100%"
-    ],
-    "widget_data": {
-      "total_value": 480,
-      "segments": [
-        {
-          "id": "seg_50_eng",
-          "label": "Engineering",
-          "color": "blue",
-          "initial_pct": 30
-        },
-        {
-          "id": "seg_50_prd",
-          "label": "Product",
-          "color": "green",
-          "initial_pct": 18
-        },
-        {
-          "id": "seg_50_fin",
-          "label": "Finance",
-          "color": "orange",
-          "initial_pct": 19
-        },
-        {
-          "id": "seg_50_mkt",
-          "label": "Marketing",
-          "color": "purple",
-          "initial_pct": 33
-        }
-      ]
-    },
-    "correct_answer": {
-      "seg_50_eng": 32,
-      "seg_50_prd": 22,
-      "seg_50_fin": 21,
-      "seg_50_mkt": 25
-    },
-    "tolerance": {
-      "pct": 2
-    },
-    "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   }
 ]

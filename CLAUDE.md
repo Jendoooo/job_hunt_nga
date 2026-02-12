@@ -36,6 +36,8 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - `src/components/interactive/SHLDragTableWidget.jsx`
   - `src/components/interactive/SHLResizablePieWidget.jsx`
   - `src/components/interactive/SHLAdjustableBarWidget.jsx`
+- Render safety:
+  - `src/components/RenderErrorBoundary.jsx` used in NLNG Interactive flow to prevent blank-screen dead ends on widget render faults
 
 ## Data Modules
 - `src/data/aptitude-questions.json`
@@ -54,7 +56,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Swift Analysis Aptitude: Active (exam + practice, custom questions/time)
   - Process Technical Assessment: Active (exam + practice)
 - NLNG:
-  - SHL Deductive Reasoning: Active (exam + practice, custom questions/time)
+  - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
   - SHL Interactive Numerical: Active (exam + practice; drag-table, pie, stacked-bar)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
@@ -68,6 +70,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Interactive stacked-bar widget supports both legacy two-bar tasks and multi-target historical tasks.
 - Interactive stacked-bar drag updates are throttled with `requestAnimationFrame` for smoother pointer handling.
 - NLNG Interactive setup includes a difficulty selector (`easy` / `medium` / `hard`) that filters question pool.
+- NLNG Interactive flow includes explicit session guards + render boundary fallback to avoid blank stage rendering.
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.
 - Dashboard surfaces runtime errors for attempt loading and AI generation.
