@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { supabase } from '../lib/supabase'
 import { generateQuestions } from '../services/deepseek'
+import { readAttemptOutbox, removeAttemptOutbox } from '../utils/attemptOutbox'
 import {
     Target,
     LogOut,
@@ -124,6 +125,74 @@ export default function Dashboard() {
     const [passRate, setPassRate] = useState(null)
     const [averageScore, setAverageScore] = useState(null)
     const [practiceSessions, setPracticeSessions] = useState(0)
+    const [pendingSyncCount, setPendingSyncCount] = useState(0)
+
+    const flushAttemptOutbox = useCallback(async (signal) => {
+        if (!user) return
+
+        const pending = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
+        if (pending.length === 0) {
+            setPendingSyncCount(0)
+            return
+        }
+
+        setPendingSyncCount(pending.length)
+
+        for (const item of pending) {
+            if (signal?.aborted) return
+            const payload = item?.payload
+            const attemptId = payload?.id
+            if (!attemptId) {
+                removeAttemptOutbox(item?.id)
+                continue
+            }
+
+            try {
+                let existsQuery = supabase
+                    .from('test_attempts')
+                    .select('id')
+                    .eq('id', attemptId)
+                    .maybeSingle()
+
+                if (signal) existsQuery = existsQuery.abortSignal(signal)
+                const { data: existing, error: existsError } = await existsQuery
+                if (existsError && !isAbortLikeError(existsError)) {
+                    throw existsError
+                }
+
+                if (existing?.id) {
+                    removeAttemptOutbox(attemptId)
+                    continue
+                }
+
+                let insertQuery = supabase
+                    .from('test_attempts')
+                    .insert(payload)
+
+                if (signal) insertQuery = insertQuery.abortSignal(signal)
+                const { error: insertError } = await insertQuery
+
+                if (insertError) {
+                    const message = String(insertError?.message || '')
+                    if (message.toLowerCase().includes('duplicate')) {
+                        removeAttemptOutbox(attemptId)
+                        continue
+                    }
+                    throw insertError
+                }
+
+                removeAttemptOutbox(attemptId)
+                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
+            } catch (error) {
+                if (isAbortLikeError(error) || signal?.aborted) return
+                // Keep item in outbox; we'll try again on next refresh/focus.
+                console.warn('Outbox sync failed (will retry):', error)
+            }
+        }
+
+        const remaining = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
+        setPendingSyncCount(remaining.length)
+    }, [user])
 
     const fetchRecentAttempts = useCallback(async (signal) => {
         if (!user) return
@@ -141,7 +210,7 @@ export default function Dashboard() {
                 query = query.abortSignal(signal)
             }
 
-            const { data, error } = await withTimeout(query, 8000, 'Stats fetch timed out after 8s')
+            const { data, error } = await withTimeout(query, 20000, 'Stats fetch timed out after 20s')
 
             if (error) throw error
             const attempts = dedupeAttempts(data || [])
@@ -165,6 +234,7 @@ export default function Dashboard() {
                 return
             }
             if (err?.message?.includes('timed out')) {
+                setAttemptsError('Supabase is taking too long to respond. Please wait a moment and refresh.')
                 return
             }
             console.error('Error fetching attempts:', err)
@@ -185,6 +255,7 @@ export default function Dashboard() {
                 activeController.abort()
             }
             activeController = new AbortController()
+            flushAttemptOutbox(activeController.signal)
             fetchRecentAttempts(activeController.signal)
         }
 
@@ -210,7 +281,7 @@ export default function Dashboard() {
             window.removeEventListener('attempt-saved', handleAttemptSaved)
             window.removeEventListener('focus', handleWindowFocus)
         }
-    }, [fetchRecentAttempts, user])
+    }, [fetchRecentAttempts, flushAttemptOutbox, user])
 
     async function handleGenerateQuestions() {
         if (!aiTopic.trim()) return
@@ -425,6 +496,15 @@ export default function Dashboard() {
                         </article>
                     </div>
                 </section>
+
+                {pendingSyncCount > 0 && (
+                    <div className="dashboard-sync-banner">
+                        <CheckCircle2 size={16} />
+                        <span>
+                            {pendingSyncCount} result{pendingSyncCount === 1 ? '' : 's'} saved locally. Cloud sync will retry automatically.
+                        </span>
+                    </div>
+                )}
 
                 <div className="dashboard-grid">
                     <section className="dashboard-main">

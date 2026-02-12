@@ -3,6 +3,7 @@ import AIExplainer from './AIExplainer'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
 import { buildQuestionResults, isInteractiveQuestionType } from '../utils/questionScoring'
+import { enqueueAttemptOutbox } from '../utils/attemptOutbox'
 import {
     Trophy,
     Star,
@@ -19,7 +20,7 @@ import {
     Check,
 } from 'lucide-react'
 
-const SAVE_FAILSAFE_MS = 8000
+const SAVE_FAILSAFE_MS = 15000
 const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
 const RECENT_ATTEMPT_TTL_MS = 120000
 
@@ -114,6 +115,13 @@ function isLikelyDuplicateAttempt(latestAttempt, payload) {
     )
 }
 
+function createClientAttemptId() {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+        return crypto.randomUUID()
+    }
+    return `attempt_${Date.now()}_${Math.random().toString(16).slice(2)}`
+}
+
 export default function ScoreReport({
     questions,
     answers,
@@ -129,6 +137,7 @@ export default function ScoreReport({
     const { user } = useAuth()
     const isMountedRef = useRef(false)
     const autoSaveTriggeredRef = useRef(false)
+    const attemptIdRef = useRef(null)
     const [reviewMode, setReviewMode] = useState(false)
     const [currentReview, setCurrentReview] = useState(0)
     const [saved, setSaved] = useState(false)
@@ -158,7 +167,12 @@ export default function ScoreReport({
             setSaveError('')
         }
 
+        if (!attemptIdRef.current) {
+            attemptIdRef.current = createClientAttemptId()
+        }
+
         const payload = {
+            id: attemptIdRef.current,
             user_id: user.id,
             assessment_type: assessmentType,
             module_name: moduleName,
@@ -259,6 +273,7 @@ export default function ScoreReport({
                     setSavedLocally(true)
                     setSaveError('')
                 }
+                enqueueAttemptOutbox(payload)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return true
             }
@@ -272,8 +287,11 @@ export default function ScoreReport({
             console.error('Failed to save results:', err)
             if (isMountedRef.current) {
                 setSaveError(err?.message || 'Unable to save results right now.')
+                setSavedLocally(true)
             }
-            return false
+            enqueueAttemptOutbox(payload)
+            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
+            return true
         } finally {
             if (failsafeTimerId) {
                 clearTimeout(failsafeTimerId)
@@ -303,9 +321,9 @@ export default function ScoreReport({
         saveResults()
     }, [saveResults, user])
 
-    async function handleBackToDashboard() {
+    function handleBackToDashboard() {
         if (!saved && !savedLocally) {
-            await saveResults()
+            void saveResults()
         }
         onBackToDashboard()
     }
@@ -319,6 +337,241 @@ export default function ScoreReport({
     }
 
     const grade = getGrade()
+
+    function resolveChoiceLabel(id, options) {
+        if (!id) return '--'
+        const match = (options || []).find((option) => String(option?.id) === String(id))
+        return match?.label || String(id)
+    }
+
+    function renderInteractiveReview(questionResult, expectedAnswer) {
+        const actualAnswer = questionResult?.answer
+        const widgetData = questionResult?.widget_data || {}
+
+        if (questionResult.type === 'interactive_drag_table') {
+            const rows = Array.isArray(widgetData.rows) ? widgetData.rows : []
+            const draggables = Array.isArray(widgetData.draggables) ? widgetData.draggables : []
+            const labelById = draggables.reduce((acc, item) => {
+                acc[String(item.id)] = item.label
+                return acc
+            }, {})
+            const expectedMap = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : {}
+            const actualMap = actualAnswer && typeof actualAnswer === 'object' ? actualAnswer : {}
+
+            return (
+                <div className="score-review__interactive">
+                    <table className="score-review__interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Row</th>
+                                <th>Your Answer</th>
+                                <th>Expected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows.map((row) => {
+                                const rowId = row?.id
+                                const rowLabel = row?.label || row?.values?.[0] || rowId
+                                const your = labelById[String(actualMap?.[rowId])] || actualMap?.[rowId] || '--'
+                                const expected = labelById[String(expectedMap?.[rowId])] || expectedMap?.[rowId] || '--'
+                                const ok = String(actualMap?.[rowId] || '') === String(expectedMap?.[rowId] || '')
+                                return (
+                                    <tr key={rowId} className={ok ? 'score-review__interactive-row--ok' : ''}>
+                                        <td>{rowLabel}</td>
+                                        <td>{your}</td>
+                                        <td>{expected}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+        if (questionResult.type === 'interactive_pie_chart') {
+            const segments = Array.isArray(widgetData.segments) ? widgetData.segments : []
+            const expectedMap = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : {}
+            const actualMap = actualAnswer && typeof actualAnswer === 'object' ? actualAnswer : {}
+            const totalValue = Number(widgetData.total_value) || 0
+            const tolerance = questionResult?.tolerance?.pct ?? 2
+
+            return (
+                <div className="score-review__interactive">
+                    <table className="score-review__interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Segment</th>
+                                <th>Your %</th>
+                                <th>Expected %</th>
+                                <th>Your Value</th>
+                                <th>Expected Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {segments.map((segment) => {
+                                const id = segment?.id
+                                const label = segment?.label || id
+                                const yourPct = Number(actualMap?.[id])
+                                const expPct = Number(expectedMap?.[id])
+                                const ok = Number.isFinite(yourPct) && Number.isFinite(expPct)
+                                    ? Math.abs(yourPct - expPct) <= tolerance
+                                    : false
+                                const yourValue = Number.isFinite(yourPct) ? Math.round(totalValue * (yourPct / 100)) : null
+                                const expValue = Number.isFinite(expPct) ? Math.round(totalValue * (expPct / 100)) : null
+                                return (
+                                    <tr key={id} className={ok ? 'score-review__interactive-row--ok' : ''}>
+                                        <td>{label}</td>
+                                        <td>{Number.isFinite(yourPct) ? `${Math.round(yourPct)}%` : '--'}</td>
+                                        <td>{Number.isFinite(expPct) ? `${Math.round(expPct)}%` : '--'}</td>
+                                        <td>{yourValue ?? '--'}</td>
+                                        <td>{expValue ?? '--'}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+        if (questionResult.type === 'interactive_stacked_bar') {
+            const bars = Array.isArray(widgetData.interactive_bars) ? widgetData.interactive_bars : []
+            const expected = expectedAnswer || {}
+            const actual = actualAnswer || {}
+            const totalTolerance = questionResult?.tolerance?.total ?? 0
+            const splitTolerance = questionResult?.tolerance?.split_pct ?? 0
+            const primaryLabel = widgetData?.segment_labels?.primary || widgetData?.labels?.bottom || 'Primary'
+
+            const rows = bars.length > 0
+                ? bars.map((bar) => ({ id: bar.id, label: bar.label || bar.id }))
+                : Object.keys(expected || {}).map((key) => ({ id: key, label: key }))
+
+            return (
+                <div className="score-review__interactive">
+                    <table className="score-review__interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Bar</th>
+                                <th>Your Total</th>
+                                <th>Expected Total</th>
+                                <th>Your {primaryLabel}%</th>
+                                <th>Expected {primaryLabel}%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rows.map((row) => {
+                                const expBar = expected?.[row.id]
+                                const actBar = actual?.[row.id]
+                                const expTotal = Number(expBar?.total)
+                                const actTotal = Number(actBar?.total)
+                                const expSplit = Number(expBar?.split_pct)
+                                const actSplit = Number(actBar?.split_pct)
+                                const ok = Number.isFinite(expTotal) && Number.isFinite(actTotal) && Number.isFinite(expSplit) && Number.isFinite(actSplit)
+                                    ? (Math.abs(expTotal - actTotal) <= totalTolerance && Math.abs(expSplit - actSplit) <= splitTolerance)
+                                    : false
+
+                                return (
+                                    <tr key={row.id} className={ok ? 'score-review__interactive-row--ok' : ''}>
+                                        <td>{row.label}</td>
+                                        <td>{Number.isFinite(actTotal) ? Math.round(actTotal) : '--'}</td>
+                                        <td>{Number.isFinite(expTotal) ? Math.round(expTotal) : '--'}</td>
+                                        <td>{Number.isFinite(actSplit) ? `${Math.round(actSplit)}%` : '--'}</td>
+                                        <td>{Number.isFinite(expSplit) ? `${Math.round(expSplit)}%` : '--'}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+        if (questionResult.type === 'interactive_tabbed_evaluation') {
+            const tabs = Array.isArray(widgetData.tabs) ? widgetData.tabs : []
+            const options = Array.isArray(widgetData.options) ? widgetData.options : []
+            const expectedMap = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : {}
+            const actualMap = actualAnswer && typeof actualAnswer === 'object' ? actualAnswer : {}
+            const tabRows = tabs.length > 0
+                ? tabs.map((tab) => ({ id: tab.id, label: tab.label || tab.id }))
+                : Object.keys(expectedMap).map((id) => ({ id, label: id }))
+
+            return (
+                <div className="score-review__interactive">
+                    <table className="score-review__interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Tab</th>
+                                <th>Your Status</th>
+                                <th>Expected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tabRows.map((tab) => {
+                                const your = resolveChoiceLabel(actualMap?.[tab.id], options)
+                                const exp = resolveChoiceLabel(expectedMap?.[tab.id], options)
+                                const ok = String(actualMap?.[tab.id] || '') === String(expectedMap?.[tab.id] || '')
+                                return (
+                                    <tr key={tab.id} className={ok ? 'score-review__interactive-row--ok' : ''}>
+                                        <td>{tab.label}</td>
+                                        <td>{your}</td>
+                                        <td>{exp}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+        if (questionResult.type === 'interactive_point_graph') {
+            const labels = Array.isArray(widgetData.x_axis_labels) ? widgetData.x_axis_labels : []
+            const expectedValues = expectedAnswer && typeof expectedAnswer === 'object' && Array.isArray(expectedAnswer.values)
+                ? expectedAnswer.values
+                : (Array.isArray(expectedAnswer) ? expectedAnswer : [])
+            const actualValues = actualAnswer && typeof actualAnswer === 'object' && Array.isArray(actualAnswer.values)
+                ? actualAnswer.values
+                : (Array.isArray(actualAnswer) ? actualAnswer : [])
+            const tolerance = questionResult?.tolerance?.value ?? 1
+
+            return (
+                <div className="score-review__interactive">
+                    <table className="score-review__interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Your Value</th>
+                                <th>Expected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {labels.map((label, index) => {
+                                const act = Number(actualValues[index])
+                                const exp = Number(expectedValues[index])
+                                const ok = Number.isFinite(act) && Number.isFinite(exp)
+                                    ? Math.abs(act - exp) <= tolerance
+                                    : false
+                                return (
+                                    <tr key={label} className={ok ? 'score-review__interactive-row--ok' : ''}>
+                                        <td>{label}</td>
+                                        <td>{Number.isFinite(act) ? act.toLocaleString() : '--'}</td>
+                                        <td>{Number.isFinite(exp) ? exp.toLocaleString() : '--'}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+        return (
+            <div className="score-review__interactive">
+                <pre>{JSON.stringify(actualAnswer, null, 2)}</pre>
+            </div>
+        )
+    }
 
     if (reviewMode && incorrectAnswers.length > 0) {
         const q = incorrectAnswers[currentReview]
@@ -354,16 +607,7 @@ export default function ScoreReport({
                             ))}
                         </div>
                     ) : (
-                        <div className="score-review__interactive">
-                            <div>
-                                <h4>Your Response</h4>
-                                <pre>{JSON.stringify(q.answer, null, 2)}</pre>
-                            </div>
-                            <div>
-                                <h4>Expected Answer</h4>
-                                <pre>{JSON.stringify(expectedInteractiveAnswer, null, 2)}</pre>
-                            </div>
-                        </div>
+                        renderInteractiveReview(q, expectedInteractiveAnswer)
                     )}
 
                     {q.explanation && (

@@ -65,7 +65,7 @@ Date: 2026-02-12
 - [x] Add missing NLNG question ID 28
 - [ ] Complete full Sets 2-4 ingestion beyond current 30-question bank
 - [ ] Run and review `scripts/validate-shl.js` output before merging new sets
-- [x] Add SHL Interactive Numerical bank (`src/data/shl-interactive-questions.json`) with 50 generated items
+- [x] Add SHL Interactive Numerical bank (`src/data/shl-interactive-questions.json`) generated from gold standard (currently 62 items)
 - [x] Add generation script (`scripts/generate_shl_module.js`) and npm command (`generate:shl-interactive`)
 
 ## Phase 7: Interactive Numerical Module
@@ -141,6 +141,22 @@ Date: 2026-02-12
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 
+## Phase 10: SHL Interactive Upgrade + Production Bug Fixes (2026-02-12)
+- [x] **Fix** — `ScoreReport.jsx` SELECT query no longer uses inner 6s timeout (was causing "Timed out while checking latest saved result" on cold-start Supabase)
+- [x] **Fix** — `ScoreReport.jsx` now includes reference explanation in DeepSeek AI prompt context
+- [x] **Widget** — `SHLAdjustableBarWidget.jsx`: PLOT_LEFT 56→72 (Y-axis labels no longer clipped)
+- [x] **Widget** — `SHLResizablePieWidget.jsx`: updated to exact SHL colors (#007ab3 Blue, #63b209 Green, #f73c33 Red, #f68016 Orange)
+- [x] **Colors** — All SHL colors updated in `src/index.css` + prompt_rules bg `#1d2d35` (exact SHL dark)
+- [x] **Widget** — New `SHLTabbedEvalWidget.jsx`: tabbed per-person expense evaluation with Approved/Not Approved buttons
+- [x] **Widget** — New `SHLPointGraphWidget.jsx`: draggable SVG line graph with dollar-label Y-axis + RAF throttle
+- [x] **Routing** — `QuestionCard.jsx` routes `interactive_tabbed_evaluation` and `interactive_point_graph` to new widgets
+- [x] **Scoring** — `questionScoring.js` evaluates tabbed eval (all-tab equality) and point graph (per-value tolerance)
+- [x] **CSS** — New `.tabeval-*` and `.interactive-point-graph` / `.graph-point` classes added to `index.css`
+- [x] **Data** — `shl-gold-standard.json`: 56→63 questions; adds `pie_customer_contacts_real`, `tab_travel_meal_allowance_real`, `graph_stock_account_value_real`, 6 point graph variants, `tab_office_entertainment`
+- [x] **Data** — `shl-interactive-questions.json` regenerated: 63 questions across 5 types
+- [x] `npm run lint` passes
+- [x] `npm run build` passes
+
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
@@ -178,3 +194,28 @@ Date: 2026-02-12
 - [x] Verification:
   - [x] `npm run lint`
   - [x] `npm run build`
+
+## Phase 11: SHL Widget Fidelity + Supabase Outbox (2026-02-12)
+- [x] Stacked bar widget now matches SHL expectations:
+  - totals above each bar
+  - axis prefix/step support (e.g. `$160`, `$120`, ...)
+  - visible drag handles (square nodes) + rAF drag throttling
+  - improved bar spacing/width for 2-bar layouts
+  - legend mapping colors to segment labels (e.g. East/West)
+- [x] Pie widget now matches SHL expectations:
+  - full pie (no donut hole)
+  - draggable boundary handles
+  - min slice constraint (default 5%)
+  - optional SHL info cards + reset control
+- [x] Interactive numerical dataset now preserves richer gold-standard widget fields (`info_cards`, `min_pct`, axis settings)
+- [x] Convert 2-bar stacked-bar gold records into 2-bar interactive sessions (both bars adjustable) during generation
+- [x] Score review now renders interactive answers as readable tables (not raw JSON)
+- [x] Save reliability:
+  - outbox queue in localStorage for unsynced attempts
+  - dashboard auto-sync flush + visible pending-sync banner
+  - results screen never blocks navigation while saves are pending
+- [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
+
+## Phase 12: NLNG Deductive Draft Guard + Repo Hygiene (2026-02-12)
+- [x] NLNG deductive pool now excludes draft questions that are missing an answer key (`correctAnswer < 0`), so sessions only draw from valid questions.
+- [x] Expanded `.gitignore` to exclude local artifacts (`.claude/`, `image/`, `supabase/.temp/`, `src/index.css.bak`, etc.) to keep Git status clean.

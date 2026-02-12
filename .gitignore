@@ -29,3 +29,14 @@ dist-ssr
 .env.production
 
 .vercel
+
+# Local tooling artifacts
+.claude/
+supabase/.temp/
+supabase/schema-audit.sql
+image/
+dashboard.txt
+fix_delete.sql
+saville.html
+src/index.css.bak
+nul

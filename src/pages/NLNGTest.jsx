@@ -23,6 +23,15 @@ const REAL_SHL_TIME_MINUTES = 18
 const DEFAULT_QUESTION_COUNT = REAL_SHL_QUESTION_COUNT
 const DEFAULT_TIME_MINUTES = REAL_SHL_TIME_MINUTES
 
+function isValidDeductiveQuestion(question) {
+    const correctAnswer = question?.correctAnswer
+    const options = question?.options
+
+    if (!Number.isInteger(correctAnswer) || correctAnswer < 0) return false
+    if (!Array.isArray(options) || options.length < 2) return false
+    return correctAnswer < options.length
+}
+
 export default function NLNGTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
@@ -37,7 +46,9 @@ export default function NLNGTest() {
     const [timeTaken, setTimeTaken] = useState(0)
     const startTimeRef = useRef(null)
 
-    const availableQuestions = deductiveQuestions.filter((question) => question.subtest === 'deductive')
+    const allDeductiveQuestions = deductiveQuestions.filter((question) => question.subtest === 'deductive')
+    const availableQuestions = allDeductiveQuestions.filter(isValidDeductiveQuestion)
+    const excludedDraftCount = allDeductiveQuestions.length - availableQuestions.length
     const totalTimeSeconds = timeLimitMinutes * 60
     const isExamMode = mode === 'exam'
 
@@ -206,6 +217,7 @@ export default function NLNGTest() {
                                 {sessionPreset === 'real'
                                     ? `${questionCount} questions in ${timeLimitMinutes} minutes (SHL-style timed run).`
                                     : `${questionCount} questions${isExamMode ? ` in ${timeLimitMinutes} minutes.` : ' in untimed practice mode.'}`}
+                                {excludedDraftCount > 0 ? ` (${excludedDraftCount} draft questions excluded)` : ''}
                             </div>
                         </div>
 

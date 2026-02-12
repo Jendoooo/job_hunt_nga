@@ -7,8 +7,8 @@ const PLOT_BOTTOM = 236
 const PLOT_LEFT = 72
 const PLOT_RIGHT = 416
 const PLOT_HEIGHT = PLOT_BOTTOM - PLOT_TOP
-const BAR_WIDTH = 56
 const X_AXIS_LABEL_OFFSET = 40
+const TOTAL_LABEL_OFFSET = 10
 
 function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value))
@@ -19,9 +19,10 @@ function toNumber(value, fallback = 0) {
     return Number.isFinite(next) ? next : fallback
 }
 
-function valueToHeight(value, axisMax) {
-    if (axisMax <= 0) return 0
-    return (clamp(value, 0, axisMax) / axisMax) * PLOT_HEIGHT
+function valueToHeight(value, axisMin, axisMax) {
+    const range = axisMax - axisMin
+    if (range <= 0) return 0
+    return ((clamp(value, axisMin, axisMax) - axisMin) / range) * PLOT_HEIGHT
 }
 
 function normalizeBar(bar, fallbackLabel) {
@@ -35,8 +36,15 @@ function normalizeBar(bar, fallbackLabel) {
 
 function buildWidgetConfig(data, value) {
     const configuredAxisMax = toNumber(data?.axis_max, 100)
-    const primaryLabel = data?.segment_labels?.primary || 'Service'
-    const secondaryLabel = data?.segment_labels?.secondary || 'Product'
+    const configuredAxisMin = toNumber(data?.axis_min, 0)
+    const configuredAxisStep = toNumber(data?.axis_step, 0)
+    const axisPrefix = typeof data?.axis_prefix === 'string' ? data.axis_prefix : ''
+    const axisSuffix = typeof data?.axis_suffix === 'string' ? data.axis_suffix : ''
+    const totalPrefix = typeof data?.total_prefix === 'string' ? data.total_prefix : ''
+
+    const labelSource = data?.segment_labels || data?.labels || {}
+    const primaryLabel = labelSource?.primary || labelSource?.bottom || 'Service'
+    const secondaryLabel = labelSource?.secondary || labelSource?.top || 'Product'
 
     let referenceBars = []
     if (Array.isArray(data?.reference_bars) && data.reference_bars.length > 0) {
@@ -80,17 +88,25 @@ function buildWidgetConfig(data, value) {
 
     const bufferedAxisMax = Math.ceil(Math.max(baseMaxTotal, requestedMaxTotal) * 1.1)
     const axisMax = Math.max(10, configuredAxisMax, bufferedAxisMax)
+    const axisMin = Math.min(axisMax - 1, configuredAxisMin)
+    const axisRange = axisMax - axisMin
 
     const initialState = Object.entries(requestedState).reduce((accumulator, [barId, state]) => {
         accumulator[barId] = {
-            total: clamp(toNumber(state?.total, 0), 1, axisMax),
+            total: clamp(toNumber(state?.total, 0), axisMin, axisMax),
             split_pct: clamp(toNumber(state?.split_pct, 50), 0, 100),
         }
         return accumulator
     }, {})
 
     return {
+        axisMin,
         axisMax,
+        axisRange,
+        axisStep: configuredAxisStep > 0 ? configuredAxisStep : null,
+        axisPrefix,
+        axisSuffix,
+        totalPrefix,
         primaryLabel,
         secondaryLabel,
         referenceBars,
@@ -150,17 +166,23 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
             setBarState((previous) => {
                 const current = previous[dragMode.barId]
                 if (!current) return previous
+                const ratio = (PLOT_BOTTOM - chartY) / PLOT_HEIGHT
 
                 let nextEntry = current
                 if (dragMode.kind === 'total') {
                     nextEntry = {
                         ...current,
-                        total: clamp(Math.round(((PLOT_BOTTOM - chartY) / PLOT_HEIGHT) * config.axisMax), 1, config.axisMax),
+                        total: clamp(
+                            Math.round(config.axisMin + ratio * config.axisRange),
+                            config.axisMin,
+                            config.axisMax
+                        ),
                     }
                 }
 
                 if (dragMode.kind === 'split') {
-                    const primaryValue = clamp(((PLOT_BOTTOM - chartY) / PLOT_HEIGHT) * config.axisMax, 0, current.total)
+                    const valueAtPointer = config.axisMin + ratio * config.axisRange
+                    const primaryValue = clamp(valueAtPointer, config.axisMin, current.total)
                     const nextSplit = current.total > 0
                         ? clamp(Math.round((primaryValue / current.total) * 100), 0, 100)
                         : 0
@@ -222,7 +244,7 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
             window.removeEventListener('pointermove', onPointerMove)
             window.removeEventListener('pointerup', onPointerUp)
         }
-    }, [config.axisMax, disabled, dragMode, emitAnswer])
+    }, [config.axisMax, config.axisMin, config.axisRange, disabled, dragMode, emitAnswer])
 
     const allBars = useMemo(() => {
         const references = config.referenceBars.map((bar) => ({
@@ -243,20 +265,22 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
     const chartBars = useMemo(() => {
         const count = Math.max(allBars.length, 1)
         const span = PLOT_RIGHT - PLOT_LEFT
-        const step = count === 1 ? 0 : span / (count - 1)
+        const slotWidth = count === 0 ? span : span / count
+        const barWidthBase = clamp(Math.round(slotWidth * 0.6), 46, 86)
+        const barWidth = Math.min(barWidthBase, Math.max(24, Math.round(slotWidth - 18)))
 
         return allBars.map((bar, index) => {
-            const centerX = PLOT_LEFT + (step * index)
-            const x = centerX - BAR_WIDTH / 2
-            const total = clamp(toNumber(bar.total, 0), 0, config.axisMax)
+            const centerX = PLOT_LEFT + (slotWidth * (index + 0.5))
+            const x = centerX - barWidth / 2
+            const total = clamp(toNumber(bar.total, 0), config.axisMin, config.axisMax)
             const splitPct = clamp(toNumber(bar.split_pct, 50), 0, 100)
 
             const primaryValue = (total * splitPct) / 100
             const secondaryValue = total - primaryValue
 
-            const totalHeight = valueToHeight(total, config.axisMax)
-            const primaryHeight = valueToHeight(primaryValue, config.axisMax)
-            const secondaryHeight = valueToHeight(secondaryValue, config.axisMax)
+            const totalHeight = valueToHeight(total, config.axisMin, config.axisMax)
+            const primaryHeight = valueToHeight(primaryValue, config.axisMin, config.axisMax)
+            const secondaryHeight = valueToHeight(secondaryValue, config.axisMin, config.axisMax)
 
             const topY = PLOT_BOTTOM - totalHeight
             const splitY = PLOT_BOTTOM - primaryHeight
@@ -265,6 +289,7 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                 ...bar,
                 centerX,
                 x,
+                barWidth,
                 total,
                 splitPct,
                 primaryValue,
@@ -276,11 +301,37 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                 splitY,
             }
         })
-    }, [allBars, config.axisMax])
+    }, [allBars, config.axisMax, config.axisMin])
 
     const activeBar = dragMode
         ? chartBars.find((bar) => bar.id === dragMode.barId)
         : null
+
+    const axisTicks = useMemo(() => {
+        const ticks = []
+
+        if (config.axisStep && config.axisStep > 0) {
+            for (let v = config.axisMin; v <= config.axisMax; v += config.axisStep) {
+                ticks.push(v)
+            }
+            if (ticks[ticks.length - 1] !== config.axisMax) {
+                ticks.push(config.axisMax)
+            }
+            return ticks
+        }
+
+        // Default: 5 ticks including min/max.
+        const steps = 4
+        for (let i = 0; i <= steps; i += 1) {
+            ticks.push(Math.round(config.axisMin + (config.axisRange * i) / steps))
+        }
+        return ticks
+    }, [config.axisMax, config.axisMin, config.axisRange, config.axisStep])
+
+    function formatAxisValue(valueLabel) {
+        const numberLabel = Number(valueLabel).toLocaleString()
+        return `${config.axisPrefix}${numberLabel}${config.axisSuffix}`
+    }
 
     return (
         <section className="interactive-widget interactive-widget--bar">
@@ -288,30 +339,33 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                 <line x1={PLOT_LEFT} y1={PLOT_TOP} x2={PLOT_LEFT} y2={PLOT_BOTTOM} className="interactive-axis" />
                 <line x1={PLOT_LEFT} y1={PLOT_BOTTOM} x2={PLOT_RIGHT} y2={PLOT_BOTTOM} className="interactive-axis" />
 
-                {[0, 0.25, 0.5, 0.75, 1].map((fraction) => {
-                    const y = PLOT_BOTTOM - (PLOT_HEIGHT * fraction)
-                    const valueLabel = Math.round(config.axisMax * fraction)
+                {axisTicks.map((tickValue) => {
+                    const tickHeight = valueToHeight(tickValue, config.axisMin, config.axisMax)
+                    const y = PLOT_BOTTOM - tickHeight
                     return (
-                        <g key={fraction}>
+                        <g key={tickValue}>
                             <line x1={PLOT_LEFT} y1={y} x2={PLOT_RIGHT} y2={y} className="interactive-grid-line" />
-                            <text x={PLOT_LEFT - 8} y={y + 4} className="interactive-axis-label">{valueLabel}</text>
+                            <text x={PLOT_LEFT - 8} y={y + 4} className="interactive-axis-label">{formatAxisValue(tickValue)}</text>
                         </g>
                     )
                 })}
 
                 {chartBars.map((bar) => (
                     <g key={bar.id}>
+                        <text x={bar.centerX} y={bar.topY - TOTAL_LABEL_OFFSET} className="interactive-bar-total">
+                            {config.totalPrefix}{Math.round(bar.total).toLocaleString()}
+                        </text>
                         <rect
                             x={bar.x}
                             y={PLOT_BOTTOM - bar.primaryHeight}
-                            width={BAR_WIDTH}
+                            width={bar.barWidth}
                             height={bar.primaryHeight}
                             className={`interactive-segment interactive-segment--service ${bar.interactive ? 'interactive-segment--interactive' : ''}`}
                         />
                         <rect
                             x={bar.x}
                             y={bar.topY}
-                            width={BAR_WIDTH}
+                            width={bar.barWidth}
                             height={bar.secondaryHeight}
                             className={`interactive-segment interactive-segment--product ${bar.interactive ? 'interactive-segment--interactive' : ''}`}
                         />
@@ -338,17 +392,19 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
 
                         {bar.interactive && (
                             <>
-                                <circle
-                                    cx={bar.centerX}
-                                    cy={bar.topY}
-                                    r="20"
+                                <rect
+                                    x={bar.centerX - 7}
+                                    y={bar.topY - 7}
+                                    width="14"
+                                    height="14"
                                     className={`interactive-handle ${dragMode?.barId === bar.id && dragMode.kind === 'total' ? 'interactive-handle--active' : ''}`}
                                     onPointerDown={() => !disabled && setDragMode({ barId: bar.id, kind: 'total' })}
                                 />
-                                <circle
-                                    cx={bar.centerX}
-                                    cy={bar.splitY}
-                                    r="20"
+                                <rect
+                                    x={bar.centerX - 7}
+                                    y={bar.splitY - 7}
+                                    width="14"
+                                    height="14"
                                     className={`interactive-handle ${dragMode?.barId === bar.id && dragMode.kind === 'split' ? 'interactive-handle--active' : ''}`}
                                     onPointerDown={() => !disabled && setDragMode({ barId: bar.id, kind: 'split' })}
                                 />
@@ -364,12 +420,22 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                         className="interactive-tooltip-text"
                     >
                         {dragMode.kind === 'total'
-                            ? `Total: ${Math.round(activeBar.total)}`
+                            ? `Total: ${formatAxisValue(Math.round(activeBar.total))}`
                             : `${config.primaryLabel}: ${Math.round(activeBar.splitPct)}%`}
                     </text>
                 )}
             </svg>
 
+            <div className="interactive-bar-legend" aria-hidden="true">
+                <div className="interactive-bar-legend__item">
+                    <span className="interactive-bar-legend__swatch interactive-bar-legend__swatch--primary" />
+                    <span>{config.primaryLabel}</span>
+                </div>
+                <div className="interactive-bar-legend__item">
+                    <span className="interactive-bar-legend__swatch interactive-bar-legend__swatch--secondary" />
+                    <span>{config.secondaryLabel}</span>
+                </div>
+            </div>
         </section>
     )
 }

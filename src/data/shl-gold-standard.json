@@ -1784,30 +1784,33 @@
     "widget_data": {
       "axis_max": 160,
       "axis_step": 40,
-      "labels": {
-        "bottom": "West",
-        "top": "East"
-      },
       "bar_1": {
         "label": "Quarter 1",
         "total": 120,
-        "split_pct": 35
+        "split_pct": 65,
+        "id": "q1"
       },
       "bar_2_initial": {
         "label": "Quarter 2",
         "total": 120,
-        "split_pct": 50
+        "split_pct": 50,
+        "id": "q2"
+      },
+      "axis_prefix": "$",
+      "segment_labels": {
+        "primary": "East",
+        "secondary": "West"
       }
     },
     "correct_answer": {
       "total": 110,
-      "split_pct": 80
+      "split_pct": 20
     },
     "tolerance": {
       "total": 5,
       "split_pct": 2
     },
-    "explanation": "Q2 total = 120 - 10 = $110m. West grew from $42m to $42m + $46m = $88m. East = $110m - $88m = $22m. West share = 88/110 ~= 80%."
+    "explanation": "Q2 total = 120 - 10 = $110m. Q1 West = 120 - 78 = $42m. Q2 West = 42 + 46 = $88m. Q2 East = 110 - 88 = $22m, so East share = 22/110 = 20%."
   },
   {
     "id": "tab_travel_meal_allowance_real",
@@ -1929,7 +1932,7 @@
     "question": "Drag each weekday point to the correct account value.",
     "prompt_rules": [
       "Cheryl invested $1,000 on Monday.",
-      "Each day after Monday, the account increases by 1% of the original value ($10).",
+      "Each day, the account increases by 1% of the original value ($10).",
       "On Wednesday, an administrative fee of $10 is charged."
     ],
     "widget_data": {
@@ -1956,17 +1959,17 @@
     },
     "correct_answer": {
       "values": [
-        1000,
-        1010,
         1010,
         1020,
-        1030
+        1020,
+        1030,
+        1040
       ]
     },
     "tolerance": {
       "value": 0
     },
-    "explanation": "Daily gain is fixed at $10. Wednesday applies +$10 growth and -$10 fee, so Wednesday remains $1,010."
+    "explanation": "Mon: 1000+10=1010. Tue: 1010+10=1020. Wed: 1020+10-10=1020 (admin fee). Thu: 1020+10=1030. Fri: 1030+10=1040."
   },
   {
     "id": "pie_customer_contacts_real",
@@ -2007,6 +2010,33 @@
           "label": "Social Media",
           "color": "orange",
           "initial_pct": 5
+        }
+      ],
+      "min_pct": 5,
+      "info_cards": [
+        {
+          "id": "phone",
+          "title": "Phone",
+          "subtitle": "250 Customers",
+          "color": "blue"
+        },
+        {
+          "id": "email",
+          "title": "Email",
+          "subtitle": "50% of Phone",
+          "color": "green"
+        },
+        {
+          "id": "webchat",
+          "title": "Webchat",
+          "subtitle": "4x Social Media",
+          "color": "red"
+        },
+        {
+          "id": "social_media",
+          "title": "Social Media",
+          "subtitle": "",
+          "color": "orange"
         }
       ]
     },
@@ -2051,7 +2081,9 @@
       "segment_labels": {
         "primary": "East",
         "secondary": "West"
-      }
+      },
+      "axis_prefix": "$",
+      "axis_step": 40
     },
     "correct_answer": {
       "total": 110,
@@ -3027,5 +3059,361 @@
       "sdr6_ola": "approved"
     },
     "explanation": "Allowed totals: Musa 260, Nneka 262, Ola 264."
+  },
+  {
+    "id": "graph_stock_02",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Start value: $1,200 on Monday.",
+      "Each day after Monday, the account increases by $12.",
+      "On Wednesday, an administrative fee of $12 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 1180,
+        "max": 1260,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        1200,
+        1236,
+        1212,
+        1224,
+        1212
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        1200,
+        1212,
+        1212,
+        1224,
+        1236
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Apply the daily change each day after Monday. On Wednesday, subtract the fee after adding the daily increase."
+  },
+  {
+    "id": "graph_stock_03",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Start value: $1,500 on Monday.",
+      "Each day after Monday, the account increases by $15.",
+      "On Thursday, an administrative fee of $20 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 1480,
+        "max": 1560,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        1500,
+        1545,
+        1515,
+        1530,
+        1515
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        1500,
+        1515,
+        1530,
+        1525,
+        1540
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Apply the daily change each day after Monday. On Thursday, subtract the fee after adding the daily increase."
+  },
+  {
+    "id": "graph_stock_04",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Start value: $2,000 on Monday.",
+      "Each day after Monday, the account increases by $20.",
+      "On Wednesday, an administrative fee of $10 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 1980,
+        "max": 2060,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        2000,
+        2060,
+        2020,
+        2040,
+        2020
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        2000,
+        2020,
+        2030,
+        2050,
+        2070
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Apply the daily change each day after Monday. On Wednesday, subtract the fee after adding the daily increase."
+  },
+  {
+    "id": "graph_stock_05",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Start value: $1,800 on Monday.",
+      "Each day after Monday, the account increases by $18.",
+      "On Thursday, an administrative fee of $18 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 1780,
+        "max": 1880,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        1800,
+        1854,
+        1818,
+        1836,
+        1818
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        1800,
+        1818,
+        1836,
+        1836,
+        1854
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Apply the daily change each day after Monday. On Thursday, subtract the fee after adding the daily increase."
+  },
+  {
+    "id": "graph_stock_06",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Start value: $1,000 on Monday.",
+      "Each day after Monday, the account increases by $10.",
+      "On Thursday, an administrative fee of $30 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 970,
+        "max": 1040,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        1000,
+        1030,
+        1010,
+        1020,
+        1010
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        1000,
+        1010,
+        1020,
+        1000,
+        1010
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Apply the daily change each day after Monday. On Thursday, subtract the fee after adding the daily increase."
+  },
+  {
+    "id": "graph_stock_07",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Drag each weekday point to the correct account value.",
+    "prompt_rules": [
+      "Start value: $2,500 on Monday.",
+      "Each day after Monday, the account increases by $25.",
+      "On Wednesday, an administrative fee of $50 is charged."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 2450,
+        "max": 2600,
+        "step": 10,
+        "label": "$"
+      },
+      "initial_values": [
+        2500,
+        2575,
+        2525,
+        2550,
+        2525
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        2500,
+        2525,
+        2500,
+        2525,
+        2550
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Apply the daily change each day after Monday. On Wednesday, subtract the fee after adding the daily increase."
+  },
+  {
+    "id": "tab_office_entertainment",
+    "subtype": "interactive_numerical",
+    "type": "interactive_tabbed_evaluation",
+    "difficulty": "hard",
+    "instruction": "Decide if the office entertainment expense claims should be approved.",
+    "question": "Review each employee's entertainment expense and approve or reject based on the policy limits.",
+    "prompt_rules": [
+      "Client Entertainment Limit: $75 per person, per event.",
+      "Internal Team Events Limit: $40 per person, per event.",
+      "Total combined expenses must not exceed $500 per quarter."
+    ],
+    "widget_data": {
+      "tabs": [
+        {
+          "id": "diana",
+          "label": "Diana",
+          "rows": [
+            {
+              "item": "Client Dinner",
+              "count": 4,
+              "cost": 284
+            },
+            {
+              "item": "Team Lunch",
+              "count": 6,
+              "cost": 228
+            },
+            {
+              "item": "Total",
+              "cost": 512
+            }
+          ]
+        },
+        {
+          "id": "evan",
+          "label": "Evan",
+          "rows": [
+            {
+              "item": "Client Drinks Reception",
+              "count": 3,
+              "cost": 198
+            },
+            {
+              "item": "Team Coffee Meeting",
+              "count": 5,
+              "cost": 187.5
+            },
+            {
+              "item": "Total",
+              "cost": 385.5
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "id": "approved",
+          "label": "Approved",
+          "color": "#63b209"
+        },
+        {
+          "id": "not_approved",
+          "label": "Not Approved",
+          "color": "#f73c33"
+        }
+      ]
+    },
+    "correct_answer": {
+      "diana": "not_approved",
+      "evan": "approved"
+    },
+    "explanation": "Diana: Total $512 exceeds the $500 quarterly limit — Not Approved. Evan: Total $385.50 is within the $500 limit — Approved."
   }
 ]

@@ -131,3 +131,62 @@ Return ONLY the JSON array, no other text.`
         throw error
     }
 }
+
+export async function explainInteractiveAttempt(questionResult) {
+    assertApiKey()
+
+    const type = String(questionResult?.type || 'interactive').trim()
+    const questionText = stripHtml(questionResult?.question || questionResult?.instruction || '')
+    const rules = Array.isArray(questionResult?.prompt_rules) ? questionResult.prompt_rules.map((r) => stripHtml(r)) : []
+    const widgetData = questionResult?.widget_data || {}
+    const expected = questionResult?.correct_answer || questionResult?.correctAnswer || {}
+    const actual = questionResult?.answer ?? questionResult?.userAnswer ?? {}
+    const cleanExplanation = stripHtml(questionResult?.explanation || '')
+
+    const prompt = `You are an SHL assessment tutor.
+
+We are reviewing an interactive numerical reasoning question.
+
+Type: ${type}
+Question: ${questionText}
+Rules/Information:
+${rules.length > 0 ? `- ${rules.join('\n- ')}` : '(none)'}
+
+Widget Data (JSON):
+${JSON.stringify(widgetData)}
+
+Expected Answer (JSON):
+${JSON.stringify(expected)}
+
+User Answer (JSON):
+${JSON.stringify(actual)}
+${cleanExplanation ? `\nReference Explanation:\n${cleanExplanation}` : ''}
+Given the above, provide:
+1) The fastest correct way to compute/derive the expected answer (step-by-step, but concise)
+2) Exactly where the user answer differs (be specific)
+3) A quick tip to avoid this mistake next time
+
+Return plain markdown. Do not output HTML.`
+
+    const response = await fetch(DEEPSEEK_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+        },
+        body: JSON.stringify({
+            model: 'deepseek-chat',
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.4,
+            max_tokens: 900,
+        }),
+    })
+
+    if (!response.ok) {
+        const body = await response.text()
+        throw new Error(`DeepSeek API error ${response.status}: ${body}`)
+    }
+
+    const data = await response.json()
+    return data.choices[0].message.content
+}

@@ -448,5 +448,485 @@
     ],
     "correctAnswer": 3,
     "explanation": "Option D identifies a serious flaw because if commuters from outside the city cannot access mass transit, the proposed fee cannot encourage them to switch, undermining the plan's core rationale. Options A, C, and E actually support the suggestion by making driving relatively more expensive. Option B is irrelevant, as even a 40% reduction in private vehicles could still meaningfully reduce congestion."
+  },
+  {
+    "id": 31,
+    "subtest": "deductive",
+    "context": "A call centre requires that agents take breaks no longer than 15 minutes. Additionally, call centre agents are only given 3 minutes to type notes after a call. If an agent is breaking these rules, the supervisor must make a note of it.\nCall Agent Monitoring System:\nAgent - Current Actvity - time on current activity (MM:SS)\nAmy - On a call - 10:01\nAndrew - On a call - 3:25\nBeth - On break - 14:59\nChloe - On a call - 9:23\nBenjamin - Typing call notes - 3:07\nChristopher - On break - 16:23\nDavid - On break - 15:58\nDaisy - On a call - 21:46\nEdward - On a call - 2:01\nEmily - Typing call notes - 4:43\nFrank - Typing call notes - 2:45\nFiona - On a call - 3:09\nGemma - Typing call notes - 14:23\nGeorge - On break - 15:58\nThe supervisor will need to write notes on how many people?",
+    "question": "Which statement must be true?",
+    "options": [
+      "3",
+      "4",
+      "6",
+      "8",
+      "12"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 32,
+    "subtest": "deductive",
+    "context": "Employee Reward Program\nA company offers a reward system in which prizes can be redeemed from the reward points that employees receive for good performance.\nPrize Points Needed:\nHeadphones: 650 | Radio: 2,000 | Telephone: 3,500 | DVD Player: 6,000\nCamera: 9,500 | Webcam: 11,000 | GPS Tracking System: 14,000\nMP3 Player: 19,000 | Video Camera: 24,000 | Television: 36,000\nIf an employee has 24,000 points, which statement is true?",
+    "question": "Which statement must be true?",
+    "options": [
+      "The employee can get the radio, camera, and GPS tracking system.",
+      "The employee can get the video camera and the headphones.",
+      "The employee can get the telephone and MP3 player.",
+      "The employee can get the MP3 player, DVD player, and the headphones.",
+      "The employee can get the television."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Option C -telephone and MP3 player sums up to 22,500"
+  },
+  {
+    "id": 33,
+    "subtest": "deductive",
+    "context": "Preventive Care Initiatives - Eligibility Form for U.S.-based Provider\nPrescription Number: 0654854-0654 | Medication: X\nDoctor's Name: Javier Lee | Patient's Name: Jessica Brown\nDosage per Tablet: 600 milligrams | Tablets per Bottle: 24\nRefills Remaining (Not including this bottle): 2\nDirections: Take one tablet by mouth 3 to 4 times daily as needed for pain.\nWarnings:\nMay cause drowsiness or dizziness.\nDo not take with aspirin or products containing aspirin.\nTake with plenty of liquids.\nMay be taken with meals.\nCONSULT YOUR PHYSICIAN IF YOU EXPERIENCE CONTINUED PAIN OR DISCOMFORT\nIf Jessica refills her prescription as many times as it is allowed, how many tablets will she have received altogether?",
+    "question": "Which statement must be true?",
+    "options": [
+      "24 tablets",
+      "36 tablets",
+      "72 tablets",
+      "80 tablets",
+      "600 tablets"
+    ],
+    "correctAnswer": -1,
+    "explanation": "24 times 3 is 72"
+  },
+  {
+    "id": 34,
+    "subtest": "deductive",
+    "context": "Electronic Database Information System\nWhenever contact is made with a customer, always begin with the customer general account information screen.\nAlways verify the customer's name, address, and telephone number. Any verification or changes made in the account information screen or any inquiries in the payment information screen must be coded and entered into the customer contact screen.\nThe code used to access the customer general account screen is 110.\nThe code used to access the customer contact screen is 115.\nThe code used to access the customer payment screen is 120.\nProcessing Codes:\nAccount Information Screen:\n210: Verify account name | 215: Verify account address | 220: Verify account telephone number\n310: Change of telephone number | 315: Change of address\nPayment Information Screen:\n410: Prior late payments | 415: Payment due in five days notice | 420: Payment overdue | 510: Account balance inquiry | 515: Account status\nWhat do the following codes mean: 110, 310, 120, 415?",
+    "question": "Which statement must be true?",
+    "options": [
+      "Entered account screen, changed telephone number, entered payment screen, payment due in five days' notice",
+      "Entered payment screen, payment due in five days' notice, entered telephone number",
+      "Entered change of address, entered payment screen, prior late payments",
+      "Entered account screen, changed telephone number, entered contact screen, payment due in five days' notice",
+      "Entered account screen, changed address, entered payment screen, payment due in five days' notice"
+    ],
+    "correctAnswer": 0,
+    "explanation": "The answer is Option A"
+  },
+  {
+    "id": 35,
+    "subtest": "deductive",
+    "context": "Client Response Priority Guide for a London-based Company For a London-based company, the priority level of how to respond to a customer issue is based on the client's yearly revenue and contract length.\nPriority Table: | Yearly Revenue | Contract Length | Priority Level | | :--- | :--- | :--- | | Less than £50,000 | Less than 1 year | 6 | | Less than £50,000 | 1 year or longer | 5 | | £50,001–£100,000 | Less than 1 year | 5 | | £50,001–£100,000 | 1 year or longer | 4 | | £100,001–£250,000 | Less than 1 year | 4 | | £100,001–£250,000 | 1 year or longer | 3 | | £250,001–£500,000 | Less than 1 year | 3 | | £250,001–£500,000 | 1 year or longer | 2 | | Greater than £500,000 | Less than 1 year | 2 | | Greater than £500,000 | 1 year or longer | 1 |",
+    "question": "Which is a priority level 4 client?",
+    "options": [
+      "A client that generates £252,000 in yearly revenue with an 18 month contract.",
+      "A client that generates £52,000 in yearly revenue with a 6 month contract.",
+      "A client that generates £225,000 in yearly revenue with a 2 year contract.",
+      "A client that generates £167,000 in yearly revenue with a 9 month contract.",
+      "A client that generates £1 million in yearly revenue with a 3 month contract."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 36,
+    "subtest": "deductive",
+    "context": "Lauren has more meetings than Logan.\nLogan has more meetings than Matthew.\nMaria has more meetings than Matthew.",
+    "question": "How does the number of meetings Lauren has compare to the number of meetings Maria has?",
+    "options": [
+      "Lauren has more meetings than Maria.",
+      "Maria has more meetings than Lauren.",
+      "Lauren and Maria have the same number of meetings.",
+      "Lauren has twice as many meetings as Maria.",
+      "The answer cannot be determined from the information given."
+    ],
+    "correctAnswer": 4,
+    "explanation": "Lauren > Logan > Matthew \\\\ Maria >> Matthew  Option E - Answer cannot be determined from the info given."
+  },
+  {
+    "id": 37,
+    "subtest": "deductive",
+    "context": "In the human resources department, all employees share an office with one other person.\nEveryone in the human resources department interviews applicants.\nThe person with whom Andrew shares an office writes computer programs.\nAndrew works in the human resources department.\nBrianna does not interview applicants.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Brianna shares an office with Andrew.",
+      "Brianna writes computer programs.",
+      "Andrew interviews applicants.",
+      "Brianna shares an office with someone who interviews applicants.",
+      "Brianna and Andrew work in the same department."
+    ],
+    "correctAnswer": 2,
+    "explanation": "Option C – Andrew interviews applicantss"
+  },
+  {
+    "id": 38,
+    "subtest": "deductive",
+    "context": "Lauren has 5 years of seniority over Logan.\nLauren has been with the company twice as long as Matthew.\nLauren had her 10-year service anniversary 4 years ago.\nMaria started with the company 2 years after Lauren.",
+    "question": "From most to least, who has seniority?",
+    "options": [
+      "Lauren, Logan, Matthew, Maria",
+      "Lauren, Logan, Maria, Matthew",
+      "Lauren, Maria, Matthew, Logan",
+      "Lauren, Maria, Logan, Matthew",
+      "Matthew, Maria, Lauren, Logan"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 39,
+    "subtest": "deductive",
+    "context": "A group of five students meets once a week to study. Next semester each student will be enrolled for the following courses. (Note: Specific table data is inferred from options as it is not fully visible in snippet, but logical deduction is required based on options).\nNathan is taking Algebra, English, Art, and Chemistry.\nOlivia is taking English, Biology, Chemistry, and Tennis.\nAshley is taking Orchestra, Weightlifting, Physics, Spanish, and English.\nOscar is taking Algebra, Weightlifting, Geometry, and English.\nAndrew is taking English, Biology, Tennis, History, and Geometry.",
+    "question": "Which statement must be true?",
+    "options": [
+      "No one shares all of their courses with at least one other person.",
+      "Three students are taking Geometry.",
+      "Nathan and Oscar share only one course.",
+      "No one is taking French.",
+      "Oscar is the only one taking Weightlifting."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 40,
+    "subtest": "deductive",
+    "context": "Plant A is in City C and Plant B is in City D.\nAshley works at Plant A and Plant B.\nBrandon only works at Plant B.\nBrandon works some night shifts.\nAshley worked last Wednesday.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Brandon worked in City C last week.",
+      "Some employees at Plant A work night shifts.",
+      "Ashley works in City C but Brandon does not.",
+      "Ashley does not work night shifts.",
+      "Ashley worked in City C last Wednesday."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 41,
+    "subtest": "deductive",
+    "context": "Retail Promotions Inquiry for London-based Customers\nRetailer Discount Starting Date: June 1\nRetailer Cash-Back Bonus Starting Date: June 1\nTable Terms: | | Terms for Retailer Discount | Terms for Retailer Cash-Back Bonus | | :--- | :--- | :--- | | Minimum required purchase | £200.00 | £100.00 | | Retail discount rate | 5% | 2.5% |",
+    "question": "What is the minimum required purchase for a Retailer Discount?",
+    "options": [
+      "100",
+      "102.5"
+    ],
+    "correctAnswer": -1,
+    "explanation": "200\n210\n300"
+  },
+  {
+    "id": 42,
+    "subtest": "deductive",
+    "context": "A manager needs to travel for business to cities G, H, I, J, K, L, M, N, and O. The following conditions apply:\nK and L cannot be visited in one trip.\nJ, M, and O cannot be visited in one trip.\nM and N cannot be visited in one trip.\nG and M cannot be visited in one trip.",
+    "question": "Which group of cities can all be visited in one trip?",
+    "options": [
+      "G, J, K, M",
+      "G, H, I, K",
+      "H, J, K, L",
+      "G, L, M, O",
+      "I, J, K, L"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 43,
+    "subtest": "deductive",
+    "context": "Oscar packed exactly four cartons.\nOlivia packed fewer cartons than Andrew did.\nAndrew packed half as many cartons as Brandon did.\nAndrew packed more cartons than Oscar.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Brandon packed fewer cartons than Olivia.",
+      "Brandon packed more cartons than Oscar.",
+      "Andrew packed exactly five cartons.",
+      "Olivia packed exactly five cartons.",
+      "Brandon packed exactly nine cartons."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 44,
+    "subtest": "deductive",
+    "context": "Six people, Olivia, Ashley, Andrew, Brianna, Brandon, and Cecilia, compete in a typing competition. The following conditions apply...",
+    "question": "If Olivia and Ashley finish first and fifth, respectively, which statement must be true?",
+    "options": [
+      "Andrew finishes second.",
+      "Cecilia does not finish first or last.",
+      "Andrew does not finish immediately behind either Olivia or Ashley.",
+      "Andrew finishes immediately ahead of Brianna.",
+      "Cecilia finishes third."
+    ],
+    "correctAnswer": -1,
+    "explanation": "Brianna finishes third.\nBrandon finishes third.\nBrandon finishes sixth."
+  },
+  {
+    "id": 45,
+    "subtest": "deductive",
+    "context": "Working for a U.S.-based company, Hayden successfully completed a sale worth $100,000 this morning, and Ian successfully completed a sale worth $25,000 this afternoon. Therefore, the two brought in exactly $125,000 worth of sales today.",
+    "question": "What is the assumption of the argument?",
+    "options": [
+      "Neither Hayden nor Ian made any other sales today.",
+      "The sales team consists of more than just Ian and Hayden.",
+      "Hayden is a better salesperson than Ian.",
+      "Sales to clients in the morning are worth more than those in the afternoon.",
+      "Ian is a better salesperson than Hayden."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 46,
+    "subtest": "deductive",
+    "context": "Shop A is cleaned every 7 days.\nShop B is cleaned more frequently than Shop A.\nShop C is cleaned every time Shop B is cleaned.\nShop D is cleaned less frequently than Shop B.\nShop L is cleaned less frequently than Shop D.",
+    "question": "Which statement cannot be true?",
+    "options": [
+      "Shop A is cleaned more frequently than Shop L.",
+      "Shop B is cleaned every 8 days.",
+      "Shop C is cleaned every 4 days.",
+      "Shop D is cleaned less frequently than is Shop A.",
+      "Shop B is cleaned more frequently than Shop L."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 47,
+    "subtest": "deductive",
+    "context": "At Airport A, each hangar contains two airplanes.\nEvery airplane at Airport A flies to City B.\nAirplane 45 shares a hangar with an airplane that flies to City C.\nAirplane 45 flies in and out of Airport A.\nAirplane 67 does not fly to City B.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Airplane 67 shares a hangar with an airplane that flies to City B.",
+      "Airplane 67 is in the same hangar as Airplane 45.",
+      "Airplane 67 shares a hangar with an airplane that flies to City C.",
+      "Airplane 45 and Airplane 67 are kept in the same airport.",
+      "Airplane 67 does not have a hangar at Airport A."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 48,
+    "subtest": "deductive",
+    "context": "A company's marketing department has done an analysis of factors contributing to customer loyalty. The table below displays the survey results for two separate surveys for what factors contribute to customers' repeat business and what areas customers believe need improvement.\nMarketing Survey Table: | Factor | Percent Indicating Factor as Main Reason for Repeat Business | Percent Indicating Factor as Area in Most Need of Improvement | | :--- | :--- | :--- | | Quality | 10% | 35% | | Price | 30% | 20% | | Service | 35% | 20% | | Technology | 15% | 20% | | Other | 10% | 5% |\n(Note: 220 clients responded to each survey.)",
+    "question": "How many clients reported both that price was the main factor influencing repeat business and that technology was the area most in need of improvement?",
+    "options": [
+      "99",
+      "110"
+    ],
+    "correctAnswer": -1,
+    "explanation": "120\n121\n132"
+  },
+  {
+    "id": 49,
+    "subtest": "deductive",
+    "context": "Plant A is in City C and Plant B is in City D.\nAshley works at Plant A and Plant B.\nBrandon only works at Plant B.\nBrandon works some night shifts.\nAshley worked last Wednesday.",
+    "question": "Which statement must be true?",
+    "options": [
+      "There are no night shifts at Plant A.",
+      "Some employees at Plant B work night shifts.",
+      "Ashley does not work night shifts.",
+      "Ashley worked in City C last Wednesday.",
+      "Ashley works in City D but Brandon does not."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 50,
+    "subtest": "deductive",
+    "context": "Office Calendar Dates that are underlined are paid holidays. Dates that are bold are paydays. Saturdays and Sundays are weekend days. All days except paid holidays and weekend days are workdays. Calendar visual indicates: 1st is Sunday. Bold dates (Paydays): 11, 25. Underlined dates (Holidays): 12, 19...",
+    "question": "What is the date of the first Friday after the first payday of the month?",
+    "options": [
+      "2",
+      "9"
+    ],
+    "correctAnswer": -1,
+    "explanation": "16\n23\n30"
+  },
+  {
+    "id": 51,
+    "subtest": "deductive",
+    "context": "Ethan is bilingual.\nFelicia is a human resources manager.\nEthan works in Felicia's department.\nGina works in the sales department.\nFive of the sales associates are bilingual.",
+    "question": "Which statement must be true?",
+    "options": [
+      "Gina is bilingual.",
+      "Ethan speaks Spanish.",
+      "Gina was hired before Ethan.",
+      "Ethan works in the human resource department.",
+      "Felicia is bilingual."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 52,
+    "subtest": "deductive",
+    "context": "Electronic Database Information System Always verify the customer's name, address, and telephone number. Any verification or changes made in the account information screen or any inquiries in the payment information screen must be coded and entered into the customer contact screen.\nAccount Screen: 110 | Contact Screen: 115 | Payment Screen: 120\nProcessing Codes Table: | Account Information Screen | Payment Information Screen | | :--- | :--- | | 210: Verify account name | 410: Prior late payments | | 215: Verify account address | 415: Payment due in five days notice | | 220: Verify account telephone number | 420: Payment overdue | | 310: Change of telephone number | 510: Account balance inquiry | | 315: Change of address | 515: Account status |",
+    "question": "What is the correct sequence of codes for inquiries about account balance and account status?",
+    "options": [
+      "210, 215, 220, 510, 515",
+      "220, 510, 515"
+    ],
+    "correctAnswer": -1,
+    "explanation": "215, 220, 120, 420, 510\n215, 220, 510, 515\n210, 215, 220, 420, 515"
+  },
+  {
+    "id": 53,
+    "subtest": "deductive",
+    "context": "A gift shop cashier at a European tourist attraction must make a note of certain types of sales in a special log book. The following purchases must be recorded in the log book: 3\nAll purchases over €200.\nAll purchases over €100, paid in cash.\nAll purchases paid with traveler's checks.",
+    "question": "Which purchase should be recorded?",
+    "options": [
+      "€35, paid with traveler's check.",
+      "€45, paid with debit card.",
+      "€100, paid in cash.",
+      "€190, paid with credit card.",
+      "€12, paid with a credit card."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 54,
+    "subtest": "deductive",
+    "context": "Coding Commercial Accounts: 14\nSilver Accounts: Account code 10.\nGold Accounts: Account code 20.\nPlatinum Accounts: Account code 30.\nCredit limit codes: 101-10, 101-25, 101-50.\nOverdraft fee codes: 201-25, 201-50, 201-75.\nInsurance codes: 301, 305, 310.\nNote: Codes are always listed first by account, then credit limit, overdraft fee, and insurance.",
+    "question": "Which of the following series of codes is incorrect? 15",
+    "options": [
+      "20, 305 (Inferred from table column headers, possibly incomplete option text)",
+      "10, 101-10, 201-75 16"
+    ],
+    "correctAnswer": -1,
+    "explanation": "10, 201-25 17\n101-50, 310 18\n30, 201-75 19\n(Note: The options provided in the source image are fragmented segments of codes rather than full sequences. The question asks to identify an incorrect series based on the order: Account -> Credit -> Overdraft -> Insurance.)"
+  },
+  {
+    "id": 55,
+    "subtest": "deductive",
+    "context": "Six people, Ethan, Frank, Gabriel, Erin, Felicia, and Gina, compete in a sales competition. The following conditions apply: 20\nGabriel does not finish immediately behind either Ethan or Frank.\nGabriel finishes immediately ahead of Erin. 21",
+    "question": "If Ethan and Frank finish first and fifth respectively, which statement must be true? 22",
+    "options": [
+      "Gina does not finish first or last. 23",
+      "Gabriel finishes second.",
+      "Gina finishes third. 24",
+      "Erin finishes third. 25",
+      "Felicia finishes third."
+    ],
+    "correctAnswer": -1,
+    "explanation": "Felicia finishes sixth."
+  },
+  {
+    "id": 56,
+    "subtest": "deductive",
+    "context": "A country has six seaports, E, F, G, H, I, and J, where ships only travel from... (Text cuts off, but diagram implies connections). Passengers can transfer to different ships at the ports. 26",
+    "question": "If port G is closed which trip is impossible? 27",
+    "options": [
+      "E to F 28",
+      "E to H",
+      "F to E",
+      "F to G",
+      "G to H"
+    ],
+    "correctAnswer": -1,
+    "explanation": "H to I\nH to F\nJ to E\nI to E\nJ to I\nJ to G\nJ to H"
+  },
+  {
+    "id": 57,
+    "subtest": "deductive",
+    "context": "Frank faxed eight contracts to clients in the morning, and four in the afternoon. Therefore, a total of exactly 12 contracts were faxed to clients today. 29",
+    "question": "Which statement strengthens the argument? 30",
+    "options": [
+      "No other person faxed contracts to clients today.",
+      "A minimum of 13 contracts must be faxed per day.",
+      "Frank faxes more contracts to clients than others.",
+      "More contracts are always faxed to clients in the morning than in the afternoon. 31",
+      "More contracts will be faxed to clients tomorrow. 32"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 58,
+    "subtest": "deductive",
+    "context": "Cargo weighing over 1000 kilograms is shipped on type A cargo planes.\nCargo weighing 500 to 999 kilograms is shipped on type B cargo planes.\nCargo weighing 500 to 999 kilograms often contains airplane engine parts.\nCrate C weighs 1175 kilograms.\nType A cargo planes are only flown on Mondays. 35",
+    "question": "Which statement must be true? 36",
+    "options": [
+      "Crate C should be shipped on a type B cargo plane. 37",
+      "Some airplane engine parts can be shipped on type B cargo planes. (Inferred from \"type A\" typo in source option \"type A cargo planes\" for engine parts).",
+      "Only crates weighing more than 1000 kilograms are shipped on Monday. 38",
+      "Only crates weighing more than 1000 kilograms contain engine parts. 39",
+      "Crate C contains airplane engine parts."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 59,
+    "subtest": "deductive",
+    "context": "To be eligible for the bonus, an employee must meet 75 percent or more of his/her goal, receive an evaluation of Good or Excellent, and all of his team members must meet at least 50 percent or more of their goals. 44\nData Table: 45454545\nTeam 1: Erin (74%, Good), Ethan (45%, Average), Felicia (81%, Excellent).\nTeam 2: Frank (59%, Poor), Gina (58%, Poor), Gabriel (77%, Good).\nTeam 3: Hannah (79%, Excellent), Hayden (76%, Average), Isabel (52%, Poor).",
+    "question": "Who is eligible for the bonus? 46",
+    "options": [
+      "Erin, Felicia, Gabriel, Hannah, Hayden.",
+      "Felicia, Gabriel, Hannah.",
+      "Felicia, Gabriel, Hayden.",
+      "Gabriel, Hannah, Hayden.",
+      "Gabriel, Hannah."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 60,
+    "subtest": "deductive",
+    "context": "Twelve documents are aligned on a shelf - four new employee manuals, three employee handbooks, two project binders, and three computer manuals. The following conditions apply: 47\nOne of the project binders is first.\nThe four new employee manuals are together. 48\nThe project binders are next to each other.\nThe employee handbooks are not next to each other. 49",
+    "question": "If a project binder is first and a new employee manual is 12th, which statement must be true? 50",
+    "options": [
+      "An employee handbook is third. 51",
+      "An employee handbook is eighth.",
+      "If an employee handbook is third, then a computer manual is seventh. 52",
+      "If an employee handbook is fourth, then a computer manual is fifth. 53",
+      "If a computer manual is fourth, then a computer manual is fifth. 54"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 61,
+    "subtest": "deductive",
+    "context": "Isabel, Jessica, Javier, and Ken are all attending a class beginning between 9 a.m. and 5 p.m. 55\nIsabel's class begins 4 hours later than Ken's class. 56\nJessica's class begins at noon.\nJavier's class begins after 1 p.m.",
+    "question": "Which statement must be true? (Source text partially obscured \"Which ... be the...\") 57",
+    "options": [
+      "Isabel's class begins at or before 1 pm. 58",
+      "Javier's class begins at 5 pm.",
+      "Jessica and Javier are attending the same class.",
+      "Ken's class begins at 8 am or earlier. 59",
+      "Jessica's class begins after Ken's class. 60"
+    ],
+    "correctAnswer": -1,
+    "explanation": "Jessica's class begins before Javier's."
+  },
+  {
+    "id": 62,
+    "subtest": "deductive",
+    "context": "A doctor's office is scheduling patients Olivia, Andrew, Ashley, Brandon, and Brianna for Monday through Friday, during the 9 a.m. to 10 a.m. appointment. The following conditions apply: 61\nBrianna gets the Monday appointment and Olivia the Friday appointment.\nBrandon has an appointment exactly 2 days after Ashley.",
+    "question": "Which statement cannot be true? 62",
+    "options": [
+      "Andrew's appointment is after Brandon's appointment. 63",
+      "Ashley's appointment is before Andrew's appointment.",
+      "Andrew's appointment is later than Brianna's appointment.",
+      "Ashley's appointment is the day immediately after Brianna's appointment.",
+      "Andrew's appointment is on Wednesday. 64"
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
+  },
+  {
+    "id": 63,
+    "subtest": "deductive",
+    "context": "Six people, Olivia, Ashley, Andrew, Brianna, Brandon, and Cecilia, compete in a typing competition. The following conditions apply: 65\nAndrew finishes second.\nCecilia does not finish first or last.\nAndrew does not finish immediately behind either Olivia or Ashley.\nAndrew finishes immediately ahead of Brianna. 66\nQuestion (Unnumbered - Logic: Dogs/Mammals)\n\nAll dogs are mammals.\nSome mammals are colorblind. 69\nWhich statement must be true? 70\nSome dogs are colorblind.\nSome dogs are not colorblind.\nAll dogs are colorblind.\nSome dogs may be colorblind.\nNo dogs are colorblind.\nQuestion (Unnumbered - Logic: Ethan/Felicia)\n\nEthan is bilingual.\nFelicia is a human resources manager.\nEthan works under Felicia. (Note: Set 1 had \"Ethan works in Felicia's department\").\nGina works in the sales department.\nFive of the sales associates are bilingual. 71",
+    "question": "Which statement must be true? 67",
+    "options": [
+      "Either Olivia or Ashley must finish sixth. 68",
+      "Olivia must finish fourth.",
+      "Ashley must finish fifth.",
+      "Cecilia finishes fifth.",
+      "Brandon finishes sixth."
+    ],
+    "correctAnswer": -1,
+    "explanation": ""
   }
 ]

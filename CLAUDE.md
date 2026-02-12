@@ -27,8 +27,10 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Displays save progress/error and emits `attempt-saved` browser event
   - Uses short-lived session fingerprint cache + latest-attempt check to reduce duplicate inserts
   - Uses AbortController for cancellation-safe save flow during unmount/strict re-renders
-  - Uses 5s fail-safe local-save fallback so users are never blocked on report exit
+  - Uses 15s fail-safe local-save fallback so users are never blocked on report exit
+  - Queues unsynced attempts into a localStorage outbox for background cloud sync retries
   - Score review explanation supports formatted HTML content
+  - Interactive review answers are rendered as readable tables (not raw JSON)
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
 - Question scoring: `src/utils/questionScoring.js`
@@ -36,8 +38,8 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Supports stacked-bar single-target and multi-bar target answer contracts
 - Interactive widgets:
   - `src/components/interactive/SHLDragTableWidget.jsx`
-  - `src/components/interactive/SHLResizablePieWidget.jsx`
-  - `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - `src/components/interactive/SHLResizablePieWidget.jsx` (full pie + draggable handles, min-slice constraint, optional info cards)
+  - `src/components/interactive/SHLAdjustableBarWidget.jsx` (totals above bars, axis prefix/step, legend, both-bar adjust support via `interactive_bars`)
 - Render safety:
   - `src/components/RenderErrorBoundary.jsx` used in NLNG Interactive flow to prevent blank-screen dead ends on widget render faults
 
@@ -45,10 +47,11 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/aptitude-questions.json`
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
-- `src/data/nlng-deductive-questions.json` (30 questions live; Set 1 + additional chunks)
+- `src/data/nlng-deductive-questions.json` (expanded bank; some items may be draft with `correctAnswer: -1` and are excluded from sessions)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
   - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
-- `src/data/shl-interactive-questions.json` (50 interactive numerical questions; mixed `interactive_numerical` + `interactive_numerical_hard`)
+- `src/data/shl-interactive-questions.json` (62 interactive numerical questions; mixed `interactive_numerical` + `interactive_numerical_hard`)
+  - Generated from gold standard; currently 62 records.
   - Hard models included:
     - Tiered progressive drag-table verification
     - Equation-system pie constraints (reverse engineered from target percentages)
@@ -85,10 +88,8 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 ## Verification Snapshot (2026-02-12)
 - `npm run lint`: pass
 - `npm run build`: pass
-- Local cloud CLIs installed: `vercel` and `supabase`
-- Vercel CLI authenticated in this workspace environment
-- Supabase CLI authenticated via PAT and linked to project ref `fjwfoedyomdgxadnjsdt`
-- Remote migration path verified with `supabase db push --linked`
+- Cloud CLIs (`vercel`, `supabase`) can be used if authenticated locally.
+- Do not commit tokens/keys; configure via local environment variables or provider dashboards.
 
 ## Pending Work
 - Complete NLNG SHL ingestion for full Sets 2-4 beyond current 30-question bank and QA each addition.
@@ -114,6 +115,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Generator (`scripts/generate_shl_module.js`) normalizes and carries these new types into `src/data/shl-interactive-questions.json`.
 - Save reliability update:
   - `src/components/ScoreReport.jsx` duplicate-check SELECT and INSERT no longer use inner timeouts; they are controlled by AbortController + global failsafe timing.
+  - Pending (local) attempts are queued and auto-flushed on dashboard load/focus via `src/utils/attemptOutbox.js`.
 
 ## Pending Work Addendum
 - Manual browser QA specifically for the two new widget types on desktop + mobile pointer interactions.

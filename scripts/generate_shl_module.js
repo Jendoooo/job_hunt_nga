@@ -153,11 +153,13 @@ function normalizeGoldQuestion(question, index) {
             }))
 
             normalized.widget_data = {
+                ...widgetData,
                 total_value: Number(question?.prompt_data?.total_value || widgetData.total_value || 100),
                 segments,
             }
         } else {
             normalized.widget_data = {
+                ...widgetData,
                 total_value: Number(widgetData.total_value || question?.prompt_data?.total_value || 100),
                 segments: widgetData.segments,
             }
@@ -170,7 +172,61 @@ function normalizeGoldQuestion(question, index) {
 
     if (normalized.type === 'interactive_stacked_bar') {
         const widgetData = normalized.widget_data || {}
-        normalized.widget_data = widgetData
+
+        // SHL stacked-bar questions typically allow adjusting both bars in the prompt.
+        // If the gold question uses { bar_1, bar_2_initial } with a single correct_answer,
+        // convert it into a 2-bar interactive set with a per-bar expected answer map.
+        const bar1 = widgetData?.bar_1
+        const bar2 = widgetData?.bar_2_initial
+        const hasInteractiveBars = Array.isArray(widgetData?.interactive_bars) && widgetData.interactive_bars.length > 0
+        const hasReferenceBars = Array.isArray(widgetData?.reference_bars) && widgetData.reference_bars.length > 0
+        const hasReferenceBar = Boolean(widgetData?.reference_bar)
+        const hasSingleExpected = normalized?.correct_answer && typeof normalized.correct_answer === 'object'
+            && typeof normalized.correct_answer.total === 'number'
+            && typeof normalized.correct_answer.split_pct === 'number'
+
+        if (bar1 && bar2 && !hasInteractiveBars && !hasReferenceBars && !hasReferenceBar && hasSingleExpected) {
+            const bar1Id = String(bar1.id || 'bar_1')
+            const bar2Id = String(bar2.id || 'bar_2')
+            const expectedSplit1 = Number(bar1.split_pct)
+            const initialSplit1 = Number.isFinite(expectedSplit1)
+                ? (expectedSplit1 === 50 ? 45 : 50)
+                : 50
+
+            normalized.widget_data = {
+                ...widgetData,
+                interactive_bars: [
+                    {
+                        id: bar1Id,
+                        label: bar1.label || 'Bar 1',
+                        total: Number(bar1.total),
+                        split_pct: clamp(initialSplit1, 5, 95),
+                    },
+                    {
+                        id: bar2Id,
+                        label: bar2.label || 'Bar 2',
+                        total: Number(bar2.total),
+                        split_pct: Number(bar2.split_pct),
+                    },
+                ],
+            }
+            delete normalized.widget_data.bar_1
+            delete normalized.widget_data.bar_2_initial
+
+            normalized.correct_answer = {
+                [bar1Id]: {
+                    total: Number(bar1.total),
+                    split_pct: Number(bar1.split_pct),
+                },
+                [bar2Id]: {
+                    total: Number(normalized.correct_answer.total),
+                    split_pct: Number(normalized.correct_answer.split_pct),
+                },
+            }
+        } else {
+            normalized.widget_data = widgetData
+        }
+
         if (!normalized.tolerance) {
             normalized.tolerance = { total: 5, split_pct: 2 }
         }
