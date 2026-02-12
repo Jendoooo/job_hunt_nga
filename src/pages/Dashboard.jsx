@@ -24,6 +24,13 @@ import {
 const PASS_RATIO_THRESHOLD = 0.5
 const DUPLICATE_WINDOW_MS = 45000
 
+function isAbortLikeError(error) {
+    const message = typeof error?.message === 'string'
+        ? error.message.toLowerCase()
+        : ''
+    return error?.name === 'AbortError' || message.includes('aborted')
+}
+
 function normalizeForComparison(value) {
     if (value === null || typeof value !== 'object') return value
 
@@ -109,17 +116,23 @@ export default function Dashboard() {
     const [averageScore, setAverageScore] = useState(null)
     const [practiceSessions, setPracticeSessions] = useState(0)
 
-    const fetchRecentAttempts = useCallback(async () => {
+    const fetchRecentAttempts = useCallback(async (signal) => {
         if (!user) return
         setLoadingAttempts(true)
         setAttemptsError('')
 
         try {
-            const { data, error } = await supabase
+            let query = supabase
                 .from('test_attempts')
                 .select('*')
                 .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
+
+            if (signal) {
+                query = query.abortSignal(signal)
+            }
+
+            const { data, error } = await query
 
             if (error) throw error
             const attempts = dedupeAttempts(data || [])
@@ -139,34 +152,53 @@ export default function Dashboard() {
             setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
             setAverageScore(averagePercent)
         } catch (err) {
+            if (isAbortLikeError(err) || signal?.aborted) {
+                return
+            }
             console.error('Error fetching attempts:', err)
             setAttemptsError('Could not load recent activity from Supabase.')
         } finally {
-            setLoadingAttempts(false)
+            if (!signal?.aborted) {
+                setLoadingAttempts(false)
+            }
         }
     }, [user])
 
     useEffect(() => {
-        fetchRecentAttempts()
+        let activeController = null
+
+        function runFetch() {
+            if (!user) return
+            if (activeController) {
+                activeController.abort()
+            }
+            activeController = new AbortController()
+            fetchRecentAttempts(activeController.signal)
+        }
+
+        runFetch()
 
         function handleAttemptSaved() {
-            fetchRecentAttempts()
+            runFetch()
         }
 
         function handleWindowFocus() {
-            fetchRecentAttempts()
+            runFetch()
         }
 
-        const intervalId = setInterval(fetchRecentAttempts, 20000)
+        const intervalId = setInterval(runFetch, 20000)
 
         window.addEventListener('attempt-saved', handleAttemptSaved)
         window.addEventListener('focus', handleWindowFocus)
         return () => {
+            if (activeController) {
+                activeController.abort()
+            }
             clearInterval(intervalId)
             window.removeEventListener('attempt-saved', handleAttemptSaved)
             window.removeEventListener('focus', handleWindowFocus)
         }
-    }, [fetchRecentAttempts])
+    }, [fetchRecentAttempts, user])
 
     async function handleGenerateQuestions() {
         if (!aiTopic.trim()) return

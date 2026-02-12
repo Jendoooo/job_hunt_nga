@@ -16,6 +16,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 ## Core Shared Contracts
 - Auth provider: `src/context/AuthContext.jsx`
   - Sign-out attempts global then local fallback for reliability
+  - Bootstrap now explicitly checks `supabase.auth.getSession()` and handles abort-safe profile fetch
 - Auth hook/context: `src/context/useAuth.js`
 - Test timer: `src/components/Timer.jsx`
   - Uses urgency classes `timer--urgent`, `timer--critical`
@@ -26,6 +27,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Displays save progress/error and emits `attempt-saved` browser event
   - Uses short-lived session fingerprint cache + latest-attempt check to reduce duplicate inserts
   - Uses AbortController for cancellation-safe save flow during unmount/strict re-renders
+  - Uses 5s fail-safe local-save fallback so users are never blocked on report exit
   - Score review explanation supports formatted HTML content
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
@@ -45,6 +47,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (30 questions live; Set 1 + additional chunks)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
+  - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
 - `src/data/shl-interactive-questions.json` (50 interactive numerical questions; mixed `interactive_numerical` + `interactive_numerical_hard`)
   - Hard models included:
     - Tiered progressive drag-table verification
@@ -57,7 +60,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Process Technical Assessment: Active (exam + practice)
 - NLNG:
   - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
-  - SHL Interactive Numerical: Active (exam + practice; drag-table, pie, stacked-bar)
+  - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:
@@ -69,6 +72,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Question card supports typed widget rendering for interactive numerical questions.
 - Interactive stacked-bar widget supports both legacy two-bar tasks and multi-target historical tasks.
 - Interactive stacked-bar drag updates are throttled with `requestAnimationFrame` for smoother pointer handling.
+- Interactive stacked-bar axis now applies dynamic headroom (`max * 1.1`) and extra label spacing to avoid overlap/clipping.
 - NLNG Interactive setup includes a difficulty selector (`easy` / `medium` / `hard`) that filters question pool.
 - NLNG Interactive flow includes explicit session guards + render boundary fallback to avoid blank stage rendering.
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).

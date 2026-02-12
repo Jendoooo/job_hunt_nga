@@ -20,6 +20,9 @@ Date: 2026-02-12
 - [x] Add Supabase env fallback guard to avoid deployment hard-crash
 - [x] De-duplicate dashboard attempts before KPI/recent-activity calculations
 - [x] Align dashboard pass-rate threshold with score-report pass threshold (50%)
+- [x] Replace auth bootstrap timeout shortcut with explicit `getSession()` init + abort-safe profile fetch
+- [x] Make dashboard attempts polling abort-safe to suppress cancellation noise/fetch race errors
+- [x] Add score-save fail-safe: after 5s mark as locally saved and never trap user on results screen
 
 ## Phase 2: Design System Refactor (Light Theme)
 - [x] Consolidate core visual tokens and shared UI primitives in `src/index.css`
@@ -99,6 +102,9 @@ Date: 2026-02-12
 - [x] Add explicit session recovery UI when question state becomes invalid
 - [x] Add SHL deductive real-attempt preset in `src/pages/NLNGTest.jsx` (16Q / 18m)
 - [x] Lock real-attempt preset to exam mode; custom mode remains editable
+- [x] Add SHL interactive real-attempt preset in `src/pages/NLNGInteractiveTest.jsx` (10Q / 18m)
+- [x] Append extracted eligibility variants (`elig_person_b_v2`, `elig_person_d_v2`) to gold source and regenerate session bank
+- [x] Add stacked-bar visual hardening: dynamic Y-axis buffer + extra label spacing to prevent overlap
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
@@ -113,5 +119,6 @@ Date: 2026-02-12
 2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
 3. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
 4. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
-5. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
-6. Optionally split large frontend bundle if payload size reduction is required.
+5. Confirm Supabase live policies allow `profiles` read and `test_attempts` insert/select for authenticated users.
+6. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
+7. Optionally split large frontend bundle if payload size reduction is required.

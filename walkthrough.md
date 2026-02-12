@@ -85,12 +85,13 @@ This project is a React + Vite assessment platform for graduate candidate prepar
 - NLNG deductive setup includes an SHL-style real attempt preset (16 questions in 18 minutes).
 - NLNG Interactive Numerical route (`/test/nlng-interactive`) is active and linked from dashboard.
 - NLNG Interactive setup now supports difficulty filtering (`Easy`, `Medium`, `Hard`).
+- NLNG Interactive setup includes an SHL-style real attempt preset (10 questions in 18 minutes).
 - Interactive numerical question types are supported through `QuestionCard` type routing.
 - Aptitude setup supports exam/practice modes and selectable questions/time per subtest.
 - Saville setup supports exam/practice modes and selectable question/time profiles.
 - Dragnet appears as Coming Soon.
 - Score report now surfaces save progress/errors and triggers dashboard refresh event after successful save.
-- Score report save is timeout-protected so users can still leave during save delays.
+- Score report save now has a 5-second fail-safe and local-save fallback so users are never blocked on result exit.
 - Dashboard now surfaces AI generation and activity-load errors.
 - Sign-out now has global->local fallback for reliability on unstable networks.
 - Score review explanation now renders HTML emphasis content properly.

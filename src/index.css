@@ -1382,6 +1382,9 @@ select:focus-visible {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: #fff;
+  display: block;
+  margin-bottom: 0.45rem;
+  padding-bottom: 30px;
 }
 
 .interactive-axis {
@@ -1747,6 +1750,12 @@ select:focus-visible {
   padding: 0.45rem 0.58rem;
   font-size: 0.78rem;
   font-weight: 800;
+}
+
+.score-report__saved--local {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
 }
 
 .score-report__saving {

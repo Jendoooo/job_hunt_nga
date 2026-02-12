@@ -354,3 +354,44 @@
 - `npm run lint`: PASS
 - `npm run build`: PASS
 - Interactive schema checks on generated bank: PASS (no missing required widget structures)
+
+## 2026-02-12 - Auth/Save Fail-Safe + Interactive Real Preset + Gold Variant Injection
+
+## User Report
+- NLNG Interactive results flow showed auth/session abort errors and save failures near completion.
+- Requested SHL-realistic interactive pacing (10 questions in 18 minutes).
+- Reported stacked-bar label overlap/overflow and asked for chart-domain headroom.
+- Requested injection of new extracted eligibility variants into the gold-source bank.
+
+## Changes Applied
+- `src/context/AuthContext.jsx`
+  - Replaced aggressive auth-timeout shortcut with explicit `supabase.auth.getSession()` bootstrap.
+  - Added abort-safe profile fetch flow using `maybeSingle()` and cancellation guards.
+  - Suppresses abort-noise while keeping real auth/profile errors visible.
+- `src/components/ScoreReport.jsx`
+  - Added 5-second save fail-safe (`Promise.race`) for Supabase persistence.
+  - If save exceeds fail-safe window, result is marked as locally saved and user can leave immediately.
+  - Added abort-like error detection to suppress cancellation noise.
+  - Added local-save status message: "Result saved locally. Cloud sync is pending."
+- `src/pages/Dashboard.jsx`
+  - Refactored attempt polling to use `AbortController` and cancellation-safe query handling.
+  - Prevents repeated "Error fetching attempts" noise caused by overlapping refreshes.
+- `src/pages/NLNGInteractiveTest.jsx`
+  - Added SHL real-attempt preset for interactive numerical: `10Q / 18m`.
+  - Real preset enforces exam behavior while custom preset still supports practice/editable settings.
+  - Setup summary now reflects effective real/custom configuration.
+- `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - Increased chart bottom spacing for axis labels.
+  - Added dynamic axis headroom buffer (`max_total * 1.1`) so bars do not clip at chart ceiling.
+- `src/index.css`
+  - Added bar-chart spacing tweaks to prevent visual overlap with axis labels.
+  - Added `.score-report__saved--local` state styling.
+- `src/data/shl-gold-standard.json`
+  - Appended extracted variants: `elig_person_b_v2`, `elig_person_d_v2`.
+- `src/data/shl-interactive-questions.json`
+  - Regenerated via `npm run generate:shl-interactive` (gold source now 34 records).
+
+## Verification
+- `npm run generate:shl-interactive`: PASS (50 records; gold source 34)
+- `npm run lint`: PASS
+- `npm run build`: PASS

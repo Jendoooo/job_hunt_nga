@@ -1670,5 +1670,103 @@
       "cli_a": "correct"
     },
     "explanation": "(100 x 10) + (100 x 8) + (50 x 5) = 2,050."
+  },
+  {
+    "id": "elig_person_b_v2",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out if Person B is eligible.",
+    "question": "Determine if Person B is eligible.",
+    "prompt_rules": [
+      "Flag if Late > 1.5% OR Attendance < 93%",
+      "Any flag => Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "epb2",
+          "label": "Person B",
+          "values": [
+            "109",
+            "125",
+            "10",
+            "15"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "epb2": "not_eligible"
+    },
+    "explanation": "Lateness 10/125 = 8.0% (>1.5%) so Person B is not eligible."
+  },
+  {
+    "id": "elig_person_d_v2",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out if Person D is eligible.",
+    "question": "Determine if Person D is eligible.",
+    "prompt_rules": [
+      "Flag if Late > 1.5% OR Attendance < 93%",
+      "Any flag => Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Status"
+      ],
+      "rows": [
+        {
+          "id": "epd2",
+          "label": "Person D",
+          "values": [
+            "67",
+            "71",
+            "1",
+            "0"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "epd2": "eligible"
+    },
+    "explanation": "Lateness 1/71 = 1.4% and attendance 67/71 = 94.3%; both pass."
   }
 ]

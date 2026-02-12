@@ -8,7 +8,7 @@ Light-theme, employer-aligned assessment practice platform built with React + Vi
   - Process Technical Assessment (exam + practice)
 - NLNG:
   - SHL Deductive Reasoning (exam + practice, includes real preset: 16Q / 18m)
-  - SHL Interactive Numerical (exam + practice; drag-table, pie, stacked bar, plus hard-mode logic variants)
+  - SHL Interactive Numerical (exam + practice; includes real preset: 10Q / 18m, plus hard-mode logic variants)
 - Drills:
   - Engineering Math Practice (exam + practice, custom question count/time)
 - AI:
@@ -90,5 +90,5 @@ The interactive flow also includes runtime render recovery to avoid blank-screen
 ## Notes
 - Sign-out includes a local fallback strategy when global token revocation fails.
 - Score review explanation supports inline HTML formatting from trusted local question data.
-- Score saving uses timeout safeguards so users can always leave the report screen.
+- Score saving uses a 5-second fail-safe with local-save fallback so users can always leave the report screen.
 - Vercel SPA deployment is configured via `vercel.json` rewrite to `index.html`.

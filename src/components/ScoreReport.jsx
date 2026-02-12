@@ -20,7 +20,7 @@ import {
 } from 'lucide-react'
 
 const SAVE_TIMEOUT_MS = 7000
-const LEAVE_WAIT_MS = 1500
+const SAVE_FAILSAFE_MS = 5000
 const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
 const RECENT_ATTEMPT_TTL_MS = 120000
 
@@ -31,6 +31,13 @@ function withTimeout(promise, timeoutMs, message) {
             setTimeout(() => reject(new Error(message)), timeoutMs)
         }),
     ])
+}
+
+function isAbortLikeError(error) {
+    const message = typeof error?.message === 'string'
+        ? error.message.toLowerCase()
+        : ''
+    return error?.name === 'AbortError' || message.includes('aborted')
 }
 
 function normalizeForComparison(value) {
@@ -131,9 +138,11 @@ export default function ScoreReport({
 }) {
     const { user } = useAuth()
     const isMountedRef = useRef(false)
+    const autoSaveTriggeredRef = useRef(false)
     const [reviewMode, setReviewMode] = useState(false)
     const [currentReview, setCurrentReview] = useState(0)
     const [saved, setSaved] = useState(false)
+    const [savedLocally, setSavedLocally] = useState(false)
     const [saving, setSaving] = useState(false)
     const [saveError, setSaveError] = useState('')
 
@@ -151,35 +160,34 @@ export default function ScoreReport({
         }
     }, [])
 
-    const saveResults = useCallback(async (signal) => {
-        if (!user || saved || saving) return saved
+    const saveResults = useCallback(async () => {
+        if (!user || saved || savedLocally || saving) return saved || savedLocally
+
         if (isMountedRef.current) {
             setSaving(true)
             setSaveError('')
         }
 
-        try {
-            const payload = {
-                user_id: user.id,
-                assessment_type: assessmentType,
-                module_name: moduleName,
-                score: correctCount,
-                total_questions: questions.length,
-                time_taken_seconds: timeTaken,
-                mode,
-                answers,
-            }
-            const attemptFingerprint = stableSerialize(payload)
+        const payload = {
+            user_id: user.id,
+            assessment_type: assessmentType,
+            module_name: moduleName,
+            score: correctCount,
+            total_questions: questions.length,
+            time_taken_seconds: timeTaken,
+            mode,
+            answers,
+        }
+        const attemptFingerprint = stableSerialize(payload)
+        const controller = new AbortController()
+        let failsafeTimerId = null
 
+        async function persistToSupabase(signal) {
             if (isFingerprintRecentlySaved(attemptFingerprint)) {
-                if (isMountedRef.current) {
-                    setSaved(true)
-                }
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
-                return true
+                return { status: 'saved' }
             }
 
-            // Check for duplicate recent attempts
             let selectQuery = supabase
                 .from('test_attempts')
                 .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
@@ -201,15 +209,11 @@ export default function ScoreReport({
             if (latestError) throw latestError
 
             if (isLikelyDuplicateAttempt(latestAttempt, payload)) {
-                if (isMountedRef.current) {
-                    setSaved(true)
-                }
                 markFingerprintAsSaved(attemptFingerprint)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: latestAttempt }))
-                return true
+                return { status: 'saved' }
             }
 
-            // Insert new attempt
             let insertQuery = supabase
                 .from('test_attempts')
                 .insert(payload)
@@ -228,16 +232,48 @@ export default function ScoreReport({
 
             if (error) throw error
 
-            if (!signal?.aborted && isMountedRef.current) {
-                setSaved(true)
-                markFingerprintAsSaved(attemptFingerprint)
-                // Notify dashboard to refresh attempts even without a full page reload.
-                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
+            markFingerprintAsSaved(attemptFingerprint)
+            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
+            return { status: 'saved' }
+        }
+
+        try {
+            const savePromise = persistToSupabase(controller.signal).catch((error) => {
+                if (isAbortLikeError(error) || controller.signal.aborted) {
+                    return { status: 'aborted' }
+                }
+                throw error
+            })
+
+            const result = await Promise.race([
+                savePromise,
+                new Promise((resolve) => {
+                    failsafeTimerId = setTimeout(() => {
+                        controller.abort()
+                        resolve({ status: 'local' })
+                    }, SAVE_FAILSAFE_MS)
+                }),
+            ])
+
+            if (result?.status === 'saved') {
+                if (isMountedRef.current) {
+                    setSaved(true)
+                    setSavedLocally(false)
+                }
+                return true
             }
-            return true
+
+            if (result?.status === 'local') {
+                if (isMountedRef.current) {
+                    setSavedLocally(true)
+                    setSaveError('')
+                }
+                return true
+            }
+
+            return false
         } catch (err) {
-            // Ignore abort errors as they happen on unmount or strict mode re-runs
-            if (err.name === 'AbortError' || signal?.aborted) {
+            if (isAbortLikeError(err) || controller.signal.aborted) {
                 return false
             }
 
@@ -247,6 +283,10 @@ export default function ScoreReport({
             }
             return false
         } finally {
+            if (failsafeTimerId) {
+                clearTimeout(failsafeTimerId)
+            }
+            controller.abort()
             if (isMountedRef.current) {
                 setSaving(false)
             }
@@ -254,6 +294,7 @@ export default function ScoreReport({
     }, [
         user,
         saved,
+        savedLocally,
         saving,
         assessmentType,
         moduleName,
@@ -265,17 +306,14 @@ export default function ScoreReport({
     ])
 
     useEffect(() => {
-        const controller = new AbortController()
-        saveResults(controller.signal)
-        return () => controller.abort()
-    }, [saveResults])
+        if (!user || autoSaveTriggeredRef.current) return
+        autoSaveTriggeredRef.current = true
+        saveResults()
+    }, [saveResults, user])
 
     async function handleBackToDashboard() {
-        if (!saved) {
-            await Promise.race([
-                saveResults(),
-                new Promise((resolve) => setTimeout(resolve, LEAVE_WAIT_MS)),
-            ])
+        if (!saved && !savedLocally) {
+            await saveResults()
         }
         onBackToDashboard()
     }
@@ -410,6 +448,13 @@ export default function ScoreReport({
                 <div className="score-report__saved">
                     <Check size={14} />
                     Results saved to your profile
+                </div>
+            )}
+
+            {savedLocally && !saved && (
+                <div className="score-report__saved score-report__saved--local">
+                    <Check size={14} />
+                    Result saved locally. Cloud sync is pending.
                 </div>
             )}
 

@@ -17,14 +17,16 @@ import {
 } from 'lucide-react'
 
 const QUESTION_OPTIONS = [5, 10, 15, 20, 30, 40, 50]
-const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30, 40]
+const TIME_OPTIONS_MINUTES = [10, 15, 18, 20, 25, 30, 40]
 const DIFFICULTY_OPTIONS = [
     { value: 'easy', label: 'Easy' },
     { value: 'medium', label: 'Medium' },
     { value: 'hard', label: 'Hard' },
 ]
-const DEFAULT_QUESTION_COUNT = 15
-const DEFAULT_TIME_MINUTES = 20
+const REAL_SHL_QUESTION_COUNT = 10
+const REAL_SHL_TIME_MINUTES = 18
+const DEFAULT_QUESTION_COUNT = REAL_SHL_QUESTION_COUNT
+const DEFAULT_TIME_MINUTES = REAL_SHL_TIME_MINUTES
 
 function normalizeDifficulty(value) {
     const normalized = String(value || '').trim().toLowerCase()
@@ -45,6 +47,7 @@ function getQuestionDifficulty(question) {
 export default function NLNGInteractiveTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
+    const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
     const [difficulty, setDifficulty] = useState('medium')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
@@ -64,12 +67,26 @@ export default function NLNGInteractiveTest() {
             getQuestionDifficulty(question) === difficulty
         )
     ), [difficulty])
-    const totalTimeSeconds = timeLimitMinutes * 60
-    const isExamMode = mode === 'exam'
+    const isRealPreset = sessionPreset === 'real'
+    const effectiveMode = isRealPreset ? 'exam' : mode
+    const effectiveQuestionCount = isRealPreset
+        ? Math.min(REAL_SHL_QUESTION_COUNT, availableQuestions.length || REAL_SHL_QUESTION_COUNT)
+        : questionCount
+    const effectiveTimeLimitMinutes = isRealPreset ? REAL_SHL_TIME_MINUTES : timeLimitMinutes
+    const totalTimeSeconds = effectiveTimeLimitMinutes * 60
+    const isExamMode = effectiveMode === 'exam'
     const difficultyLabel = DIFFICULTY_OPTIONS.find((option) => option.value === difficulty)?.label || 'Medium'
 
+    function applyRealPreset() {
+        setSessionPreset('real')
+    }
+
+    function applyCustomPreset() {
+        setSessionPreset('custom')
+    }
+
     function startTest() {
-        const selected = selectUniqueSessionQuestions(availableQuestions, questionCount)
+        const selected = selectUniqueSessionQuestions(availableQuestions, effectiveQuestionCount)
         if (selected.length === 0) {
             setSessionError('No questions are available for this difficulty right now. Change difficulty and try again.')
             return
@@ -129,21 +146,43 @@ export default function NLNGInteractiveTest() {
                         </p>
 
                         <div className="test-setup__mode">
+                            <h3>Session Preset</h3>
+                            <div className="test-setup__time-options">
+                                <button
+                                    className={`test-setup__time-btn ${sessionPreset === 'real' ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={applyRealPreset}
+                                >
+                                    SHL Real (10Q / 18m)
+                                </button>
+                                <button
+                                    className={`test-setup__time-btn ${sessionPreset === 'custom' ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={applyCustomPreset}
+                                >
+                                    Custom
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="test-setup__mode">
                             <h3>Mode</h3>
                             <div className="test-setup__mode-options">
                                 <button
-                                    className={`test-setup__mode-btn ${mode === 'exam' ? 'test-setup__mode-btn--active' : ''}`}
+                                    className={`test-setup__mode-btn ${effectiveMode === 'exam' ? 'test-setup__mode-btn--active' : ''}`}
                                     onClick={() => setMode('exam')}
                                 >
-                                    <TimerIcon className={`mb-2 ${mode === 'exam' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
+                                    <TimerIcon className={`mb-2 ${effectiveMode === 'exam' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
                                     <span className="test-setup__mode-label">Exam Mode</span>
                                     <span className="test-setup__mode-desc">Timed and scored at the end</span>
                                 </button>
                                 <button
-                                    className={`test-setup__mode-btn ${mode === 'practice' ? 'test-setup__mode-btn--active' : ''}`}
-                                    onClick={() => setMode('practice')}
+                                    className={`test-setup__mode-btn ${effectiveMode === 'practice' ? 'test-setup__mode-btn--active' : ''}`}
+                                    onClick={() => {
+                                        setMode('practice')
+                                        setSessionPreset('custom')
+                                    }}
+                                    disabled={sessionPreset === 'real'}
                                 >
-                                    <BookOpen className={`mb-2 ${mode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
+                                    <BookOpen className={`mb-2 ${effectiveMode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
                                     <span className="test-setup__mode-label">Practice Mode</span>
                                     <span className="test-setup__mode-desc">Immediate correctness feedback</span>
                                 </button>
@@ -177,8 +216,11 @@ export default function NLNGInteractiveTest() {
                                 {QUESTION_OPTIONS.map((count) => (
                                     <button
                                         key={count}
-                                        className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
-                                        onClick={() => setQuestionCount(count)}
+                                        className={`test-setup__time-btn ${effectiveQuestionCount === count ? 'test-setup__time-btn--active' : ''}`}
+                                        onClick={() => {
+                                            setSessionPreset('custom')
+                                            setQuestionCount(count)
+                                        }}
                                         disabled={count > availableQuestions.length}
                                     >
                                         {count} Qs
@@ -193,8 +235,12 @@ export default function NLNGInteractiveTest() {
                                 {TIME_OPTIONS_MINUTES.map((minutes) => (
                                     <button
                                         key={minutes}
-                                        className={`test-setup__time-btn ${timeLimitMinutes === minutes ? 'test-setup__time-btn--active' : ''}`}
-                                        onClick={() => setTimeLimitMinutes(minutes)}
+                                        className={`test-setup__time-btn ${effectiveTimeLimitMinutes === minutes ? 'test-setup__time-btn--active' : ''}`}
+                                        onClick={() => {
+                                            setSessionPreset('custom')
+                                            setTimeLimitMinutes(minutes)
+                                        }}
+                                        disabled={sessionPreset === 'real'}
                                     >
                                         {minutes} min
                                     </button>
@@ -213,6 +259,15 @@ export default function NLNGInteractiveTest() {
                                 <li>Adjust stacked-bar total and internal split.</li>
                                 <li>{isExamMode ? 'Timed under exam pressure.' : 'Practice with immediate correctness.'}</li>
                             </ul>
+                        </div>
+
+                        <div className="bg-amber-50 border border-amber-100 rounded-xl p-5 mb-8">
+                            <div className="text-sm text-amber-800">
+                                <strong className="block mb-1">Session Summary</strong>
+                                {isRealPreset
+                                    ? `${effectiveQuestionCount} questions in ${effectiveTimeLimitMinutes} minutes (SHL-style real attempt).`
+                                    : `${effectiveQuestionCount} questions${isExamMode ? ` in ${effectiveTimeLimitMinutes} minutes.` : ' in untimed practice mode.'}`}
+                            </div>
                         </div>
 
                         <button
@@ -250,8 +305,8 @@ export default function NLNGInteractiveTest() {
                     timeTaken={timeTaken || (isExamMode ? totalTimeSeconds : 0)}
                     totalTime={isExamMode ? totalTimeSeconds : 0}
                     assessmentType="nlng-interactive-numerical"
-                    moduleName={`NLNG Interactive Numerical (${difficulty}, ${mode}, ${activeQuestions.length}Q${isExamMode ? ` / ${timeLimitMinutes}m` : ''})`}
-                    mode={mode}
+                    moduleName={`NLNG Interactive Numerical (${difficulty}, ${effectiveMode}, ${activeQuestions.length}Q${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
+                    mode={effectiveMode}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

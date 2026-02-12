@@ -11,62 +11,97 @@ function withTimeout(promise, timeoutMs, message) {
     ])
 }
 
+function isAbortLikeError(error) {
+    const message = typeof error?.message === 'string'
+        ? error.message.toLowerCase()
+        : ''
+    return error?.name === 'AbortError' || message.includes('aborted')
+}
+
+function isSessionBootstrapTimeout(error) {
+    return String(error?.message || '').includes('Timed out while retrieving auth session.')
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
     const [loading, setLoading] = useState(true)
 
-    const fetchProfile = useCallback(async (userId) => {
+    const fetchProfile = useCallback(async (userId, signal) => {
         try {
-            const { data, error } = await supabase
+            let query = supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', userId)
-                .single()
+                .maybeSingle()
+
+            if (signal) {
+                query = query.abortSignal(signal)
+            }
+
+            const { data, error } = await query
 
             if (error) throw error
-            setProfile(data)
+            if (signal?.aborted) return null
+
+            setProfile(data || null)
+            return data || null
         } catch (error) {
+            if (isAbortLikeError(error) || signal?.aborted) {
+                return null
+            }
             console.error('Error fetching profile:', error)
+            return null
         } finally {
-            setLoading(false)
+            if (!signal?.aborted) {
+                setLoading(false)
+            }
         }
     }, [])
 
     useEffect(() => {
-        let mounted = true
+        let active = true
+        const controller = new AbortController()
 
-        // Safety timeout: stop loading after 5s no matter what
-        const timer = setTimeout(() => {
-            if (mounted) {
-                console.warn('Auth check timed out, forcing load completion')
-                setLoading(false)
-            }
-        }, 5000)
+        async function initializeSession() {
+            try {
+                const { data, error } = await withTimeout(
+                    supabase.auth.getSession(),
+                    8000,
+                    'Timed out while retrieving auth session.'
+                )
+                if (!active) return
+                if (error) throw error
 
-        // Get initial session
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            if (!mounted) return
-            setUser(session?.user ?? null)
-            if (session?.user) {
-                fetchProfile(session.user.id)
-            } else {
-                setLoading(false)
+                const session = data?.session ?? null
+                setUser(session?.user ?? null)
+                if (session?.user) {
+                    await fetchProfile(session.user.id, controller.signal)
+                } else {
+                    setProfile(null)
+                    setLoading(false)
+                }
+            } catch (error) {
+                if (!isAbortLikeError(error) && !isSessionBootstrapTimeout(error)) {
+                    console.error('Error getting session:', error)
+                }
+                if (active) {
+                    setUser(null)
+                    setProfile(null)
+                    setLoading(false)
+                }
             }
-        }).catch(error => {
-            console.error('Error getting session:', error)
-            if (mounted) setLoading(false)
-        }).finally(() => {
-            clearTimeout(timer)
-        })
+        }
+
+        initializeSession()
 
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event, session) => {
-                if (!mounted) return
+                if (!active) return
                 setUser(session?.user ?? null)
                 if (session?.user) {
-                    await fetchProfile(session.user.id)
+                    await fetchProfile(session.user.id, controller.signal)
                 } else {
                     setProfile(null)
                     setLoading(false)
@@ -75,8 +110,8 @@ export function AuthProvider({ children }) {
         )
 
         return () => {
-            mounted = false
-            clearTimeout(timer)
+            active = false
+            controller.abort()
             subscription.unsubscribe()
         }
     }, [fetchProfile])

@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 const SVG_WIDTH = 440
-const SVG_HEIGHT = 290
+const SVG_HEIGHT = 320
 const PLOT_TOP = 24
-const PLOT_BOTTOM = 248
+const PLOT_BOTTOM = 236
 const PLOT_LEFT = 56
 const PLOT_RIGHT = 400
 const PLOT_HEIGHT = PLOT_BOTTOM - PLOT_TOP
 const BAR_WIDTH = 56
+const X_AXIS_LABEL_OFFSET = 28
 
 function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value))
@@ -33,7 +34,7 @@ function normalizeBar(bar, fallbackLabel) {
 }
 
 function buildWidgetConfig(data, value) {
-    const axisMax = toNumber(data?.axis_max, 100)
+    const configuredAxisMax = toNumber(data?.axis_max, 100)
     const primaryLabel = data?.segment_labels?.primary || 'Service'
     const secondaryLabel = data?.segment_labels?.secondary || 'Product'
 
@@ -53,7 +54,11 @@ function buildWidgetConfig(data, value) {
         interactiveBars = [normalizeBar(data?.bar_2_initial || {}, 'Month 2')]
     }
 
-    const initialState = interactiveBars.reduce((accumulator, bar) => {
+    const baseMaxTotal = [...referenceBars, ...interactiveBars].reduce((maxTotal, bar) => {
+        return Math.max(maxTotal, toNumber(bar?.total, 0))
+    }, 0)
+
+    const requestedState = interactiveBars.reduce((accumulator, bar) => {
         const valueCandidate = interactiveBars.length === 1
             ? value
             : (value && typeof value === 'object' ? value[bar.id] : null)
@@ -62,10 +67,25 @@ function buildWidgetConfig(data, value) {
             : null
 
         accumulator[bar.id] = {
-            total: clamp(toNumber(entry?.total, bar.total), 1, axisMax),
+            total: toNumber(entry?.total, bar.total),
             split_pct: clamp(toNumber(entry?.split_pct, bar.split_pct), 0, 100),
         }
 
+        return accumulator
+    }, {})
+
+    const requestedMaxTotal = Object.values(requestedState).reduce((maxTotal, state) => {
+        return Math.max(maxTotal, toNumber(state?.total, 0))
+    }, 0)
+
+    const bufferedAxisMax = Math.ceil(Math.max(baseMaxTotal, requestedMaxTotal) * 1.1)
+    const axisMax = Math.max(10, configuredAxisMax, bufferedAxisMax)
+
+    const initialState = Object.entries(requestedState).reduce((accumulator, [barId, state]) => {
+        accumulator[barId] = {
+            total: clamp(toNumber(state?.total, 0), 1, axisMax),
+            split_pct: clamp(toNumber(state?.split_pct, 50), 0, 100),
+        }
         return accumulator
     }, {})
 
@@ -295,7 +315,7 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                             height={bar.secondaryHeight}
                             className={`interactive-segment interactive-segment--product ${bar.interactive ? 'interactive-segment--interactive' : ''}`}
                         />
-                        <text x={bar.centerX} y={PLOT_BOTTOM + 24} className="interactive-axis-caption">{bar.label}</text>
+                        <text x={bar.centerX} y={PLOT_BOTTOM + X_AXIS_LABEL_OFFSET} className="interactive-axis-caption">{bar.label}</text>
 
                         {bar.interactive && (
                             <>
