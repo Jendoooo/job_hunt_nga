@@ -324,9 +324,10 @@
 
 ## Changes Applied
 - `src/data/nlng-sjq-questions.json`
-  - Added 10 SJQ questions (deadline conflict, underperformer, critical feedback, go-live error, manager disagreement, customer complaint, colleague absence, improvement spotting, out-of-skill task, conflicting instructions).
+  - Added 50 SJQ questions (expanded bank including safety, ethics, stakeholder pressure, community relations, and professionalism scenarios).
 - `src/pages/NLNGSJQTest.jsx`
   - New SJQ runner (setup -> test -> results) with 20-minute timer and per-response rating UI.
+  - Session now runs 10 randomized questions per attempt (from the 50-question bank).
 - `src/utils/questionScoring.js`
   - Added `subtest === 'situational_judgement'` correctness support + `scoreSJQQuestion()` utility.
 - `src/components/ScoreReport.jsx`

@@ -4,8 +4,10 @@ import { ArrowLeft, Brain, StopCircle, Timer as TimerIcon } from 'lucide-react'
 import Timer from '../components/Timer'
 import ScoreReport from '../components/ScoreReport'
 import sjqQuestions from '../data/nlng-sjq-questions.json'
+import { shuffleQuestions } from '../utils/questionSession'
 
 const TIME_LIMIT_SECONDS = 20 * 60
+const SESSION_QUESTION_COUNT = 10
 
 const RATING_SCALE = [
     { value: 1, label: 'Very Ineffective' },
@@ -41,15 +43,18 @@ export default function NLNGSJQTest() {
     const startTimeRef = useRef(null)
 
     const [stage, setStage] = useState('setup')
+    const [activeQuestions, setActiveQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [answers, setAnswers] = useState({})
     const [timeTaken, setTimeTaken] = useState(0)
 
-    const activeQuestions = Array.isArray(sjqQuestions) ? sjqQuestions : []
+    const questionBank = Array.isArray(sjqQuestions) ? sjqQuestions : []
 
     const question = activeQuestions[currentQuestion]
 
     function startAssessment() {
+        const selected = shuffleQuestions(questionBank).slice(0, Math.min(SESSION_QUESTION_COUNT, questionBank.length))
+        setActiveQuestions(selected)
         setAnswers({})
         setCurrentQuestion(0)
         setTimeTaken(0)
@@ -97,18 +102,18 @@ export default function NLNGSJQTest() {
                     <div className="test-setup__card">
                         <h2 className="text-2xl font-bold text-slate-800 mb-2">SHL Job-Focused Assessment</h2>
                         <p className="test-setup__description">
-                            Situational Judgement | {activeQuestions.length} Questions | 20 minutes
+                            Situational Judgement | {SESSION_QUESTION_COUNT} Questions | 20 minutes
                         </p>
 
                         <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8 text-sm text-slate-700">
                             Rate how effective each response would be in the workplace. You must rate all responses
-                            before moving to the next question.
+                            before moving to the next question. Session questions are randomized from a bank of {questionBank.length}.
                         </div>
 
                         <button
                             className="btn btn--primary btn--lg btn--full flex items-center justify-center gap-2"
                             onClick={startAssessment}
-                            disabled={activeQuestions.length === 0}
+                            disabled={questionBank.length === 0}
                         >
                             Start Assessment
                         </button>
@@ -136,7 +141,7 @@ export default function NLNGSJQTest() {
                     timeTaken={timeTaken || TIME_LIMIT_SECONDS}
                     totalTime={TIME_LIMIT_SECONDS}
                     assessmentType="nlng_sjq"
-                    moduleName="SHL Job-Focused Assessment"
+                    moduleName={`SHL Job-Focused Assessment (${activeQuestions.length}Q / 20m)`}
                     mode="exam"
                     scoreCorrectUnits={correct}
                     scoreTotalUnits={total}
@@ -244,7 +249,7 @@ export default function NLNGSJQTest() {
                                     }}
                                     disabled={!allRated}
                                 >
-                                    {isLast ? 'Finish' : 'Next →'}
+                                    {isLast ? 'Finish' : 'Next ->'}
                                 </button>
                             </div>
                         </div>

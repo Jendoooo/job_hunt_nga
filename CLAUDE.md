@@ -52,7 +52,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (expanded bank; invalid items are excluded from sessions by runtime guard)
-- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ)
+- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ; 50-question bank)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
   - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
 - `src/data/shl-interactive-questions.json` (63 interactive numerical questions across 5 types)
@@ -67,7 +67,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - NLNG:
   - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
   - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation; difficulty supports `all`/`easy`/`medium`/`hard`)
-  - SHL Job-Focused Assessment (SJQ): Active (timed 10Q/20m, partial credit per rating)
+  - SHL Job-Focused Assessment (SJQ): Active (timed 10Q/20m, randomized from 50Q bank, partial credit per rating)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:

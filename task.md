@@ -224,10 +224,11 @@ Date: 2026-02-12
 - [x] Regenerated `src/data/shl-interactive-questions.json` (76 total)
 - [x] `npm run build` → 0 errors
 - [x] Added SHL Job-Focused Assessment (SJQ) module (`/test/nlng-sjq`):
-  - timed: 10 questions / 20 minutes
+  - timed: 10 questions / 20 minutes (randomized from SJQ bank)
   - per-response rating scale (1-4) with partial credit (stored as correct_ratings / total_ratings)
   - ScoreReport override support for unit-based scoring + SJQ review table + DeepSeek tutor explainer
   - dashboard NLNG card added + route wired in `src/App.jsx`
+- [x] Expanded `src/data/nlng-sjq-questions.json` bank to 50 questions (session still runs 10Q / 20m)
 
 ## Phase 14: SHL Visual Theme + Commission/Performance Questions (2026-02-12)
 - [x] Added 6 new `interactive_drag_table` questions to gold standard (75 total):

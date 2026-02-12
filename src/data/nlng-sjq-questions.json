@@ -138,6 +138,565 @@
     ],
     "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
     "explanation": "Aligning stakeholders directly (a) is most effective and prevents ongoing conflict. Getting written confirmation with clear constraints (d) is also effective. Trying to do both (c) often reduces quality and increases risk. Ignoring one manager (b) is very ineffective and can damage trust."
+  },
+  {
+    "id": "sjq_011",
+    "subtest": "situational_judgement",
+    "scenario": "You observe a senior contractor on site bypassing a safety protocol to speed up a delayed maintenance job. No one has been hurt, but it violates the 'Safety First' policy.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Immediately intervene to stop the work and respectfully remind the contractor of the safety protocol." },
+      { "id": "b", "text": "Wait until the job is finished to avoid conflict, then report the incident to your supervisor." },
+      { "id": "c", "text": "Ignore it this time since the contractor is senior and the project is already delayed." },
+      { "id": "d", "text": "Take a photo of the violation and anonymously report it to the safety department later." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Intervening immediately (a) aligns with the core value of Safety and 'Intervene in unsafe situations'. Reporting later (b) allows the risk to continue. Ignoring it (c) is completely ineffective and violates the code of conduct. Anonymous reporting (d) is better than ignoring but less effective than immediate intervention which prevents potential harm."
+  },
+  {
+    "id": "sjq_012",
+    "subtest": "situational_judgement",
+    "scenario": "You are working on a team report due tomorrow. You discover a significant data error in a section completed by a colleague who has already left for the day.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Call the colleague immediately to ask for clarification, even though it is after hours." },
+      { "id": "b", "text": "Fix the error as best as you can based on your own analysis and leave a note for the colleague." },
+      { "id": "c", "text": "Submit the report with the error but highlight it in the cover email so management is aware." },
+      { "id": "d", "text": "Leave the section as is, reasoning that it is not your responsibility to correct others' work." }
+    ],
+    "correct_answer": { "a": 3, "b": 4, "c": 2, "d": 1 },
+    "explanation": "Taking ownership to fix the error (b) demonstrates Teamwork and Excellence. Calling after hours (a) shows dedication but might disrespect work-life balance if the fix is manageable. Highlighting the error (c) protects you but doesn't solve the problem. Doing nothing (d) is ineffective and harms the team's output."
+  },
+  {
+    "id": "sjq_013",
+    "subtest": "situational_judgement",
+    "scenario": "A community representative approaches you with a complaint about noise from an NLNG facility. This is not your department, but they are visibly upset.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Listen to their concerns with empathy, take their contact details, and promise to have the Community Relations team contact them." },
+      { "id": "b", "text": "Politely explain that this is not your department and advise them to call the official helpline." },
+      { "id": "c", "text": "Tell them you can't help and walk away to avoid getting involved in a sensitive issue." },
+      { "id": "d", "text": "Attempt to solve the noise issue yourself by calling the plant control room immediately." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Listening and facilitating the right contact (a) shows Caring and Respect. Referral (b) is procedural but lacks the personal touch required for community relations. Walking away (c) is dismissive and damages reputation. Trying to solve it yourself (d) shows initiative but may bypass established protocols for community grievances."
+  },
+  {
+    "id": "sjq_014",
+    "subtest": "situational_judgement",
+    "scenario": "You are offered a small gift by a vendor who has just submitted a bid for a contract you are evaluating. They say it is just a 'token of appreciation'.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Accept the gift but declare it to your manager immediately to ensure transparency." },
+      { "id": "b", "text": "Politely decline the gift, explaining that company policy prohibits accepting gifts during a tender process." },
+      { "id": "c", "text": "Accept the gift to avoid offending the vendor, but donate it to charity." },
+      { "id": "d", "text": "Refuse the gift and immediately report the vendor to the ethics committee for attempted bribery." }
+    ],
+    "correct_answer": { "a": 2, "b": 4, "c": 1, "d": 3 },
+    "explanation": "Politely declining with reference to policy (b) upholds Integrity and maintains professionalism. Reporting immediately (d) might be necessary if it was a clear bribe, but 'token' gifts are often just cultural; declining is the first step. Accepting (a) or (c) creates a conflict of interest perception, violating the Code of Conduct."
+  },
+  {
+    "id": "sjq_015",
+    "subtest": "situational_judgement",
+    "scenario": "Your team is debating a solution to a technical problem. A quiet team member suggests an idea that is quickly dismissed by a vocal senior engineer.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Stay silent to avoid challenging the senior engineer's authority." },
+      { "id": "b", "text": "Speak up and ask the quiet team member to elaborate on their idea to ensure it is fully understood." },
+      { "id": "c", "text": "Privately ask the quiet team member later what their idea was." },
+      { "id": "d", "text": "Openly criticize the senior engineer for interrupting and dismissing the idea." }
+    ],
+    "correct_answer": { "a": 1, "b": 4, "c": 3, "d": 2 },
+    "explanation": "Inclusive behavior (b) demonstrates Teamwork and Respect, ensuring all ideas are heard. Asking privately (c) is supportive but misses the chance to benefit the group discussion. Criticizing publicly (d) creates conflict. Silence (a) allows potential value to be lost and condones exclusion."
+  },
+  {
+    "id": "sjq_016",
+    "subtest": "situational_judgement",
+    "scenario": "You have identified a way to reduce waste in your department's process, but it requires a change that some long-serving staff might resist.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Develop a data-driven proposal showing the benefits and present it to the team to get their input." },
+      { "id": "b", "text": "Implement the change immediately as it is clearly more efficient and saves money." },
+      { "id": "c", "text": "Discuss the idea with your manager first to get alignment before approaching the wider team." },
+      { "id": "d", "text": "Decide not to pursue it to avoid causing friction with experienced colleagues." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 3, "d": 2 },
+    "explanation": "Involving the team with data (a) shows Excellence and Innovation while managing change respectfully. Consulting management (c) is a good second step. Implementing without buy-in (b) will likely fail due to resistance. Avoiding improvement (d) neglects the value of continuous improvement."
+  },
+  {
+    "id": "sjq_017",
+    "subtest": "situational_judgement",
+    "scenario": "You realize you will miss a deadline for a quarterly report because you are waiting for input from another department that is currently understaffed.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Submit the report on time with the missing section marked as 'data unavailable'." },
+      { "id": "b", "text": "Inform your stakeholder of the delay, explain the dependency, and provide a new estimated delivery time." },
+      { "id": "c", "text": "Keep pressuring the other department to hurry up, emphasizing the urgency of your deadline." },
+      { "id": "d", "text": "Wait until the data arrives to submit the report, even if it is a few days late." }
+    ],
+    "correct_answer": { "a": 2, "b": 4, "c": 1, "d": 3 },
+    "explanation": "Proactive communication (b) manages expectations and shows Accountability. Waiting silently (d) is unprofessional. Submitting incomplete work (a) might be acceptable if agreed, but risky without prior notice. Pressuring an understaffed team (c) lacks Caring and Teamwork."
+  },
+  {
+    "id": "sjq_018",
+    "subtest": "situational_judgement",
+    "scenario": "During a virtual meeting, you notice two colleagues sending sarcastic messages in the group chat about the presenter's slides.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Ignore the messages and focus on the presentation." },
+      { "id": "b", "text": "Send a private message to the colleagues asking them to stop as it is unprofessional." },
+      { "id": "c", "text": "Join in with a mild joke to build rapport with the colleagues." },
+      { "id": "d", "text": "Report the colleagues to HR immediately after the meeting." }
+    ],
+    "correct_answer": { "a": 2, "b": 4, "c": 1, "d": 3 },
+    "explanation": "Privately correcting behavior (b) demonstrates Integrity and Respect without causing a scene. Joining in (c) violates core values. Reporting immediately (d) might be an overreaction for a first offense depending on severity. Ignoring (a) condones the disrespect."
+  },
+  {
+    "id": "sjq_019",
+    "subtest": "situational_judgement",
+    "scenario": "You are assigned a mentor who is very busy and has cancelled your last three scheduled meetings.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Send a polite email acknowledging their schedule and proposing a shorter, more focused agenda for the next slot." },
+      { "id": "b", "text": "Stop scheduling meetings and wait for them to contact you when they are free." },
+      { "id": "c", "text": "Request a new mentor from HR, citing the current mentor's lack of availability." },
+      { "id": "d", "text": "Show up at their office to ensure you get some face time." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Showing flexibility and ownership (a) is the most effective way to manage up. HR request (c) should be a last resort. Showing up unannounced (d) is disrespectful of their time. Giving up (b) shows a lack of drive for your own development."
+  },
+  {
+    "id": "sjq_020",
+    "subtest": "situational_judgement",
+    "scenario": "You are leading a small project. One member is producing excellent technical work but refuses to document their process, claiming it 'slows them down'.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Allow them to skip documentation so they can focus on high-quality technical output." },
+      { "id": "b", "text": "Explain the long-term risk to the company and insist that documentation is a non-negotiable part of the deliverable." },
+      { "id": "c", "text": "Assign another team member to document their work for them." },
+      { "id": "d", "text": "Compromise by asking for minimal documentation now and promising to return to it later." }
+    ],
+    "correct_answer": { "a": 1, "b": 4, "c": 2, "d": 3 },
+    "explanation": "Enforcing standards (b) upholds Excellence and sustainability; undocumented work creates 'key person risk'. Assigning someone else (c) rewards non-compliance. Compromising (d) often leads to the work never being done. Allowing skipping (a) fails to manage the project properly."
+  },
+  {
+    "id": "sjq_021",
+    "subtest": "situational_judgement",
+    "scenario": "You are supervising a contractor who is working at height. You notice they have unclipped their safety harness to move faster between anchor points. They are experienced and say it is safe.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Immediately stop the work and insist they re-clip before moving, reminding them of the 'Goal Zero' safety policy." },
+      { "id": "b", "text": "Allow them to finish this specific movement since they are experienced, but warn them to clip in afterwards." },
+      { "id": "c", "text": "Report the unsafe act to the site safety officer after the shift ends." },
+      { "id": "d", "text": "Trust their judgment as an experienced contractor and focus on your own tasks." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 3, "d": 1 },
+    "explanation": "Immediate intervention (a) is the only acceptable response under 'Safety First'. Allowing a violation (b) endangers life. Reporting later (c) leaves the immediate risk unmanaged. Doing nothing (d) is negligent."
+  },
+  {
+    "id": "sjq_022",
+    "subtest": "situational_judgement",
+    "scenario": "A community youth leader demands a meeting with you immediately regarding a grievance. They are aggressive and blocking the site entrance. You are not trained in community relations.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Remain calm, explain you cannot hold a meeting now, but take their contact details and promise the Community Liaison Officer will call them." },
+      { "id": "b", "text": "Call site security to forcibly remove them from the entrance." },
+      { "id": "c", "text": "Agree to the meeting immediately to de-escalate the tension, even though it is not your role." },
+      { "id": "d", "text": "Ignore them and try to drive around to enter the site through a back gate." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "De-escalating respectfully while deferring to the correct department (a) shows Respect and Caring. Security force (b) could escalate conflict. Meeting outside your role (c) risks making promises the company cannot keep. Ignoring (d) is disrespectful."
+  },
+  {
+    "id": "sjq_023",
+    "subtest": "situational_judgement",
+    "scenario": "You discover a small discrepancy in a financial report that was approved last month. It doesn't affect the bottom line significantly, but it is technically incorrect.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Flag the error to your manager and Finance immediately, and propose a correction process." },
+      { "id": "b", "text": "Fix it silently in the next month's report to balance the books." },
+      { "id": "c", "text": "Ignore it since the amount is immaterial and the report is already approved." },
+      { "id": "d", "text": "Ask a colleague if they think it is worth reporting before deciding." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Integrity demands transparency regardless of materiality (a). Silent fixing (b) falsifies records. Ignoring (c) violates the principle of accuracy. Consulting (d) delays the necessary action."
+  },
+  {
+    "id": "sjq_024",
+    "subtest": "situational_judgement",
+    "scenario": "A senior manager from another department asks you to prioritize their request over your current project. Your own manager is on leave.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Explain your current deadline constraints and ask them to email your manager to agree on the priority change." },
+      { "id": "b", "text": "Immediately drop your work to help them since they are a senior manager." },
+      { "id": "c", "text": "Refuse the request stating you only take instructions from your direct manager." },
+      { "id": "d", "text": "Try to do both tasks by working late, without informing anyone of the conflict." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Professional negotiation and respecting lines of authority (a) is best. Blind obedience (b) disrupts planned work. Refusal (c) is unhelpful/disrespectful. Overworking (d) hides the resource conflict."
+  },
+  {
+    "id": "sjq_025",
+    "subtest": "situational_judgement",
+    "scenario": "During a team brainstorming session, a colleague suggests an idea that you know has failed in the past. The team seems excited about it.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Wait for a pause, then share the history of the previous failure constructively to help refine the new idea." },
+      { "id": "b", "text": "Interrupt immediately to say it won't work because it failed before." },
+      { "id": "c", "text": "Let them proceed and fail so they learn the lesson themselves." },
+      { "id": "d", "text": "Speak to the team lead privately after the meeting to express your concerns." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Constructive input (a) shows Excellence and Teamwork. Interruption (b) is disrespectful. Letting them fail (c) wastes company resources. Private feedback (d) is okay but less efficient than real-time course correction."
+  },
+  {
+    "id": "sjq_026",
+    "subtest": "situational_judgement",
+    "scenario": "You see a colleague leaving the office with a box of company stationery supplies for their children's school project.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Remind them politely that company resources are for business use only." },
+      { "id": "b", "text": "Report them to HR immediately for theft." },
+      { "id": "c", "text": "Ignore it as it is just stationery and not worth the conflict." },
+      { "id": "d", "text": "Make a joke about it but do not directly challenge them." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Direct, polite enforcement of Integrity (a) is proportionate. Reporting immediately (b) might be excessive for stationery (depends on policy severity) but is technically correct. Ignoring (c) condones misuse. Joking (d) is passive."
+  },
+  {
+    "id": "sjq_027",
+    "subtest": "situational_judgement",
+    "scenario": "A vendor offers to pay for your travel and accommodation to a conference where you will be evaluating their product.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Decline the offer explaining that NLNG pays for its own business travel to maintain independence." },
+      { "id": "b", "text": "Accept the offer to save the company money." },
+      { "id": "c", "text": "Ask your manager if you can accept it this one time." },
+      { "id": "d", "text": "Accept the travel but insist on paying for your own hotel." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 3, "d": 2 },
+    "explanation": "Declining to avoid Conflict of Interest (a) maintains Integrity. Accepting (b) compromises impartiality. Asking manager (c) shows doubt about a clear ethical rule. Partial acceptance (d) is still compromised."
+  },
+  {
+    "id": "sjq_028",
+    "subtest": "situational_judgement",
+    "scenario": "Your team is under pressure. A colleague snaps at you in a meeting, blaming you for a delay that wasn't your fault.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Stay calm during the meeting, then speak to them privately to correct the facts and ask for professional respect." },
+      { "id": "b", "text": "Defend yourself loudly in the meeting to ensure everyone knows it wasn't you." },
+      { "id": "c", "text": "Ignore the comment and complain to your manager later." },
+      { "id": "d", "text": "Apologize to keep the peace, even though you were not at fault." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 3, "d": 1 },
+    "explanation": "Emotional intelligence and private resolution (a) shows Respect and Teamwork. Public argument (b) disrupts the team. complaining (c) is passive. False apology (d) confuses accountability."
+  },
+  {
+    "id": "sjq_029",
+    "subtest": "situational_judgement",
+    "scenario": "You notice a small oil leak on a piece of equipment that is not in your direct area of responsibility.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Report it immediately to the control room and stay nearby to warn others until help arrives." },
+      { "id": "b", "text": "Assume the area operator knows about it and continue to your workstation." },
+      { "id": "c", "text": "Mention it to a colleague later in the break room." },
+      { "id": "d", "text": "Try to fix the leak yourself even though you don't know the equipment." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "See it, Own it (a) is the Safety culture. Assuming (b) leads to disasters. Late reporting (c) is ineffective. Unqualified fixing (d) is dangerous."
+  },
+  {
+    "id": "sjq_030",
+    "subtest": "situational_judgement",
+    "scenario": "You have finished your tasks for the day early. Your colleagues are still working hard to meet a deadline.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Ask your colleagues if there is anything you can do to support them before you leave." },
+      { "id": "b", "text": "Go home early since you have completed your assigned work." },
+      { "id": "c", "text": "Use the time to organize your personal files until 5pm." },
+      { "id": "d", "text": "Ask your manager for more work for yourself." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Offering support (a) demonstrates Teamwork and Caring. Going home (b) is selfish in a team crunch. Personal work (c) is neutral but not helpful. Asking manager (d) is good, but helping teammates is better for immediate team morale."
+  },
+  {
+    "id": "sjq_031",
+    "subtest": "situational_judgement",
+    "scenario": "A supplier sends you confidential pricing information meant for a competitor by mistake.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Delete the email immediately and inform the supplier of their error without reading the attachment." },
+      { "id": "b", "text": "Forward the email to your manager to see if we can use the information." },
+      { "id": "c", "text": "Read the information to gain market intelligence but do not tell anyone." },
+      { "id": "d", "text": "Reply to the supplier pointing out their mistake and keep a copy 'just in case'." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Ethical handling of data (a) upholds Integrity. Using the data (b/c) is unethical and potentially illegal. Keeping a copy (d) is suspicious."
+  },
+  {
+    "id": "sjq_032",
+    "subtest": "situational_judgement",
+    "scenario": "You are leading a meeting and two participants are having a side conversation that is distracting others.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Pause the meeting and politely ask if they have a question or contribution to share with the group." },
+      { "id": "b", "text": "Continue speaking louder to drown them out." },
+      { "id": "c", "text": "Stop the meeting and shout at them to be quiet." },
+      { "id": "d", "text": "Ignore them and hope they stop eventually." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Polite intervention (a) maintains control and Respect. Louder speaking (b) is passive-aggressive. Shouting (c) loses respect. Ignoring (d) allows the meeting to be derailed."
+  },
+  {
+    "id": "sjq_033",
+    "subtest": "situational_judgement",
+    "scenario": "A new graduate trainee is struggling to learn the software. They are asking you frequent questions, slowing down your own work.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Schedule a specific time each day to answer their questions so you can both focus in between." },
+      { "id": "b", "text": "Tell them to figure it out themselves as you are too busy." },
+      { "id": "c", "text": "Do the work for them to save time." },
+      { "id": "d", "text": "Direct them to the user manual and ask them not to disturb you." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Structured support (a) balances Caring/Teamwork with efficiency. Refusing help (b) is unsupportive. Doing it for them (c) prevents learning. Manuals (d) are helpful but the 'do not disturb' attitude is poor."
+  },
+  {
+    "id": "sjq_034",
+    "subtest": "situational_judgement",
+    "scenario": "You find a wallet belonging to a contract worker in the restroom. It contains a large amount of cash.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Turn it in to Security immediately and log the item." },
+      { "id": "b", "text": "Leave it there so the owner can find it when they come back." },
+      { "id": "c", "text": "Take the cash for safe keeping and leave the wallet." },
+      { "id": "d", "text": "Try to find the person yourself by walking around the site." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Formal process (a) ensures Integrity and chain of custody. Leaving it (b) risks theft by others. Taking cash (c) is theft. Walking around (d) is inefficient and risky."
+  },
+  {
+    "id": "sjq_035",
+    "subtest": "situational_judgement",
+    "scenario": "Your manager asks you to bypass a required quality check to ship a product on time. They say 'I take full responsibility'.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Respectfully refuse, explaining that the quality check is a mandatory compliance requirement." },
+      { "id": "b", "text": "Do as they ask since they are the manager and took responsibility." },
+      { "id": "c", "text": "Perform a quicker, less thorough check to compromise." },
+      { "id": "d", "text": "Report the manager to their superior immediately." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Compliance/Integrity (a) overrides hierarchy. Blind obedience (b) makes you complicit. Compromise checks (c) are negligence. Reporting (d) is a secondary step if they insist, but refusal is the first step."
+  },
+  {
+    "id": "sjq_036",
+    "subtest": "situational_judgement",
+    "scenario": "You are giving a presentation and realize you have incorrect data on one of the slides.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Pause, acknowledge the error, correct it verbally, and promise to send an updated deck." },
+      { "id": "b", "text": "Skip the slide quickly and hope no one notices." },
+      { "id": "c", "text": "Blame the data analyst who prepared the slide." },
+      { "id": "d", "text": "Pretend the data is correct and explain it away." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Honesty/Excellence (a) builds trust. Hiding errors (b) destroys trust if caught. Blaming others (c) is poor leadership. Lying (d) is an integrity violation."
+  },
+  {
+    "id": "sjq_037",
+    "subtest": "situational_judgement",
+    "scenario": "A colleague is consistently late to meetings, forcing the team to repeat information.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Speak to them privately to understand why and explain the impact on the team." },
+      { "id": "b", "text": "Start the meeting on time and refuse to repeat information when they arrive." },
+      { "id": "c", "text": "Make a sarcastic comment about their 'time zone' when they enter." },
+      { "id": "d", "text": "Report them to HR for tardiness." }
+    ],
+    "correct_answer": { "a": 4, "b": 3, "c": 1, "d": 2 },
+    "explanation": "Address behavior directly and respectfully (a). Natural consequences (b) are okay but less supportive. Sarcasm (c) is toxic. HR (d) is for persistent issues, not the first step."
+  },
+  {
+    "id": "sjq_038",
+    "subtest": "situational_judgement",
+    "scenario": "You overhear a joke that relies on a racial stereotype in the breakroom. Others are laughing.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Speak up immediately and say that such comments are not appropriate in the workplace." },
+      { "id": "b", "text": "Walk away and ignore it." },
+      { "id": "c", "text": "Laugh along so you don't seem like an outcast." },
+      { "id": "d", "text": "Wait until later to tell the person privately that their joke was offensive." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Immediate alignment with Respect/Diversity (a) is required. Walking away (b) is passive. Laughing (c) is complicit. Private (d) is better than nothing but less effective than immediate correction for group norms."
+  },
+  {
+    "id": "sjq_039",
+    "subtest": "situational_judgement",
+    "scenario": "You have a great idea to improve efficiency but your manager is resistant to change.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Create a small proof-of-concept in your own time to demonstrate the value with data." },
+      { "id": "b", "text": "Do it your way anyway and hide it from your manager." },
+      { "id": "c", "text": "Accept the manager's decision and drop the idea." },
+      { "id": "d", "text": "Complain to your manager's boss about their lack of vision." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Data-driven persuasion (a) shows Excellence and Innovation. Insubordination (b) is risky. Accepting (c) is safer than insubordination but lacks drive. Escalating (d) is political and should be a last resort."
+  },
+  {
+    "id": "sjq_040",
+    "subtest": "situational_judgement",
+    "scenario": "You are asked to estimate the time for a task. You think it will take 3 days, but your manager wants it in 2.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Commit to 2 days but explain the risks to quality and what might be de-scoped." },
+      { "id": "b", "text": "Agree to 2 days and just work faster, hoping for the best." },
+      { "id": "c", "text": "Refuse and insist on 3 days without explanation." },
+      { "id": "d", "text": "Say 3 days is the minimum and you cannot do it otherwise." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Managing expectations with trade-offs (a) is professional. Blind optimism (b) leads to failure. Stubborn refusal (c) is uncooperative. '3 days' might be true, but explaining the 'why' is the key."
+  },
+  {
+    "id": "sjq_041",
+    "subtest": "situational_judgement",
+    "scenario": "A client is furious because a deliverable is late. It is your first time speaking to them.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Listen to their frustration, apologize for the delay, and provide a confirmed new delivery time." },
+      { "id": "b", "text": "Remind them that you just joined the project and are not responsible for the delay." },
+      { "id": "c", "text": "Tell them to calm down so you can explain." },
+      { "id": "d", "text": "Refer them to your manager immediately." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Taking ownership (a) de-escalates. Excuses (b) irritate clients. Policing emotions (c) escalates. Passing the buck (d) is weak, though sometimes necessary if you can't solve it."
+  },
+  {
+    "id": "sjq_042",
+    "subtest": "situational_judgement",
+    "scenario": "You witness a minor car accident in the company parking lot. The driver checks their car and walks away without leaving a note on the damaged car.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Approach the driver politely and remind them to leave a note, or report the plate number to security if they refuse." },
+      { "id": "b", "text": "Leave a note yourself on the damaged car saying what you saw." },
+      { "id": "c", "text": "Ignore it as it is not your car." },
+      { "id": "d", "text": "Post about it on the company intranet." }
+    ],
+    "correct_answer": { "a": 4, "b": 3, "c": 1, "d": 2 },
+    "explanation": "Active Integrity (a). Helping the victim (b) is good but misses holding the driver accountable. Ignoring (c) lacks Caring. Posting (d) is gossip."
+  },
+  {
+    "id": "sjq_043",
+    "subtest": "situational_judgement",
+    "scenario": "You are working remotely and your internet connection fails during a critical team meeting.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Immediately call in via phone to rejoin the audio and message the host to explain." },
+      { "id": "b", "text": "Wait for the internet to come back on." },
+      { "id": "c", "text": "Send an email later apologizing." },
+      { "id": "d", "text": "Give up and go do other work." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 3, "d": 1 },
+    "explanation": "Resilience and problem solving (a). Passive waiting (b) misses the meeting. Late apology (c) is unprofessional. Quitting (d) is unacceptable."
+  },
+  {
+    "id": "sjq_044",
+    "subtest": "situational_judgement",
+    "scenario": "You discover a more efficient way to perform a task, but it bypasses a step in the Standard Operating Procedure (SOP).",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Submit a formal request to update the SOP with your new method, waiting for approval before using it." },
+      { "id": "b", "text": "Use the new method immediately to save time." },
+      { "id": "c", "text": "Tell your friends to use the new method but don't tell management." },
+      { "id": "d", "text": "Ignore the improvement to strictly follow the rules." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Innovation within Governance (a). Unauthorized deviation (b) is a compliance risk. Secret deviation (c) is worse. Blind compliance (d) stifles improvement but is safer than deviation."
+  },
+  {
+    "id": "sjq_045",
+    "subtest": "situational_judgement",
+    "scenario": "A colleague is overwhelmed with a personal issue and breaks down in tears at their desk.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Quietly ask if they want to step outside for a break and offer a listening ear." },
+      { "id": "b", "text": "Ignore them to respect their privacy." },
+      { "id": "c", "text": "Tell them to pull themselves together as this is a workplace." },
+      { "id": "d", "text": "Call the manager immediately to handle it." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Caring/Empathy (a). Ignoring (b) is cold. Scolding (c) is cruel. Escalating (d) might be necessary later but immediate support is human."
+  },
+  {
+    "id": "sjq_046",
+    "subtest": "situational_judgement",
+    "scenario": "You are asked to present data that makes your team look bad. Your manager hints that you should 'soften' the numbers.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Present the data accurately but focus the narrative on the action plan to fix the issues." },
+      { "id": "b", "text": "Manipulate the numbers as requested to please your manager." },
+      { "id": "c", "text": "Refuse to present at all." },
+      { "id": "d", "text": "Present the bad data without any context or solution." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Integrity + Solutions (a). Falsification (b) is unethical. Refusal (c) is unhelpful. Problem dumping (d) shows lack of ownership."
+  },
+  {
+    "id": "sjq_047",
+    "subtest": "situational_judgement",
+    "scenario": "A key piece of equipment fails. You know a temporary 'hack' to fix it, but it is not an approved repair method.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Tag the equipment as out of service and call maintenance for a proper repair." },
+      { "id": "b", "text": "Apply the hack to keep production running." },
+      { "id": "c", "text": "Leave it for the next shift to deal with." },
+      { "id": "d", "text": "Ask your supervisor if they want you to use the hack." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Safety/Process Integrity (a). Hacking (b) creates safety risks. Passing the buck (c) is lazy. Asking supervisor (d) puts the onus on them but suggests you are willing to cut corners."
+  },
+  {
+    "id": "sjq_048",
+    "subtest": "situational_judgement",
+    "scenario": "You are in a training session and the instructor is moving too fast for you to understand.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Raise your hand and politely ask them to clarify the last point, as others may also be lost." },
+      { "id": "b", "text": "Stay quiet and try to figure it out later." },
+      { "id": "c", "text": "Stop the class and complain that the teaching style is bad." },
+      { "id": "d", "text": "Ask your neighbor to explain it while the teacher is talking." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Courage to speak up (a) aids learning. Silence (b) leads to gaps. Disrupting (c) is rude. Talking over (d) is distracting."
+  },
+  {
+    "id": "sjq_049",
+    "subtest": "situational_judgement",
+    "scenario": "You are working on a project with a deadline today, but you are sick and cannot work effectively.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Call your manager early, explain the situation, and send whatever work is done to a colleague to finish." },
+      { "id": "b", "text": "Power through and submit poor quality work." },
+      { "id": "c", "text": "Don't call in and just apologize tomorrow." },
+      { "id": "d", "text": "Take the day off but don't tell anyone about the deadline." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Responsible handover (a). Poor quality (b) damages reputation. AWOL (c/d) is unacceptable."
+  },
+  {
+    "id": "sjq_050",
+    "subtest": "situational_judgement",
+    "scenario": "You see a contractor struggling to carry a heavy load that requires two people.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Stop and offer to help them carry it." },
+      { "id": "b", "text": "Tell them they are violating manual handling rules and walk away." },
+      { "id": "c", "text": "Watch to see if they drop it." },
+      { "id": "d", "text": "Report them for safety violation." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Caring/Safety/Teamwork (a). Policing without helping (b) is arrogant. Watching (c) is malicious. Reporting (d) is secondary to immediate assistance."
   }
 ]
-
