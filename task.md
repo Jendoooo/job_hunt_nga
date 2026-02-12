@@ -113,6 +113,20 @@ Date: 2026-02-12
 - [x] Link workspace to Supabase project ref `fjwfoedyomdgxadnjsdt`
 - [x] Verify remote migration connectivity (`npx supabase db push --linked`)
 
+## Phase 8: Reliability Sprint (2026-02-12)
+- [x] **Bug 1** — Emit `attempt-saved` event on local-save path in `ScoreReport.jsx` (Dashboard was never refreshing after 8s failsafe)
+- [x] **Bug 2** — Add `withTimeout(8s)` wrapper on `fetchRecentAttempts` in `Dashboard.jsx` (stats hung indefinitely on slow Supabase)
+- [x] **Bug 3** — Move `navigate('/login')` from `try` to `finally` in `Dashboard.handleSignOut` (unconditional logout redirect)
+- [x] **Bug 4** — Add 400ms debounce to `handleAttemptSaved` in `Dashboard.jsx` (prevent race vs uncommitted INSERT)
+- [x] Increase `SAVE_FAILSAFE_MS` from 5000 → 8000ms and `SAVE_TIMEOUT_MS` from 7000 → 6000ms in `ScoreReport.jsx`
+- [x] **Visual** — Fix bar X-axis label clipping: `SVG_HEIGHT` 320→360, `X_AXIS_LABEL_OFFSET` 28→40 in `SHLAdjustableBarWidget.jsx`
+- [x] **Visual** — Update SHL bar segment colors: service=`#0072bc` (Blue), product=`#6a9e1f` (Green), grid=`#e0e0e0` in `index.css`
+- [x] **Visual** — Add `overflow: visible` to `.interactive-bar-chart` CSS to prevent SVG clipping
+- [x] Add "Sales Revenue" stacked-bar question (`bar_sales_revenue_real`) to `shl-gold-standard.json`
+- [x] Regenerate `shl-interactive-questions.json` from updated gold standard (50 Qs, 35 gold sources)
+- [x] Create `supabase/migrations/20260212000000_initial_schema.sql` (tables, trigger, RLS, index)
+- [x] Create `supabase/migrations/20260212000001_cascade_constraints.sql` (CASCADE FK constraints)
+
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
 - [x] `npm run build` passes

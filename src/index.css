@@ -1385,6 +1385,7 @@ select:focus-visible {
   display: block;
   margin-bottom: 0.45rem;
   padding-bottom: 30px;
+  overflow: visible;
 }
 
 .interactive-axis {
@@ -1393,7 +1394,7 @@ select:focus-visible {
 }
 
 .interactive-grid-line {
-  stroke: #e2e8f0;
+  stroke: #e0e0e0;
   stroke-width: 1;
 }
 
@@ -1421,11 +1422,11 @@ select:focus-visible {
 }
 
 .interactive-segment--service {
-  fill: #0ea5a7;
+  fill: #0072bc;
 }
 
 .interactive-segment--product {
-  fill: #2563eb;
+  fill: #6a9e1f;
 }
 
 .interactive-segment--interactive {

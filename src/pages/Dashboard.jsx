@@ -50,6 +50,15 @@ function stableSerialize(value) {
     return JSON.stringify(normalizeForComparison(value))
 }
 
+function withTimeout(promise, timeoutMs, message) {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+            setTimeout(() => reject(new Error(message)), timeoutMs)
+        }),
+    ])
+}
+
 function attemptRatio(attempt) {
     const score = Number(attempt?.score)
     const total = Number(attempt?.total_questions)
@@ -132,7 +141,7 @@ export default function Dashboard() {
                 query = query.abortSignal(signal)
             }
 
-            const { data, error } = await query
+            const { data, error } = await withTimeout(query, 8000, 'Stats fetch timed out after 8s')
 
             if (error) throw error
             const attempts = dedupeAttempts(data || [])
@@ -153,6 +162,9 @@ export default function Dashboard() {
             setAverageScore(averagePercent)
         } catch (err) {
             if (isAbortLikeError(err) || signal?.aborted) {
+                return
+            }
+            if (err?.message?.includes('timed out')) {
                 return
             }
             console.error('Error fetching attempts:', err)
@@ -179,7 +191,7 @@ export default function Dashboard() {
         runFetch()
 
         function handleAttemptSaved() {
-            runFetch()
+            setTimeout(runFetch, 400)
         }
 
         function handleWindowFocus() {
@@ -346,11 +358,11 @@ export default function Dashboard() {
         setSigningOut(true)
         try {
             await signOut()
-            navigate('/login', { replace: true })
         } catch (error) {
             console.error('Failed to sign out:', error)
         } finally {
             setSigningOut(false)
+            navigate('/login', { replace: true })
         }
     }
 

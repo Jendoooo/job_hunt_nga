@@ -19,8 +19,8 @@ import {
     Check,
 } from 'lucide-react'
 
-const SAVE_TIMEOUT_MS = 7000
-const SAVE_FAILSAFE_MS = 5000
+const SAVE_TIMEOUT_MS = 6000
+const SAVE_FAILSAFE_MS = 8000
 const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
 const RECENT_ATTEMPT_TTL_MS = 120000
 
@@ -268,6 +268,7 @@ export default function ScoreReport({
                     setSavedLocally(true)
                     setSaveError('')
                 }
+                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return true
             }
 

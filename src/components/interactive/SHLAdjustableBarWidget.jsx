@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 const SVG_WIDTH = 440
-const SVG_HEIGHT = 320
+const SVG_HEIGHT = 360
 const PLOT_TOP = 24
 const PLOT_BOTTOM = 236
 const PLOT_LEFT = 56
 const PLOT_RIGHT = 400
 const PLOT_HEIGHT = PLOT_BOTTOM - PLOT_TOP
 const BAR_WIDTH = 56
-const X_AXIS_LABEL_OFFSET = 28
+const X_AXIS_LABEL_OFFSET = 40
 
 function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value))

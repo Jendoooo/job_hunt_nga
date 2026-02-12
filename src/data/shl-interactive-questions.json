@@ -1805,6 +1805,48 @@
   },
   {
     "id": 35,
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the sales revenue by quarter and the percentages in the East and West regions.",
+    "prompt_rules": [
+      "Total sales revenue was $120 million in Quarter 1.",
+      "Total sales revenue in Quarter 2 decreased by $10 million compared to Quarter 1.",
+      "Sales revenue in the East was $78 million in Quarter 1.",
+      "Sales revenue in the West increased by $46 million from Quarter 1 to Quarter 2."
+    ],
+    "widget_data": {
+      "axis_max": 160,
+      "axis_step": 40,
+      "labels": {
+        "bottom": "West",
+        "top": "East"
+      },
+      "bar_1": {
+        "label": "Quarter 1",
+        "total": 120,
+        "split_pct": 35
+      },
+      "bar_2_initial": {
+        "label": "Quarter 2",
+        "total": 120,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 110,
+      "split_pct": 80
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Q2 total = 120 − 10 = $110m. West grew from $42m to $42m + $46m = $88m. East = $110m − $88m = $22m. West share = 88/110 ≈ 80%.",
+    "question": "Arrange the sales revenue by quarter and the percentages in the East and West regions.",
+    "source_id": "bar_sales_revenue_real"
+  },
+  {
+    "id": 36,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1824,7 +1866,7 @@
       ],
       "rows": [
         {
-          "id": "q35_r1",
+          "id": "q36_r1",
           "values": [
             "Alice",
             "433",
@@ -1832,7 +1874,7 @@
           ]
         },
         {
-          "id": "q35_r2",
+          "id": "q36_r2",
           "values": [
             "Binta",
             "473",
@@ -1840,7 +1882,7 @@
           ]
         },
         {
-          "id": "q35_r3",
+          "id": "q36_r3",
           "values": [
             "Chidi",
             "247",
@@ -1848,7 +1890,7 @@
           ]
         },
         {
-          "id": "q35_r4",
+          "id": "q36_r4",
           "values": [
             "Daniel",
             "170",
@@ -1870,15 +1912,15 @@
       ]
     },
     "correct_answer": {
-      "q35_r1": "incorrect",
-      "q35_r2": "correct",
-      "q35_r3": "incorrect",
-      "q35_r4": "incorrect"
+      "q36_r1": "incorrect",
+      "q36_r2": "correct",
+      "q36_r3": "incorrect",
+      "q36_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 36,
+    "id": 37,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1894,25 +1936,25 @@
       "total_value": 600,
       "segments": [
         {
-          "id": "seg_36_eng",
+          "id": "seg_37_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 34
         },
         {
-          "id": "seg_36_prd",
+          "id": "seg_37_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 39
         },
         {
-          "id": "seg_36_fin",
+          "id": "seg_37_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 14
         },
         {
-          "id": "seg_36_mkt",
+          "id": "seg_37_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 13
@@ -1920,10 +1962,10 @@
       ]
     },
     "correct_answer": {
-      "seg_36_eng": 31,
-      "seg_36_prd": 30,
-      "seg_36_fin": 19,
-      "seg_36_mkt": 20
+      "seg_37_eng": 31,
+      "seg_37_prd": 30,
+      "seg_37_fin": 19,
+      "seg_37_mkt": 20
     },
     "tolerance": {
       "pct": 2
@@ -1931,7 +1973,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 37,
+    "id": 38,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -1998,7 +2040,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 38,
+    "id": 39,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2018,7 +2060,7 @@
       ],
       "rows": [
         {
-          "id": "q38_r1",
+          "id": "q39_r1",
           "values": [
             "Alice",
             "546",
@@ -2026,7 +2068,7 @@
           ]
         },
         {
-          "id": "q38_r2",
+          "id": "q39_r2",
           "values": [
             "Binta",
             "709",
@@ -2034,7 +2076,7 @@
           ]
         },
         {
-          "id": "q38_r3",
+          "id": "q39_r3",
           "values": [
             "Chidi",
             "541",
@@ -2042,7 +2084,7 @@
           ]
         },
         {
-          "id": "q38_r4",
+          "id": "q39_r4",
           "values": [
             "Daniel",
             "211",
@@ -2064,15 +2106,15 @@
       ]
     },
     "correct_answer": {
-      "q38_r1": "incorrect",
-      "q38_r2": "incorrect",
-      "q38_r3": "incorrect",
-      "q38_r4": "correct"
+      "q39_r1": "incorrect",
+      "q39_r2": "incorrect",
+      "q39_r3": "incorrect",
+      "q39_r4": "correct"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 39,
+    "id": 40,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2088,25 +2130,25 @@
       "total_value": 600,
       "segments": [
         {
-          "id": "seg_39_eng",
+          "id": "seg_40_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 35
         },
         {
-          "id": "seg_39_prd",
+          "id": "seg_40_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 33
         },
         {
-          "id": "seg_39_fin",
+          "id": "seg_40_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 24
         },
         {
-          "id": "seg_39_mkt",
+          "id": "seg_40_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 8
@@ -2114,10 +2156,10 @@
       ]
     },
     "correct_answer": {
-      "seg_39_eng": 33,
-      "seg_39_prd": 31,
-      "seg_39_fin": 19,
-      "seg_39_mkt": 17
+      "seg_40_eng": 33,
+      "seg_40_prd": 31,
+      "seg_40_fin": 19,
+      "seg_40_mkt": 17
     },
     "tolerance": {
       "pct": 2
@@ -2125,7 +2167,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 40,
+    "id": 41,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2192,7 +2234,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 41,
+    "id": 42,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2212,7 +2254,7 @@
       ],
       "rows": [
         {
-          "id": "q41_r1",
+          "id": "q42_r1",
           "values": [
             "Alice",
             "612",
@@ -2220,7 +2262,7 @@
           ]
         },
         {
-          "id": "q41_r2",
+          "id": "q42_r2",
           "values": [
             "Binta",
             "160",
@@ -2228,7 +2270,7 @@
           ]
         },
         {
-          "id": "q41_r3",
+          "id": "q42_r3",
           "values": [
             "Chidi",
             "426",
@@ -2236,7 +2278,7 @@
           ]
         },
         {
-          "id": "q41_r4",
+          "id": "q42_r4",
           "values": [
             "Daniel",
             "177",
@@ -2258,15 +2300,15 @@
       ]
     },
     "correct_answer": {
-      "q41_r1": "incorrect",
-      "q41_r2": "correct",
-      "q41_r3": "correct",
-      "q41_r4": "correct"
+      "q42_r1": "incorrect",
+      "q42_r2": "correct",
+      "q42_r3": "correct",
+      "q42_r4": "correct"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 42,
+    "id": 43,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2282,25 +2324,25 @@
       "total_value": 420,
       "segments": [
         {
-          "id": "seg_42_eng",
+          "id": "seg_43_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 38
         },
         {
-          "id": "seg_42_prd",
+          "id": "seg_43_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 18
         },
         {
-          "id": "seg_42_fin",
+          "id": "seg_43_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 11
         },
         {
-          "id": "seg_42_mkt",
+          "id": "seg_43_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 33
@@ -2308,10 +2350,10 @@
       ]
     },
     "correct_answer": {
-      "seg_42_eng": 30,
-      "seg_42_prd": 23,
-      "seg_42_fin": 18,
-      "seg_42_mkt": 29
+      "seg_43_eng": 30,
+      "seg_43_prd": 23,
+      "seg_43_fin": 18,
+      "seg_43_mkt": 29
     },
     "tolerance": {
       "pct": 2
@@ -2319,7 +2361,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 43,
+    "id": 44,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2386,7 +2428,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 44,
+    "id": 45,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2405,7 +2447,7 @@
       ],
       "rows": [
         {
-          "id": "q44_r1",
+          "id": "q45_r1",
           "values": [
             "Alice",
             "141",
@@ -2413,7 +2455,7 @@
           ]
         },
         {
-          "id": "q44_r2",
+          "id": "q45_r2",
           "values": [
             "Binta",
             "307",
@@ -2421,7 +2463,7 @@
           ]
         },
         {
-          "id": "q44_r3",
+          "id": "q45_r3",
           "values": [
             "Chidi",
             "671",
@@ -2429,7 +2471,7 @@
           ]
         },
         {
-          "id": "q44_r4",
+          "id": "q45_r4",
           "values": [
             "Daniel",
             "299",
@@ -2451,15 +2493,15 @@
       ]
     },
     "correct_answer": {
-      "q44_r1": "incorrect",
-      "q44_r2": "incorrect",
-      "q44_r3": "incorrect",
-      "q44_r4": "incorrect"
+      "q45_r1": "incorrect",
+      "q45_r2": "incorrect",
+      "q45_r3": "incorrect",
+      "q45_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 45,
+    "id": 46,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2475,25 +2517,25 @@
       "total_value": 540,
       "segments": [
         {
-          "id": "seg_45_eng",
+          "id": "seg_46_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 25
         },
         {
-          "id": "seg_45_prd",
+          "id": "seg_46_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 28
         },
         {
-          "id": "seg_45_fin",
+          "id": "seg_46_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 17
         },
         {
-          "id": "seg_45_mkt",
+          "id": "seg_46_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 30
@@ -2501,10 +2543,10 @@
       ]
     },
     "correct_answer": {
-      "seg_45_eng": 20,
-      "seg_45_prd": 31,
-      "seg_45_fin": 21,
-      "seg_45_mkt": 28
+      "seg_46_eng": 20,
+      "seg_46_prd": 31,
+      "seg_46_fin": 21,
+      "seg_46_mkt": 28
     },
     "tolerance": {
       "pct": 2
@@ -2512,7 +2554,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 46,
+    "id": 47,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2579,7 +2621,7 @@
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
   },
   {
-    "id": 47,
+    "id": 48,
     "type": "interactive_drag_table",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2599,7 +2641,7 @@
       ],
       "rows": [
         {
-          "id": "q47_r1",
+          "id": "q48_r1",
           "values": [
             "Alice",
             "162",
@@ -2607,7 +2649,7 @@
           ]
         },
         {
-          "id": "q47_r2",
+          "id": "q48_r2",
           "values": [
             "Binta",
             "153",
@@ -2615,7 +2657,7 @@
           ]
         },
         {
-          "id": "q47_r3",
+          "id": "q48_r3",
           "values": [
             "Chidi",
             "244",
@@ -2623,7 +2665,7 @@
           ]
         },
         {
-          "id": "q47_r4",
+          "id": "q48_r4",
           "values": [
             "Daniel",
             "549",
@@ -2645,15 +2687,15 @@
       ]
     },
     "correct_answer": {
-      "q47_r1": "incorrect",
-      "q47_r2": "incorrect",
-      "q47_r3": "correct",
-      "q47_r4": "incorrect"
+      "q48_r1": "incorrect",
+      "q48_r2": "incorrect",
+      "q48_r3": "correct",
+      "q48_r4": "incorrect"
     },
     "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   },
   {
-    "id": 48,
+    "id": 49,
     "type": "interactive_pie_chart",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2669,25 +2711,25 @@
       "total_value": 540,
       "segments": [
         {
-          "id": "seg_48_eng",
+          "id": "seg_49_eng",
           "label": "Engineering",
           "color": "blue",
           "initial_pct": 20
         },
         {
-          "id": "seg_48_prd",
+          "id": "seg_49_prd",
           "label": "Product",
           "color": "green",
           "initial_pct": 26
         },
         {
-          "id": "seg_48_fin",
+          "id": "seg_49_fin",
           "label": "Finance",
           "color": "orange",
           "initial_pct": 40
         },
         {
-          "id": "seg_48_mkt",
+          "id": "seg_49_mkt",
           "label": "Marketing",
           "color": "purple",
           "initial_pct": 14
@@ -2695,10 +2737,10 @@
       ]
     },
     "correct_answer": {
-      "seg_48_eng": 22,
-      "seg_48_prd": 27,
-      "seg_48_fin": 31,
-      "seg_48_mkt": 20
+      "seg_49_eng": 22,
+      "seg_49_prd": 27,
+      "seg_49_fin": 31,
+      "seg_49_mkt": 20
     },
     "tolerance": {
       "pct": 2
@@ -2706,7 +2748,7 @@
     "explanation": "Treat each segment as a variable and solve the linear constraints simultaneously."
   },
   {
-    "id": 49,
+    "id": 50,
     "type": "interactive_stacked_bar",
     "subtype": "interactive_numerical_hard",
     "difficulty": "hard",
@@ -2771,78 +2813,5 @@
       }
     },
     "explanation": "Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage."
-  },
-  {
-    "id": 50,
-    "type": "interactive_drag_table",
-    "subtype": "interactive_numerical_hard",
-    "difficulty": "hard",
-    "instruction": "Verify if each travel expense claim is correct.",
-    "question": "Use the tiered mileage policy and classify each claim.",
-    "prompt_rules": [
-      "0-200 miles: $0.50/mile",
-      "201+ miles: $0.25/mile"
-    ],
-    "widget_data": {
-      "columns": [
-        "Employee",
-        "Total Miles",
-        "Claimed Amount",
-        "Status"
-      ],
-      "rows": [
-        {
-          "id": "q50_r1",
-          "values": [
-            "Alice",
-            "525",
-            "$181.25"
-          ]
-        },
-        {
-          "id": "q50_r2",
-          "values": [
-            "Binta",
-            "409",
-            "$152.25"
-          ]
-        },
-        {
-          "id": "q50_r3",
-          "values": [
-            "Chidi",
-            "249",
-            "$112.25"
-          ]
-        },
-        {
-          "id": "q50_r4",
-          "values": [
-            "Daniel",
-            "212",
-            "$94.25"
-          ]
-        }
-      ],
-      "draggables": [
-        {
-          "id": "correct",
-          "label": "Correct",
-          "color": "green"
-        },
-        {
-          "id": "incorrect",
-          "label": "Incorrect",
-          "color": "red"
-        }
-      ]
-    },
-    "correct_answer": {
-      "q50_r1": "correct",
-      "q50_r2": "correct",
-      "q50_r3": "correct",
-      "q50_r4": "incorrect"
-    },
-    "explanation": "Apply each mileage tier progressively before comparing to the claimed amount."
   }
 ]
