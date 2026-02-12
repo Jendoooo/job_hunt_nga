@@ -27,11 +27,111 @@ function randomInt(min, max) {
     return Math.floor(random() * (max - min + 1)) + min
 }
 
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value))
+}
+
+function shuffle(list) {
+    const next = [...list]
+    for (let index = next.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(random() * (index + 1))
+        ;[next[index], next[swapIndex]] = [next[swapIndex], next[index]]
+    }
+    return next
+}
+
 function toPct(part, total) {
     return Math.round((part / total) * 100)
 }
 
-function createTableQuestion(id) {
+function formatMoney(value) {
+    return `$${Number(value).toFixed(2)}`
+}
+
+function normalizeIntegerPercentages(values, minimum = 1) {
+    const safe = values.map((value) => Math.max(minimum, Math.round(value)))
+    const total = safe.reduce((sum, value) => sum + value, 0)
+    let delta = 100 - total
+
+    const indexes = safe
+        .map((value, index) => ({ value, index }))
+        .sort((a, b) => b.value - a.value)
+        .map((entry) => entry.index)
+
+    let pointer = 0
+    while (delta !== 0 && pointer < 400) {
+        const index = indexes[pointer % indexes.length]
+        if (delta > 0) {
+            safe[index] += 1
+            delta -= 1
+        } else if (safe[index] > minimum) {
+            safe[index] -= 1
+            delta += 1
+        }
+        pointer += 1
+    }
+
+    return safe
+}
+
+function progressiveAmount(miles, tiers) {
+    let amount = 0
+    let covered = 0
+
+    for (const tier of tiers) {
+        const upperBound = tier.upTo
+        const tierDistance = upperBound === Infinity
+            ? Math.max(0, miles - covered)
+            : Math.max(0, Math.min(miles, upperBound) - covered)
+
+        amount += tierDistance * tier.rate
+        covered += tierDistance
+    }
+
+    return Number(amount.toFixed(2))
+}
+
+function buildInitialPercentages(correctMap, segmentIds) {
+    const shifted = segmentIds.map((segmentId) => {
+        const correct = Number(correctMap[segmentId] || 0)
+        return clamp(correct + pick([-8, -6, -4, -2, 2, 4, 6, 8]), 4, 92)
+    })
+    const sum = shifted.reduce((total, value) => total + value, 0) || 1
+    const scaled = shifted.map((value) => (value / sum) * 100)
+    const normalized = normalizeIntegerPercentages(scaled, 1)
+
+    const initial = {}
+    segmentIds.forEach((segmentId, index) => {
+        initial[segmentId] = normalized[index]
+    })
+    return initial
+}
+
+function formatEquationTerm(label, coefficient) {
+    return coefficient === 1 ? label : `${coefficient} x ${label}`
+}
+
+function createEquationRule(targetValues, labels) {
+    const shuffledLabels = shuffle(labels)
+    const termCount = randomInt(2, Math.min(4, labels.length))
+    const pickedLabels = shuffledLabels.slice(0, termCount)
+    const terms = pickedLabels.map((label) => ({
+        label,
+        coefficient: pick([1, 1, 2, 2, 3]),
+    }))
+
+    const result = terms.reduce((sum, term) => {
+        return sum + (targetValues[term.label] * term.coefficient)
+    }, 0)
+
+    const expression = terms
+        .map((term) => formatEquationTerm(term.label, term.coefficient))
+        .join(' + ')
+
+    return `${expression} = ${result}%`
+}
+
+function createStandardTableQuestion(id) {
     const variants = ['commission', 'funding', 'penalty']
     const variant = variants[id % variants.length]
 
@@ -57,7 +157,7 @@ function createTableQuestion(id) {
             instruction: 'Classify each row using the commission rule.',
             question: 'Drag the correct outcome label for each sales rep.',
             prompt_rules: [
-                `Commission Score = (Sales - Returns x 5) / Net Sales`,
+                'Commission Score = (Sales - Returns x 5) / Net Sales',
                 `High Bonus if Commission Score >= ${threshold}%`,
                 'Otherwise classify as Standard Bonus',
             ],
@@ -158,7 +258,73 @@ function createTableQuestion(id) {
     }
 }
 
-function createPieQuestion(id) {
+function createTieredTableQuestion(id) {
+    const tierPresets = [
+        [
+            { upTo: 200, rate: 0.5 },
+            { upTo: Infinity, rate: 0.25 },
+        ],
+        [
+            { upTo: 250, rate: 0.11 },
+            { upTo: 500, rate: 0.1 },
+            { upTo: Infinity, rate: 0.05 },
+        ],
+        [
+            { upTo: 180, rate: 0.65 },
+            { upTo: 420, rate: 0.4 },
+            { upTo: Infinity, rate: 0.2 },
+        ],
+    ]
+
+    const tiers = pick(tierPresets)
+    const rows = ['Alice', 'Binta', 'Chidi', 'Daniel'].map((name, index) => {
+        const miles = randomInt(120, 780)
+        const trueAmount = progressiveAmount(miles, tiers)
+        const isCorrect = random() > 0.45
+        const offset = pick([4.25, 6.5, 8.75, 11.0, 13.25])
+        const claimedAmount = isCorrect ? trueAmount : Number((trueAmount + (random() > 0.5 ? offset : -offset)).toFixed(2))
+
+        return {
+            id: `q${id}_r${index + 1}`,
+            values: [name, String(miles), formatMoney(claimedAmount)],
+            result: isCorrect ? 'correct' : 'incorrect',
+        }
+    })
+
+    const ruleLines = tiers.map((tier, index) => {
+        const lower = index === 0 ? 0 : tiers[index - 1].upTo + 1
+        const upper = tier.upTo === Infinity ? `${lower}+` : `${lower}-${tier.upTo}`
+        return `${upper} miles: ${formatMoney(tier.rate)}/mile`
+    })
+
+    return {
+        id,
+        type: 'interactive_drag_table',
+        subtype: 'interactive_numerical_hard',
+        instruction: 'Verify if each travel expense claim is correct.',
+        question: 'Use the tiered mileage policy and classify each claim.',
+        prompt_rules: ruleLines,
+        widget_data: {
+            columns: ['Employee', 'Total Miles', 'Claimed Amount', 'Status'],
+            rows: rows.map(({ id: rowId, values }) => ({ id: rowId, values })),
+            draggables: [
+                { id: 'correct', label: 'Correct', color: 'green' },
+                { id: 'incorrect', label: 'Incorrect', color: 'red' },
+            ],
+        },
+        correct_answer: rows.reduce((accumulator, row) => {
+            accumulator[row.id] = row.result
+            return accumulator
+        }, {}),
+        explanation: 'Apply each mileage tier progressively before comparing to the claimed amount.',
+    }
+}
+
+function createTableQuestion(id, hardMode = false) {
+    return hardMode ? createTieredTableQuestion(id) : createStandardTableQuestion(id)
+}
+
+function createStandardPieQuestion(id) {
     const ratioTemplates = [
         [1, 1, 2, 6],
         [1, 2, 3, 4],
@@ -184,20 +350,11 @@ function createPieQuestion(id) {
         }
     })
 
-    let remaining = 100
-    const initialPct = {}
-    segments.forEach((segment, index) => {
-        if (index === segments.length - 1) {
-            initialPct[segment.id] = remaining
-            return
-        }
-        const move = pick([-6, -4, -2, 2, 4, 6])
-        const proposed = clamp(segment.correct_pct + move, 4, 92)
-        initialPct[segment.id] = proposed
-        remaining -= proposed
-    })
-    initialPct[segments[segments.length - 1].id] = remaining
-
+    const correctAnswer = segments.reduce((accumulator, segment) => {
+        accumulator[segment.id] = segment.correct_pct
+        return accumulator
+    }, {})
+    const initialPct = buildInitialPercentages(correctAnswer, segments.map((segment) => segment.id))
     const ratioExpression = segments
         .map((segment, index) => `${segment.label}:${template[index]}`)
         .join(' | ')
@@ -221,10 +378,7 @@ function createPieQuestion(id) {
                 initial_pct: initialPct[segment.id],
             })),
         },
-        correct_answer: segments.reduce((accumulator, segment) => {
-            accumulator[segment.id] = segment.correct_pct
-            return accumulator
-        }, {}),
+        correct_answer: correctAnswer,
         tolerance: {
             pct: 2,
         },
@@ -232,7 +386,83 @@ function createPieQuestion(id) {
     }
 }
 
-function createBarQuestion(id) {
+function createEquationPieQuestion(id) {
+    let engineering = 0
+    let product = 0
+    let finance = 0
+    let marketing = 0
+
+    while (true) {
+        engineering = randomInt(16, 34)
+        product = randomInt(15, 32)
+        finance = randomInt(12, 32)
+        marketing = 100 - engineering - product - finance
+        if (marketing >= 10 && marketing <= 32) break
+    }
+
+    const segments = [
+        { id: `seg_${id}_eng`, label: 'Engineering', color: 'blue', correct_pct: engineering },
+        { id: `seg_${id}_prd`, label: 'Product', color: 'green', correct_pct: product },
+        { id: `seg_${id}_fin`, label: 'Finance', color: 'orange', correct_pct: finance },
+        { id: `seg_${id}_mkt`, label: 'Marketing', color: 'purple', correct_pct: marketing },
+    ]
+
+    const values = {
+        Engineering: engineering,
+        Product: product,
+        Finance: finance,
+        Marketing: marketing,
+    }
+
+    const labels = ['Engineering', 'Product', 'Finance', 'Marketing']
+    const equations = []
+    const seenExpressions = new Set()
+    let guard = 0
+    while (equations.length < 3 && guard < 40) {
+        const rule = createEquationRule(values, labels)
+        if (!seenExpressions.has(rule)) {
+            seenExpressions.add(rule)
+            equations.push(rule)
+        }
+        guard += 1
+    }
+    equations.push('Engineering + Product + Finance + Marketing = 100%')
+
+    const correctAnswer = segments.reduce((accumulator, segment) => {
+        accumulator[segment.id] = segment.correct_pct
+        return accumulator
+    }, {})
+    const initialPct = buildInitialPercentages(correctAnswer, segments.map((segment) => segment.id))
+
+    return {
+        id,
+        type: 'interactive_pie_chart',
+        subtype: 'interactive_numerical_hard',
+        instruction: 'Approximate the pie slices that satisfy all equation constraints.',
+        question: 'Resize each budget slice to satisfy the system of equations.',
+        prompt_rules: equations,
+        widget_data: {
+            total_value: pick([420, 480, 540, 600]),
+            segments: segments.map((segment) => ({
+                id: segment.id,
+                label: segment.label,
+                color: segment.color,
+                initial_pct: initialPct[segment.id],
+            })),
+        },
+        correct_answer: correctAnswer,
+        tolerance: {
+            pct: 2,
+        },
+        explanation: 'Treat each segment as a variable and solve the linear constraints simultaneously.',
+    }
+}
+
+function createPieQuestion(id, hardMode = false) {
+    return hardMode ? createEquationPieQuestion(id) : createStandardPieQuestion(id)
+}
+
+function createStandardBarQuestion(id) {
     const monthOneTotal = pick([160, 180, 200, 220, 240, 260, 280])
     const splitPct = pick([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75])
     const serviceBase = Math.round((monthOneTotal * splitPct) / 100)
@@ -259,12 +489,20 @@ function createBarQuestion(id) {
         widget_data: {
             axis_max: axisMax,
             bar_1: {
+                id: 'month_1',
+                label: 'Month 1',
                 total: monthOneTotal,
                 split_pct: splitPct,
             },
             bar_2_initial: {
+                id: 'month_2',
+                label: 'Month 2',
                 total: clamp(monthOneTotal + pick([-20, -10, 10, 20]), 1, axisMax),
                 split_pct: clamp(splitPct + pick([-12, -8, -4, 4, 8, 12]), 5, 95),
+            },
+            segment_labels: {
+                primary: 'Service',
+                secondary: 'Product',
             },
         },
         correct_answer: {
@@ -279,8 +517,101 @@ function createBarQuestion(id) {
     }
 }
 
-function clamp(value, min, max) {
-    return Math.min(max, Math.max(min, value))
+function createHistoricalBarQuestion(id) {
+    const yearOneTotal = pick([180, 200, 220, 240])
+    const yearOneSmartPct = pick([30, 35, 40, 45, 50])
+    const smartphonesYearOne = Math.round((yearOneTotal * yearOneSmartPct) / 100)
+    const nonSmartYearOne = yearOneTotal - smartphonesYearOne
+
+    const yearTwoSmartIncrease = pick([40, 50, 60])
+    const yearTwoNonSmartShift = pick([-20, -10, 0, 10, 20])
+    const smartphonesYearTwo = smartphonesYearOne + yearTwoSmartIncrease
+    const nonSmartYearTwo = Math.max(10, nonSmartYearOne + yearTwoNonSmartShift)
+    const yearTwoTotal = smartphonesYearTwo + nonSmartYearTwo
+    const yearTwoSmartPct = toPct(smartphonesYearTwo, yearTwoTotal)
+
+    const yearThreeNonSmartDropPct = pick([15, 20, 25])
+    const yearThreeSmartIncreasePct = pick([20, 25, 30, 35])
+    const nonSmartYearThree = Math.round(nonSmartYearOne * (1 - yearThreeNonSmartDropPct / 100))
+    const smartphonesYearThree = Math.round(smartphonesYearOne * (1 + yearThreeSmartIncreasePct / 100))
+    const yearThreeTotal = smartphonesYearThree + nonSmartYearThree
+    const yearThreeSmartPct = toPct(smartphonesYearThree, yearThreeTotal)
+
+    const axisMax = Math.max(
+        260,
+        Math.ceil((Math.max(yearOneTotal, yearTwoTotal, yearThreeTotal) + 40) / 50) * 50
+    )
+
+    return {
+        id,
+        type: 'interactive_stacked_bar',
+        subtype: 'interactive_numerical_hard',
+        instruction: 'Use Year 1 as the historical baseline, then build Year 2 and Year 3.',
+        question: 'Adjust Year 2 and Year 3 bars to satisfy all historical rules.',
+        prompt_rules: [
+            `Year 1 baseline: ${yearOneTotal} total (${smartphonesYearOne} smartphones / ${nonSmartYearOne} non-smartphones)`,
+            `Year 2 smartphones = Year 1 smartphones + ${yearTwoSmartIncrease}`,
+            `Year 2 non-smartphones = Year 1 non-smartphones ${yearTwoNonSmartShift >= 0 ? '+' : '-'} ${Math.abs(yearTwoNonSmartShift)}`,
+            `Year 3 non-smartphones dropped by ${yearThreeNonSmartDropPct}% vs Year 1`,
+            `Year 3 smartphones increased by ${yearThreeSmartIncreasePct}% vs Year 1`,
+        ],
+        widget_data: {
+            axis_max: axisMax,
+            segment_labels: {
+                primary: 'Smartphones',
+                secondary: 'Non-smartphones',
+            },
+            reference_bar: {
+                id: 'year1',
+                label: 'Year 1',
+                total: yearOneTotal,
+                split_pct: yearOneSmartPct,
+            },
+            interactive_bars: [
+                {
+                    id: 'year2',
+                    label: 'Year 2',
+                    total: clamp(yearTwoTotal + pick([-18, -10, 10, 18]), 1, axisMax),
+                    split_pct: clamp(yearTwoSmartPct + pick([-12, -8, -4, 4, 8, 12]), 5, 95),
+                },
+                {
+                    id: 'year3',
+                    label: 'Year 3',
+                    total: clamp(yearThreeTotal + pick([-18, -10, 10, 18]), 1, axisMax),
+                    split_pct: clamp(yearThreeSmartPct + pick([-12, -8, -4, 4, 8, 12]), 5, 95),
+                },
+            ],
+        },
+        correct_answer: {
+            year2: {
+                total: yearTwoTotal,
+                split_pct: yearTwoSmartPct,
+            },
+            year3: {
+                total: yearThreeTotal,
+                split_pct: yearThreeSmartPct,
+            },
+        },
+        tolerance: {
+            total: 5,
+            split_pct: 2,
+            bars: {
+                year2: {
+                    total: 5,
+                    split_pct: 2,
+                },
+                year3: {
+                    total: 5,
+                    split_pct: 2,
+                },
+            },
+        },
+        explanation: 'Derive Year 2 and Year 3 counts from Year 1 first, then convert each year to total and smartphone percentage.',
+    }
+}
+
+function createBarQuestion(id, hardMode = false) {
+    return hardMode ? createHistoricalBarQuestion(id) : createStandardBarQuestion(id)
 }
 
 function main() {
@@ -288,11 +619,11 @@ function main() {
 
     for (let id = 1; id <= QUESTION_COUNT; id += 1) {
         if (id % 3 === 1) {
-            questions.push(createTableQuestion(id))
+            questions.push(createTableQuestion(id, id % 6 === 1))
         } else if (id % 3 === 2) {
-            questions.push(createPieQuestion(id))
+            questions.push(createPieQuestion(id, id % 6 === 2))
         } else {
-            questions.push(createBarQuestion(id))
+            questions.push(createBarQuestion(id, id % 6 === 0))
         }
     }
 

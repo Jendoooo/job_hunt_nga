@@ -17,7 +17,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    - Question card
    - Question navigator
    - Flagging and review
-   - Interactive widgets for numerical items (table, pie, stacked bar)
+   - Interactive widgets for numerical items (table, pie, stacked bar), including hard-mode variants
 4. View score report and save attempt to Supabase.
 
 ## Key Files
@@ -90,3 +90,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
 - Vercel SPA routing fallback is configured via `vercel.json`.
 - Core lint/build checks pass.
 - SHL Sets 2-4 data expansion is pending.
+- SHL Interactive Numerical now includes hard-mode logic models:
+  - tiered progressive table verification
+  - equation-system pie constraints
+  - historical-reference stacked bars (Year 1 locked, Year 2/3 adjustable)

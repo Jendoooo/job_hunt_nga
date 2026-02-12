@@ -73,10 +73,31 @@ function evaluateStackedBar(question, answer) {
     const totalTolerance = question?.tolerance?.total ?? 0
     const splitTolerance = question?.tolerance?.split_pct ?? 0
 
-    return (
-        compareWithTolerance(answer.total, expected.total, totalTolerance) &&
-        compareWithTolerance(answer.split_pct, expected.split_pct, splitTolerance)
-    )
+    if (expected && typeof expected.total === 'number' && typeof expected.split_pct === 'number') {
+        return (
+            compareWithTolerance(answer.total, expected.total, totalTolerance) &&
+            compareWithTolerance(answer.split_pct, expected.split_pct, splitTolerance)
+        )
+    }
+
+    const expectedBarIds = Object.keys(expected)
+    if (expectedBarIds.length === 0) return false
+
+    return expectedBarIds.every((barId) => {
+        const expectedBar = expected[barId]
+        const answerBar = answer?.[barId]
+
+        if (!expectedBar || typeof expectedBar !== 'object') return false
+        if (!answerBar || typeof answerBar !== 'object') return false
+
+        const perBarTotalTolerance = question?.tolerance?.bars?.[barId]?.total ?? totalTolerance
+        const perBarSplitTolerance = question?.tolerance?.bars?.[barId]?.split_pct ?? splitTolerance
+
+        return (
+            compareWithTolerance(answerBar.total, expectedBar.total, perBarTotalTolerance) &&
+            compareWithTolerance(answerBar.split_pct, expectedBar.split_pct, perBarSplitTolerance)
+        )
+    })
 }
 
 function evaluateStandardQuestion(question, answer) {

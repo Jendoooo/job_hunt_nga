@@ -229,3 +229,48 @@
 ## Verification
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - Interactive Numerical Hard-Mode Logic Models
+
+## User Direction
+- Extend SHL Interactive Numerical generation to support advanced hard-mode derivations:
+  - tiered progressive travel-claim verification
+  - reverse-engineered system-of-equations pie models
+  - historical-reference stacked-bar models with Year 1 locked and Year 2/3 interactive
+
+## Changes Applied
+- `scripts/generate_shl_module.js`
+  - Added hard-mode generation patterns:
+    - `interactive_numerical_hard` drag-table questions with progressive tier formulas.
+    - `interactive_numerical_hard` pie questions with reverse-engineered linear equation clues from preselected target percentages.
+    - `interactive_numerical_hard` stacked-bar questions using Year 1 baseline and derived Year 2/Year 3 targets.
+  - Added stronger percentage normalization for pie initial states.
+  - Added per-bar tolerance metadata for hard stacked-bar answers.
+  - Regenerated `src/data/shl-interactive-questions.json` (50 questions; mixed standard + hard).
+- `src/pages/NLNGInteractiveTest.jsx`
+  - Updated question filter to include both `interactive_numerical` and `interactive_numerical_hard`.
+- `src/utils/questionScoring.js`
+  - Extended stacked-bar evaluation to support:
+    - legacy single-answer shape `{ total, split_pct }`
+    - multi-bar shape `{ year2: {...}, year3: {...} }`
+  - Added optional per-bar tolerance handling.
+- `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - Added support for historical multi-bar schema (`reference_bar` + `interactive_bars`).
+  - Supports multiple interactive bars with independent total/split drag handles.
+  - Emits either legacy or multi-bar answer shape based on input schema.
+- `src/components/interactive/SHLDragTableWidget.jsx`
+  - Added optional color rendering for draggable status pills.
+- `src/components/interactive/SHLResizablePieWidget.jsx`
+  - Removed automatic answer emit on mount; now emits only after user adjustments.
+- `src/components/QuestionCard.jsx`
+  - Added per-question widget keying to guarantee clean widget remount/state reset when navigating questions.
+- `src/index.css`
+  - Added `.interactive-tooltip-text` style for stacked-bar live drag labels.
+
+## Verification
+- `npm run generate:shl-interactive`: PASS
+- Data checks: PASS
+  - pie initial percentages sum to 100 and stay in bounds
+  - hard stacked-bar schema shape valid (`reference_bar` + two `interactive_bars`)
+- `npm run lint`: PASS
+- `npm run build`: PASS

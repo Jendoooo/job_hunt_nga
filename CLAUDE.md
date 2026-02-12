@@ -30,6 +30,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Dedupes by normalized question signature before session sampling
 - Question scoring: `src/utils/questionScoring.js`
   - Evaluates standard MCQ + interactive types with tolerance support
+  - Supports stacked-bar single-target and multi-bar target answer contracts
 - Interactive widgets:
   - `src/components/interactive/SHLDragTableWidget.jsx`
   - `src/components/interactive/SHLResizablePieWidget.jsx`
@@ -40,7 +41,11 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (30 questions live; Set 1 + additional chunks)
-- `src/data/shl-interactive-questions.json` (50 interactive numerical questions)
+- `src/data/shl-interactive-questions.json` (50 interactive numerical questions; mixed `interactive_numerical` + `interactive_numerical_hard`)
+  - Hard models included:
+    - Tiered progressive drag-table verification
+    - Equation-system pie constraints (reverse engineered from target percentages)
+    - Historical-reference stacked bars (`reference_bar` + `interactive_bars`)
 
 ## Dashboard Module Status
 - TotalEnergies:
@@ -58,6 +63,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Shared styling lives in `src/index.css`.
 - Core shells/components are standardized across dashboard, auth, tests, and score report.
 - Question card supports typed widget rendering for interactive numerical questions.
+- Interactive stacked-bar widget supports both legacy two-bar tasks and multi-target historical tasks.
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.
 - Dashboard surfaces runtime errors for attempt loading and AI generation.

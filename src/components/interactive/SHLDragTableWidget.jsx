@@ -2,6 +2,20 @@ import { DndContext, DragOverlay, PointerSensor, closestCenter, useDraggable, us
 import { GripVertical, X } from 'lucide-react'
 import { useState } from 'react'
 
+function resolvePillColor(color) {
+    if (!color) return null
+    const palette = {
+        green: '#16a34a',
+        red: '#dc2626',
+        blue: '#2563eb',
+        amber: '#d97706',
+        slate: '#475569',
+    }
+
+    if (color.startsWith('#')) return color
+    return palette[color.toLowerCase()] || null
+}
+
 function toTransformString(transform) {
     if (!transform) return undefined
     return `translate3d(${transform.x}px, ${transform.y}px, 0)`
@@ -19,7 +33,16 @@ function DraggablePill({ item, disabled = false }) {
             type="button"
             ref={setNodeRef}
             className={`interactive-pill ${isDragging ? 'interactive-pill--dragging' : ''}`}
-            style={{ transform: toTransformString(transform) }}
+            style={{
+                transform: toTransformString(transform),
+                ...(resolvePillColor(item.color)
+                    ? {
+                        borderColor: resolvePillColor(item.color),
+                        backgroundColor: `${resolvePillColor(item.color)}14`,
+                        color: resolvePillColor(item.color),
+                    }
+                    : {}),
+            }}
             {...listeners}
             {...attributes}
             disabled={disabled}

@@ -33,7 +33,9 @@ export default function NLNGInteractiveTest() {
     const [timeTaken, setTimeTaken] = useState(0)
     const startTimeRef = useRef(null)
 
-    const availableQuestions = interactiveQuestions.filter((question) => question.subtype === 'interactive_numerical')
+    const availableQuestions = interactiveQuestions.filter((question) =>
+        typeof question?.subtype === 'string' && question.subtype.startsWith('interactive_numerical')
+    )
     const totalTimeSeconds = timeLimitMinutes * 60
     const isExamMode = mode === 'exam'
 

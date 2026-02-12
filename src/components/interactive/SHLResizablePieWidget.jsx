@@ -63,11 +63,6 @@ export default function SHLResizablePieWidget({ data, value, onAnswer, disabled 
         setPercentages(buildInitialPercentages(data, value))
     }, [data, value])
 
-    useEffect(() => {
-        if (!onAnswer) return
-        onAnswer(percentages)
-    }, [onAnswer, percentages])
-
     function adjustSegment(targetId, delta) {
         if (disabled) return
 
@@ -109,7 +104,11 @@ export default function SHLResizablePieWidget({ data, value, onAnswer, disabled 
                 }
             }
 
-            return normalizeToHundred(next, segmentIds)
+            const normalized = normalizeToHundred(next, segmentIds)
+            if (onAnswer) {
+                onAnswer(normalized)
+            }
+            return normalized
         })
     }
 

@@ -8,7 +8,7 @@ Light-theme, employer-aligned assessment practice platform built with React + Vi
   - Process Technical Assessment (exam + practice)
 - NLNG:
   - SHL Deductive Reasoning (exam + practice, custom question count/time)
-  - SHL Interactive Numerical (exam + practice; drag-table, pie, stacked bar)
+  - SHL Interactive Numerical (exam + practice; drag-table, pie, stacked bar, plus hard-mode logic variants)
 - Drills:
   - Engineering Math Practice (exam + practice, custom question count/time)
 - AI:
@@ -66,6 +66,11 @@ Generate/regenerate the interactive NLNG numerical bank:
 ```bash
 npm run generate:shl-interactive
 ```
+
+Hard-mode generation patterns are included:
+- Tiered progressive drag-table verification
+- Reverse-engineered equation-system pie constraints
+- Historical-reference stacked bars (Year 1 locked, Year 2/3 interactive)
 
 ## Next Planned Work
 1. Expand NLNG SHL Sets 2-4 using `scripts/validate-shl.js`.

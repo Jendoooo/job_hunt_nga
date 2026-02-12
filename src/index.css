@@ -1395,6 +1395,12 @@ select:focus-visible {
   font-weight: 700;
 }
 
+.interactive-tooltip-text {
+  fill: #0f172a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .interactive-segment {
   rx: 7px;
 }

@@ -75,15 +75,27 @@ Date: 2026-02-12
 - [x] Add protected route `/test/nlng-interactive`
 - [x] Add dashboard NLNG Interactive module card
 - [x] Add interactive review fallback in score report for non-MCQ responses
+- [x] Add hard-mode subtype support (`interactive_numerical_hard`) in NLNG Interactive question selection
+- [x] Add advanced hard-model generator logic in `scripts/generate_shl_module.js`:
+  - [x] Tiered progressive calculation drag-table model
+  - [x] Reverse-engineered equation-system pie model
+  - [x] Historical-reference multi-bar model (Year 1 locked, Year 2/3 interactive)
+- [x] Extend stacked-bar scorer for both single-bar and multi-bar answer contracts
+- [x] Add colorized drag-table tokens for hard verification tasks
+- [x] Ensure interactive pie answers are emitted only on user interaction (not auto-submitted on mount)
+- [x] Add stacked-bar active-handle tooltip styling and rendering support
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
+- [x] `npm run generate:shl-interactive` passes
+- [x] Hard-mode data integrity checks pass (pie sums, bounds, schema shape)
 - [ ] Full manual end-to-end smoke test across every module in browser
 
 ## Next Actions
 1. Run manual UX/accessibility checks on all target breakpoints and log defects.
 2. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
-3. Validate Interactive Numerical usability on touch devices (drag handles + drag/drop hit zones).
-4. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
-5. Optionally split large frontend bundle if payload size reduction is required.
+3. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
+4. Add optional difficulty filter (Standard vs Hard vs Mixed) to `NLNGInteractiveTest` setup.
+5. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
+6. Optionally split large frontend bundle if payload size reduction is required.

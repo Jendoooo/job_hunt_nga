@@ -36,10 +36,13 @@ export default function QuestionCard({
     }
 
     function renderInteractiveWidget() {
+        const widgetKey = `interactive-${question?.id ?? questionNumber}`
+
         switch (question.type) {
             case 'interactive_drag_table':
                 return (
                     <SHLDragTableWidget
+                        key={widgetKey}
                         data={question.widget_data}
                         value={selectedAnswer}
                         onAnswer={onSelectAnswer}
@@ -48,6 +51,7 @@ export default function QuestionCard({
             case 'interactive_pie_chart':
                 return (
                     <SHLResizablePieWidget
+                        key={widgetKey}
                         data={question.widget_data}
                         value={selectedAnswer}
                         onAnswer={onSelectAnswer}
@@ -56,6 +60,7 @@ export default function QuestionCard({
             case 'interactive_stacked_bar':
                 return (
                     <SHLAdjustableBarWidget
+                        key={widgetKey}
                         data={question.widget_data}
                         value={selectedAnswer}
                         onAnswer={onSelectAnswer}
