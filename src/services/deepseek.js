@@ -190,3 +190,67 @@ Return plain markdown. Do not output HTML.`
     const data = await response.json()
     return data.choices[0].message.content
 }
+
+export async function explainSJQAttempt(question, userAnswer) {
+    assertApiKey()
+
+    const scenario = stripHtml(question?.scenario || '')
+    const promptText = stripHtml(question?.question || '')
+    const responses = Array.isArray(question?.responses) ? question.responses : []
+    const correctMap = question?.correct_answer || {}
+    const actualMap = userAnswer && typeof userAnswer === 'object' ? userAnswer : {}
+    const cleanExplanation = stripHtml(question?.explanation || '')
+
+    const prompt = `You are an SHL situational judgement (SJQ) coach.
+
+Rating scale:
+1 = Very Ineffective
+2 = Ineffective
+3 = Effective
+4 = Very Effective
+
+Scenario:
+${scenario}
+
+Question:
+${promptText}
+
+Responses:
+${responses.map((r) => `${String(r.id).toUpperCase()}. ${stripHtml(r.text)}`).join('\n')}
+
+Correct Ratings (JSON):
+${JSON.stringify(correctMap)}
+
+User Ratings (JSON):
+${JSON.stringify(actualMap)}
+${cleanExplanation ? `\nReference Explanation:\n${cleanExplanation}` : ''}
+
+Provide:
+1) For EACH response (A-D), the correct rating and a short rationale
+2) Where the user differed (if any) and what principle they missed
+3) 2-3 quick heuristics to answer SJQ rating questions faster next time
+
+Return plain markdown. Do not output HTML.`
+
+    const response = await fetch(DEEPSEEK_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+        },
+        body: JSON.stringify({
+            model: 'deepseek-chat',
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.4,
+            max_tokens: 900,
+        }),
+    })
+
+    if (!response.ok) {
+        const body = await response.text()
+        throw new Error(`DeepSeek API error ${response.status}: ${body}`)
+    }
+
+    const data = await response.json()
+    return data.choices[0].message.content
+}

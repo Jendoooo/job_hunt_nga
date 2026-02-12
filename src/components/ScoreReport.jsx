@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import AIExplainer from './AIExplainer'
+import AISJQExplainer from './AISJQExplainer'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
 import { buildQuestionResults, isInteractiveQuestionType } from '../utils/questionScoring'
@@ -133,6 +134,9 @@ export default function ScoreReport({
     mode,
     onRetry,
     onBackToDashboard,
+    scoreCorrectUnits,
+    scoreTotalUnits,
+    scoreUnitLabel = 'correct answers',
 }) {
     const { user } = useAuth()
     const isMountedRef = useRef(false)
@@ -146,9 +150,16 @@ export default function ScoreReport({
     const [saveError, setSaveError] = useState('')
 
     const questionResults = buildQuestionResults(questions, answers)
-    const totalQuestions = questions.length || 1
-    const correctCount = questionResults.filter((result) => result.correct).length
-    const score = Math.round((correctCount / totalQuestions) * 100)
+    const hasScoreOverrides =
+        Number.isFinite(scoreCorrectUnits) &&
+        Number.isFinite(scoreTotalUnits) &&
+        Number(scoreTotalUnits) > 0
+    const saveTotalQuestions = hasScoreOverrides ? Number(scoreTotalUnits) : questions.length
+    const totalQuestions = hasScoreOverrides ? Number(scoreTotalUnits) : (questions.length || 1)
+    const correctCount = hasScoreOverrides
+        ? Number(scoreCorrectUnits)
+        : questionResults.filter((result) => result.correct).length
+    const score = Math.round((correctCount / (totalQuestions || 1)) * 100)
     const skipped = questionResults.filter((result) => !result.answered).length
     const incorrectAnswers = questionResults.filter((result) => result.answered && !result.correct)
 
@@ -177,7 +188,7 @@ export default function ScoreReport({
             assessment_type: assessmentType,
             module_name: moduleName,
             score: correctCount,
-            total_questions: questions.length,
+            total_questions: saveTotalQuestions,
             time_taken_seconds: timeTaken,
             mode,
             answers,
@@ -309,7 +320,7 @@ export default function ScoreReport({
         assessmentType,
         moduleName,
         correctCount,
-        questions.length,
+        saveTotalQuestions,
         timeTaken,
         mode,
         answers,
@@ -342,6 +353,55 @@ export default function ScoreReport({
         if (!id) return '--'
         const match = (options || []).find((option) => String(option?.id) === String(id))
         return match?.label || String(id)
+    }
+
+    function resolveSJQRatingLabel(value) {
+        const rating = Number(value)
+        if (rating === 1) return 'Very Ineffective'
+        if (rating === 2) return 'Ineffective'
+        if (rating === 3) return 'Effective'
+        if (rating === 4) return 'Very Effective'
+        return '--'
+    }
+
+    function renderSJQReview(questionResult) {
+        const responses = Array.isArray(questionResult?.responses) ? questionResult.responses : []
+        const expectedMap = questionResult?.correct_answer || {}
+        const actualMap = questionResult?.answer && typeof questionResult.answer === 'object' ? questionResult.answer : {}
+
+        return (
+            <div className="score-review__interactive">
+                <table className="score-review__interactive-table">
+                    <thead>
+                        <tr>
+                            <th>Response</th>
+                            <th>Your Rating</th>
+                            <th>Expected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {responses.map((r) => {
+                            const your = resolveSJQRatingLabel(actualMap?.[r.id])
+                            const exp = resolveSJQRatingLabel(expectedMap?.[r.id])
+                            const ok = Number(actualMap?.[r.id]) === Number(expectedMap?.[r.id])
+                            return (
+                                <tr
+                                    key={r.id}
+                                    className={ok ? 'score-review__interactive-row--ok' : 'score-review__interactive-row--bad'}
+                                >
+                                    <td>
+                                        <strong className="mr-2">{String(r.id).toUpperCase()}.</strong>
+                                        {r.text}
+                                    </td>
+                                    <td>{your}</td>
+                                    <td>{exp}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        )
     }
 
     function renderInteractiveReview(questionResult, expectedAnswer) {
@@ -575,6 +635,7 @@ export default function ScoreReport({
 
     if (reviewMode && incorrectAnswers.length > 0) {
         const q = incorrectAnswers[currentReview]
+        const isSJQ = q.subtest === 'situational_judgement'
         const interactiveReview = isInteractiveQuestionType(q.type)
         const expectedInteractiveAnswer = q.correct_answer || q.correctAnswer
         return (
@@ -589,25 +650,35 @@ export default function ScoreReport({
 
                 <article className="score-review__card">
                     <p className="score-review__question-tag">Question {q.index + 1}</p>
-                    <h3>{q.question}</h3>
-                    {Array.isArray(q.options) && typeof q.correctAnswer === 'number' ? (
-                        <div className="score-review__options">
-                            {q.options.map((option, oi) => (
-                                <div
-                                    key={oi}
-                                    className={`score-review__option ${oi === q.correctAnswer
-                                        ? 'score-review__option--correct'
-                                        : q.answer === oi
-                                            ? 'score-review__option--wrong'
-                                            : ''}`}
-                                >
-                                    <span>{String.fromCharCode(65 + oi)}</span>
-                                    <p>{option}</p>
-                                </div>
-                            ))}
-                        </div>
+                    {isSJQ ? (
+                        <>
+                            <h3>{q.scenario}</h3>
+                            <p className="score-review__sjq-prompt">{q.question}</p>
+                            {renderSJQReview(q)}
+                        </>
                     ) : (
-                        renderInteractiveReview(q, expectedInteractiveAnswer)
+                        <>
+                            <h3>{q.question}</h3>
+                            {Array.isArray(q.options) && typeof q.correctAnswer === 'number' ? (
+                                <div className="score-review__options">
+                                    {q.options.map((option, oi) => (
+                                        <div
+                                            key={oi}
+                                            className={`score-review__option ${oi === q.correctAnswer
+                                                ? 'score-review__option--correct'
+                                                : q.answer === oi
+                                                    ? 'score-review__option--wrong'
+                                                    : ''}`}
+                                        >
+                                            <span>{String.fromCharCode(65 + oi)}</span>
+                                            <p>{option}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                renderInteractiveReview(q, expectedInteractiveAnswer)
+                            )}
+                        </>
                     )}
 
                     {q.explanation && (
@@ -619,6 +690,10 @@ export default function ScoreReport({
 
                     {!interactiveReview && Array.isArray(q.options) && typeof q.correctAnswer === 'number' && (
                         <AIExplainer question={q} />
+                    )}
+
+                    {isSJQ && (
+                        <AISJQExplainer question={q} answer={q.answer} />
                     )}
                 </article>
 
@@ -653,7 +728,7 @@ export default function ScoreReport({
                 <h2>{grade.label}</h2>
                 <p className="score-report__score">{score}%</p>
                 <p className="score-report__score-sub">
-                    {correctCount}/{questions.length} correct answers
+                    {correctCount}/{saveTotalQuestions} {scoreUnitLabel}
                 </p>
             </article>
 

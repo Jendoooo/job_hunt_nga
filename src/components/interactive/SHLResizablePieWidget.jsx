@@ -338,8 +338,7 @@ export default function SHLResizablePieWidget({ data, value, onAnswer, disabled 
                                 <path
                                     d={arcPath(CENTER, CENTER, OUTER_RADIUS, startAngle, endAngle)}
                                     fill={segment.fill}
-                                    stroke="#ffffff"
-                                    strokeWidth="2"
+                                    stroke="none"
                                 />
                                 {segment.percentage >= 6 && (
                                     <text

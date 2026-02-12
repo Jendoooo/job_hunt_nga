@@ -315,6 +315,39 @@
 - `npm run lint`: PASS
 - `npm run build`: PASS
 
+## 2026-02-12 - NLNG SHL Job-Focused Assessment (SJQ)
+
+## User Direction
+- Add an SHL-style Situational Judgement Questionnaire (SJQ) module for NLNG screening prep.
+- Timed run: 10 questions in 20 minutes.
+- Rating scale (1-4) per response with partial credit and DeepSeek coaching in review.
+
+## Changes Applied
+- `src/data/nlng-sjq-questions.json`
+  - Added 10 SJQ questions (deadline conflict, underperformer, critical feedback, go-live error, manager disagreement, customer complaint, colleague absence, improvement spotting, out-of-skill task, conflicting instructions).
+- `src/pages/NLNGSJQTest.jsx`
+  - New SJQ runner (setup -> test -> results) with 20-minute timer and per-response rating UI.
+- `src/utils/questionScoring.js`
+  - Added `subtest === 'situational_judgement'` correctness support + `scoreSJQQuestion()` utility.
+- `src/components/ScoreReport.jsx`
+  - Added unit-based score overrides (save + display) for partial-credit modules.
+  - Added SJQ review table (response text + your rating vs expected, green/red rows).
+  - Added DeepSeek SJQ explainer slot during review.
+- `src/services/deepseek.js`
+  - Added `explainSJQAttempt()` prompt for SJQ coaching.
+- `src/components/AISJQExplainer.jsx`
+  - DeepSeek-powered SJQ explanation component (markdown output).
+- `src/index.css`
+  - Added SJQ rating pill styles and red-row styling for review tables.
+- `src/App.jsx`
+  - Added protected route: `/test/nlng-sjq`.
+- `src/pages/Dashboard.jsx`
+  - Added NLNG module card: "SHL Job-Focused Assessment" linking to `/test/nlng-sjq`.
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS
+
 ## 2026-02-12 - NLNG Deductive Draft Guard + Repo Hygiene
 
 ## User Report

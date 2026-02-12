@@ -77,6 +77,15 @@ function getPointGraphExpectedValues(question) {
 export function hasAnsweredValue(answer, question = null) {
     if (answer === null || answer === undefined) return false
 
+    if (question?.subtest === 'situational_judgement') {
+        if (!answer || typeof answer !== 'object') return false
+
+        const responses = Array.isArray(question?.responses) ? question.responses : []
+        if (responses.length === 0) return Object.keys(answer).length > 0
+
+        return responses.every((r) => answer[r.id] !== null && answer[r.id] !== undefined)
+    }
+
     if (question?.type === 'interactive_tabbed_evaluation') {
         if (typeof answer !== 'object') return false
 
@@ -217,6 +226,15 @@ export function evaluateQuestionAnswer(question, answer) {
 
     if (!hasAnsweredValue(answer, question)) return false
 
+    if (question.subtest === 'situational_judgement') {
+        if (!answer || typeof answer !== 'object') return false
+        const responses = question.responses || []
+        const correctMap = question.correct_answer || {}
+        return responses.every((r) => {
+            return Number(answer[r.id]) === Number(correctMap[r.id])
+        })
+    }
+
     switch (question.type) {
         case 'interactive_drag_table':
             return evaluateDragTable(question, answer)
@@ -231,6 +249,14 @@ export function evaluateQuestionAnswer(question, answer) {
         default:
             return evaluateStandardQuestion(question, answer)
     }
+}
+
+export function scoreSJQQuestion(question, answer) {
+    if (!answer || typeof answer !== 'object') return 0
+    const responses = question?.responses || []
+    const correctMap = question?.correct_answer || {}
+    const correct = responses.filter((r) => Number(answer[r.id]) === Number(correctMap[r.id])).length
+    return responses.length > 0 ? (correct / responses.length) * 100 : 0
 }
 
 export function buildQuestionResults(questions, answers) {

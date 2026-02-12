@@ -369,6 +369,16 @@ export default function SHLAdjustableBarWidget({ data, value, onAnswer, disabled
                             height={bar.secondaryHeight}
                             className={`interactive-segment interactive-segment--product ${bar.interactive ? 'interactive-segment--interactive' : ''}`}
                         />
+                        {bar.primaryHeight > 0 && bar.secondaryHeight > 0 && (
+                            <line
+                                x1={bar.x}
+                                y1={bar.splitY}
+                                x2={bar.x + bar.barWidth}
+                                y2={bar.splitY}
+                                stroke="#ffffff"
+                                strokeWidth="2"
+                            />
+                        )}
                         <text x={bar.centerX} y={PLOT_BOTTOM + X_AXIS_LABEL_OFFSET} className="interactive-axis-caption">{bar.label}</text>
 
                         {bar.primaryHeight >= 18 && (

@@ -3415,5 +3415,640 @@
       "evan": "approved"
     },
     "explanation": "Diana: Total $512 exceeds the $500 quarterly limit — Not Approved. Evan: Total $385.50 is within the $500 limit — Approved."
+  },
+  {
+    "id": "graph_energy_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the daily energy consumption in the office.",
+    "question": "Drag each weekday point to the correct energy consumption value (kWh).",
+    "prompt_rules": [
+      "Energy consumption on Monday: 500 kWh.",
+      "Each day, consumption increases by 20 kWh.",
+      "On Wednesday, energy-saving mode reduces consumption by 50 kWh from the expected value."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 480,
+        "max": 600,
+        "step": 20,
+        "label": ""
+      },
+      "initial_values": [
+        500,
+        500,
+        500,
+        500,
+        500
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        500,
+        520,
+        490,
+        560,
+        580
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Mon=500. Tue=500+20=520. Wed expected=540, actual=540-50=490 (energy-saving). Thu=540+20=560. Fri=560+20=580."
+  },
+  {
+    "id": "graph_sales_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the daily unit sales for the week.",
+    "question": "Drag each weekday point to the correct number of units sold.",
+    "prompt_rules": [
+      "100 units were sold on Monday.",
+      "Each subsequent day, 10 more units are sold than the previous day.",
+      "On Friday, a clearance sale adds 30 extra units to the day's total."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 90,
+        "max": 180,
+        "step": 10,
+        "label": ""
+      },
+      "initial_values": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        100,
+        110,
+        120,
+        130,
+        170
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Mon=100. Tue=110. Wed=120. Thu=130. Fri expected=140, actual=140+30=170 (clearance sale)."
+  },
+  {
+    "id": "graph_temp_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the actual office temperature each day.",
+    "question": "Drag each weekday point to the correct recorded temperature (°C).",
+    "prompt_rules": [
+      "Office thermostat is set to 20°C on Monday.",
+      "Each day, the thermostat is set 1°C higher than the previous day.",
+      "On Tuesday, the air conditioning fails and actual temperature is 4°C above the thermostat setting."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 18,
+        "max": 28,
+        "step": 1,
+        "label": ""
+      },
+      "initial_values": [
+        20,
+        20,
+        20,
+        20,
+        20
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        20,
+        25,
+        22,
+        23,
+        24
+      ]
+    },
+    "tolerance": {
+      "value": 0
+    },
+    "explanation": "Mon=20. Tue set=21, AC fail adds 4 → actual=25. Wed=22. Thu=23. Fri=24."
+  },
+  {
+    "id": "graph_delivery_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the number of packages successfully delivered each day.",
+    "question": "Drag each weekday point to the correct delivery count.",
+    "prompt_rules": [
+      "80 packages were delivered on Monday.",
+      "Each subsequent day, 8 more packages are scheduled for delivery than the previous day.",
+      "On Thursday, 12 packages failed delivery and were not rescheduled."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 75,
+        "max": 120,
+        "step": 5,
+        "label": ""
+      },
+      "initial_values": [
+        80,
+        80,
+        80,
+        80,
+        80
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        80,
+        88,
+        96,
+        92,
+        112
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Mon=80. Tue=88. Wed=96. Thu expected=104, actual=104-12=92. Fri=112."
+  },
+  {
+    "id": "graph_staff_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the number of staff present in the office each day.",
+    "question": "Drag each weekday point to the correct staff headcount.",
+    "prompt_rules": [
+      "200 staff were present on Monday.",
+      "Each subsequent day, 10 fewer staff are present than the previous day.",
+      "On Friday, a company-wide team meeting brings 20 extra staff into the office."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 155,
+        "max": 210,
+        "step": 10,
+        "label": ""
+      },
+      "initial_values": [
+        200,
+        200,
+        200,
+        200,
+        200
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        200,
+        190,
+        180,
+        170,
+        180
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Mon=200. Tue=190. Wed=180. Thu=170. Fri expected=160, actual=160+20=180 (team meeting)."
+  },
+  {
+    "id": "graph_production_01",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Graph the factory's daily production output.",
+    "question": "Drag each weekday point to the correct production total (units).",
+    "prompt_rules": [
+      "The factory produced 1,000 units on Monday.",
+      "Each subsequent day, the factory produces 50 more units than the previous day.",
+      "On Wednesday, scheduled maintenance reduces output by 100 units from the expected value."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "Mon",
+        "Tues",
+        "Wed",
+        "Thurs",
+        "Fri"
+      ],
+      "y_axis": {
+        "min": 980,
+        "max": 1220,
+        "step": 50,
+        "label": ""
+      },
+      "initial_values": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        1000,
+        1050,
+        1000,
+        1150,
+        1200
+      ]
+    },
+    "tolerance": {
+      "value": 1
+    },
+    "explanation": "Mon=1000. Tue=1050. Wed expected=1100, actual=1100-100=1000 (maintenance). Thu=1150. Fri=1200."
+  },
+  {
+    "id": "comm_person_b_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the commission tier for Person B.",
+    "prompt_rules": [
+      "Net Sales = Sales per week − (Daily Cancellations × 5)",
+      "Avg Sale Value = Total Revenue ÷ Net Sales",
+      "£0–£40: No Commission | £41–£100: 5% | £101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Total Revenue",
+        "Sales/Week",
+        "Cancellations/Day",
+        "Commission"
+      ],
+      "rows": [
+        {
+          "id": "person_b_comm",
+          "values": [
+            "Person B",
+            "£670",
+            "15",
+            "1"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None",
+          "color": "green"
+        },
+        {
+          "id": "5pct",
+          "label": "5%",
+          "color": "blue"
+        },
+        {
+          "id": "10pct",
+          "label": "10%",
+          "color": "orange"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_b_comm": "5pct"
+    },
+    "explanation": "Net Sales = 15 − (1×5) = 10. Avg Value = £670 ÷ 10 = £67. Band £41–£100 → 5% commission."
+  },
+  {
+    "id": "comm_person_d_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the commission tier for Person D.",
+    "prompt_rules": [
+      "Net Sales = Sales per week − (Daily Cancellations × 5)",
+      "Avg Sale Value = Total Revenue ÷ Net Sales",
+      "£0–£40: No Commission | £41–£100: 5% | £101+: 10%"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Total Revenue",
+        "Sales/Week",
+        "Cancellations/Day",
+        "Commission"
+      ],
+      "rows": [
+        {
+          "id": "person_d_comm",
+          "values": [
+            "Person D",
+            "£1,120",
+            "55",
+            "5"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None",
+          "color": "green"
+        },
+        {
+          "id": "5pct",
+          "label": "5%",
+          "color": "blue"
+        },
+        {
+          "id": "10pct",
+          "label": "10%",
+          "color": "orange"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_d_comm": "none"
+    },
+    "explanation": "Net Sales = 55 − (5×5) = 30. Avg Value = £1,120 ÷ 30 = £37.33. Band £0–£40 → No Commission."
+  },
+  {
+    "id": "perf_person_a_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Check the performance reward eligibility for Person A.",
+    "prompt_rules": [
+      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
+      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
+      "Either flag = Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Days Attended",
+        "Total Days",
+        "Late Days",
+        "Holiday",
+        "Eligibility"
+      ],
+      "rows": [
+        {
+          "id": "person_a_perf",
+          "values": [
+            "Person A",
+            "205",
+            "235",
+            "2",
+            "20"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_a_perf": "eligible"
+    },
+    "explanation": "Late: 2/235 = 0.85% ✓ (<1.5%). Attendance: 205/(235−20) = 205/215 = 95.3% ✓ (>93%). → Eligible."
+  },
+  {
+    "id": "perf_person_b_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Check the performance reward eligibility for Person B.",
+    "prompt_rules": [
+      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
+      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
+      "Either flag = Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Days Attended",
+        "Total Days",
+        "Late Days",
+        "Holiday",
+        "Eligibility"
+      ],
+      "rows": [
+        {
+          "id": "person_b_perf",
+          "values": [
+            "Person B",
+            "109",
+            "125",
+            "10",
+            "15"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_b_perf": "not_eligible"
+    },
+    "explanation": "Late: 10/125 = 8% ✗ (>1.5%). Late rate threshold breached → Not Eligible."
+  },
+  {
+    "id": "perf_person_c_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Check the performance reward eligibility for Person C.",
+    "prompt_rules": [
+      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
+      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
+      "Either flag = Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Days Attended",
+        "Total Days",
+        "Late Days",
+        "Holiday",
+        "Eligibility"
+      ],
+      "rows": [
+        {
+          "id": "person_c_perf",
+          "values": [
+            "Person C",
+            "199",
+            "227",
+            "3",
+            "10"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_c_perf": "not_eligible"
+    },
+    "explanation": "Late: 3/227 = 1.3% ✓. Attendance: 199/(227−10) = 199/217 = 91.7% ✗ (<93%). → Not Eligible."
+  },
+  {
+    "id": "perf_person_d_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Check the performance reward eligibility for Person D.",
+    "prompt_rules": [
+      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
+      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
+      "Either flag = Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Days Attended",
+        "Total Days",
+        "Late Days",
+        "Holiday",
+        "Eligibility"
+      ],
+      "rows": [
+        {
+          "id": "person_d_perf",
+          "values": [
+            "Person D",
+            "67",
+            "71",
+            "1",
+            "0"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_d_perf": "eligible"
+    },
+    "explanation": "Late: 1/71 = 1.4% ✓ (<1.5%). Attendance: 67/(71−0) = 94.4% ✓ (>93%). → Eligible."
+  },
+  {
+    "id": "bar_new_clients_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the number of new clients by source and the North/South regional split.",
+    "prompt_rules": [
+      "Total new clients: 540.",
+      "Referrals: 1/3 of all new clients.",
+      "Cold Calls: twice as many as Client Initiated.",
+      "Northern Referrals: 40% more than Southern Referrals.",
+      "Southern Cold Calls exceed Southern Client Initiated by 84."
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "axis_step": 50,
+      "labels": {
+        "bottom": "South",
+        "top": "North"
+      },
+      "bar_1": {
+        "label": "Referrals",
+        "total": 180,
+        "split_pct": 41.6
+      },
+      "bar_2_initial": {
+        "label": "Cold Calls",
+        "total": 180,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 240,
+      "split_pct": 55
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Cold Calls = 540 − 180 − 120 = 240. South CC = 132 (55%), North CC = 108 (45%). Verified: South CC − South CI = 132 − 48 = 84 ✓"
   }
 ]

@@ -11,6 +11,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `/test/saville-practice` -> `src/pages/SavillePractice.jsx` (protected)
 - `/test/nlng` -> `src/pages/NLNGTest.jsx` (protected)
 - `/test/nlng-interactive` -> `src/pages/NLNGInteractiveTest.jsx` (protected)
+- `/test/nlng-sjq` -> `src/pages/NLNGSJQTest.jsx` (protected)
 - `/test/ai-generated` -> `src/pages/AIGeneratedTest.jsx` (protected)
 
 ## Core Shared Contracts
@@ -31,10 +32,11 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Queues unsynced attempts into a localStorage outbox for background cloud sync retries
   - Score review explanation supports formatted HTML content
   - Interactive review answers are rendered as readable tables (not raw JSON)
+  - Supports unit-based score overrides for partial-credit modules (e.g., SJQ: correct_ratings / total_ratings)
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
 - Question scoring: `src/utils/questionScoring.js`
-  - Evaluates standard MCQ + interactive types with tolerance support
+  - Evaluates standard MCQ + interactive types with tolerance support + SJQ (situational judgement)
   - Supports stacked-bar single-target and multi-bar target answer contracts
 - Interactive widgets:
   - `src/components/interactive/SHLDragTableWidget.jsx`
@@ -49,7 +51,8 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/aptitude-questions.json`
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
-- `src/data/nlng-deductive-questions.json` (expanded bank; some items may be draft with `correctAnswer: -1` and are excluded from sessions)
+- `src/data/nlng-deductive-questions.json` (expanded bank; invalid items are excluded from sessions by runtime guard)
+- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
   - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
 - `src/data/shl-interactive-questions.json` (63 interactive numerical questions across 5 types)
@@ -64,6 +67,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - NLNG:
   - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
   - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation; difficulty supports `all`/`easy`/`medium`/`hard`)
+  - SHL Job-Focused Assessment (SJQ): Active (timed 10Q/20m, partial credit per rating)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:
@@ -94,7 +98,6 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - attemptOutbox.js auto-retries local-saves in background on dashboard load
 
 ## Pending Work
-- Complete 29 draft NLNG deductive questions (`correctAnswer: -1`) in `src/data/nlng-deductive-questions.json`.
 - Run manual touch-device QA for interactive widgets (drag handles, pie handles, point graph dots).
 - Run complete manual QA across breakpoints 320/375/768/1024/1280+.
 - Optional: optimize bundle splitting to reduce large chunk warning.

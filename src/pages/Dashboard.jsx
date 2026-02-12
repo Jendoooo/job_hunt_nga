@@ -377,6 +377,18 @@ export default function Dashboard() {
                     path: '/test/nlng-interactive',
                     accent: 'sky',
                 },
+                {
+                    id: 'nlng-sjq',
+                    title: 'SHL Job-Focused Assessment',
+                    subtitle: 'Situational Judgement',
+                    description: 'Timed SJQ: rate the effectiveness of workplace responses.',
+                    icon: Brain,
+                    stat: '10 Qs',
+                    type: 'Timed 20 min',
+                    status: 'active',
+                    path: '/test/nlng-sjq',
+                    accent: 'sky',
+                },
             ],
         },
         {

@@ -216,6 +216,44 @@ Date: 2026-02-12
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 
+## Phase 15: New Clients Stacked Bar + SJQ Module Kickoff (2026-02-12)
+- [x] Added `bar_new_clients_real` (`interactive_stacked_bar`, hard) to gold standard (76 total):
+  - Reference bar: Referrals (total=180, South 41.6%)
+  - Interactive bar: Cold Calls (correct total=240, South=55%)
+  - Prompt derives totals from: 540 total, 1/3 referrals, CC=2×CI, N Referrals 40% > S, S CC−S CI=84
+- [x] Regenerated `src/data/shl-interactive-questions.json` (76 total)
+- [x] `npm run build` → 0 errors
+- [x] Added SHL Job-Focused Assessment (SJQ) module (`/test/nlng-sjq`):
+  - timed: 10 questions / 20 minutes
+  - per-response rating scale (1-4) with partial credit (stored as correct_ratings / total_ratings)
+  - ScoreReport override support for unit-based scoring + SJQ review table + DeepSeek tutor explainer
+  - dashboard NLNG card added + route wired in `src/App.jsx`
+
+## Phase 14: SHL Visual Theme + Commission/Performance Questions (2026-02-12)
+- [x] Added 6 new `interactive_drag_table` questions to gold standard (75 total):
+  - `comm_person_b_real` — Commission tier (Net Sales formula, 3-tier band)
+  - `comm_person_d_real` — Commission tier (different data, correct answer: None)
+  - `perf_person_a_real` — Performance reward eligibility (passes both rules → Eligible)
+  - `perf_person_b_real` — Fails late rate (8% > 1.5%) → Not Eligible
+  - `perf_person_c_real` — Fails attendance (91.7% < 93%) → Not Eligible
+  - `perf_person_d_real` — Passes both rules → Eligible
+- [x] SHL Visual Theme applied (`src/index.css`):
+  - App background: `#edf1f7` → `#f3f4f6`
+  - Instruction header: `#1d2d35` → `#111827` (near-black)
+  - Active tab + approved button: `#63b209` → `#84cc16` (lime green)
+  - Bar top segment + legend swatch: `#63b209` → `#4c8b2b` (forest green)
+  - Table header: `#f8fafc` → `#e5e7eb`; text color darkened
+  - Pill bank: larger pills with hover lime tint; filled drop zone renders as lime green pill
+- [x] Bar chart: white `strokeWidth="2"` separator line drawn at West/East split in each bar
+- [x] Regenerated `src/data/shl-interactive-questions.json` (75 total)
+- [x] `npm run build` → 0 errors
+
+## Phase 13: Pie Visual Fix + Point Graph Expansion (2026-02-12)
+- [x] Fix pie chart: removed `stroke="#ffffff"` from wedge paths so slices render as solid, gap-free segments (no visual donut hole at centre)
+- [x] Expanded point graph question bank: added 6 new hard difficulty scenarios (energy consumption, daily sales, office temperature, package deliveries, staff headcount, factory production) — bank now at 69 questions
+- [x] Regenerated `src/data/shl-interactive-questions.json` (69 total)
+- [x] `npm run build` → 0 errors
+
 ## Phase 12: NLNG Deductive Draft Guard + Repo Hygiene (2026-02-12)
 - [x] NLNG deductive pool now excludes draft questions that are missing an answer key (`correctAnswer < 0`), so sessions only draw from valid questions.
 - [x] Expanded `.gitignore` to exclude local artifacts (`.claude/`, `image/`, `supabase/.temp/`, `src/index.css.bak`, etc.) to keep Git status clean.

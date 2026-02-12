@@ -1,0 +1,143 @@
+[
+  {
+    "id": "sjq_001",
+    "subtest": "situational_judgement",
+    "scenario": "You are halfway through a major project when your manager assigns you an urgent task that will take two days. Your original project deadline is in three days.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Tell your manager you cannot do the urgent task until your project is complete." },
+      { "id": "b", "text": "Ask your manager to help you prioritise between the two tasks." },
+      { "id": "c", "text": "Work overtime to complete both tasks without telling anyone you are under pressure." },
+      { "id": "d", "text": "Negotiate a short extension on your original deadline to accommodate the urgent task." }
+    ],
+    "correct_answer": { "a": 2, "b": 4, "c": 1, "d": 3 },
+    "explanation": "Consulting your manager (b) is most effective because they can re-prioritise based on business needs. Negotiating (d) shows initiative and manages expectations. Refusing outright (a) is passive and may not reflect urgency. Suffering in silence (c) risks quality and burnout and may still miss both deadlines."
+  },
+  {
+    "id": "sjq_002",
+    "subtest": "situational_judgement",
+    "scenario": "A teammate on your project has repeatedly missed deadlines, and their unfinished work is starting to delay the whole team.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Speak to the teammate privately to understand what is blocking them and agree a plan to get back on track." },
+      { "id": "b", "text": "Raise the issue with your manager, sharing specific examples and suggesting ways the team can support the teammate." },
+      { "id": "c", "text": "Quietly complete the teammate’s work yourself to keep the project moving, without involving anyone." },
+      { "id": "d", "text": "Avoid addressing it directly and hope the teammate improves over time." }
+    ],
+    "correct_answer": { "a": 4, "b": 3, "c": 2, "d": 1 },
+    "explanation": "A private, constructive conversation (a) is most effective because it tackles the root cause and preserves trust. Escalating with evidence (b) can be appropriate if the issue persists or risks delivery. Taking over silently (c) may enable the problem and creates hidden risk. Avoiding the issue (d) allows delays to continue."
+  },
+  {
+    "id": "sjq_003",
+    "subtest": "situational_judgement",
+    "scenario": "After you deliver a presentation, a senior colleague gives you critical feedback and says your analysis was not clear enough for stakeholders.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Thank them for the feedback and ask for specific examples of what was unclear so you can improve." },
+      { "id": "b", "text": "Defend your work and explain that the stakeholders should have understood the details." },
+      { "id": "c", "text": "Ignore the feedback and continue using the same approach in future presentations." },
+      { "id": "d", "text": "Ask a trusted colleague to review your next presentation in advance and give candid input." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Seeking specific, actionable feedback (a) is most effective and shows a growth mindset. Getting a second review (d) is also helpful and proactive. Defending yourself (b) may damage relationships and misses the learning opportunity. Ignoring feedback (c) is very ineffective and likely repeats the same issue."
+  },
+  {
+    "id": "sjq_004",
+    "subtest": "situational_judgement",
+    "scenario": "You notice a process error in a document that is due to go live tomorrow. Fixing it may cause a short delay, but leaving it could create customer impact.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Flag the error immediately to the project lead, explain the potential impact, and suggest a fix." },
+      { "id": "b", "text": "Make a quick change yourself and push it through without telling anyone to avoid delays." },
+      { "id": "c", "text": "Do nothing because you don’t want to be responsible for delaying the launch." },
+      { "id": "d", "text": "Recommend pausing go-live until the error is reviewed and a decision is made by the accountable owner." }
+    ],
+    "correct_answer": { "a": 4, "b": 2, "c": 1, "d": 3 },
+    "explanation": "Raising the issue with context and a proposed solution (a) is best practice and protects quality. Advising an accountable review (d) is also effective when risk is material. Changing it unilaterally (b) introduces governance and quality risk. Doing nothing (c) is very ineffective given potential customer impact."
+  },
+  {
+    "id": "sjq_005",
+    "subtest": "situational_judgement",
+    "scenario": "Your manager chooses an approach for a piece of work that you believe has a significant risk. The decision has been shared with the team.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Request a short 1:1 with your manager to share your concerns with evidence and propose mitigations or an alternative." },
+      { "id": "b", "text": "Support the decision publicly, but document the key risks and ask for agreement on mitigation actions." },
+      { "id": "c", "text": "Challenge your manager’s decision strongly in a team meeting so everyone knows you disagree." },
+      { "id": "d", "text": "Complain to teammates about the decision and refuse to contribute to the work." }
+    ],
+    "correct_answer": { "a": 4, "b": 3, "c": 2, "d": 1 },
+    "explanation": "Raising concerns privately with evidence and solutions (a) is most effective and constructive. Documenting risks and agreeing mitigations (b) is a professional way to manage risk once a decision is made. Public confrontation (c) can damage trust and reduce psychological safety. Complaining and refusing (d) is very ineffective and harms delivery."
+  },
+  {
+    "id": "sjq_006",
+    "subtest": "situational_judgement",
+    "scenario": "A customer emails you angrily about a delay caused by another team. You are the main contact person and the customer demands an immediate explanation.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Acknowledge the issue, apologise for the experience, and take ownership to coordinate a resolution with the responsible team." },
+      { "id": "b", "text": "Explain that it is not your fault and direct the customer to complain to the other team." },
+      { "id": "c", "text": "Wait to respond until you have every detail, even if that takes a full day." },
+      { "id": "d", "text": "Offer a clear next step and timeline now, and commit to providing updates as you gather more information." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Taking ownership as the contact and coordinating resolution (a) is most effective. Providing an immediate plan and updates (d) helps manage expectations. Waiting too long to reply (c) can escalate the issue even if you need details. Blaming others (b) is very ineffective and damages trust."
+  },
+  {
+    "id": "sjq_007",
+    "subtest": "situational_judgement",
+    "scenario": "A colleague is unexpectedly absent for the week and you learn that they own several tasks that are due soon. There is no formal handover.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Inform your manager, clarify what must be covered urgently, and communicate any impact to stakeholders early." },
+      { "id": "b", "text": "Ask a teammate to share the workload with you and document what you do so the colleague can pick up later." },
+      { "id": "c", "text": "Take on all the tasks yourself and work overtime without telling anyone you are covering." },
+      { "id": "d", "text": "Leave the tasks until the colleague returns because they are not assigned to you." }
+    ],
+    "correct_answer": { "a": 4, "b": 3, "c": 2, "d": 1 },
+    "explanation": "Escalating early to prioritise and manage stakeholder expectations (a) is most effective. Sharing work and documenting (b) is proactive and sustainable. Covering silently (c) may help short term but creates risk and hides capacity issues. Doing nothing (d) is very ineffective and risks missed deadlines."
+  },
+  {
+    "id": "sjq_008",
+    "subtest": "situational_judgement",
+    "scenario": "You notice your team repeats the same manual step every week, causing delays and occasional errors. You think there is a simple improvement the team has not discussed.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Prepare a brief improvement proposal with expected benefits and suggest a small pilot to test it." },
+      { "id": "b", "text": "Implement the change immediately on your own without informing the team, to prove it works." },
+      { "id": "c", "text": "Mention the idea casually once and then drop it if no one responds right away." },
+      { "id": "d", "text": "Collect a few examples of errors and ask the team for input before proposing the improvement." }
+    ],
+    "correct_answer": { "a": 3, "b": 1, "c": 2, "d": 4 },
+    "explanation": "Gathering evidence and involving the team (d) is most effective and increases buy-in. A clear proposal with a pilot (a) is also effective and practical. Implementing unilaterally (b) is very ineffective because it bypasses governance and alignment. Mentioning it and dropping it (c) is somewhat ineffective because it is unlikely to drive change."
+  },
+  {
+    "id": "sjq_009",
+    "subtest": "situational_judgement",
+    "scenario": "You are asked to complete a task using a tool you have never used before. The work is important and the deadline is soon.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Explain your current skill level and propose a plan: quick learning, a mentor check, and realistic milestones." },
+      { "id": "b", "text": "Accept the task and start learning immediately, asking for help only if you get stuck." },
+      { "id": "c", "text": "Decline the task because it is outside your role and you do not want to risk failure." },
+      { "id": "d", "text": "Pretend you know the tool and deliver whatever you can, even if the output is unreliable." }
+    ],
+    "correct_answer": { "a": 4, "b": 3, "c": 2, "d": 1 },
+    "explanation": "Being transparent and setting a plan with support (a) is most effective and reduces delivery risk. Learning quickly and seeking help when needed (b) is generally effective. Declining outright (c) may be inappropriate if support is available and the task is important. Pretending and producing unreliable work (d) is very ineffective."
+  },
+  {
+    "id": "sjq_010",
+    "subtest": "situational_judgement",
+    "scenario": "Two managers give you conflicting instructions about priorities for the same week. Both tasks seem important and you do not have time to complete both.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      { "id": "a", "text": "Bring both managers into a short alignment conversation to agree the priority and timeline." },
+      { "id": "b", "text": "Choose the manager you work with most and ignore the other instruction." },
+      { "id": "c", "text": "Try to do both tasks anyway, even if it means rushing and risking mistakes." },
+      { "id": "d", "text": "Explain your capacity constraints in writing and ask for confirmation of which task should take priority." }
+    ],
+    "correct_answer": { "a": 4, "b": 1, "c": 2, "d": 3 },
+    "explanation": "Aligning stakeholders directly (a) is most effective and prevents ongoing conflict. Getting written confirmation with clear constraints (d) is also effective. Trying to do both (c) often reduces quality and increases risk. Ignoring one manager (b) is very ineffective and can damage trust."
+  }
+]
+
