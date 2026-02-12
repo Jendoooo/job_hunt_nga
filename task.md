@@ -15,6 +15,8 @@ Date: 2026-02-12
 - [x] Harden dashboard fetch + sign-out handling + visible error states
 - [x] Add sign-out fallback to local scope when global revocation fails
 - [x] Fix HTML explanation rendering in score review mode
+- [x] Add timeout protection so result save cannot block dashboard navigation
+- [x] Add Supabase env fallback guard to avoid deployment hard-crash
 
 ## Phase 2: Design System Refactor (Light Theme)
 - [x] Consolidate core visual tokens and shared UI primitives in `src/index.css`
@@ -28,12 +30,14 @@ Date: 2026-02-12
 - [x] Aptitude test flow (`src/pages/AptitudeTest.jsx`)
   - [x] User-selectable question count per subtest
   - [x] User-selectable time per subtest
+  - [x] Practice mode + exam mode
 - [x] Saville practice flow (`src/pages/SavillePractice.jsx`)
   - [x] User-selectable question count
   - [x] User-selectable time limit
 - [x] NLNG SHL flow (`src/pages/NLNGTest.jsx`)
   - [x] User-selectable question count
   - [x] User-selectable time limit
+  - [x] Practice mode + exam mode
 - [x] AI generated flow (`src/pages/AIGeneratedTest.jsx`)
 - [x] Score report review flow (`src/components/ScoreReport.jsx`)
 - [x] AI generator error feedback surfaced in dashboard UI
@@ -57,5 +61,5 @@ Date: 2026-02-12
 ## Next Actions
 1. Run manual UX/accessibility checks on all target breakpoints and log defects.
 2. Execute SHL Sets 2-4 validation pipeline and QA generated explanations.
-3. Confirm DeepSeek API key and CORS/proxy setup in production environment.
+3. Confirm Vercel env vars (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_DEEPSEEK_API_KEY`) and redeploy.
 4. Optionally split large frontend bundle if payload size reduction is required.

@@ -33,12 +33,12 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 
 ## Dashboard Module Status
 - TotalEnergies:
-  - Swift Analysis Aptitude: Active (custom questions-per-subtest + time-per-subtest)
-  - Process Technical Assessment: Active
+  - Swift Analysis Aptitude: Active (exam + practice, custom questions/time)
+  - Process Technical Assessment: Active (exam + practice)
 - NLNG:
-  - SHL Deductive Reasoning: Active (custom question count + time limit)
+  - SHL Deductive Reasoning: Active (exam + practice, custom questions/time)
 - Drills:
-  - Engineering Math Drills: Active (custom question count + time limit)
+  - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:
   - Assessment Track: Coming Soon
 
@@ -48,6 +48,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.
 - Dashboard surfaces runtime errors for attempt loading and AI generation.
+- Deployment uses SPA rewrite via `vercel.json`.
 
 ## Verification Snapshot (2026-02-12)
 - `npm run lint`: pass

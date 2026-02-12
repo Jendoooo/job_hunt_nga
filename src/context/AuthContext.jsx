@@ -2,6 +2,15 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { AuthContext } from './useAuth'
 
+function withTimeout(promise, timeoutMs, message) {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+            setTimeout(() => reject(new Error(message)), timeoutMs)
+        }),
+    ])
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
@@ -99,7 +108,11 @@ export function AuthProvider({ children }) {
         let signOutError = null
 
         try {
-            const { error } = await supabase.auth.signOut({ scope: 'global' })
+            const { error } = await withTimeout(
+                supabase.auth.signOut({ scope: 'global' }),
+                5000,
+                'Global sign-out timed out.'
+            )
             signOutError = error
         } catch (error) {
             signOutError = error
@@ -107,7 +120,11 @@ export function AuthProvider({ children }) {
 
         if (signOutError) {
             console.warn('Global sign-out failed, falling back to local sign-out:', signOutError)
-            const { error: localError } = await supabase.auth.signOut({ scope: 'local' })
+            const { error: localError } = await withTimeout(
+                supabase.auth.signOut({ scope: 'local' }),
+                5000,
+                'Local sign-out timed out.'
+            )
             if (localError) throw localError
         }
 

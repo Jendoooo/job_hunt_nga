@@ -31,6 +31,7 @@ function shuffleQuestions(items) {
 export default function NLNGTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
+    const [mode, setMode] = useState('exam')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
     const [activeQuestions, setActiveQuestions] = useState([])
@@ -42,6 +43,7 @@ export default function NLNGTest() {
 
     const availableQuestions = deductiveQuestions.filter((question) => question.subtest === 'deductive')
     const totalTimeSeconds = timeLimitMinutes * 60
+    const isExamMode = mode === 'exam'
 
     function startTest() {
         const maxQuestions = Math.min(questionCount, availableQuestions.length)
@@ -94,8 +96,30 @@ export default function NLNGTest() {
                     <div className="test-setup__card">
                         <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Assessment Session</h2>
                         <p className="test-setup__description">
-                            Run SHL-style deductive reasoning practice with your preferred question count and time constraint.
+                            Choose timed exam mode or untimed practice mode with immediate correctness feedback.
                         </p>
+
+                        <div className="test-setup__mode">
+                            <h3>Mode</h3>
+                            <div className="test-setup__mode-options">
+                                <button
+                                    className={`test-setup__mode-btn ${mode === 'exam' ? 'test-setup__mode-btn--active' : ''}`}
+                                    onClick={() => setMode('exam')}
+                                >
+                                    <TimerIcon className={`mb-2 ${mode === 'exam' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
+                                    <span className="test-setup__mode-label">Exam Mode</span>
+                                    <span className="test-setup__mode-desc">Timed assessment, final-only scoring</span>
+                                </button>
+                                <button
+                                    className={`test-setup__mode-btn ${mode === 'practice' ? 'test-setup__mode-btn--active' : ''}`}
+                                    onClick={() => setMode('practice')}
+                                >
+                                    <BookOpen className={`mb-2 ${mode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
+                                    <span className="test-setup__mode-label">Practice Mode</span>
+                                    <span className="test-setup__mode-desc">Untimed with immediate correctness</span>
+                                </button>
+                            </div>
+                        </div>
 
                         <div className="test-setup__mode">
                             <h3>Question Count</h3>
@@ -114,7 +138,7 @@ export default function NLNGTest() {
                         </div>
 
                         <div className="test-setup__mode">
-                            <h3>Time Limit</h3>
+                            <h3>Time Limit (Exam)</h3>
                             <div className="test-setup__time-options">
                                 {TIME_OPTIONS_MINUTES.map((minutes) => (
                                     <button
@@ -134,9 +158,9 @@ export default function NLNGTest() {
                                 <h3 className="font-bold text-sky-900">What to Expect</h3>
                             </div>
                             <ul className="text-sm text-sky-800 space-y-2 list-disc list-inside">
-                                <li>Each question tests logical inference from a fixed set of statements.</li>
-                                <li>Choose the option that is guaranteed by the information given.</li>
-                                <li>No negative marking, so answer every question before time expires.</li>
+                                <li>Each question tests logical inference from fixed statements.</li>
+                                <li>Choose the option guaranteed by the information given.</li>
+                                <li>{isExamMode ? 'Timed mode: answer before the clock runs out.' : 'Practice mode: no timer pressure.'}</li>
                             </ul>
                         </div>
 
@@ -144,7 +168,8 @@ export default function NLNGTest() {
                             <AlertCircle className="text-amber-600 shrink-0 mt-0.5" size={18} />
                             <div className="text-sm text-amber-800">
                                 <strong className="block mb-1">Session Summary</strong>
-                                {questionCount} questions in {timeLimitMinutes} minutes.
+                                {questionCount} questions
+                                {isExamMode ? ` in ${timeLimitMinutes} minutes.` : ' in untimed practice mode.'}
                             </div>
                         </div>
 
@@ -153,7 +178,7 @@ export default function NLNGTest() {
                             onClick={startTest}
                             disabled={availableQuestions.length === 0}
                         >
-                            <Play size={18} /> Start Assessment
+                            <Play size={18} /> Start {isExamMode ? 'Assessment' : 'Practice'}
                         </button>
                     </div>
                 </div>
@@ -175,11 +200,11 @@ export default function NLNGTest() {
                     questions={activeQuestions}
                     answers={answers}
                     flagged={flagged}
-                    timeTaken={timeTaken || totalTimeSeconds}
-                    totalTime={totalTimeSeconds}
+                    timeTaken={timeTaken || (isExamMode ? totalTimeSeconds : 0)}
+                    totalTime={isExamMode ? totalTimeSeconds : 0}
                     assessmentType="nlng-shl"
-                    moduleName={`NLNG SHL Deductive (${activeQuestions.length}Q / ${timeLimitMinutes}m)`}
-                    mode="exam"
+                    moduleName={`NLNG SHL Deductive (${mode}, ${activeQuestions.length}Q${isExamMode ? ` / ${timeLimitMinutes}m` : ''})`}
+                    mode={mode}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />
@@ -206,10 +231,16 @@ export default function NLNGTest() {
                 </div>
 
                 <div className="test-page__header-right">
-                    <div className="flex items-center gap-2">
-                        <TimerIcon size={16} className="text-slate-500" />
-                        <Timer duration={totalTimeSeconds} onTimeUp={finishTest} />
-                    </div>
+                    {isExamMode ? (
+                        <div className="flex items-center gap-2">
+                            <TimerIcon size={16} className="text-slate-500" />
+                            <Timer duration={totalTimeSeconds} onTimeUp={finishTest} />
+                        </div>
+                    ) : (
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+                            Practice Mode
+                        </span>
+                    )}
                 </div>
             </header>
 
@@ -232,7 +263,7 @@ export default function NLNGTest() {
                             totalQuestions={activeQuestions.length}
                             selectedAnswer={answers[currentQuestion]}
                             onSelectAnswer={handleAnswer}
-                            showResult={false}
+                            showResult={!isExamMode && answers[currentQuestion] !== undefined}
                             correctAnswer={question.correctAnswer}
                             isFlagged={flagged.includes(currentQuestion)}
                             onToggleFlag={toggleFlag}

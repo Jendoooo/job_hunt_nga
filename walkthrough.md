@@ -59,13 +59,15 @@ This project is a React + Vite assessment platform for graduate candidate prepar
 
 ## Current Status
 - NLNG route and dashboard entry are active.
-- NLNG setup supports selectable question count and time limit.
-- Aptitude setup supports selectable questions-per-subtest and time-per-subtest.
-- Saville setup supports selectable question count and time limit.
+- NLNG setup supports exam/practice modes and selectable question/time profiles.
+- Aptitude setup supports exam/practice modes and selectable questions/time per subtest.
+- Saville setup supports exam/practice modes and selectable question/time profiles.
 - Dragnet appears as Coming Soon.
 - Score report now surfaces save progress/errors and triggers dashboard refresh event after successful save.
+- Score report save is timeout-protected so users can still leave during save delays.
 - Dashboard now surfaces AI generation and activity-load errors.
 - Sign-out now has global->local fallback for reliability on unstable networks.
 - Score review explanation now renders HTML emphasis content properly.
+- Vercel SPA routing fallback is configured via `vercel.json`.
 - Core lint/build checks pass.
 - SHL Sets 2-4 data expansion is pending.

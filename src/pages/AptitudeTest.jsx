@@ -13,6 +13,7 @@ import {
     AlertCircle,
     CheckCircle2,
     Play,
+    Timer as TimerIcon,
 } from 'lucide-react'
 
 const SUBTESTS = [
@@ -38,6 +39,7 @@ function shuffleQuestions(items) {
 export default function AptitudeTest() {
     const navigate = useNavigate()
     const [stage, setStage] = useState('setup')
+    const [mode, setMode] = useState('exam')
     const [questionsPerSubtest, setQuestionsPerSubtest] = useState(DEFAULT_QUESTIONS)
     const [minutesPerSubtest, setMinutesPerSubtest] = useState(DEFAULT_TIME_MINUTES)
     const [sessionQuestions, setSessionQuestions] = useState({})
@@ -52,6 +54,7 @@ export default function AptitudeTest() {
     const currentSubtest = SUBTESTS[currentSubtestIndex]
     const sectionDurationSeconds = minutesPerSubtest * 60
     const totalTimeSeconds = SUBTESTS.length * sectionDurationSeconds
+    const isExamMode = mode === 'exam'
 
     const subtestQuestions = useMemo(
         () => sessionQuestions[currentSubtest?.key] || [],
@@ -123,8 +126,30 @@ export default function AptitudeTest() {
                     <div className="test-setup__card">
                         <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Aptitude Session</h2>
                         <p className="test-setup__description">
-                            Customize question count and time per section, then run the full three-part aptitude flow.
+                            Run this module in timed exam mode or guided practice mode with instant answer feedback.
                         </p>
+
+                        <div className="test-setup__mode">
+                            <h3>Mode</h3>
+                            <div className="test-setup__mode-options">
+                                <button
+                                    className={`test-setup__mode-btn ${mode === 'exam' ? 'test-setup__mode-btn--active' : ''}`}
+                                    onClick={() => setMode('exam')}
+                                >
+                                    <TimerIcon className={`mb-2 ${mode === 'exam' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
+                                    <span className="test-setup__mode-label">Exam Mode</span>
+                                    <span className="test-setup__mode-desc">Timed sections, no instant correctness</span>
+                                </button>
+                                <button
+                                    className={`test-setup__mode-btn ${mode === 'practice' ? 'test-setup__mode-btn--active' : ''}`}
+                                    onClick={() => setMode('practice')}
+                                >
+                                    <BookOpen className={`mb-2 ${mode === 'practice' ? 'text-blue-600' : 'text-slate-400'}`} size={24} />
+                                    <span className="test-setup__mode-label">Practice Mode</span>
+                                    <span className="test-setup__mode-desc">Untimed flow with immediate feedback</span>
+                                </button>
+                            </div>
+                        </div>
 
                         <div className="test-setup__mode">
                             <h3>Questions Per Subtest</h3>
@@ -142,7 +167,7 @@ export default function AptitudeTest() {
                         </div>
 
                         <div className="test-setup__mode">
-                            <h3>Time Per Subtest</h3>
+                            <h3>Time Per Subtest (Exam)</h3>
                             <div className="test-setup__time-options">
                                 {TIME_OPTIONS_MINUTES.map((minutes) => (
                                     <button
@@ -164,7 +189,8 @@ export default function AptitudeTest() {
                                     </div>
                                     <h3 className="font-bold text-slate-800 mb-1">{subtest.name}</h3>
                                     <p className="text-sm text-slate-500">
-                                        {questionsPerSubtest} questions | {minutesPerSubtest} minutes
+                                        {questionsPerSubtest} questions
+                                        {isExamMode ? ` | ${minutesPerSubtest} minutes` : ' | untimed'}
                                     </p>
                                 </div>
                             ))}
@@ -176,7 +202,7 @@ export default function AptitudeTest() {
                                 <h3 className="font-bold text-amber-900 mb-2">Session Summary</h3>
                                 <ul className="text-sm text-amber-800 space-y-2 list-disc list-inside">
                                     <li>{questionsPerSubtest * SUBTESTS.length} total questions.</li>
-                                    <li>{minutesPerSubtest * SUBTESTS.length} total timed minutes.</li>
+                                    <li>{isExamMode ? `${minutesPerSubtest * SUBTESTS.length} total timed minutes.` : 'No timer in practice mode.'}</li>
                                     <li>You cannot return to a completed section.</li>
                                 </ul>
                             </div>
@@ -186,7 +212,7 @@ export default function AptitudeTest() {
                             className="btn btn--primary btn--lg btn--full flex items-center justify-center gap-2"
                             onClick={startTest}
                         >
-                            <Play size={18} /> Start Assessment
+                            <Play size={18} /> Start {isExamMode ? 'Assessment' : 'Practice'}
                         </button>
                     </div>
                 </div>
@@ -212,7 +238,7 @@ export default function AptitudeTest() {
                             <nextSubtestData.icon size={20} color={nextSubtestData.color} />
                             {nextSubtestData.name}
                         </div>
-                        <span className="text-sm text-slate-500">{minutesPerSubtest} minutes</span>
+                        <span className="text-sm text-slate-500">{isExamMode ? `${minutesPerSubtest} minutes` : 'Untimed'}</span>
                     </div>
 
                     <button className="btn btn--primary btn--full" onClick={nextSubtest}>
@@ -251,11 +277,11 @@ export default function AptitudeTest() {
                     questions={flatQuestions}
                     answers={flatAnswers}
                     flagged={flagged}
-                    timeTaken={timeTaken || totalTimeSeconds}
-                    totalTime={totalTimeSeconds}
+                    timeTaken={timeTaken || (isExamMode ? totalTimeSeconds : 0)}
+                    totalTime={isExamMode ? totalTimeSeconds : 0}
                     assessmentType="saville-aptitude"
-                    moduleName={`Swift Analysis Aptitude (${questionsPerSubtest}Q x ${SUBTESTS.length} / ${minutesPerSubtest}m each)`}
-                    mode="exam"
+                    moduleName={`Swift Analysis Aptitude (${mode}, ${questionsPerSubtest}Q x ${SUBTESTS.length}${isExamMode ? ` / ${minutesPerSubtest}m each` : ''})`}
+                    mode={mode}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />
@@ -265,6 +291,7 @@ export default function AptitudeTest() {
 
     const question = subtestQuestions[currentQuestionIndex]
     const answerKey = `${currentSubtest.key}-${currentQuestionIndex}`
+    const selected = answers[answerKey]
 
     if (!question) {
         return null
@@ -289,7 +316,13 @@ export default function AptitudeTest() {
                 </div>
 
                 <div className="test-page__header-right">
-                    <Timer duration={sectionTimeLeft} onTimeUp={finishSubtest} />
+                    {isExamMode ? (
+                        <Timer duration={sectionTimeLeft} onTimeUp={finishSubtest} />
+                    ) : (
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+                            Practice Mode
+                        </span>
+                    )}
                 </div>
             </header>
 
@@ -298,9 +331,9 @@ export default function AptitudeTest() {
                     question={question}
                     questionNumber={currentQuestionIndex + 1}
                     totalQuestions={subtestQuestions.length}
-                    selectedAnswer={answers[answerKey]}
+                    selectedAnswer={selected}
                     onSelectAnswer={handleAnswer}
-                    showResult={false}
+                    showResult={!isExamMode && selected !== undefined}
                     correctAnswer={question.correctAnswer}
                 />
 

@@ -4,12 +4,12 @@ Light-theme, employer-aligned assessment practice platform built with React + Vi
 
 ## Modules
 - TotalEnergies:
-  - Swift Analysis Aptitude (custom questions-per-subtest + time-per-subtest)
-  - Process Technical Assessment
+  - Swift Analysis Aptitude (exam + practice, custom questions/time)
+  - Process Technical Assessment (exam + practice)
 - NLNG:
-  - SHL Deductive Reasoning (custom question count + time limit)
+  - SHL Deductive Reasoning (exam + practice, custom question count/time)
 - Drills:
-  - Engineering Math Practice (custom question count + time limit)
+  - Engineering Math Practice (exam + practice, custom question count/time)
 - AI:
   - Custom generated quizzes
 - Dragnet:
@@ -68,3 +68,5 @@ npm run build
 ## Notes
 - Sign-out includes a local fallback strategy when global token revocation fails.
 - Score review explanation supports inline HTML formatting from trusted local question data.
+- Score saving uses timeout safeguards so users can always leave the report screen.
+- Vercel SPA deployment is configured via `vercel.json` rewrite to `index.html`.

@@ -64,6 +64,37 @@
 - `npm run lint`: PASS
 - `npm run build`: PASS
 
+## 2026-02-12 - Save-Exit Unblock + Full Practice Coverage + Vercel Hardening
+
+## User Report
+- Score report could get stuck on "Saving your result..." and block Dashboard navigation.
+- Requested practice mode availability across all assessment modules.
+- Vercel deployment rendered a blank page.
+
+## Changes Applied
+- `src/components/ScoreReport.jsx`
+  - Added save timeout protections for latest-attempt check and insert operations.
+  - Dashboard navigation now leaves after a short wait even if save is still pending.
+  - Removed hard block on Dashboard button during save.
+- `src/pages/AptitudeTest.jsx`
+  - Added explicit mode selection: `exam` and `practice`.
+  - Practice mode now provides immediate correctness feedback and untimed flow.
+- `src/pages/NLNGTest.jsx`
+  - Added explicit mode selection: `exam` and `practice`.
+  - Practice mode now provides immediate correctness feedback and untimed flow.
+- `src/lib/supabase.js`
+  - Added safe fallback initialization when env vars are missing, preventing startup crash.
+- `src/pages/LoginPage.jsx`
+  - Added visible deployment warning when Supabase env vars are not configured.
+- `src/context/AuthContext.jsx`
+  - Added timeout wrappers around sign-out calls to avoid indefinite hanging.
+- `vercel.json`
+  - Added SPA rewrite rule to route all paths to `index.html`.
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS
+
 ## 2026-02-12 - Dashboard/Auth/AI Reliability + Aptitude/Saville Controls
 
 ## User Report

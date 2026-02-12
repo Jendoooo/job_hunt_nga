@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../context/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { motion as Motion, AnimatePresence } from 'framer-motion'
+import { hasSupabaseEnv } from '../lib/supabase'
 import { Mail, Lock, User, ArrowRight, CheckCircle2, Loader2, Target } from 'lucide-react'
 
 export default function LoginPage() {
@@ -67,6 +68,13 @@ export default function LoginPage() {
                         <h2>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
                         <p>{isLogin ? 'Sign in to continue your preparation.' : 'Create your account to begin practice.'}</p>
                     </header>
+
+                    {!hasSupabaseEnv && (
+                        <div className="auth-form__message auth-form__message--error">
+                            Supabase environment variables are missing in this deployment. Set
+                            `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+                        </div>
+                    )}
 
                     <form onSubmit={handleSubmit} className="auth-form">
                         <AnimatePresence mode="wait">

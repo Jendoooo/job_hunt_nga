@@ -18,6 +18,18 @@ import {
     Check,
 } from 'lucide-react'
 
+const SAVE_TIMEOUT_MS = 7000
+const LEAVE_WAIT_MS = 1500
+
+function withTimeout(promise, timeoutMs, message) {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+            setTimeout(() => reject(new Error(message)), timeoutMs)
+        }),
+    ])
+}
+
 function normalizeForComparison(value) {
     if (value === null || typeof value !== 'object') {
         return value
@@ -103,13 +115,17 @@ export default function ScoreReport({
                 answers,
             }
 
-            const { data: latestAttempt, error: latestError } = await supabase
-                .from('test_attempts')
-                .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(1)
-                .maybeSingle()
+            const { data: latestAttempt, error: latestError } = await withTimeout(
+                supabase
+                    .from('test_attempts')
+                    .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .maybeSingle(),
+                SAVE_TIMEOUT_MS,
+                'Timed out while checking latest saved result.'
+            )
 
             if (latestError) throw latestError
 
@@ -118,7 +134,11 @@ export default function ScoreReport({
                 return true
             }
 
-            const { error } = await supabase.from('test_attempts').insert(payload)
+            const { error } = await withTimeout(
+                supabase.from('test_attempts').insert(payload),
+                SAVE_TIMEOUT_MS,
+                'Timed out while saving result to Supabase.'
+            )
             if (error) throw error
             setSaved(true)
 
@@ -151,7 +171,10 @@ export default function ScoreReport({
 
     async function handleBackToDashboard() {
         if (!saved) {
-            await saveResults()
+            await Promise.race([
+                saveResults(),
+                new Promise((resolve) => setTimeout(resolve, LEAVE_WAIT_MS)),
+            ])
         }
         onBackToDashboard()
     }
@@ -295,7 +318,7 @@ export default function ScoreReport({
                     <RotateCcw size={16} />
                     Retry
                 </button>
-                <button className="btn btn--ghost" onClick={handleBackToDashboard} disabled={saving}>
+                <button className="btn btn--ghost" onClick={handleBackToDashboard}>
                     <ArrowLeft size={16} />
                     Dashboard
                 </button>
