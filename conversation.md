@@ -314,6 +314,19 @@
 - `npm run generate:shl-interactive`: PASS
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - NLNG Deductive Draft Guard + Repo Hygiene
+
+## User Report
+- NLNG deductive data expanded but some questions were incomplete (`correctAnswer: -1`) and could break scoring/feedback.
+- Local scratch folders/files were cluttering `git status` and causing tool noise.
+
+## Changes Applied
+- `src/pages/NLNGTest.jsx`
+  - Filters the deductive pool to only questions with a valid answer key (`0 <= correctAnswer < options.length`).
+  - Setup screen now shows how many draft questions were excluded.
+- `.gitignore`
+  - Ignores local artifact folders/files (`.claude/`, `image/`, `supabase/.temp/`, `src/index.css.bak`, etc.).
 - Generated set now includes difficulty distribution (`easy`, `medium`, `hard`) and mixed subtype coverage.
 
 ## 2026-02-12 - Interactive Blank-Screen Hardening + SHL Real Preset + Gold Data Expansion
@@ -515,3 +528,43 @@
 ## Notes
 - Generated interactive pool now includes the two new widget types in addition to drag-table, pie, and stacked-bar.
 - New widget files were rewritten cleanly to remove encoding corruption from the interrupted run.
+
+## 2026-02-12 - SHL Fidelity Pass + Supabase Sync Outbox
+
+## User Report
+- SHL stacked-bar and pie interactions were not visually/behaviorally accurate (no legend, donut instead of pie, only Bar 2 adjustable).
+- Interactive review showed raw JSON which was hard to read.
+- Results frequently saved locally and never appeared in Supabase/dashboard KPIs.
+- Requested more line-graph (point graph) questions and stronger preference for SHL-style realism.
+
+## Changes Applied
+- `src/components/interactive/SHLAdjustableBarWidget.jsx`
+  - Improved SHL fidelity: totals above bars, axis prefix/step support, visible square drag handles, better spacing/width for 2-bar layouts, and a color legend for segment mapping.
+  - Keeps `requestAnimationFrame` throttling for smooth dragging.
+- `src/components/interactive/SHLResizablePieWidget.jsx`
+  - Replaced donut approach with a full SVG pie chart that supports draggable boundary handles.
+  - Enforces SHL min-slice constraint (default 5%) and includes an optional reset control.
+  - Supports SHL-style info cards when provided by question data.
+- `scripts/generate_shl_module.js`
+  - Preserves richer pie widget fields (`min_pct`, `info_cards`) during normalization.
+  - Converts 2-bar stacked-bar gold records into 2-bar interactive sessions (both bars adjustable) and emits per-bar expected answers.
+- `src/data/shl-gold-standard.json`
+  - Added SHL info cards + min slice on customer-contact pie question.
+  - Added multiple new stock-account point-graph questions.
+  - Adjusted sales-revenue bar record to consistent East/West mapping and currency axis.
+- `src/data/shl-interactive-questions.json`
+  - Regenerated from gold standard (now 62 items).
+- `src/components/ScoreReport.jsx`
+  - Interactive review now renders readable tables for interactive answers (instead of raw JSON).
+  - Save flow now generates a client attempt id and queues unsynced attempts to a local outbox on timeout/error.
+  - Increased save fail-safe window to 15s and removed navigation blocking on Dashboard exit.
+- `src/utils/attemptOutbox.js` (new)
+  - LocalStorage-backed outbox queue for pending Supabase inserts.
+- `src/pages/Dashboard.jsx`
+  - Auto-flushes the outbox (retries pending inserts) and shows a banner when cloud sync is pending.
+  - Increased Supabase fetch timeout to reduce blank KPI states on cold starts.
+
+## Verification
+- `npm run generate:shl-interactive`: PASS
+- `npm run lint`: PASS
+- `npm run build`: PASS
