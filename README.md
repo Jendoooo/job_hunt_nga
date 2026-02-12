@@ -52,6 +52,11 @@ Light-theme, employer-aligned assessment practice platform built with React + Vi
   ```bash
   npx supabase login --token <SUPABASE_PERSONAL_ACCESS_TOKEN>
   ```
+- Link and verify remote backend connectivity:
+  ```bash
+  npx supabase link --project-ref fjwfoedyomdgxadnjsdt
+  npx supabase db push --linked
+  ```
 
 ## Validation
 ```bash

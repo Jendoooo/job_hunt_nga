@@ -109,7 +109,9 @@ Date: 2026-02-12
 - [x] Harden sign-out to force local session cleanup even when Supabase network calls fail
 - [x] Install local CLI tooling for cloud ops: `vercel` and `supabase`
 - [x] Authenticate Vercel CLI for this machine/session
-- [ ] Authenticate Supabase CLI with personal access token (`npx supabase login --token ...`)
+- [x] Authenticate Supabase CLI with personal access token (`npx supabase login --token ...`)
+- [x] Link workspace to Supabase project ref `fjwfoedyomdgxadnjsdt`
+- [x] Verify remote migration connectivity (`npx supabase db push --linked`)
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes

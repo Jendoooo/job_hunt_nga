@@ -77,6 +77,11 @@ This project is a React + Vite assessment platform for graduate candidate prepar
    npx vercel login
    npx supabase login --token <SUPABASE_PERSONAL_ACCESS_TOKEN>
    ```
+6. Link to the target remote project before backend operations:
+   ```bash
+   npx supabase link --project-ref fjwfoedyomdgxadnjsdt
+   npx supabase db push --linked
+   ```
 5. Regenerate interactive numerical dataset (optional):
    ```bash
    npm run generate:shl-interactive

@@ -442,3 +442,23 @@
 
 ## Notes
 - Once Supabase token is provided, database/project actions can be run directly from this terminal session.
+
+## 2026-02-12 - Supabase Token Login + Project Linking Complete
+
+## User Direction
+- Provided Supabase personal access token and requested full backend control from this workspace.
+
+## Changes Applied
+- Executed Supabase token login successfully:
+  - `npx supabase login --token <provided_token>`
+- Linked this repository to project:
+  - `npx supabase link --project-ref fjwfoedyomdgxadnjsdt`
+- Verified remote project visibility and linkage:
+  - `npx supabase projects list --output json` shows `job_hunt_nga` as `linked: true`
+- Verified remote migration pipeline connectivity:
+  - `npx supabase db push --linked` returns remote up-to-date
+
+## Operational Status
+- Vercel CLI authenticated and usable.
+- Supabase CLI authenticated and linked to `job_hunt_nga`.
+- Backend changes (tables, policies, migrations) can now be applied directly from this terminal.
