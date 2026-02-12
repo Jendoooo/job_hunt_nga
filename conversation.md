@@ -395,3 +395,29 @@
 - `npm run generate:shl-interactive`: PASS (50 records; gold source 34)
 - `npm run lint`: PASS
 - `npm run build`: PASS
+
+## 2026-02-12 - Mixed Difficulty + Sign-Out Reliability Follow-Up
+
+## User Report
+- Requested an option to mix all interactive difficulties instead of selecting only one level.
+- Reported sign-out still appeared unreliable.
+- Asked whether Supabase/Vercel can be controlled directly from this environment.
+
+## Changes Applied
+- `src/pages/NLNGInteractiveTest.jsx`
+  - Added `All (Mixed)` difficulty option.
+  - Updated filtering logic so `all` includes easy + medium + hard pools together.
+  - Updated setup availability text and defaults to mixed mode for broader practice.
+- `src/context/AuthContext.jsx`
+  - Reworked `signOut()` to prioritize local logout and always clear in-memory auth state.
+  - Added storage key cleanup fallback for Supabase auth tokens when local sign-out fails.
+  - Global sign-out is now best-effort and non-blocking.
+
+## Environment Capability Check
+- `supabase` CLI is not installed in this terminal environment.
+- `vercel` CLI is not installed in this terminal environment.
+- Result: direct account automation from here is possible only after CLI install + auth/token setup.
+
+## Verification
+- `npm run lint`: PASS
+- `npm run build`: PASS

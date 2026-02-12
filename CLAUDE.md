@@ -60,7 +60,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Process Technical Assessment: Active (exam + practice)
 - NLNG:
   - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
-  - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation)
+  - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation; difficulty supports `all`/`easy`/`medium`/`hard`)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:
@@ -74,6 +74,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Interactive stacked-bar drag updates are throttled with `requestAnimationFrame` for smoother pointer handling.
 - Interactive stacked-bar axis now applies dynamic headroom (`max * 1.1`) and extra label spacing to avoid overlap/clipping.
 - NLNG Interactive setup includes a difficulty selector (`easy` / `medium` / `hard`) that filters question pool.
+- NLNG Interactive setup supports mixed-difficulty mode via `all` (combined pool) in addition to `easy` / `medium` / `hard`.
 - NLNG Interactive flow includes explicit session guards + render boundary fallback to avoid blank stage rendering.
 - Responsive and accessibility baseline included (focus-visible, disabled states, interaction consistency).
 - Score report includes persistence feedback state styles.

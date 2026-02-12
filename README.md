@@ -74,6 +74,7 @@ Hard-mode generation patterns are included:
 - Historical-reference stacked bars (Year 1 locked, Year 2/3 interactive)
 
 Interactive NLNG setup also supports difficulty filtering:
+- `All (Mixed)`
 - `Easy`
 - `Medium`
 - `Hard`

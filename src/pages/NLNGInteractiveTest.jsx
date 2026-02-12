@@ -19,6 +19,7 @@ import {
 const QUESTION_OPTIONS = [5, 10, 15, 20, 30, 40, 50]
 const TIME_OPTIONS_MINUTES = [10, 15, 18, 20, 25, 30, 40]
 const DIFFICULTY_OPTIONS = [
+    { value: 'all', label: 'All (Mixed)' },
     { value: 'easy', label: 'Easy' },
     { value: 'medium', label: 'Medium' },
     { value: 'hard', label: 'Hard' },
@@ -49,7 +50,7 @@ export default function NLNGInteractiveTest() {
     const [stage, setStage] = useState('setup')
     const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
-    const [difficulty, setDifficulty] = useState('medium')
+    const [difficulty, setDifficulty] = useState('all')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
     const [activeQuestions, setActiveQuestions] = useState([])
@@ -64,7 +65,7 @@ export default function NLNGInteractiveTest() {
         interactiveQuestions.filter((question) =>
             typeof question?.subtype === 'string' &&
             question.subtype.startsWith('interactive_numerical') &&
-            getQuestionDifficulty(question) === difficulty
+            (difficulty === 'all' || getQuestionDifficulty(question) === difficulty)
         )
     ), [difficulty])
     const isRealPreset = sessionPreset === 'real'
@@ -75,7 +76,7 @@ export default function NLNGInteractiveTest() {
     const effectiveTimeLimitMinutes = isRealPreset ? REAL_SHL_TIME_MINUTES : timeLimitMinutes
     const totalTimeSeconds = effectiveTimeLimitMinutes * 60
     const isExamMode = effectiveMode === 'exam'
-    const difficultyLabel = DIFFICULTY_OPTIONS.find((option) => option.value === difficulty)?.label || 'Medium'
+    const difficultyLabel = DIFFICULTY_OPTIONS.find((option) => option.value === difficulty)?.label || 'All (Mixed)'
 
     function applyRealPreset() {
         setSessionPreset('real')
@@ -206,7 +207,7 @@ export default function NLNGInteractiveTest() {
                                 </select>
                             </div>
                             <p className="text-xs text-slate-500 mt-2">
-                                {availableQuestions.length} questions available for {difficultyLabel.toLowerCase()} mode.
+                                {availableQuestions.length} questions available for {difficultyLabel.toLowerCase()}.
                             </p>
                         </div>
 

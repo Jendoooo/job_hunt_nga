@@ -84,7 +84,7 @@ This project is a React + Vite assessment platform for graduate candidate prepar
 - NLNG setup supports exam/practice modes and selectable question/time profiles.
 - NLNG deductive setup includes an SHL-style real attempt preset (16 questions in 18 minutes).
 - NLNG Interactive Numerical route (`/test/nlng-interactive`) is active and linked from dashboard.
-- NLNG Interactive setup now supports difficulty filtering (`Easy`, `Medium`, `Hard`).
+- NLNG Interactive setup now supports difficulty filtering (`All (Mixed)`, `Easy`, `Medium`, `Hard`).
 - NLNG Interactive setup includes an SHL-style real attempt preset (10 questions in 18 minutes).
 - Interactive numerical question types are supported through `QuestionCard` type routing.
 - Aptitude setup supports exam/practice modes and selectable questions/time per subtest.

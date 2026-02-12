@@ -103,8 +103,10 @@ Date: 2026-02-12
 - [x] Add SHL deductive real-attempt preset in `src/pages/NLNGTest.jsx` (16Q / 18m)
 - [x] Lock real-attempt preset to exam mode; custom mode remains editable
 - [x] Add SHL interactive real-attempt preset in `src/pages/NLNGInteractiveTest.jsx` (10Q / 18m)
+- [x] Add mixed difficulty option in interactive setup (`All (Mixed)` in addition to Easy/Medium/Hard)
 - [x] Append extracted eligibility variants (`elig_person_b_v2`, `elig_person_d_v2`) to gold source and regenerate session bank
 - [x] Add stacked-bar visual hardening: dynamic Y-axis buffer + extra label spacing to prevent overlap
+- [x] Harden sign-out to force local session cleanup even when Supabase network calls fail
 
 ## Phase 6: Verification Status
 - [x] `npm run lint` passes

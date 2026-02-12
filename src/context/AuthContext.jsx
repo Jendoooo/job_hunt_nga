@@ -22,6 +22,30 @@ function isSessionBootstrapTimeout(error) {
     return String(error?.message || '').includes('Timed out while retrieving auth session.')
 }
 
+function clearSupabaseAuthStorage() {
+    if (typeof window === 'undefined') return
+
+    const clearTokenKeys = (storage) => {
+        try {
+            const keys = []
+            for (let index = 0; index < storage.length; index += 1) {
+                const key = storage.key(index)
+                if (!key) continue
+                if (key.startsWith('sb-') && key.endsWith('-auth-token')) {
+                    keys.push(key)
+                }
+            }
+
+            keys.forEach((key) => storage.removeItem(key))
+        } catch {
+            // Ignore storage cleanup issues.
+        }
+    }
+
+    clearTokenKeys(window.localStorage)
+    clearTokenKeys(window.sessionStorage)
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
@@ -138,34 +162,38 @@ export function AuthProvider({ children }) {
     }
 
     async function signOut() {
-        // Prefer global sign-out, but gracefully fallback to local session clear
-        // if network conditions block token revocation.
-        let signOutError = null
-
+        let localError = null
         try {
             const { error } = await withTimeout(
-                supabase.auth.signOut({ scope: 'global' }),
-                5000,
-                'Global sign-out timed out.'
-            )
-            signOutError = error
-        } catch (error) {
-            signOutError = error
-        }
-
-        if (signOutError) {
-            console.warn('Global sign-out failed, falling back to local sign-out:', signOutError)
-            const { error: localError } = await withTimeout(
                 supabase.auth.signOut({ scope: 'local' }),
                 5000,
                 'Local sign-out timed out.'
             )
-            if (localError) throw localError
+            if (error) {
+                localError = error
+            }
+        } catch (error) {
+            localError = error
         }
 
+        if (localError) {
+            console.warn('Local sign-out failed; forcing client cleanup:', localError)
+            clearSupabaseAuthStorage()
+        }
+
+        // Always clear in-memory auth state so the UI never stays "stuck signed in".
         setUser(null)
         setProfile(null)
         setLoading(false)
+
+        // Best-effort global revoke in background; do not block local logout UX.
+        void withTimeout(
+            supabase.auth.signOut({ scope: 'global' }),
+            5000,
+            'Global sign-out timed out.'
+        ).catch((error) => {
+            console.warn('Global sign-out revoke failed (non-blocking):', error)
+        })
     }
 
     const value = {
