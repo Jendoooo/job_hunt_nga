@@ -82,11 +82,7 @@ function buildWidgetConfig(data, value) {
         return accumulator
     }, {})
 
-    const requestedMaxTotal = Object.values(requestedState).reduce((maxTotal, state) => {
-        return Math.max(maxTotal, toNumber(state?.total, 0))
-    }, 0)
-
-    const bufferedAxisMax = Math.ceil(Math.max(baseMaxTotal, requestedMaxTotal) * 1.1)
+    const bufferedAxisMax = Math.ceil(baseMaxTotal * 1.1)
     const axisMax = Math.max(10, configuredAxisMax, bufferedAxisMax)
     const axisMin = Math.min(axisMax - 1, configuredAxisMin)
     const axisRange = axisMax - axisMin
