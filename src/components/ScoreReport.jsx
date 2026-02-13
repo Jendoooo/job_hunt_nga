@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import AIExplainer from './AIExplainer'
 import AISJQExplainer from './AISJQExplainer'
+import SHLDragTableWidget from './interactive/SHLDragTableWidget'
+import SHLResizablePieWidget from './interactive/SHLResizablePieWidget'
+import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
+import SHLTabbedEvalWidget from './interactive/SHLTabbedEvalWidget'
+import SHLPointGraphWidget from './interactive/SHLPointGraphWidget'
 import { supabase, hasSupabaseEnv } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
 import { buildQuestionResults, isInteractiveQuestionType } from '../utils/questionScoring'
@@ -151,6 +156,109 @@ function createClientAttemptId() {
     ].join('-')
 }
 
+function normalizeInteractiveWidgetValue(question, value) {
+    if (question?.type === 'interactive_point_graph' && Array.isArray(value)) {
+        return { values: value }
+    }
+
+    return value
+}
+
+function renderInteractiveWidget(questionResult, value, { disabled = true } = {}) {
+    const widgetData = questionResult?.widget_data || {}
+    const normalizedValue = normalizeInteractiveWidgetValue(questionResult, value)
+
+    switch (questionResult?.type) {
+        case 'interactive_drag_table':
+            return (
+                <SHLDragTableWidget
+                    data={widgetData}
+                    value={normalizedValue}
+                    onAnswer={() => { }}
+                    disabled={disabled}
+                />
+            )
+        case 'interactive_pie_chart':
+            return (
+                <SHLResizablePieWidget
+                    data={widgetData}
+                    value={normalizedValue}
+                    onAnswer={() => { }}
+                    disabled={disabled}
+                />
+            )
+        case 'interactive_stacked_bar':
+            return (
+                <SHLAdjustableBarWidget
+                    data={widgetData}
+                    value={normalizedValue}
+                    onAnswer={() => { }}
+                    disabled={disabled}
+                />
+            )
+        case 'interactive_tabbed_evaluation':
+            return (
+                <SHLTabbedEvalWidget
+                    data={widgetData}
+                    value={normalizedValue}
+                    onAnswer={() => { }}
+                    disabled={disabled}
+                />
+            )
+        case 'interactive_point_graph':
+            return (
+                <SHLPointGraphWidget
+                    data={widgetData}
+                    value={normalizedValue}
+                    onAnswer={() => { }}
+                    disabled={disabled}
+                />
+            )
+        default:
+            return null
+    }
+}
+
+function InteractiveWidgetPreview({ questionResult, expectedAnswer }) {
+    const [view, setView] = useState('your')
+    const actualAnswer = questionResult?.answer
+    const expected = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : null
+    const canShowExpected = Boolean(expected)
+
+    const selectedValue = view === 'expected'
+        ? expected
+        : actualAnswer
+
+    return (
+        <div className="score-review__widget-preview">
+            <div className="score-review__widget-tabs" role="tablist" aria-label="Interactive answer view">
+                <button
+                    type="button"
+                    className={`score-review__widget-tab ${view === 'your' ? 'score-review__widget-tab--active' : ''}`}
+                    onClick={() => setView('your')}
+                    role="tab"
+                    aria-selected={view === 'your'}
+                >
+                    Your Answer
+                </button>
+                <button
+                    type="button"
+                    className={`score-review__widget-tab ${view === 'expected' ? 'score-review__widget-tab--active' : ''}`}
+                    onClick={() => canShowExpected && setView('expected')}
+                    role="tab"
+                    aria-selected={view === 'expected'}
+                    disabled={!canShowExpected}
+                >
+                    Correct Answer
+                </button>
+            </div>
+            <div className="score-review__widget-canvas">
+                {renderInteractiveWidget(questionResult, selectedValue, { disabled: true })}
+            </div>
+        </div>
+    )
+}
+
 export default function ScoreReport({
     questions,
     answers,
@@ -172,6 +280,7 @@ export default function ScoreReport({
     const autoSaveTriggeredRef = useRef(false)
     const attemptIdRef = useRef(null)
     const [reviewMode, setReviewMode] = useState(false)
+    const [reviewScope, setReviewScope] = useState('all')
     const [currentReview, setCurrentReview] = useState(0)
     const [saved, setSaved] = useState(false)
     const [savedLocally, setSavedLocally] = useState(false)
@@ -192,6 +301,9 @@ export default function ScoreReport({
     const score = Math.round((correctCount / (totalQuestions || 1)) * 100)
     const skipped = questionResults.filter((result) => !result.answered).length
     const incorrectAnswers = questionResults.filter((result) => result.answered && !result.correct)
+    const reviewQuestions = reviewScope === 'incorrect'
+        ? (incorrectAnswers.length > 0 ? incorrectAnswers : questionResults)
+        : questionResults
 
     useEffect(() => {
         isMountedRef.current = true
@@ -478,6 +590,7 @@ export default function ScoreReport({
 
             return (
                 <div className="score-review__interactive">
+                    <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
                     <table className="score-review__interactive-table">
                         <thead>
                             <tr>
@@ -516,6 +629,7 @@ export default function ScoreReport({
 
             return (
                 <div className="score-review__interactive">
+                    <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
                     <table className="score-review__interactive-table">
                         <thead>
                             <tr>
@@ -567,6 +681,7 @@ export default function ScoreReport({
 
             return (
                 <div className="score-review__interactive">
+                    <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
                     <table className="score-review__interactive-table">
                         <thead>
                             <tr>
@@ -616,6 +731,7 @@ export default function ScoreReport({
 
             return (
                 <div className="score-review__interactive">
+                    <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
                     <table className="score-review__interactive-table">
                         <thead>
                             <tr>
@@ -655,6 +771,7 @@ export default function ScoreReport({
 
             return (
                 <div className="score-review__interactive">
+                    <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
                     <table className="score-review__interactive-table">
                         <thead>
                             <tr>
@@ -686,16 +803,21 @@ export default function ScoreReport({
 
         return (
             <div className="score-review__interactive">
+                <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
                 <pre>{JSON.stringify(actualAnswer, null, 2)}</pre>
             </div>
         )
     }
 
-    if (reviewMode && incorrectAnswers.length > 0) {
-        const q = incorrectAnswers[currentReview]
+    if (reviewMode && reviewQuestions.length > 0) {
+        const reviewIndex = Math.min(Math.max(0, currentReview), reviewQuestions.length - 1)
+        const q = reviewQuestions[reviewIndex]
         const isSJQ = q.subtest === 'situational_judgement'
         const interactiveReview = isInteractiveQuestionType(q.type)
         const expectedInteractiveAnswer = q.correct_answer || q.correctAnswer
+        const promptTitle = q.instruction || q.question || q.scenario || 'Question'
+        const promptRules = Array.isArray(q.prompt_rules) ? q.prompt_rules : []
+        const promptRuleTitle = promptRules.length > 0 ? 'Information' : null
         return (
             <div className="score-review">
                 <header className="score-review__top">
@@ -703,7 +825,7 @@ export default function ScoreReport({
                         <ArrowLeft size={15} />
                         Back To Results
                     </button>
-                    <span>Reviewing {currentReview + 1} of {incorrectAnswers.length}</span>
+                    <span>Reviewing {reviewIndex + 1} of {reviewQuestions.length}</span>
                 </header>
 
                 <article className="score-review__card">
@@ -716,7 +838,17 @@ export default function ScoreReport({
                         </>
                     ) : (
                         <>
-                            <h3>{q.question}</h3>
+                            <h3>{promptTitle}</h3>
+                            {promptRuleTitle && (
+                                <div className="question-card__rules">
+                                    <div className="question-card__rules-title">{promptRuleTitle}</div>
+                                    <ul>
+                                        {promptRules.map((rule, idx) => (
+                                            <li key={idx}>{rule}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                             {Array.isArray(q.options) && typeof q.correctAnswer === 'number' ? (
                                 <div className="score-review__options">
                                     {q.options.map((option, oi) => (
@@ -758,16 +890,16 @@ export default function ScoreReport({
                 <footer className="score-review__actions">
                     <button
                         className="btn btn--secondary"
-                        onClick={() => setCurrentReview(Math.max(0, currentReview - 1))}
-                        disabled={currentReview === 0}
+                        onClick={() => setCurrentReview(Math.max(0, reviewIndex - 1))}
+                        disabled={reviewIndex === 0}
                     >
                         <ArrowLeft size={15} />
                         Previous
                     </button>
                     <button
                         className="btn btn--secondary"
-                        onClick={() => setCurrentReview(Math.min(incorrectAnswers.length - 1, currentReview + 1))}
-                        disabled={currentReview === incorrectAnswers.length - 1}
+                        onClick={() => setCurrentReview(Math.min(reviewQuestions.length - 1, reviewIndex + 1))}
+                        disabled={reviewIndex === reviewQuestions.length - 1}
                     >
                         Next
                         <ArrowRight size={15} />
@@ -881,8 +1013,27 @@ export default function ScoreReport({
             )}
 
             <div className="score-report__actions">
+                <button
+                    className="btn btn--primary"
+                    onClick={() => {
+                        setReviewScope('all')
+                        setCurrentReview(0)
+                        setReviewMode(true)
+                    }}
+                >
+                    <ClipboardList size={16} />
+                    Review All
+                </button>
+
                 {incorrectAnswers.length > 0 && (
-                    <button className="btn btn--primary" onClick={() => setReviewMode(true)}>
+                    <button
+                        className="btn btn--secondary"
+                        onClick={() => {
+                            setReviewScope('incorrect')
+                            setCurrentReview(0)
+                            setReviewMode(true)
+                        }}
+                    >
                         <ClipboardList size={16} />
                         Review Incorrect
                     </button>

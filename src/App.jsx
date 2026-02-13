@@ -11,6 +11,7 @@ import NLNGTest from './pages/NLNGTest'
 import NLNGInteractiveTest from './pages/NLNGInteractiveTest'
 import NLNGSJQTest from './pages/NLNGSJQTest'
 import NLNGProcessMonitorTest from './pages/NLNGProcessMonitorTest'
+import SiteFooter from './components/SiteFooter'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -66,7 +67,12 @@ export default function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppRoutes />
+        <div className="app-frame">
+          <div className="app-frame__content">
+            <AppRoutes />
+          </div>
+          <SiteFooter />
+        </div>
       </AuthProvider>
     </Router>
   )

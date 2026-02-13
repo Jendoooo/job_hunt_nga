@@ -51,6 +51,7 @@ Date: 2026-02-12
   - [x] Practice mode + exam mode
 - [x] AI generated flow (`src/pages/AIGeneratedTest.jsx`)
 - [x] Score report review flow (`src/components/ScoreReport.jsx`)
+- [Codex 2026-02-13 08:05] Global footer + ScoreReport review upgrades: added a consistent site footer, added Review All (not only incorrect), and render interactive widgets during review (Your Answer vs Correct Answer). Also adjusted NLNG Interactive SHL Real preset sampling to prioritize stacked-bar + pie items.
 - [x] AI generator error feedback surfaced in dashboard UI
 
 ## Phase 4: Responsive + Accessibility Hardening

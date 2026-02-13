@@ -6,7 +6,7 @@ import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
 import RenderErrorBoundary from '../components/RenderErrorBoundary'
 import interactiveQuestions from '../data/shl-interactive-questions.json'
-import { selectUniqueSessionQuestions } from '../utils/questionSession'
+import { selectUniqueSessionQuestions, shuffleQuestions } from '../utils/questionSession'
 import {
     ArrowLeft,
     BookOpen,
@@ -44,6 +44,38 @@ function getQuestionDifficulty(question) {
 
     if (question?.subtype === 'interactive_numerical_hard') return 'hard'
     return 'medium'
+}
+
+function selectRealPresetQuestions(pool, count) {
+    const wanted = [
+        { type: 'interactive_stacked_bar', count: 4 },
+        { type: 'interactive_pie_chart', count: 3 },
+        { type: 'interactive_drag_table', count: 2 },
+        { type: 'interactive_point_graph', count: 1 },
+    ]
+
+    let remaining = [...pool]
+    const picked = []
+
+    for (const bucket of wanted) {
+        if (picked.length >= count) break
+        const needed = Math.min(bucket.count, count - picked.length)
+        if (needed <= 0) continue
+
+        const bucketPool = remaining.filter((q) => q?.type === bucket.type)
+        const selected = selectUniqueSessionQuestions(bucketPool, needed)
+        if (selected.length === 0) continue
+
+        picked.push(...selected)
+        const selectedIds = new Set(selected.map((q) => q.id))
+        remaining = remaining.filter((q) => !selectedIds.has(q.id))
+    }
+
+    if (picked.length < count) {
+        picked.push(...selectUniqueSessionQuestions(remaining, count - picked.length))
+    }
+
+    return shuffleQuestions(picked).slice(0, count)
 }
 
 export default function NLNGInteractiveTest() {
@@ -88,7 +120,9 @@ export default function NLNGInteractiveTest() {
     }
 
     function startTest() {
-        const selected = selectUniqueSessionQuestions(availableQuestions, effectiveQuestionCount)
+        const selected = isRealPreset
+            ? selectRealPresetQuestions(availableQuestions, effectiveQuestionCount)
+            : selectUniqueSessionQuestions(availableQuestions, effectiveQuestionCount)
         if (selected.length === 0) {
             setSessionError('No questions are available for this difficulty right now. Change difficulty and try again.')
             return

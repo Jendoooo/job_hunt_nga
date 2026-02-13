@@ -43,6 +43,11 @@
 - `src/services/deepseek.js`: updated the SJQ coach prompt to reflect More/Less Effective choices.
 - `src/components/ScoreReport.jsx` + `src/utils/sjqAnalytics.js`: updated SJQ review labels to display More/Less Effective.
 
+### [Codex 2026-02-13 08:05] Global Footer + Interactive Review Improvements
+- Added a consistent site footer (`src/components/SiteFooter.jsx`) and wrapped the app layout in `src/App.jsx` so it appears on all pages.
+- `src/components/ScoreReport.jsx`: added **Review All** (not only incorrect) and render interactive widgets during review (tabbed Your Answer / Correct Answer preview).
+- `src/pages/NLNGInteractiveTest.jsx`: SHL Real preset now prioritizes stacked-bar + pie chart items (then drag-table/point-graph fill) to better match real SHL emphasis.
+
 ---
 
 ## Architecture Notes (Codex's modules)
