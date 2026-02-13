@@ -12,6 +12,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `/test/nlng` -> `src/pages/NLNGTest.jsx` (protected)
 - `/test/nlng-interactive` -> `src/pages/NLNGInteractiveTest.jsx` (protected)
 - `/test/nlng-sjq` -> `src/pages/NLNGSJQTest.jsx` (protected)
+- `/test/nlng-process-monitor` -> `src/pages/NLNGProcessMonitorTest.jsx` (protected)
 - `/test/ai-generated` -> `src/pages/AIGeneratedTest.jsx` (protected)
 
 ## Core Shared Contracts
@@ -69,6 +70,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
   - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation; difficulty supports `all`/`easy`/`medium`/`hard`)
   - SHL Job-Focused Assessment (SJQ): Active (timed 10Q/20m, randomized from 50Q bank, partial credit per rating)
+  - SHL Process Monitoring: Active (5-min real-time simulation; 9 event types; 5s response window; `scheduleNextRef` pattern for event chaining after correct actions)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)
 - Dragnet:
@@ -89,6 +91,14 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Dashboard surfaces runtime errors for attempt loading and AI generation.
 - Dashboard KPIs are computed from de-duplicated attempts and include pass rate, tests taken, average score, and practice sessions.
 - Deployment uses SPA rewrite via `vercel.json`.
+
+## Process Monitoring Simulation Architecture (src/pages/NLNGProcessMonitorTest.jsx)
+- Self-contained real-time game: phases `setup` | `playing` | `results`
+- Game loop runs in a single `useEffect([phase])`: countdown timer (1s), ambient panel animation (400ms), event scheduler
+- **Critical pattern — `scheduleNextRef`**: `scheduleNext()` is defined inside the useEffect closure. After a correct answer in `handleAction`, call `setTimeout(() => scheduleNextRef.current?.(), 900)` to re-trigger the event chain. Without this, events stop after the first correct response.
+- All three screens use `test-page` + `test-page__header` (platform shell) — the playing screen keeps the dark `pm-panel` grid inside
+- 9 event types each mapped to a required button ID; temperature spike counter cycles 0→1→2→0 (High for spikes<2, 3rd High for spike===2)
+- CSS: `.pm-*` classes in `src/index.css` (~200 lines); panel background `#111827`, zone cards `#1e293b`
 
 ## Verification Snapshot (2026-02-12)
 - `npm run lint`: pass
