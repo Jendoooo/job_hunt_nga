@@ -216,11 +216,20 @@ Date: 2026-02-12
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 
-## Phase 17: Process Monitoring — Bug Fix (2026-02-13 12:00)
+## Phase 17: Process Monitoring — Bug Fix + UI Redesign [Claude 2026-02-13]
 - [x] Fixed event chain: after a correct action `scheduleNext()` was never called → only one event fired per session.
   Fixed by storing `scheduleNext` in `scheduleNextRef` inside the useEffect and calling it from `handleAction` on correct (900ms delay to let flash clear).
 - [x] Fixed visual shell: all three screens (setup / playing / results) now use `test-page` + `test-page__header` platform structure with `ArrowLeft → Dashboard` back-link. Previously rendered on a blank white canvas with no platform chrome.
-- [x] `npm run build` → 0 errors
+- [x] Full UI/UX redesign of Process Monitoring layout:
+  - Added `pm-playing-wrap` CSS class + JSX wrapper to center panel inside platform page
+  - `pm-setup-card` / `pm-results-card` now use `margin: auto` for proper centering
+  - Panel max-width increased to 980px; `border-radius: 0 0 12px 12px` (bottom corners rounded)
+  - Gas bars widened (34×114px), stabilizer dials enlarged (100×100px), system reset dial 82px
+  - Zone cards: improved padding, 10px border-radius, better breathing room
+  - Countdown/event-hint tracks now match panel width (max-width 980px)
+  - Gas fills use lime→green gradient; alert bars red gradient; urgent timer pulses opacity
+  - Results header has colour-coded gradient (green = pass, red = fail)
+- [x] `npm run build` → 0 errors; pushed commit 7b08587
 
 ## Phase 16: SHL Verify Interactive — Process Monitoring Simulation (2026-02-12)
 - [x] Created `src/pages/NLNGProcessMonitorTest.jsx` — full real-time simulation
