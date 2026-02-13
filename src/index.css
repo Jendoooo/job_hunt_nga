@@ -3171,6 +3171,10 @@ select:focus-visible {
 .pm-results-score  { font-size: 3rem; font-weight: 900; margin: .4rem 0 0; line-height: 1; }
 .pm-results-pct    { font-size: 1.2rem; opacity: .85; margin-top: .25rem; }
 .pm-results-verdict{ font-size: 0.92rem; margin-top: .5rem; font-weight: 600; opacity: .9; }
+.pm-results-percentile{ font-size: 0.85rem; margin-top: 0.25rem; opacity: .75; letter-spacing: 0.01em; }
+.pm-results-advice{ background: var(--surface-2,#f8fafc); border: 1px solid var(--border,#e2e8f0); border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 1.5rem; text-align: left; }
+.pm-results-advice__title{ font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3,#64748b); margin-bottom: 0.5rem; }
+.pm-results-advice__text{ font-size: 0.9rem; color: var(--text-1,#1e293b); line-height: 1.6; margin: 0; }
 .pm-results-stats  { display: flex; justify-content: space-around; padding: 1.75rem 1rem; border-bottom: 1px solid var(--line); }
 .pm-stat           { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
 .pm-stat__num      { font-size: 2.1rem; font-weight: 800; color: var(--text-1); }
@@ -3321,7 +3325,7 @@ select:focus-visible {
 
 /* ── Temperature graph ──────────────────────────────────────────────────────── */
 .pm-temp-graph {
-  width: 100%; height: 78px;
+  width: 100%; height: 130px;
   border-radius: 6px; overflow: hidden;
   background: #0d1117; border: 1px solid #1e2d3d;
 }

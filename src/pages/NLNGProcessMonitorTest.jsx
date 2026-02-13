@@ -98,7 +98,7 @@ function PowerBars({ power, alert }) {
 }
 
 function TempGraph({ history, value }) {
-  const H = 80
+  const H = 130
   const W = 200
   const redLine = H * (1 - 75 / 100)
   const points = history.map((v, i) => `${(i / 49) * W},${H - (v / 100) * H}`).join(' ')
@@ -438,6 +438,20 @@ export default function NLNGProcessMonitorTest() {
   if (phase === 'results') {
     const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0
     const pass = pct >= 60
+    const percentileLabel = pct >= 90
+      ? 'Top 10% (90th+ percentile)'
+      : pct >= 75
+        ? 'Above Average (75th percentile)'
+        : pct >= 60
+          ? 'Average (50th–75th percentile)'
+          : pct >= 40
+            ? 'Below Average (25th–50th percentile)'
+            : 'Needs Development (<25th percentile)'
+    const devAdvice = pct >= 75
+      ? 'You demonstrated strong ability to monitor a control panel and respond to alerts promptly. You are likely to perform well on the SHL Verify Interactive Process Monitoring assessment with continued practice.'
+      : pct >= 60
+        ? 'You will likely, with appropriate instruction and a reasonable learning curve, be able to successfully complete tasks involving the interpretation of machine readings and timely responses to control panel alerts.'
+        : 'Focus on learning the rules table thoroughly before each session. Identifying the alert zone first, then recalling the correct action, is the key skill assessed. Additional practice sessions are recommended before your assessment.'
     return (
       <div className="test-page">
         <header className="test-page__header test-page__header--compact">
@@ -452,12 +466,17 @@ export default function NLNGProcessMonitorTest() {
             <div className="pm-results-label">Simulation Complete</div>
             <div className="pm-results-score">{score} / {maxScore}</div>
             <div className="pm-results-pct">{pct}%</div>
+            <div className="pm-results-percentile">{percentileLabel}</div>
             <div className="pm-results-verdict">{pass ? 'Good performance' : 'Keep practising'}</div>
           </div>
           <div className="pm-results-stats">
             <div className="pm-stat"><span className="pm-stat__num pm-stat__num--green">{hits}</span><span className="pm-stat__label">Correct</span></div>
             <div className="pm-stat"><span className="pm-stat__num pm-stat__num--red">{misses}</span><span className="pm-stat__label">Missed</span></div>
             <div className="pm-stat"><span className="pm-stat__num">{hits + misses}</span><span className="pm-stat__label">Total Events</span></div>
+          </div>
+          <div className="pm-results-advice">
+            <div className="pm-results-advice__title">Development Guidance</div>
+            <p className="pm-results-advice__text">{devAdvice}</p>
           </div>
           <div className="pm-results-actions">
             <button className="btn btn--primary" onClick={startGame}>Try Again</button>
@@ -525,7 +544,7 @@ export default function NLNGProcessMonitorTest() {
               <div className="pm-power-label">{Math.round(panel.gen.power)}%</div>
             </div>
             <button
-              className={`pm-btn ${genAlert ? 'pm-btn--alert-action' : ''}`}
+              className="pm-btn"
               onClick={() => handleAction('generator_off')}
             >
               On / Off
@@ -542,13 +561,13 @@ export default function NLNGProcessMonitorTest() {
             <div className="pm-temp-val">{Math.round(panel.temp.value)}°</div>
             <div className="pm-btn-row">
               <button
-                className={`pm-btn ${tempAlert && spikes < 2 ? 'pm-btn--alert-action' : ''}`}
+                className="pm-btn"
                 onClick={() => handleAction('high')}
               >
                 High
               </button>
               <button
-                className={`pm-btn ${tempAlert && spikes === 2 ? 'pm-btn--alert-action' : ''}`}
+                className="pm-btn"
                 onClick={() => handleAction('3rd_high')}
               >
                 3rd High
@@ -567,7 +586,7 @@ export default function NLNGProcessMonitorTest() {
               <div className="pm-sysreset-inner">↺</div>
             </div>
             <button
-              className={`pm-btn ${sysAlert ? 'pm-btn--alert-action' : ''}`}
+              className="pm-btn"
               onClick={() => handleAction('system_reset')}
             >
               System Reset
@@ -583,13 +602,13 @@ export default function NLNGProcessMonitorTest() {
             </div>
             <div className="pm-btn-row">
               <button
-                className={`pm-btn ${(gasO2Alert || gasCO2Alert) && !alarmAlert ? 'pm-btn--alert-action' : ''}`}
+                className="pm-btn"
                 onClick={() => handleAction('gas_reset')}
               >
                 Gas Reset
               </button>
               <button
-                className={`pm-btn ${alarmAlert ? 'pm-btn--alert-action' : ''}`}
+                className="pm-btn"
                 onClick={() => handleAction('gas_alarm')}
               >
                 Alarm
@@ -605,7 +624,7 @@ export default function NLNGProcessMonitorTest() {
             <div className="pm-zone__title">N Stabilizer</div>
             <StabDial angle={panel.stabN.angle} alert={stabNAlert} label1="N" label2="S" />
             <button
-              className={`pm-btn ${stabNAlert && !recentreAlert ? 'pm-btn--alert-action' : ''}`}
+              className="pm-btn"
               onClick={() => handleAction('stab_n')}
             >
               Reset N
@@ -615,7 +634,7 @@ export default function NLNGProcessMonitorTest() {
           {/* Recentre */}
           <div className={`pm-zone pm-zone--recentre ${recentreAlert ? 'pm-zone--alert' : ''}`}>
             <button
-              className={`pm-btn pm-btn--recentre ${recentreAlert ? 'pm-btn--alert-action' : ''}`}
+              className="pm-btn pm-btn--recentre"
               onClick={() => handleAction('stab_recentre')}
             >
               Recentre
@@ -627,7 +646,7 @@ export default function NLNGProcessMonitorTest() {
             <div className="pm-zone__title">W Stabilizer</div>
             <StabDial angle={panel.stabW.angle} alert={stabWAlert} label1="W" label2="E" />
             <button
-              className={`pm-btn ${stabWAlert && !recentreAlert ? 'pm-btn--alert-action' : ''}`}
+              className="pm-btn"
               onClick={() => handleAction('stab_w')}
             >
               Reset W
