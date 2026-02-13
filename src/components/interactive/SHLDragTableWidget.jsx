@@ -1,15 +1,27 @@
 import { useState } from 'react'
 
 // SHL Verify Interactive: click-tab + click-answer pattern
-// User selects a person/store tab → data updates → clicks a lime-green answer button
+// Each person/store tab shows that sub-question's data; click a lime-green button to answer.
+// UNIQUE MODE (ranking): auto-detected when there are N numeric rank buttons for N rows.
+//   In unique mode badges move, not clone — clicking a badge already assigned elsewhere
+//   clears it from the old row and assigns it here.
 export default function SHLDragTableWidget({ data, value, onAnswer, disabled = false }) {
   const assignments = value && typeof value === 'object' ? value : {}
   const draggables = Array.isArray(data?.draggables) ? data.draggables : []
   const rows = Array.isArray(data?.rows) ? data.rows : []
   const columns = Array.isArray(data?.columns) ? data.columns : []
 
-  const [selectedIdx, setSelectedIdx] = useState(0)
+  function isNumericRank(value) {
+    return /^\d+$/.test(String(value || '').trim())
+  }
 
+  // Unique mode: each rank can only be used once (ranking questions).
+  // Heuristic: N rows + N numeric buttons (1..N). Keeps penalty/store questions in non-unique mode.
+  const uniqueMode = rows.length > 1 &&
+    draggables.length === rows.length &&
+    draggables.every((d) => isNumericRank(d.label ?? d.id))
+
+  const [selectedIdx, setSelectedIdx] = useState(0)
   const activeRow = rows[Math.min(selectedIdx, rows.length - 1)] || rows[0]
 
   const pillLookup = draggables.reduce((acc, item) => {
@@ -19,9 +31,20 @@ export default function SHLDragTableWidget({ data, value, onAnswer, disabled = f
 
   function handleAnswer(draggableId) {
     if (!onAnswer || !activeRow) return
-    const next = { ...assignments, [activeRow.id]: draggableId }
+    let next = { ...assignments, [activeRow.id]: draggableId }
+
+    if (uniqueMode) {
+      // Move: clear the same draggableId from any other row
+      for (const [rowId, assignedId] of Object.entries(next)) {
+        if (rowId !== activeRow.id && assignedId === draggableId) {
+          delete next[rowId]
+        }
+      }
+    }
+
     onAnswer(next)
-    // Auto-advance to next unanswered tab
+
+    // Auto-advance to the next unanswered tab
     const nextUnanswered = rows.findIndex((r, i) => i !== selectedIdx && !next[r.id])
     if (nextUnanswered !== -1) setSelectedIdx(nextUnanswered)
   }
@@ -33,6 +56,16 @@ export default function SHLDragTableWidget({ data, value, onAnswer, disabled = f
   const answerCol = columns.length > 1 ? columns[columns.length - 1] : 'Result'
   const assignedId = assignments[activeRow.id]
   const assignedLabel = assignedId ? (pillLookup[assignedId] ?? assignedId) : null
+
+  // For unique mode: track which draggables are already used by OTHER rows
+  const usedByRow = {} // draggableId → label of the row that uses it
+  if (uniqueMode) {
+    for (const row of rows) {
+      if (row.id === activeRow.id) continue
+      const a = assignments[row.id]
+      if (a) usedByRow[a] = row.label || row.id
+    }
+  }
 
   return (
     <section className="shl-dt">
@@ -89,17 +122,27 @@ export default function SHLDragTableWidget({ data, value, onAnswer, disabled = f
       )}
 
       <div className="shl-dt__answers">
-        {draggables.map((d) => (
-          <button
-            key={d.id}
-            type="button"
-            className="shl-dt__answer-btn"
-            onClick={() => handleAnswer(d.id)}
-            disabled={disabled}
-          >
-            {d.label}
-          </button>
-        ))}
+        {draggables.map((d) => {
+          const usedBy = uniqueMode ? usedByRow[d.id] : null
+          return (
+            <button
+              key={d.id}
+              type="button"
+              className={[
+                'shl-dt__answer-btn',
+                usedBy ? 'shl-dt__answer-btn--used' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              onClick={() => handleAnswer(d.id)}
+              disabled={disabled}
+              title={usedBy ? `Currently assigned to ${usedBy}` : undefined}
+            >
+              {d.label}
+              {usedBy && <span className="shl-dt__btn-used-by"> ↩ {usedBy}</span>}
+            </button>
+          )
+        })}
       </div>
     </section>
   )

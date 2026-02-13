@@ -63,7 +63,20 @@ function selectRealPresetQuestions(pool, count) {
         if (needed <= 0) continue
 
         const bucketPool = remaining.filter((q) => q?.type === bucket.type)
-        const selected = selectUniqueSessionQuestions(bucketPool, needed)
+        let selected = []
+
+        // Prefer multi-part drag-table sets (tabs) in the SHL Real preset.
+        if (bucket.type === 'interactive_drag_table') {
+            const multiPart = bucketPool.filter((q) => (q?.widget_data?.rows || []).length > 1)
+            selected = selectUniqueSessionQuestions(multiPart, needed)
+            if (selected.length < needed) {
+                const pickedIds = new Set(selected.map((q) => q.id))
+                const fallbackPool = bucketPool.filter((q) => !pickedIds.has(q.id))
+                selected.push(...selectUniqueSessionQuestions(fallbackPool, needed - selected.length))
+            }
+        } else {
+            selected = selectUniqueSessionQuestions(bucketPool, needed)
+        }
         if (selected.length === 0) continue
 
         picked.push(...selected)
@@ -290,7 +303,7 @@ export default function NLNGInteractiveTest() {
                                 <h3 className="font-bold text-sky-900">Interaction Modes</h3>
                             </div>
                             <ul className="text-sm text-sky-800 space-y-2 list-disc list-inside">
-                                <li>Drag table labels into result cells.</li>
+                                <li>Select a person/store tab then click the answer button (SHL style).</li>
                                 <li>Resize pie allocations by increment controls.</li>
                                 <li>Adjust stacked-bar total and internal split.</li>
                                 <li>Approve or reject each tabbed expense request.</li>

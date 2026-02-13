@@ -7,8 +7,9 @@
     "instruction": "Work out the correct penalty for Mike.",
     "question": "Classify Mike's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -64,8 +65,9 @@
     "instruction": "Work out the correct penalty for Tim.",
     "question": "Classify Tim's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -121,8 +123,9 @@
     "instruction": "Work out the correct penalty for Angela.",
     "question": "Classify Angela's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -178,8 +181,9 @@
     "instruction": "Work out the correct penalty for Tina.",
     "question": "Classify Tina's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -365,9 +369,9 @@
     "instruction": "Determine funding status for Project A.",
     "question": "Classify Project A as Funded, Deferred, or Rejected.",
     "prompt_rules": [
-      "Funded: Rev >= 2 x Investment",
-      "Deferred: Rev >= Investment",
-      "Rejected: Rev < Investment"
+      "Funded: if the expected revenue over four years is at least double the total investment required.",
+      "Deferred: if the expected revenue over four years is greater than or equal to the total investment required, but not double.",
+      "Rejected: if the expected revenue over four years is less than the total investment required."
     ],
     "widget_data": {
       "columns": [
@@ -423,9 +427,9 @@
     "instruction": "Determine funding status for Project B.",
     "question": "Classify Project B as Funded, Deferred, or Rejected.",
     "prompt_rules": [
-      "Funded: Rev >= 2 x Investment",
-      "Deferred: Rev >= Investment",
-      "Rejected: Rev < Investment"
+      "Funded: if the expected revenue over four years is at least double the total investment required.",
+      "Deferred: if the expected revenue over four years is greater than or equal to the total investment required, but not double.",
+      "Rejected: if the expected revenue over four years is less than the total investment required."
     ],
     "widget_data": {
       "columns": [
@@ -507,7 +511,8 @@
             "5",
             "10% off",
             "-"
-          ]
+          ],
+          "label": "Store A"
         },
         {
           "id": "sv1_b",
@@ -518,7 +523,8 @@
             "5",
             "$2 off",
             "6%"
-          ]
+          ],
+          "label": "Store B"
         },
         {
           "id": "sv1_c",
@@ -529,7 +535,8 @@
             "5",
             "10% off",
             "5%"
-          ]
+          ],
+          "label": "Store C"
         },
         {
           "id": "sv1_d",
@@ -540,23 +547,24 @@
             "2",
             "-",
             "8%"
-          ]
+          ],
+          "label": "Store D"
         }
       ],
       "draggables": [
         {
           "id": "high",
-          "label": "High",
+          "label": "High Volume",
           "color": "green"
         },
         {
           "id": "medium",
-          "label": "Medium",
+          "label": "Medium Volume",
           "color": "amber"
         },
         {
           "id": "low",
-          "label": "Low",
+          "label": "Low Volume",
           "color": "red"
         }
       ]
@@ -604,7 +612,8 @@
             "4",
             "$1 off",
             "5%"
-          ]
+          ],
+          "label": "Store E"
         },
         {
           "id": "sv2_f",
@@ -615,7 +624,8 @@
             "10",
             "15% off",
             "-"
-          ]
+          ],
+          "label": "Store F"
         },
         {
           "id": "sv2_g",
@@ -626,7 +636,8 @@
             "3",
             "-",
             "7%"
-          ]
+          ],
+          "label": "Store G"
         },
         {
           "id": "sv2_h",
@@ -637,23 +648,24 @@
             "20",
             "10% off",
             "4%"
-          ]
+          ],
+          "label": "Store H"
         }
       ],
       "draggables": [
         {
           "id": "high",
-          "label": "High",
+          "label": "High Volume",
           "color": "green"
         },
         {
           "id": "medium",
-          "label": "Medium",
+          "label": "Medium Volume",
           "color": "amber"
         },
         {
           "id": "low",
-          "label": "Low",
+          "label": "Low Volume",
           "color": "red"
         }
       ]
@@ -675,9 +687,12 @@
     "instruction": "Commission for Person A.",
     "question": "Determine Person A commission tier.",
     "prompt_rules": [
-      "Net Sales = Sales - (Cancel x 5)",
-      "Avg = Rev / Net Sales",
-      "0-40: None, 41-100: 5%, 101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -726,9 +741,12 @@
     "instruction": "Commission for Person B.",
     "question": "Determine Person B commission tier.",
     "prompt_rules": [
-      "Net Sales = Sales - (Cancel x 5)",
-      "Avg = Rev / Net Sales",
-      "0-40: None, 41-100: 5%, 101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -777,9 +795,12 @@
     "instruction": "Commission for Person C.",
     "question": "Determine Person C commission tier.",
     "prompt_rules": [
-      "Net Sales = Sales - (Cancel x 5)",
-      "Avg = Rev / Net Sales",
-      "0-40: None, 41-100: 5%, 101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -828,9 +849,12 @@
     "instruction": "Commission for Person D.",
     "question": "Determine Person D commission tier.",
     "prompt_rules": [
-      "Net Sales = Sales - (Cancel x 5)",
-      "Avg = Rev / Net Sales",
-      "0-40: None, 41-100: 5%, 101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -879,8 +903,10 @@
     "instruction": "Eligibility for Person A.",
     "question": "Determine if Person A is eligible.",
     "prompt_rules": [
-      "Flag if Late > 1.5% OR Attendance < 93%",
-      "Any flag => Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -929,8 +955,10 @@
     "instruction": "Eligibility for Person B.",
     "question": "Determine if Person B is eligible.",
     "prompt_rules": [
-      "Flag if Late > 1.5% OR Attendance < 93%",
-      "Any flag => Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -979,8 +1007,10 @@
     "instruction": "Eligibility for Person C.",
     "question": "Determine if Person C is eligible.",
     "prompt_rules": [
-      "Flag if Late > 1.5% OR Attendance < 93%",
-      "Any flag => Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -1029,8 +1059,10 @@
     "instruction": "Eligibility for Person D.",
     "question": "Determine if Person D is eligible.",
     "prompt_rules": [
-      "Flag if Late > 1.5% OR Attendance < 93%",
-      "Any flag => Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -1079,8 +1111,9 @@
     "instruction": "Work out the correct penalty for Sarah.",
     "question": "Classify Sarah's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -1136,8 +1169,9 @@
     "instruction": "Work out the correct penalty for David.",
     "question": "Classify David's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -1193,8 +1227,9 @@
     "instruction": "Work out the correct penalty for Jess.",
     "question": "Classify Jess's penalty status.",
     "prompt_rules": [
-      "Yellow: Return < 75%",
-      "Red: Damage >= 5%"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -1250,9 +1285,9 @@
     "instruction": "Determine funding status for Project Alpha.",
     "question": "Classify Project Alpha.",
     "prompt_rules": [
-      "Funded: Rev >= 2 x Investment",
-      "Deferred: Rev >= Investment",
-      "Rejected: Rev < Investment"
+      "Funded: if the expected revenue over four years is at least double the total investment required.",
+      "Deferred: if the expected revenue over four years is greater than or equal to the total investment required, but not double.",
+      "Rejected: if the expected revenue over four years is less than the total investment required."
     ],
     "widget_data": {
       "columns": [
@@ -1306,9 +1341,9 @@
     "instruction": "Determine funding status for Project Beta.",
     "question": "Classify Project Beta.",
     "prompt_rules": [
-      "Funded: Rev >= 2 x Investment",
-      "Deferred: Rev >= Investment",
-      "Rejected: Rev < Investment"
+      "Funded: if the expected revenue over four years is at least double the total investment required.",
+      "Deferred: if the expected revenue over four years is greater than or equal to the total investment required, but not double.",
+      "Rejected: if the expected revenue over four years is less than the total investment required."
     ],
     "widget_data": {
       "columns": [
@@ -1362,9 +1397,12 @@
     "instruction": "Commission for Person E.",
     "question": "Determine Person E commission tier.",
     "prompt_rules": [
-      "Net Sales = Sales - (Cancel x 5)",
-      "Avg = Rev / Net Sales",
-      "0-40: None, 41-100: 5%, 101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -1413,9 +1451,12 @@
     "instruction": "Commission for Person F.",
     "question": "Determine Person F commission tier.",
     "prompt_rules": [
-      "Net Sales = Sales - (Cancel x 5)",
-      "Avg = Rev / Net Sales",
-      "0-40: None, 41-100: 5%, 101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -1617,8 +1658,10 @@
     "instruction": "Work out if Person B is eligible.",
     "question": "Determine if Person B is eligible.",
     "prompt_rules": [
-      "Flag if Late > 1.5% OR Attendance < 93%",
-      "Any flag => Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -1667,8 +1710,10 @@
     "instruction": "Work out if Person D is eligible.",
     "question": "Determine if Person D is eligible.",
     "prompt_rules": [
-      "Flag if Late > 1.5% OR Attendance < 93%",
-      "Any flag => Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -3797,9 +3842,12 @@
     "difficulty": "medium",
     "instruction": "Determine the commission tier for Person B.",
     "prompt_rules": [
-      "Net Sales = Sales per week − (Daily Cancellations × 5)",
-      "Avg Sale Value = Total Revenue ÷ Net Sales",
-      "£0–£40: No Commission | £41–£100: 5% | £101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -3850,9 +3898,12 @@
     "difficulty": "medium",
     "instruction": "Determine the commission tier for Person D.",
     "prompt_rules": [
-      "Net Sales = Sales per week − (Daily Cancellations × 5)",
-      "Avg Sale Value = Total Revenue ÷ Net Sales",
-      "£0–£40: No Commission | £41–£100: 5% | £101+: 10%"
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
     ],
     "widget_data": {
       "columns": [
@@ -3903,9 +3954,10 @@
     "difficulty": "medium",
     "instruction": "Check the performance reward eligibility for Person A.",
     "prompt_rules": [
-      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
-      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
-      "Either flag = Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -3953,9 +4005,10 @@
     "difficulty": "medium",
     "instruction": "Check the performance reward eligibility for Person B.",
     "prompt_rules": [
-      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
-      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
-      "Either flag = Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -4003,9 +4056,10 @@
     "difficulty": "medium",
     "instruction": "Check the performance reward eligibility for Person C.",
     "prompt_rules": [
-      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
-      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
-      "Either flag = Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -4053,9 +4107,10 @@
     "difficulty": "medium",
     "instruction": "Check the performance reward eligibility for Person D.",
     "prompt_rules": [
-      "Late Rate = Late Days ÷ Total Days. Fail if > 1.5%",
-      "Attendance = Days Attended ÷ (Total Days − Holiday). Fail if < 93%",
-      "Either flag = Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -4333,7 +4388,8 @@
             "Product A",
             "10,500",
             "$1.60"
-          ]
+          ],
+          "label": "Product A"
         },
         {
           "id": "rpps1_b",
@@ -4341,7 +4397,8 @@
             "Product B",
             "5,000",
             "$3.00"
-          ]
+          ],
+          "label": "Product B"
         },
         {
           "id": "rpps1_c",
@@ -4349,7 +4406,8 @@
             "Product C",
             "6,500",
             "$2.50"
-          ]
+          ],
+          "label": "Product C"
         },
         {
           "id": "rpps1_d",
@@ -4357,7 +4415,8 @@
             "Product D",
             "9,500",
             "$1.75"
-          ]
+          ],
+          "label": "Product D"
         },
         {
           "id": "rpps1_e",
@@ -4365,7 +4424,8 @@
             "Product E",
             "8,500",
             "$2.50"
-          ]
+          ],
+          "label": "Product E"
         },
         {
           "id": "rpps1_f",
@@ -4373,7 +4433,8 @@
             "Product F",
             "11,000",
             "$1.50"
-          ]
+          ],
+          "label": "Product F"
         }
       ],
       "draggables": [
@@ -4440,7 +4501,8 @@
             "Product A",
             "9,200",
             "$2.10"
-          ]
+          ],
+          "label": "Product A"
         },
         {
           "id": "rpps2_b",
@@ -4448,7 +4510,8 @@
             "Product B",
             "6,400",
             "$3.20"
-          ]
+          ],
+          "label": "Product B"
         },
         {
           "id": "rpps2_c",
@@ -4456,7 +4519,8 @@
             "Product C",
             "12,500",
             "$1.25"
-          ]
+          ],
+          "label": "Product C"
         },
         {
           "id": "rpps2_d",
@@ -4464,7 +4528,8 @@
             "Product D",
             "7,800",
             "$2.75"
-          ]
+          ],
+          "label": "Product D"
         },
         {
           "id": "rpps2_e",
@@ -4472,7 +4537,8 @@
             "Product E",
             "10,000",
             "$1.80"
-          ]
+          ],
+          "label": "Product E"
         },
         {
           "id": "rpps2_f",
@@ -4480,7 +4546,8 @@
             "Product F",
             "5,500",
             "$4.10"
-          ]
+          ],
+          "label": "Product F"
         }
       ],
       "draggables": [
@@ -5117,10 +5184,10 @@
     "difficulty": "medium",
     "instruction": "Classify Store A based on revenue volume.",
     "prompt_rules": [
-      "Revenue = (Price − Discount) × Units × (1 + Delivery Fee %)",
-      "High: Revenue > £1,500",
-      "Medium: Revenue £350–£1,500",
-      "Low: Revenue < £350"
+      "Discount applies at the unit rate.",
+      "Delivery fees (if any) are added after any discount is applied.",
+      "High Volume shops generate revenue over £1,500.",
+      "Low Volume shops generate revenue under £350."
     ],
     "widget_data": {
       "columns": [
@@ -5147,17 +5214,17 @@
       "draggables": [
         {
           "id": "high",
-          "label": "High",
+          "label": "High Volume",
           "color": "green"
         },
         {
           "id": "medium",
-          "label": "Medium",
+          "label": "Medium Volume",
           "color": "amber"
         },
         {
           "id": "low",
-          "label": "Low",
+          "label": "Low Volume",
           "color": "red"
         }
       ]
@@ -5176,10 +5243,10 @@
     "difficulty": "medium",
     "instruction": "Classify Store D based on revenue volume.",
     "prompt_rules": [
-      "Revenue = Price × Units × (1 + Delivery Fee %)",
-      "High: Revenue > £1,500",
-      "Medium: Revenue £350–£1,500",
-      "Low: Revenue < £350"
+      "Discount applies at the unit rate.",
+      "Delivery fees (if any) are added after any discount is applied.",
+      "High Volume shops generate revenue over £1,500.",
+      "Low Volume shops generate revenue under £350."
     ],
     "widget_data": {
       "columns": [
@@ -5206,17 +5273,17 @@
       "draggables": [
         {
           "id": "high",
-          "label": "High",
+          "label": "High Volume",
           "color": "green"
         },
         {
           "id": "medium",
-          "label": "Medium",
+          "label": "Medium Volume",
           "color": "amber"
         },
         {
           "id": "low",
-          "label": "Low",
+          "label": "Low Volume",
           "color": "red"
         }
       ]
@@ -5235,9 +5302,10 @@
     "difficulty": "hard",
     "instruction": "Check eligibility for the performance reward for Person A.",
     "prompt_rules": [
-      "Attendance = Attended ÷ (Possible − Holiday Days)",
-      "Attendance < 93% → Not Eligible",
-      "Late rate = Late ÷ Possible. Late rate > 1.5% → Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -5286,9 +5354,10 @@
     "difficulty": "medium",
     "instruction": "Check eligibility for the performance reward for Person B.",
     "prompt_rules": [
-      "Attendance = Attended ÷ (Possible − Holiday Days)",
-      "Attendance < 93% → Not Eligible",
-      "Late rate = Late ÷ Possible. Late rate > 1.5% → Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -5337,9 +5406,10 @@
     "difficulty": "hard",
     "instruction": "Check eligibility for the performance reward for Person C.",
     "prompt_rules": [
-      "Attendance = Attended ÷ (Possible − Holiday Days)",
-      "Attendance < 93% → Not Eligible",
-      "Late rate = Late ÷ Possible. Late rate > 1.5% → Not Eligible"
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
     ],
     "widget_data": {
       "columns": [
@@ -5388,9 +5458,9 @@
     "difficulty": "hard",
     "instruction": "Work out the correct penalty for Tim.",
     "prompt_rules": [
-      "Yellow: Return rate < 75%",
-      "Red: Damage rate ≥ 5%",
-      "‘Both’: qualifies for Yellow AND Red"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -5446,9 +5516,9 @@
     "difficulty": "medium",
     "instruction": "Work out the correct penalty for Angela.",
     "prompt_rules": [
-      "Yellow: Return rate < 75%",
-      "Red: Damage rate ≥ 5%",
-      "‘Both’: qualifies for Yellow AND Red"
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
     ],
     "widget_data": {
       "columns": [
@@ -5504,10 +5574,10 @@
     "difficulty": "medium",
     "instruction": "Classify Store B based on revenue volume.",
     "prompt_rules": [
-      "Revenue = Price × Units × (1 + Delivery Fee %)",
-      "High Volume: Revenue > £1,500",
-      "Medium Volume: Revenue £350–£1,500",
-      "Low Volume: Revenue < £350"
+      "Discount applies at the unit rate.",
+      "Delivery fees (if any) are added after any discount is applied.",
+      "High Volume shops generate revenue over £1,500.",
+      "Low Volume shops generate revenue under £350."
     ],
     "widget_data": {
       "columns": [
@@ -5563,11 +5633,10 @@
     "difficulty": "hard",
     "instruction": "Classify Store C based on revenue volume.",
     "prompt_rules": [
-      "Discount applies at the unit rate",
-      "Revenue = (Price − Discount) × Units × (1 + Delivery Fee %)",
-      "High Volume: Revenue > £1,500",
-      "Medium Volume: Revenue £350–£1,500",
-      "Low Volume: Revenue < £350"
+      "Discount applies at the unit rate.",
+      "Delivery fees (if any) are added after any discount is applied.",
+      "High Volume shops generate revenue over £1,500.",
+      "Low Volume shops generate revenue under £350."
     ],
     "widget_data": {
       "columns": [
@@ -5615,5 +5684,427 @@
     "explanation": "Discounted price: £17.25 − £2 = £15.25. Revenue: £15.25 × 90 × 1.06 = £1,454.85. Result: Medium Volume (£350–£1,500).",
     "question": "Classify Store C based on revenue volume.",
     "source_id": "pricing_store_c_real"
+  },
+  {
+    "id": 98,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "easy",
+    "instruction": "Work out the correct penalty for each person.",
+    "question": "Work out the correct penalty for each person.",
+    "prompt_rules": [
+      "Yellow penalty: Failure to return at least 75% of books on time.",
+      "Red penalty: Damage to 5% or more of books.",
+      "Each person can receive one penalty, both penalties or no penalty."
+    ],
+    "widget_data": {
+      "columns": [
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "mike",
+          "label": "Mike",
+          "values": [
+            "24",
+            "10",
+            "1"
+          ]
+        },
+        {
+          "id": "tim",
+          "label": "Tim",
+          "values": [
+            "90",
+            "44",
+            "9"
+          ]
+        },
+        {
+          "id": "angela",
+          "label": "Angela",
+          "values": [
+            "150",
+            "60",
+            "2"
+          ]
+        },
+        {
+          "id": "tina",
+          "label": "Tina",
+          "values": [
+            "16",
+            "15",
+            "2"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
+    },
+    "correct_answer": {
+      "mike": "yellow",
+      "tim": "both",
+      "angela": "yellow",
+      "tina": "red"
+    },
+    "explanation": "Mike: Returned 10/24 = 41.7% (<75%) so Yellow applies. Damaged 1/24 = 4.2% (<5%) so no Red.<br/>Tim: Returned 44/90 = 48.9% (<75%) and Damaged 9/90 = 10% (>=5%).<br/>Angela: Returned 60/150 = 40% (<75%) so Yellow only. Damage 2/150 = 1.3% (<5%).<br/>Tina: Returned 15/16 = 93.8% (no Yellow). Damaged 2/16 = 12.5% (Red).",
+    "source_id": "library_penalty_set_1"
+  },
+  {
+    "id": 99,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the correct commission for each employee.",
+    "question": "Determine the correct commission for each employee.",
+    "prompt_rules": [
+      "Total number of sales per week equals Sales per week minus Cancellations per week (5 days per week).",
+      "Cancellations per week = Daily cancellations × 5.",
+      "Average sale value is based on Total revenue per week and Total number of sales per week.",
+      "If Average sale value is 0–40 there is no commission.",
+      "If Average sale value is 41–100 there is 5% commission.",
+      "If Average sale value is 101+ there is 10% commission."
+    ],
+    "widget_data": {
+      "columns": [
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
+      ],
+      "rows": [
+        {
+          "id": "pa",
+          "label": "Person A",
+          "values": [
+            "$390",
+            "20",
+            "2"
+          ]
+        },
+        {
+          "id": "pb",
+          "label": "Person B",
+          "values": [
+            "$670",
+            "15",
+            "1"
+          ]
+        },
+        {
+          "id": "pc",
+          "label": "Person C",
+          "values": [
+            "$1,440",
+            "31",
+            "4"
+          ]
+        },
+        {
+          "id": "pd",
+          "label": "Person D",
+          "values": [
+            "$1,120",
+            "55",
+            "5"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "5%",
+          "label": "5%"
+        },
+        {
+          "id": "10%",
+          "label": "10%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "pa": "none",
+      "pb": "5%",
+      "pc": "10%",
+      "pd": "none"
+    },
+    "explanation": "Person A: Net=10; Avg=39 => None.<br/>Person B: Net=10; Avg=67 => 5%.<br/>Person C: Net=11; Avg=130.9 => 10%.<br/>Person D: Net=30; Avg=37.3 => None.",
+    "source_id": "commission_set_1"
+  },
+  {
+    "id": 100,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out if each employee is eligible for a performance reward.",
+    "question": "Work out if each employee is eligible for a performance reward.",
+    "prompt_rules": [
+      "In order to be eligible for a performance reward, an employee must not have any warning flags against them.",
+      "Flags are given for:",
+      "Late to work more than 1.5% of the time.",
+      "Attendance less than 93% (after holiday leave taken is deducted)."
+    ],
+    "widget_data": {
+      "columns": [
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
+      ],
+      "rows": [
+        {
+          "id": "person_a_perf",
+          "values": [
+            "205",
+            "235",
+            "2",
+            "20"
+          ],
+          "label": "Person A"
+        },
+        {
+          "id": "person_b_perf",
+          "values": [
+            "109",
+            "125",
+            "10",
+            "15"
+          ],
+          "label": "Person B"
+        },
+        {
+          "id": "person_c_perf",
+          "values": [
+            "199",
+            "227",
+            "3",
+            "10"
+          ],
+          "label": "Person C"
+        },
+        {
+          "id": "person_d_perf",
+          "values": [
+            "67",
+            "71",
+            "1",
+            "0"
+          ],
+          "label": "Person D"
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_a_perf": "eligible",
+      "person_b_perf": "not_eligible",
+      "person_c_perf": "not_eligible",
+      "person_d_perf": "eligible"
+    },
+    "explanation": "Person A: Late: 2/235 = 0.85% ✓ (<1.5%). Attendance: 205/(235−20) = 205/215 = 95.3% ✓ (>93%). → Eligible.<br/>Person B: Late: 10/125 = 8% ✗ (>1.5%). Late rate threshold breached → Not Eligible.<br/>Person C: Late: 3/227 = 1.3% ✓. Attendance: 199/(227−10) = 199/217 = 91.7% ✗ (<93%). → Not Eligible.<br/>Person D: Late: 1/71 = 1.4% ✓ (<1.5%). Attendance: 67/(71−0) = 94.4% ✓ (>93%). → Eligible.",
+    "source_id": "performance_reward_set_1"
+  },
+  {
+    "id": 101,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out which volume type each store is.",
+    "question": "Work out which volume type each store is.",
+    "prompt_rules": [
+      "Discount applies at the unit rate.",
+      "Delivery fees (if any) are added after any discount is applied.",
+      "High Volume shops generate revenue over £1,500.",
+      "Low Volume shops generate revenue under £350."
+    ],
+    "widget_data": {
+      "columns": [
+        "Average Unit Price (£)",
+        "Units",
+        "Discount",
+        "Delivery Fee",
+        "Price Per Unit",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "p_a",
+          "label": "Store A",
+          "values": [
+            "£6.46",
+            "60",
+            "10%",
+            "—",
+            "—"
+          ]
+        },
+        {
+          "id": "p_b",
+          "label": "Store B",
+          "values": [
+            "£6.89",
+            "50",
+            "—",
+            "6%",
+            "—"
+          ]
+        },
+        {
+          "id": "p_c",
+          "label": "Store C",
+          "values": [
+            "£17.25",
+            "90",
+            "£2 off",
+            "6%",
+            "—"
+          ]
+        },
+        {
+          "id": "p_d",
+          "label": "Store D",
+          "values": [
+            "£17.97",
+            "80",
+            "—",
+            "8%",
+            "—"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High Volume",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium Volume",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low Volume",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_a": "low",
+      "p_b": "medium",
+      "p_c": "medium",
+      "p_d": "high"
+    },
+    "explanation": "Store A: Discounted price: £6.46 × 0.9 = £5.81. Revenue: £5.81 × 60 = £348.84. Result: Low (< £350).<br/>Store B: No discount. Revenue: £6.89 × 50 × 1.06 = £365.17. Result: Medium Volume (£350–£1,500).<br/>Store C: Discounted price: £17.25 − £2 = £15.25. Revenue: £15.25 × 90 × 1.06 = £1,454.85. Result: Medium Volume (£350–£1,500).<br/>Store D: Base: £17.97 × 80 = £1,437.60. With 8% delivery fee: £1,437.60 × 1.08 = £1,552.61. Result: High (> £1,500).",
+    "source_id": "pricing_volume_set_1"
+  },
+  {
+    "id": 102,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the funding status for each project.",
+    "question": "Determine the funding status for each project.",
+    "prompt_rules": [
+      "Funded: if the expected revenue over four years is at least double the total investment required.",
+      "Deferred: if the expected revenue over four years is greater than or equal to the total investment required, but not double.",
+      "Rejected: if the expected revenue over four years is less than the total investment required."
+    ],
+    "widget_data": {
+      "columns": [
+        "Investment required",
+        "Revenue Year 1",
+        "Revenue Year 2",
+        "Revenue Year 3",
+        "Revenue Year 4",
+        "Funding Status"
+      ],
+      "rows": [
+        {
+          "id": "proj_a",
+          "label": "Project A",
+          "values": [
+            "$8,000",
+            "$1,800",
+            "$2,000",
+            "$4,300",
+            "$2,800"
+          ]
+        },
+        {
+          "id": "proj_b",
+          "label": "Project B",
+          "values": [
+            "$17,500",
+            "$500",
+            "$5,000",
+            "$10,000",
+            "$20,000"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "funded",
+          "label": "Funded",
+          "color": "green"
+        },
+        {
+          "id": "deferred",
+          "label": "Deferred",
+          "color": "amber"
+        },
+        {
+          "id": "rejected",
+          "label": "Rejected",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "proj_a": "deferred",
+      "proj_b": "funded"
+    },
+    "explanation": "Project A: Total revenue 10,900 is >=8,000 but <16,000.<br/>Project B: Total revenue 35,500 >= 35,000 (2 x investment).",
+    "source_id": "project_funding_set_1"
   }
 ]

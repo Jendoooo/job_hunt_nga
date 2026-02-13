@@ -63,6 +63,13 @@
 - `src/components/interactive/SHLPointGraphWidget.jsx`: added `%` Y-axis label formatting.
 - `src/data/shl-gold-standard.json`: appended the SHL "Wholesale Discount" point-graph question; regenerated `src/data/shl-interactive-questions.json` (now 88 items).
 
+### [Codex 2026-02-13 14:32] Phase 26 SHL Drag-Table Ranking + Bank Upgrades
+- `src/components/interactive/SHLDragTableWidget.jsx`: auto-detect ranking questions (N numeric badges for N rows) and enforce unique-use badges (move semantics); show "used by" hint and used state.
+- `src/index.css`: stabilized interactive area with `min-height: 320px`; added `.shl-dt__answer-btn--used` styling.
+- `scripts/phase26_naturalize_and_consolidate_shl.cjs`: naturalize `prompt_rules`, normalize High/Medium/Low volume labels, ensure tab row labels, and append 5 consolidated multi-part drag-table questions (4 sub-questions in one).
+- `src/data/shl-gold-standard.json`: bank expanded to 102; `npm run generate:shl-interactive` regenerated `src/data/shl-interactive-questions.json`.
+- `src/pages/NLNGInteractiveTest.jsx`: SHL Real preset prefers multi-part drag-table sets; setup copy updated.
+
 ---
 
 ## Architecture Notes (Codex's modules)

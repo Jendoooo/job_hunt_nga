@@ -1202,6 +1202,7 @@ select:focus-visible {
   border-radius: var(--radius-md);
   background: #fcfdff;
   padding: 0.75rem;
+  min-height: 320px;
 }
 
 .question-card__interactive-result {
@@ -1551,6 +1552,23 @@ select:focus-visible {
 .shl-dt__answer-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Unique-mode (ranking): badge already consumed by another row */
+.shl-dt__answer-btn--used {
+  background: #6b7280;
+  opacity: 0.75;
+}
+
+.shl-dt__answer-btn--used:hover:not(:disabled) {
+  filter: brightness(0.9);
+  opacity: 1;
+}
+
+.shl-dt__btn-used-by {
+  font-size: 0.72rem;
+  font-weight: 400;
+  opacity: 0.9;
 }
 /* ────────────────────────────────────────────────────────────────────────── */
 

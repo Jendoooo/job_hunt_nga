@@ -115,6 +115,7 @@ Date: 2026-02-12
 - [x] Authenticate Supabase CLI with personal access token (`npx supabase login --token ...`)
 - [x] Link workspace to Supabase project ref `fjwfoedyomdgxadnjsdt`
 - [x] Verify remote migration connectivity (`npx supabase db push --linked`)
+- [Codex 2026-02-13 14:16] Phase 26 SHL drag-table + bank upgrades: added unique-rank move semantics in `src/components/interactive/SHLDragTableWidget.jsx`, stabilized interactive card height (`min-height`) and added used-rank styling in `src/index.css`, created `scripts/phase26_naturalize_and_consolidate_shl.cjs` to naturalize prompt rules, normalize volume labels, add missing tab labels, and append 5 consolidated multi-part drag-table questions; regenerated `src/data/shl-interactive-questions.json` (gold source now 102). Also updated `src/pages/NLNGInteractiveTest.jsx` SHL Real preset to prefer multi-part drag-table questions and refreshed the interaction-mode copy.
 
 ## Phase 8: Reliability Sprint (2026-02-12)
 - [x] **Bug 1** — Emit `attempt-saved` event on local-save path in `ScoreReport.jsx` (Dashboard was never refreshing after 8s failsafe)
