@@ -22,6 +22,18 @@ const EVENT_POOL = [
   { type: 'stab_both',    action: 'stab_recentre'   },
 ]
 
+const ZONE_LABEL = {
+  power_high:   'Generator alert',
+  temp_high:    'Temperature alert',
+  gas_o2_low:   'O₂ Gas alert',
+  gas_co2_low:  'CO₂ Gas alert',
+  gas_both_low: 'Gas alert',
+  gas_o2_temp:  'System Reset alert',
+  stab_north:   'N Stabilizer alert',
+  stab_west:    'W Stabilizer alert',
+  stab_both:    'Stabilizer alert',
+}
+
 /* ── helpers ───────────────────────────────────────────────────────────────── */
 function rand(lo, hi) { return Math.random() * (hi - lo) + lo }
 function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)) }
@@ -98,7 +110,7 @@ function PowerBars({ power, alert }) {
 }
 
 function TempGraph({ history, value }) {
-  const H = 160
+  const H = 220
   const W = 200
   const redLine = H * (1 - 75 / 100)
   const points = history.map((v, i) => `${(i / 49) * W},${H - (v / 100) * H}`).join(' ')
@@ -501,6 +513,10 @@ export default function NLNGProcessMonitorTest() {
         <div className="test-page__header-right">
           <div className={`pm-timer ${timeLeft <= 60 ? 'pm-timer--urgent' : ''}`}>{fmtTime(timeLeft)}</div>
           <div className="pm-header__score">Score: <strong>{score}</strong></div>
+          <button
+            className="btn btn--ghost pm-end-btn"
+            onClick={() => { phaseRef.current = 'results'; setPhase('results') }}
+          >End Test</button>
         </div>
       </header>
 
@@ -527,7 +543,7 @@ export default function NLNGProcessMonitorTest() {
       {/* Event hint */}
       {ev && (
         <div className="pm-event-hint">
-          ⚠ Alert active — respond within {Math.ceil(cntPct / 20)}s
+          ⚠ {ZONE_LABEL[ev.type] ?? 'Alert active'} — respond within {Math.ceil(cntPct / 20)}s
         </div>
       )}
 
