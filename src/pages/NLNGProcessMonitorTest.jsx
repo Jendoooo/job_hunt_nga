@@ -87,7 +87,7 @@ function PowerBars({ power, alert }) {
           key={i}
           className="pm-power-bar"
           style={{
-            height: `${14 + i * 6}px`,
+            height: `${20 + i * 8}px`,
             background: power >= t ? colors[i] : 'rgba(255,255,255,0.08)',
             boxShadow: alert && power >= t ? `0 0 8px ${colors[i]}` : 'none',
           }}
@@ -98,7 +98,7 @@ function PowerBars({ power, alert }) {
 }
 
 function TempGraph({ history, value }) {
-  const H = 130
+  const H = 160
   const W = 200
   const redLine = H * (1 - 75 / 100)
   const points = history.map((v, i) => `${(i / 49) * W},${H - (v / 100) * H}`).join(' ')
@@ -530,6 +530,14 @@ export default function NLNGProcessMonitorTest() {
           ⚠ Alert active — respond within {Math.ceil(cntPct / 20)}s
         </div>
       )}
+
+      {/* Panel header bar */}
+      <div className="pm-panel-header">
+        <span className="pm-panel-header__title">◉ Process Control System</span>
+        <span className={`pm-panel-header__status ${ev ? 'pm-panel-header__status--alert' : ''}`}>
+          {ev ? '▲ ALERT ACTIVE' : '● MONITORING'}
+        </span>
+      </div>
 
       {/* Control Panel */}
       <div className="pm-panel">
