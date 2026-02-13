@@ -3143,6 +3143,17 @@ select:focus-visible {
 }
 .pm-rules-table td { padding: .45rem .7rem; border-bottom: 1px solid var(--line); color: var(--text-1); }
 .pm-rules-table tr:last-child td { border-bottom: none; }
+.pm-two-phase-note {
+  margin-top: .9rem;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-left: 4px solid #f59e0b;
+  border-radius: 6px;
+  padding: .6rem .85rem;
+  font-size: 0.83rem;
+  color: #78350f;
+  line-height: 1.5;
+}
 
 .pm-score-info { display: flex; flex-direction: column; gap: .6rem; margin-bottom: .75rem; }
 .pm-score-row  { display: flex; align-items: center; gap: .7rem; font-size: 0.85rem; color: var(--text-1); }
@@ -3217,9 +3228,18 @@ select:focus-visible {
 /* ── Event hint ─────────────────────────────────────────────────────────────── */
 .pm-event-hint {
   width: 100%; max-width: 1280px;
-  background: #4338ca; color: #fff;
+  color: #fff;
   font-size: 0.85rem; font-weight: 700; text-align: center;
   padding: .5rem 1rem; letter-spacing: .06em;
+}
+.pm-event-hint--wait {
+  background: #7f1d1d;
+  border-left: 4px solid #ef4444;
+  animation: pmTimerUrgent 0.7s ease-in-out infinite alternate;
+}
+.pm-event-hint--act {
+  background: #14532d;
+  border-left: 4px solid #22c55e;
 }
 
 /* ── Panel header bar ───────────────────────────────────────────────────────── */
@@ -3239,7 +3259,8 @@ select:focus-visible {
 .pm-panel-header__status {
   font-size: 0.68rem; font-weight: 700; letter-spacing: .1em; color: #22c55e;
 }
-.pm-panel-header__status--alert { color: #ef4444; animation: pmTimerUrgent 0.9s ease-in-out infinite alternate; }
+.pm-panel-header__status--alert { color: #22c55e; letter-spacing: .12em; }
+.pm-panel-header__status--wait  { color: #ef4444; animation: pmTimerUrgent 0.9s ease-in-out infinite alternate; }
 
 /* ── Panel shell ────────────────────────────────────────────────────────────── */
 .pm-panel {
@@ -3281,6 +3302,7 @@ select:focus-visible {
   flex-direction: column;
   align-items: center;
   gap: .75rem;
+  box-shadow: 4px 4px 10px #080e18, -2px -2px 6px #1c2c42;
   transition: border-color .15s, box-shadow .15s;
 }
 .pm-zone--alert {
@@ -3356,6 +3378,18 @@ select:focus-visible {
 /* ── Gas bars ───────────────────────────────────────────────────────────────── */
 .pm-gas-bars { display: flex; gap: 2.5rem; align-items: flex-end; justify-content: center; }
 .pm-gas-col  { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
+.pm-gas-alarm-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #1e2d3d;
+  border: 1.5px solid #243044;
+  transition: background .2s, box-shadow .2s;
+}
+.pm-gas-alarm-dot--on {
+  background: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+  animation: pmAlertPulse 0.5s ease-in-out infinite alternate;
+}
 .pm-gas-label { font-size: 0.82rem; font-weight: 800; color: #5b7089; letter-spacing: .05em; }
 .pm-gas-track {
   position: relative; width: 44px; height: 150px;

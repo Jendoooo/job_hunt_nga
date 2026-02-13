@@ -4,11 +4,16 @@ import { ArrowLeft } from 'lucide-react'
 
 /* ── constants ─────────────────────────────────────────────────────────────── */
 const DURATION = 5 * 60       // 5-minute practice
-const WINDOW_MS = 5000        // 5-second response window
+const WINDOW_MS = 5000        // 5-second response window (immediate events)
+const ALARM_PHASE_MS = 2500   // alarm phase: values stay in red (two-phase events)
+const CLEAR_PHASE_MS = 4500   // clearing phase: user must press after values return safe
 const GAP_MIN = 3500
 const GAP_MAX = 7500
 const PTS_HIT = 10
 const PTS_MISS = 5
+
+// Events where user must WAIT for values to return to safe zone before pressing
+const TWO_PHASE_EVENTS = new Set(['gas_o2_low','gas_co2_low','gas_both_low','temp_high','power_high'])
 
 const EVENT_POOL = [
   { type: 'power_high',   action: 'generator_off'  },
@@ -129,6 +134,7 @@ function GasBar({ label, level, alert }) {
   const redZonePct = 20
   return (
     <div className="pm-gas-col">
+      <div className={`pm-gas-alarm-dot ${alert ? 'pm-gas-alarm-dot--on' : ''}`} />
       <span className="pm-gas-label">{label}</span>
       <div className="pm-gas-track">
         <div className="pm-gas-red-zone" />
@@ -184,6 +190,7 @@ export default function NLNGProcessMonitorTest() {
   const [hits, setHits]           = useState(0)
   const [misses, setMisses]       = useState(0)
   const [activeEvent, setActiveEvent] = useState(null)
+  const [evPhase, setEvPhase]     = useState(null)   // 'alarm' | 'clearing' | null
   const [cntPct, setCntPct]       = useState(100)
   const [flash, setFlash]         = useState(null)  // { msg, ok }
 
@@ -191,11 +198,13 @@ export default function NLNGProcessMonitorTest() {
   const phaseRef        = useRef('setup')
   const panelRef        = useRef(initPanel())
   const evRef           = useRef(null)
+  const evPhaseRef      = useRef(null)
   const scoreRef        = useRef(0)
   const hitsRef         = useRef(0)
   const missesRef       = useRef(0)
   const maxScoreRef     = useRef(0)
   const scheduleNextRef = useRef(null)   // so handleAction can trigger next event
+  const alarmToutRef    = useRef(null)   // alarm-phase auto-resolve timeout
 
   function showFlash(msg, ok) {
     setFlash({ msg, ok })
@@ -212,6 +221,8 @@ export default function NLNGProcessMonitorTest() {
     setMisses(0); missesRef.current = 0
     setMaxScore(0); maxScoreRef.current = 0
     setActiveEvent(null); evRef.current = null
+    setEvPhase(null); evPhaseRef.current = null
+    clearTimeout(alarmToutRef.current)
     setCntPct(100)
     setFlash(null)
     phaseRef.current = 'playing'
@@ -223,6 +234,19 @@ export default function NLNGProcessMonitorTest() {
     if (phaseRef.current !== 'playing') return
     const ev = evRef.current
     if (!ev) return
+
+    // System Reset is only valid during a system trip (gas_o2_temp)
+    if (btnId === 'system_reset' && ev.type !== 'gas_o2_temp') {
+      showFlash('⚠ System Reset: only on system trip!', false)
+      return
+    }
+
+    // Two-phase events: block all actions during the alarm phase
+    // User must WAIT for values to return to safe zone before pressing
+    if (TWO_PHASE_EVENTS.has(ev.type) && evPhaseRef.current === 'alarm') {
+      showFlash('⏳ Wait — value still in alarm zone!', false)
+      return
+    }
 
     const spikes = panelRef.current.temp.spikes
     let correct = false
@@ -244,6 +268,9 @@ export default function NLNGProcessMonitorTest() {
     }
 
     if (correct) {
+      clearTimeout(alarmToutRef.current)
+      evPhaseRef.current = null
+      setEvPhase(null)
       setPanel((prev) => {
         const n = resolveEvent(ev.type, prev)
         panelRef.current = n
@@ -257,7 +284,7 @@ export default function NLNGProcessMonitorTest() {
       setScore(scoreRef.current)
       setHits(hitsRef.current)
       showFlash(`+${PTS_HIT} Correct!`, true)
-      // Re-start the event chain — scheduleNext() was only called on miss, not correct
+      // Re-start the event chain
       setTimeout(() => scheduleNextRef.current?.(), 900)
     } else {
       showFlash('Wrong button!', false)
@@ -311,8 +338,10 @@ export default function NLNGProcessMonitorTest() {
     function clearEvTimers() {
       clearTimeout(missTimeout)
       clearInterval(cntIv)
+      clearTimeout(alarmToutRef.current)
       missTimeout = null
       cntIv = null
+      alarmToutRef.current = null
     }
 
     function scheduleNext() {
@@ -322,7 +351,9 @@ export default function NLNGProcessMonitorTest() {
         if (phaseRef.current !== 'playing' || evRef.current) { scheduleNext(); return }
 
         const ev = EVENT_POOL[Math.floor(Math.random() * EVENT_POOL.length)]
-        const deadline = Date.now() + WINDOW_MS
+        const isTwoPhase = TWO_PHASE_EVENTS.has(ev.type)
+        const totalWindow = isTwoPhase ? (ALARM_PHASE_MS + CLEAR_PHASE_MS) : WINDOW_MS
+        const deadline = Date.now() + totalWindow
         const newEv = { ...ev, deadline }
 
         setPanel((prev) => { const n = applyEvent(ev.type, prev); panelRef.current = n; return n })
@@ -332,19 +363,41 @@ export default function NLNGProcessMonitorTest() {
         setMaxScore(maxScoreRef.current)
         setCntPct(100)
 
-        // Countdown visual
+        if (isTwoPhase) {
+          // Alarm phase: values in red zone — user must WAIT
+          evPhaseRef.current = 'alarm'
+          setEvPhase('alarm')
+          // After ALARM_PHASE_MS: auto-resolve panel values, switch to clearing phase
+          alarmToutRef.current = setTimeout(() => {
+            if (evRef.current?.deadline !== deadline) return
+            setPanel((prev) => { const n = resolveEvent(ev.type, prev); panelRef.current = n; return n })
+            evPhaseRef.current = 'clearing'
+            setEvPhase('clearing')
+          }, ALARM_PHASE_MS)
+        } else {
+          // Immediate events (stabilizers, system trip): press right away
+          evPhaseRef.current = 'clearing'
+          setEvPhase('clearing')
+        }
+
+        // Countdown visual (over full totalWindow)
         const start = Date.now()
         cntIv = setInterval(() => {
-          setCntPct(Math.max(0, 100 - ((Date.now() - start) / WINDOW_MS) * 100))
+          setCntPct(Math.max(0, 100 - ((Date.now() - start) / totalWindow) * 100))
         }, 50)
 
         // Miss timeout
         missTimeout = setTimeout(() => {
           if (evRef.current?.deadline !== deadline) return
           clearEvTimers()
-          setPanel((prev) => { const n = resolveEvent(ev.type, prev); panelRef.current = n; return n })
+          // For immediate events, panel not yet resolved — resolve now
+          if (!isTwoPhase) {
+            setPanel((prev) => { const n = resolveEvent(ev.type, prev); panelRef.current = n; return n })
+          }
           evRef.current = null
           setActiveEvent(null)
+          evPhaseRef.current = null
+          setEvPhase(null)
           setCntPct(100)
           scoreRef.current = Math.max(0, scoreRef.current - PTS_MISS)
           missesRef.current += 1
@@ -352,7 +405,7 @@ export default function NLNGProcessMonitorTest() {
           setMisses(missesRef.current)
           showFlash(`Missed! -${PTS_MISS}`, false)
           scheduleNext()
-        }, WINDOW_MS)
+        }, totalWindow)
       }, delay)
     }
 
@@ -364,6 +417,7 @@ export default function NLNGProcessMonitorTest() {
       clearInterval(ambientIv)
       clearTimeout(evTimeout)
       clearEvTimers()
+      evPhaseRef.current = null
     }
   }, [phase])
 
@@ -374,7 +428,7 @@ export default function NLNGProcessMonitorTest() {
   const gasO2Alert = ev?.type === 'gas_o2_low' || ev?.type === 'gas_both_low' || ev?.type === 'gas_o2_temp'
   const gasCO2Alert= ev?.type === 'gas_co2_low' || ev?.type === 'gas_both_low'
   const sysAlert   = ev?.type === 'gas_o2_temp'
-  const alarmAlert = ev?.type === 'gas_both_low'
+  const _alarmAlert = ev?.type === 'gas_both_low'
   const stabNAlert = ev?.type === 'stab_north' || ev?.type === 'stab_both'
   const stabWAlert = ev?.type === 'stab_west'  || ev?.type === 'stab_both'
   const recentreAlert = ev?.type === 'stab_both'
@@ -409,15 +463,19 @@ export default function NLNGProcessMonitorTest() {
                 <thead><tr><th>Condition</th><th>Action</th></tr></thead>
                 <tbody>
                   <tr><td>Power too high</td><td>Turn Generator <strong>Off</strong></td></tr>
-                  <tr><td>Temperature high (1st/2nd)</td><td>Press <strong>High</strong></td></tr>
-                  <tr><td>Temperature high (3rd)</td><td>Press <strong>3rd High</strong></td></tr>
+                  <tr><td>Temperature high (1st/2nd spike)</td><td>Press <strong>High</strong></td></tr>
+                  <tr><td>Temperature high (3rd spike)</td><td>Press <strong>3rd High</strong></td></tr>
                   <tr><td>One gas in red, temp normal</td><td>Press <strong>Gas Reset</strong></td></tr>
-                  <tr><td>O₂ low + temp high</td><td>Press <strong>System Reset</strong></td></tr>
+                  <tr><td>O₂ low + temp high (System Trip)</td><td>Press <strong>System Reset</strong> immediately</td></tr>
                   <tr><td>Both gases in red</td><td>Press <strong>Alarm</strong></td></tr>
-                  <tr><td>One stabilizer in red</td><td>Press that stabilizer's <strong>Reset</strong></td></tr>
-                  <tr><td>Both stabilizers in red</td><td>Press <strong>Recentre</strong></td></tr>
+                  <tr><td>N Stabilizer needle in red zone</td><td>Press <strong>Reset N</strong></td></tr>
+                  <tr><td>W Stabilizer needle in red zone</td><td>Press <strong>Reset W</strong></td></tr>
+                  <tr><td>Both stabilizer needles in red</td><td>Press <strong>Recentre</strong></td></tr>
                 </tbody>
               </table>
+              <div className="pm-two-phase-note">
+                ⚠ Gas · Temperature · Power alerts: <strong>wait</strong> for the value to return to the safe zone — then press the action button to clear the alarm.
+              </div>
             </div>
             <div className="pm-rules-col">
               <div className="pm-rules-title">Scoring</div>
@@ -527,7 +585,9 @@ export default function NLNGProcessMonitorTest() {
           className="pm-countdown-bar"
           style={{
             width: `${cntPct}%`,
-            background: cntPct > 50 ? '#84cc16' : cntPct > 25 ? '#f59e0b' : '#ef4444',
+            background: evPhase === 'alarm'
+              ? '#ef4444'
+              : (cntPct > 50 ? '#84cc16' : cntPct > 25 ? '#f59e0b' : '#ef4444'),
             opacity: ev ? 1 : 0,
           }}
         />
@@ -542,16 +602,19 @@ export default function NLNGProcessMonitorTest() {
 
       {/* Event hint */}
       {ev && (
-        <div className="pm-event-hint">
-          ⚠ {ZONE_LABEL[ev.type] ?? 'Alert active'} — respond within {Math.ceil(cntPct / 20)}s
+        <div className={`pm-event-hint ${evPhase === 'alarm' ? 'pm-event-hint--wait' : 'pm-event-hint--act'}`}>
+          {evPhase === 'alarm'
+            ? `⛔ ${ZONE_LABEL[ev.type] ?? 'Alert'} — wait for value to return to safe zone`
+            : `✓ ${ZONE_LABEL[ev.type] ?? 'Alert'} cleared — press the action button now!`
+          }
         </div>
       )}
 
       {/* Panel header bar */}
       <div className="pm-panel-header">
         <span className="pm-panel-header__title">◉ Process Control System</span>
-        <span className={`pm-panel-header__status ${ev ? 'pm-panel-header__status--alert' : ''}`}>
-          {ev ? '▲ ALERT ACTIVE' : '● MONITORING'}
+        <span className={`pm-panel-header__status ${ev ? (evPhase === 'alarm' ? 'pm-panel-header__status--wait' : 'pm-panel-header__status--alert') : ''}`}>
+          {ev ? (evPhase === 'alarm' ? '⛔ WAIT — ALARM ACTIVE' : '✓ CLEARED — ACT NOW') : '● MONITORING'}
         </span>
       </div>
 
