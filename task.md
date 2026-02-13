@@ -217,6 +217,24 @@ Date: 2026-02-12
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 
+## Phase 19: Classification Questions + Pill Styling + DB History Fix [Claude 2026-02-13]
+- [x] Added 3 new `interactive_drag_table` questions to `shl-gold-standard.json` (now 79 total):
+  - `sales_goals_person_a`: quarterly sales goals Met/Not Met (hard)
+  - `quality_team_d`: defect rate Grade A/B/C (medium)
+  - `finance_beatrice`: credit score finance rate 4%/6%/7% (medium)
+- [x] Regenerated `shl-interactive-questions.json` (now 79 questions)
+- [x] Fixed draggable pill styling: solid colour fill + white text (was tinted 8% opacity)
+- [x] Updated pill hover to use `filter: brightness(0.88)` instead of overriding to lime-green
+- [x] Dashboard "Attempt History": now loads up to 100 attempts, shows 8 by default with "View all (N)" toggle
+- [x] Each history row now shows mode badge (Exam/Practice blue/gray), score X/Y, date with year
+- [x] Supabase migration `20260213000000_attempt_dedup_constraint.sql`: removed existing semantic duplicates (kept earliest) + added partial unique index to prevent future duplicates
+- [x] `npm run build` → 0 errors; pushed commit 3e31c79
+
+## Phase 18: SHLAdjustableBarWidget Drag Ceiling Fix [Claude 2026-02-13]
+- [x] Fixed runaway axis scaling: removed `requestedMaxTotal` from `bufferedAxisMax` computation in `buildWidgetConfig`
+- [x] Bar now stops at chart ceiling (axis_max) instead of allowing unbounded drag to 300,000+
+- [x] Pushed commit de9cee2
+
 ## Phase 17: Process Monitoring — Bug Fix + UI Redesign [Claude 2026-02-13]
 - [x] Fixed event chain: after a correct action `scheduleNext()` was never called → only one event fired per session.
   Fixed by storing `scheduleNext` in `scheduleNextRef` inside the useEffect and calling it from `handleAction` on correct (900ms delay to let flash clear).
