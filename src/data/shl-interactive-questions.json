@@ -1926,6 +1926,54 @@
   {
     "id": 34,
     "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "medium",
+    "instruction": "Graph the wholesale price as a percentage of full price.",
+    "question": "Drag each order-size point to the correct percentage of full price.",
+    "prompt_rules": [
+      "The full price per laptop is the 1-9 bracket price.",
+      "1-9 laptops: $1,280 per laptop.",
+      "10-49 laptops: $1,152 per laptop.",
+      "50-99 laptops: $1,024 per laptop.",
+      "100-199 laptops: $832 per laptop."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "1-9",
+        "10-49",
+        "50-99",
+        "100-199"
+      ],
+      "y_axis": {
+        "min": 40,
+        "max": 100,
+        "step": 10,
+        "label": "%"
+      },
+      "initial_values": [
+        50,
+        50,
+        50,
+        50
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        100,
+        90,
+        80,
+        65
+      ]
+    },
+    "tolerance": {
+      "value": 2
+    },
+    "explanation": "Full price uses 1-9 as 100%. 10-49: 1152/1280=90%. 50-99: 1024/1280=80%. 100-199: 832/1280=65%.",
+    "source_id": "graph_wholesale_discount_real"
+  },
+  {
+    "id": 35,
+    "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "medium",
     "instruction": "Adjust the pie chart to represent the source of customer contacts.",
@@ -2005,7 +2053,7 @@
     "source_id": "pie_customer_contacts_real"
   },
   {
-    "id": 35,
+    "id": 36,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "medium",
@@ -2058,7 +2106,7 @@
     "source_id": "sample_bar_01"
   },
   {
-    "id": 36,
+    "id": 37,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "medium",
@@ -2108,7 +2156,7 @@
     "source_id": "sample_bar_02"
   },
   {
-    "id": 37,
+    "id": 38,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "medium",
@@ -2158,7 +2206,7 @@
     "source_id": "sample_bar_03"
   },
   {
-    "id": 38,
+    "id": 39,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "medium",
@@ -2208,7 +2256,7 @@
     "source_id": "sample_bar_04"
   },
   {
-    "id": 39,
+    "id": 40,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "hard",
@@ -2258,7 +2306,7 @@
     "source_id": "sample_bar_05"
   },
   {
-    "id": 40,
+    "id": 41,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "hard",
@@ -2308,7 +2356,7 @@
     "source_id": "sample_bar_06"
   },
   {
-    "id": 41,
+    "id": 42,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "easy",
@@ -2362,7 +2410,7 @@
     "source_id": "sample_pie_01"
   },
   {
-    "id": 42,
+    "id": 43,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "medium",
@@ -2417,7 +2465,7 @@
     "source_id": "sample_pie_02"
   },
   {
-    "id": 43,
+    "id": 44,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "medium",
@@ -2472,7 +2520,7 @@
     "source_id": "sample_pie_03"
   },
   {
-    "id": 44,
+    "id": 45,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "medium",
@@ -2527,7 +2575,7 @@
     "source_id": "sample_pie_04"
   },
   {
-    "id": 45,
+    "id": 46,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "medium",
@@ -2582,7 +2630,7 @@
     "source_id": "sample_pie_05"
   },
   {
-    "id": 46,
+    "id": 47,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "hard",
@@ -2636,7 +2684,7 @@
     "source_id": "sample_pie_06"
   },
   {
-    "id": 47,
+    "id": 48,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -2710,7 +2758,7 @@
     "source_id": "sample_drag_01"
   },
   {
-    "id": 48,
+    "id": 49,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -2784,7 +2832,7 @@
     "source_id": "sample_drag_02"
   },
   {
-    "id": 49,
+    "id": 50,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "hard",
@@ -2858,7 +2906,7 @@
     "source_id": "sample_drag_03"
   },
   {
-    "id": 50,
+    "id": 51,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -2932,7 +2980,7 @@
     "source_id": "sample_drag_04"
   },
   {
-    "id": 51,
+    "id": 52,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "hard",
@@ -3006,7 +3054,7 @@
     "source_id": "sample_drag_05"
   },
   {
-    "id": 52,
+    "id": 53,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "hard",
@@ -3080,7 +3128,7 @@
     "source_id": "sample_drag_06"
   },
   {
-    "id": 53,
+    "id": 54,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3129,7 +3177,7 @@
     "source_id": "graph_stock_02"
   },
   {
-    "id": 54,
+    "id": 55,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3178,7 +3226,7 @@
     "source_id": "graph_stock_03"
   },
   {
-    "id": 55,
+    "id": 56,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3227,7 +3275,7 @@
     "source_id": "graph_stock_04"
   },
   {
-    "id": 56,
+    "id": 57,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3276,7 +3324,7 @@
     "source_id": "graph_stock_05"
   },
   {
-    "id": 57,
+    "id": 58,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3325,7 +3373,7 @@
     "source_id": "graph_stock_06"
   },
   {
-    "id": 58,
+    "id": 59,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3374,7 +3422,7 @@
     "source_id": "graph_stock_07"
   },
   {
-    "id": 59,
+    "id": 60,
     "subtype": "interactive_numerical",
     "type": "interactive_tabbed_evaluation",
     "difficulty": "hard",
@@ -3449,7 +3497,7 @@
     "source_id": "tab_office_entertainment"
   },
   {
-    "id": 60,
+    "id": 61,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3498,7 +3546,7 @@
     "source_id": "graph_energy_01"
   },
   {
-    "id": 61,
+    "id": 62,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3547,7 +3595,7 @@
     "source_id": "graph_sales_01"
   },
   {
-    "id": 62,
+    "id": 63,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3596,7 +3644,7 @@
     "source_id": "graph_temp_01"
   },
   {
-    "id": 63,
+    "id": 64,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3645,7 +3693,7 @@
     "source_id": "graph_delivery_01"
   },
   {
-    "id": 64,
+    "id": 65,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3694,7 +3742,7 @@
     "source_id": "graph_staff_01"
   },
   {
-    "id": 65,
+    "id": 66,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -3743,7 +3791,7 @@
     "source_id": "graph_production_01"
   },
   {
-    "id": 66,
+    "id": 67,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -3798,7 +3846,7 @@
     "source_id": "comm_person_b_real"
   },
   {
-    "id": 67,
+    "id": 68,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -3853,7 +3901,7 @@
     "source_id": "comm_person_d_real"
   },
   {
-    "id": 68,
+    "id": 69,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -3905,7 +3953,7 @@
     "source_id": "perf_person_a_real"
   },
   {
-    "id": 69,
+    "id": 70,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -3957,7 +4005,7 @@
     "source_id": "perf_person_b_real"
   },
   {
-    "id": 70,
+    "id": 71,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -4009,7 +4057,7 @@
     "source_id": "perf_person_c_real"
   },
   {
-    "id": 71,
+    "id": 72,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -4061,7 +4109,7 @@
     "source_id": "perf_person_d_real"
   },
   {
-    "id": 72,
+    "id": 73,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "hard",
@@ -4114,7 +4162,7 @@
     "source_id": "bar_new_clients_real"
   },
   {
-    "id": 73,
+    "id": 74,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "hard",
@@ -4164,7 +4212,7 @@
     "source_id": "sales_goals_person_a"
   },
   {
-    "id": 74,
+    "id": 75,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -4217,7 +4265,7 @@
     "source_id": "quality_team_d"
   },
   {
-    "id": 75,
+    "id": 76,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "medium",
@@ -4272,7 +4320,7 @@
     "source_id": "finance_beatrice"
   },
   {
-    "id": 76,
+    "id": 77,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "hard",
@@ -4379,7 +4427,7 @@
     "source_id": "rank_product_profit_set_1"
   },
   {
-    "id": 77,
+    "id": 78,
     "subtype": "interactive_numerical",
     "type": "interactive_drag_table",
     "difficulty": "hard",
@@ -4486,7 +4534,7 @@
     "source_id": "rank_product_profit_set_2"
   },
   {
-    "id": 78,
+    "id": 79,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "hard",
@@ -4565,7 +4613,7 @@
     "source_id": "pie_profit_grades_set_1"
   },
   {
-    "id": 79,
+    "id": 80,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "hard",
@@ -4644,7 +4692,7 @@
     "source_id": "pie_profit_grades_set_2"
   },
   {
-    "id": 80,
+    "id": 81,
     "subtype": "interactive_numerical",
     "type": "interactive_pie_chart",
     "difficulty": "hard",
@@ -4723,7 +4771,7 @@
     "source_id": "pie_profit_grades_set_3"
   },
   {
-    "id": 81,
+    "id": 82,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "hard",
@@ -4775,7 +4823,7 @@
     "source_id": "bar_customer_enquiries_abs_01"
   },
   {
-    "id": 82,
+    "id": 83,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "hard",
@@ -4827,7 +4875,7 @@
     "source_id": "bar_support_tickets_abs_01"
   },
   {
-    "id": 83,
+    "id": 84,
     "subtype": "interactive_numerical",
     "type": "interactive_stacked_bar",
     "difficulty": "hard",
@@ -4879,7 +4927,7 @@
     "source_id": "bar_quality_output_abs_01"
   },
   {
-    "id": 84,
+    "id": 85,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -4928,7 +4976,7 @@
     "source_id": "graph_stock_08"
   },
   {
-    "id": 85,
+    "id": 86,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -4977,7 +5025,7 @@
     "source_id": "graph_stock_09"
   },
   {
-    "id": 86,
+    "id": 87,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -5026,7 +5074,7 @@
     "source_id": "graph_stock_10"
   },
   {
-    "id": 87,
+    "id": 88,
     "subtype": "interactive_numerical",
     "type": "interactive_point_graph",
     "difficulty": "hard",
@@ -5073,5 +5121,395 @@
     },
     "explanation": "Apply the 60-unit reduction each day. On Wednesday, subtract 60 then add 120.",
     "source_id": "graph_inventory_02"
+  },
+  {
+    "id": 89,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store A based on revenue volume.",
+    "prompt_rules": [
+      "Revenue = (Price − Discount) × Units × (1 + Delivery Fee %)",
+      "High: Revenue > £1,500",
+      "Medium: Revenue £350–£1,500",
+      "Low: Revenue < £350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Store",
+        "Avg Price",
+        "Units",
+        "Discount",
+        "Delivery Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "p_a",
+          "label": "Store A",
+          "values": [
+            "£6.46",
+            "60",
+            "10%",
+            "—"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_a": "low"
+    },
+    "explanation": "Discounted price: £6.46 × 0.9 = £5.81. Revenue: £5.81 × 60 = £348.84. Result: Low (< £350).",
+    "question": "Classify Store A based on revenue volume.",
+    "source_id": "pricing_store_a_real"
+  },
+  {
+    "id": 90,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store D based on revenue volume.",
+    "prompt_rules": [
+      "Revenue = Price × Units × (1 + Delivery Fee %)",
+      "High: Revenue > £1,500",
+      "Medium: Revenue £350–£1,500",
+      "Low: Revenue < £350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Store",
+        "Avg Price",
+        "Units",
+        "Discount",
+        "Delivery Fee",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "p_d",
+          "label": "Store D",
+          "values": [
+            "£17.97",
+            "80",
+            "—",
+            "8%"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_d": "high"
+    },
+    "explanation": "Base: £17.97 × 80 = £1,437.60. With 8% delivery fee: £1,437.60 × 1.08 = £1,552.61. Result: High (> £1,500).",
+    "question": "Classify Store D based on revenue volume.",
+    "source_id": "pricing_store_d_real"
+  },
+  {
+    "id": 91,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Check eligibility for the performance reward for Person A.",
+    "prompt_rules": [
+      "Attendance = Attended ÷ (Possible − Holiday Days)",
+      "Attendance < 93% → Not Eligible",
+      "Late rate = Late ÷ Possible. Late rate > 1.5% → Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Person",
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Eligible?"
+      ],
+      "rows": [
+        {
+          "id": "p_a_rw",
+          "label": "Person A",
+          "values": [
+            "205",
+            "235",
+            "2",
+            "20"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_a_rw": "eligible"
+    },
+    "explanation": "Late rate: 2 ÷ 235 = 0.85% (Pass). Attendance: 205 ÷ (235 − 20) = 205 ÷ 215 = 95.3% (Pass). Eligible.",
+    "question": "Check eligibility for the performance reward for Person A.",
+    "source_id": "reward_person_a_real"
+  },
+  {
+    "id": 92,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Check eligibility for the performance reward for Person B.",
+    "prompt_rules": [
+      "Attendance = Attended ÷ (Possible − Holiday Days)",
+      "Attendance < 93% → Not Eligible",
+      "Late rate = Late ÷ Possible. Late rate > 1.5% → Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Person",
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Eligible?"
+      ],
+      "rows": [
+        {
+          "id": "p_b_rw",
+          "label": "Person B",
+          "values": [
+            "109",
+            "125",
+            "10",
+            "15"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_b_rw": "not_eligible"
+    },
+    "explanation": "Late rate: 10 ÷ 125 = 8.0% (Fail > 1.5%). Not Eligible.",
+    "question": "Check eligibility for the performance reward for Person B.",
+    "source_id": "reward_person_b_real"
+  },
+  {
+    "id": 93,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Check eligibility for the performance reward for Person C.",
+    "prompt_rules": [
+      "Attendance = Attended ÷ (Possible − Holiday Days)",
+      "Attendance < 93% → Not Eligible",
+      "Late rate = Late ÷ Possible. Late rate > 1.5% → Not Eligible"
+    ],
+    "widget_data": {
+      "columns": [
+        "Person",
+        "Attended",
+        "Possible",
+        "Late",
+        "Holiday",
+        "Eligible?"
+      ],
+      "rows": [
+        {
+          "id": "p_c_rw",
+          "label": "Person C",
+          "values": [
+            "199",
+            "227",
+            "3",
+            "10"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "eligible",
+          "label": "Eligible",
+          "color": "green"
+        },
+        {
+          "id": "not_eligible",
+          "label": "Not Eligible",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_c_rw": "not_eligible"
+    },
+    "explanation": "Late rate: 3 ÷ 227 = 1.32% (Pass). Attendance: 199 ÷ (227 − 10) = 199 ÷ 217 = 91.7% (Fail < 93%). Not Eligible.",
+    "question": "Check eligibility for the performance reward for Person C.",
+    "source_id": "reward_person_c_real"
+  },
+  {
+    "id": 94,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Work out the correct penalty for Tim.",
+    "prompt_rules": [
+      "Yellow: Return rate < 75%",
+      "Red: Damage rate ≥ 5%",
+      "‘Both’: qualifies for Yellow AND Red"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "tim",
+          "label": "Tim",
+          "values": [
+            "90",
+            "44",
+            "9"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
+    },
+    "correct_answer": {
+      "tim": "both"
+    },
+    "explanation": "Return rate: 44 ÷ 90 = 48.9% (Fail < 75% → Yellow). Damage rate: 9 ÷ 90 = 10% (Fail ≥ 5% → Red). Result: Both.",
+    "question": "Work out the correct penalty for Tim.",
+    "source_id": "library_tim_real"
+  },
+  {
+    "id": 95,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Work out the correct penalty for Angela.",
+    "prompt_rules": [
+      "Yellow: Return rate < 75%",
+      "Red: Damage rate ≥ 5%",
+      "‘Both’: qualifies for Yellow AND Red"
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Borrowed",
+        "Returned",
+        "Damaged",
+        "Penalty"
+      ],
+      "rows": [
+        {
+          "id": "angela",
+          "label": "Angela",
+          "values": [
+            "150",
+            "60",
+            "2"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "yellow",
+          "label": "Yellow",
+          "color": "amber"
+        },
+        {
+          "id": "red",
+          "label": "Red",
+          "color": "red"
+        },
+        {
+          "id": "both",
+          "label": "Both",
+          "color": "green"
+        }
+      ]
+    },
+    "correct_answer": {
+      "angela": "yellow"
+    },
+    "explanation": "Return rate: 60 ÷ 150 = 40% (Fail < 75% → Yellow). Damage rate: 2 ÷ 150 = 1.3% (Pass < 5%). Result: Yellow.",
+    "question": "Work out the correct penalty for Angela.",
+    "source_id": "library_angela_real"
   }
 ]
