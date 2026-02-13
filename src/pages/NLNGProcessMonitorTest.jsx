@@ -485,6 +485,7 @@ export default function NLNGProcessMonitorTest() {
         </div>
       </header>
 
+      <div className="pm-playing-wrap">
       {/* Countdown bar */}
       <div className="pm-countdown-track">
         <div
@@ -638,6 +639,7 @@ export default function NLNGProcessMonitorTest() {
 
       <div className="pm-footer">
         Events: <strong>{hits + misses}</strong> · Correct: <strong>{hits}</strong> · Missed: <strong>{misses}</strong>
+      </div>
       </div>
     </div>
   )
