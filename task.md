@@ -23,6 +23,7 @@ Date: 2026-02-12
 - [x] Replace auth bootstrap timeout shortcut with explicit `getSession()` init + abort-safe profile fetch
 - [x] Make dashboard attempts polling abort-safe to suppress cancellation noise/fetch race errors
 - [x] Add score-save fail-safe: after 5s mark as locally saved and never trap user on results screen
+- [Codex 2026-02-13 06:16] ScoreReport: ensure client-generated attempt IDs are always UUIDv4 (fixes rare Supabase insert failures on browsers without `crypto.randomUUID()`).
 
 ## Phase 2: Design System Refactor (Light Theme)
 - [x] Consolidate core visual tokens and shared UI primitives in `src/index.css`

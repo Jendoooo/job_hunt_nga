@@ -32,6 +32,10 @@
 - Dashboard now shows a rolling SJQ profile (last 10 SJQ attempts) derived from Supabase attempts.
 - Added shared analytics module `src/utils/sjqAnalytics.js` + tagging script `scripts/tag_sjq_response_competencies.cjs`.
 
+### [Codex 2026-02-13 06:16] Supabase Save Hardening — UUID Attempt IDs
+- `src/components/ScoreReport.jsx`: attempt IDs are now always UUIDv4 (fallback uses `crypto.getRandomValues` or Math.random).
+- Prevents Supabase insert failures if a browser lacks `crypto.randomUUID()`.
+
 ---
 
 ## Architecture Notes (Codex's modules)
