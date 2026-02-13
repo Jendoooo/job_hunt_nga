@@ -217,6 +217,7 @@ Date: 2026-02-12
   - dashboard auto-sync flush + visible pending-sync banner
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
+- [Codex 2026-02-13 09:08] SHL interactive numerical bank overhaul: replaced simplistic store-volume items with multi-row SHL-style revenue audits, added product-profit ranking drag-table questions, added profit-share pie questions with SHL info cards, added additional stacked-bar and point-graph scenarios, updated `pie_offices` with info cards, and regenerated `src/data/shl-interactive-questions.json` (now 87 items).
 
 ## Phase 19: Classification Questions + Pill Styling + DB History Fix [Claude 2026-02-13]
 - [x] Added 3 new `interactive_drag_table` questions to `shl-gold-standard.json` (now 79 total):

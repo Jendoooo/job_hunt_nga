@@ -48,6 +48,13 @@
 - `src/components/ScoreReport.jsx`: added **Review All** (not only incorrect) and render interactive widgets during review (tabbed Your Answer / Correct Answer preview).
 - `src/pages/NLNGInteractiveTest.jsx`: SHL Real preset now prioritizes stacked-bar + pie chart items (then drag-table/point-graph fill) to better match real SHL emphasis.
 
+### [Codex 2026-02-13 09:08] SHL-Style Interactive Numerical Bank (Harder Wording + Multi-Part Tables)
+- `src/data/shl-gold-standard.json`: replaced the simplistic single-row store volume items with 2 multi-row SHL-style revenue audit questions (4 outlets per question, net-units + discount + fee rules).
+- `src/data/shl-gold-standard.json`: added SHL-style multi-part drag-table ranking questions (product profit ranking using badges 1-6).
+- `src/data/shl-gold-standard.json`: added SHL-style profit-share pie chart questions (grades 1-4 with fixed costs, info cards, and computed profit percentages) and added info cards to `pie_offices` to match SHL tiles.
+- `src/data/shl-gold-standard.json`: added more SHL-style stacked-bar questions using multi-constraint statements (absolute changes + totals) and more point-graph (line chart) scenarios.
+- Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive` (now 87 questions; higher proportion of pie/bar/line tasks).
+
 ---
 
 ## Architecture Notes (Codex's modules)
