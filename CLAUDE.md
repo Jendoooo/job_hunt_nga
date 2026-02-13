@@ -33,6 +33,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Score review explanation supports formatted HTML content
   - Interactive review answers are rendered as readable tables (not raw JSON)
   - Supports unit-based score overrides for partial-credit modules (e.g., SJQ: correct_ratings / total_ratings)
+  - SJQ: renders competency breakdown (based on `question.competency`) and can persist answers keyed by question id via `answersForSave`
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
 - Question scoring: `src/utils/questionScoring.js`
@@ -52,7 +53,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (expanded bank; invalid items are excluded from sessions by runtime guard)
-- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ; 50-question bank)
+- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ; 50-question bank with `competency` tags)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
   - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
 - `src/data/shl-interactive-questions.json` (63 interactive numerical questions across 5 types)

@@ -25,6 +25,81 @@ const SAVE_FAILSAFE_MS = 15000
 const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
 const RECENT_ATTEMPT_TTL_MS = 120000
 
+const SJQ_COMPETENCIES = [
+    {
+        id: 'safety',
+        label: 'Safety',
+        tip: 'Prioritize risk control: stop unsafe work, follow critical controls, and escalate hazards immediately.',
+    },
+    {
+        id: 'integrity',
+        label: 'Integrity',
+        tip: 'Be transparent under pressure: avoid conflicts of interest, handle data ethically, and report issues early.',
+    },
+    {
+        id: 'quality',
+        label: 'Quality',
+        tip: 'Protect standards: follow checks/SOPs and fix errors before release even when deadlines are tight.',
+    },
+    {
+        id: 'people',
+        label: 'People',
+        tip: 'Communicate respectfully: listen, clarify, and address issues directly without blame or public confrontation.',
+    },
+    {
+        id: 'innovation',
+        label: 'Innovation',
+        tip: 'Improve with evidence: propose small pilots, measure impact, and get buy-in before scaling changes.',
+    },
+    {
+        id: 'delivery',
+        label: 'Delivery',
+        tip: 'Manage priorities early: negotiate scope/timeline, surface blockers, and confirm alignment with stakeholders.',
+    },
+]
+
+function resolveSJQCompetencyMeta(id) {
+    const key = String(id || '').trim().toLowerCase()
+    const match = SJQ_COMPETENCIES.find((item) => item.id === key)
+    return match || SJQ_COMPETENCIES.find((item) => item.id === 'delivery')
+}
+
+function buildSJQCompetencyBreakdown(questionResults) {
+    const totals = SJQ_COMPETENCIES.reduce((accumulator, item) => {
+        accumulator[item.id] = { correct: 0, total: 0 }
+        return accumulator
+    }, {})
+
+    for (const result of questionResults || []) {
+        if (result?.subtest !== 'situational_judgement') continue
+
+        const meta = resolveSJQCompetencyMeta(result?.competency)
+        const responses = Array.isArray(result?.responses) ? result.responses : []
+        const expectedMap = result?.correct_answer || {}
+        const actualMap = result?.answer && typeof result.answer === 'object' ? result.answer : {}
+
+        for (const response of responses) {
+            totals[meta.id].total += 1
+            if (Number(actualMap?.[response.id]) === Number(expectedMap?.[response.id])) {
+                totals[meta.id].correct += 1
+            }
+        }
+    }
+
+    return SJQ_COMPETENCIES.map((item) => {
+        const correct = totals[item.id].correct
+        const total = totals[item.id].total
+        const pct = total > 0 ? Math.round((correct / total) * 100) : 0
+
+        return {
+            ...item,
+            correct,
+            total,
+            pct,
+        }
+    })
+}
+
 function isAbortLikeError(error) {
     const message = typeof error?.message === 'string'
         ? error.message.toLowerCase()
@@ -126,6 +201,7 @@ function createClientAttemptId() {
 export default function ScoreReport({
     questions,
     answers,
+    answersForSave,
     flagged = [],
     timeTaken,
     totalTime,
@@ -150,6 +226,7 @@ export default function ScoreReport({
     const [saveError, setSaveError] = useState('')
 
     const questionResults = buildQuestionResults(questions, answers)
+    const answersForPersistence = answersForSave ?? answers
     const hasScoreOverrides =
         Number.isFinite(scoreCorrectUnits) &&
         Number.isFinite(scoreTotalUnits) &&
@@ -191,7 +268,7 @@ export default function ScoreReport({
             total_questions: saveTotalQuestions,
             time_taken_seconds: timeTaken,
             mode,
-            answers,
+            answers: answersForPersistence,
         }
         const attemptFingerprint = stableSerialize(payload)
         const controller = new AbortController()
@@ -323,7 +400,7 @@ export default function ScoreReport({
         saveTotalQuestions,
         timeTaken,
         mode,
-        answers,
+        answersForPersistence,
     ])
 
     useEffect(() => {
@@ -348,6 +425,11 @@ export default function ScoreReport({
     }
 
     const grade = getGrade()
+    const isSJQAssessment = assessmentType === 'nlng_sjq'
+        || questionResults.some((result) => result?.subtest === 'situational_judgement')
+    const sjqCompetencyBreakdown = isSJQAssessment
+        ? buildSJQCompetencyBreakdown(questionResults)
+        : null
 
     function resolveChoiceLabel(id, options) {
         if (!id) return '--'
@@ -754,6 +836,47 @@ export default function ScoreReport({
                     <p>Flagged</p>
                 </article>
             </div>
+
+            {sjqCompetencyBreakdown && (
+                <article className="score-report__breakdown">
+                    <header className="score-report__breakdown-head">
+                        <h3>Competency Breakdown</h3>
+                        <p>Alignment by NLNG value category (based on your ratings).</p>
+                    </header>
+
+                    <div className="score-report__breakdown-grid">
+                        {sjqCompetencyBreakdown.map((item) => {
+                            const tone = item.pct >= 80 ? 'good' : item.pct >= 60 ? 'mid' : 'bad'
+                            const showTip = item.total > 0 && item.pct < 70
+
+                            return (
+                                <div key={item.id} className="score-report__breakdown-card">
+                                    <div className="score-report__breakdown-top">
+                                        <div className="score-report__breakdown-label">{item.label}</div>
+                                        <div className="score-report__breakdown-value">
+                                            {item.pct}%
+                                            <span className="score-report__breakdown-sub">
+                                                {item.correct}/{item.total}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="score-report__breakdown-bar" aria-hidden="true">
+                                        <span
+                                            className={`score-report__breakdown-fill score-report__breakdown-fill--${tone}`}
+                                            style={{ width: `${Math.max(0, Math.min(100, item.pct))}%` }}
+                                        />
+                                    </div>
+
+                                    {showTip && (
+                                        <p className="score-report__breakdown-tip">{item.tip}</p>
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </article>
+            )}
 
             {saved && (
                 <div className="score-report__saved">

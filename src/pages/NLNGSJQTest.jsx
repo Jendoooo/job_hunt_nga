@@ -125,6 +125,11 @@ export default function NLNGSJQTest() {
 
     if (stage === 'finish') {
         const { correct, total } = countCorrectRatings(activeQuestions, answers)
+        const answersByQuestionId = activeQuestions.reduce((accumulator, q, index) => {
+            const value = answers?.[index]
+            accumulator[q.id] = value && typeof value === 'object' ? value : {}
+            return accumulator
+        }, {})
         return (
             <div className="test-page">
                 <header className="test-page__header">
@@ -137,6 +142,7 @@ export default function NLNGSJQTest() {
                 <ScoreReport
                     questions={activeQuestions}
                     answers={answers}
+                    answersForSave={answersByQuestionId}
                     flagged={[]}
                     timeTaken={timeTaken || TIME_LIMIT_SECONDS}
                     totalTime={TIME_LIMIT_SECONDS}

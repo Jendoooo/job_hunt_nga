@@ -216,6 +216,18 @@ Date: 2026-02-12
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 
+## Phase 16: SHL Verify Interactive — Process Monitoring Simulation (2026-02-12)
+- [x] Created `src/pages/NLNGProcessMonitorTest.jsx` — full real-time simulation
+  - Setup screen with rules cheat-sheet table + scoring info
+  - 5-minute practice loop with ambient panel animation (every 400ms)
+  - 9 event types: power_high, temp_high (spike counting), gas_o2_low, gas_co2_low, gas_both_low, gas_o2_temp, stab_north, stab_west, stab_both
+  - 5-second countdown bar per event; +10 correct / −5 miss / wrong button = flash only
+  - Results screen: score, correct/missed/total counts, pass ≥ 60%
+- [x] Added ~200 lines of `.pm-*` CSS to `src/index.css` (dark panel theme)
+- [x] Route `/test/nlng-process-monitor` added to `src/App.jsx`
+- [x] Dashboard card under NLNG: "SHL Process Monitoring / Verify Interactive" (Cpu icon, red accent)
+- [x] `npm run build` → 0 errors
+
 ## Phase 15: New Clients Stacked Bar + SJQ Module Kickoff (2026-02-12)
 - [x] Added `bar_new_clients_real` (`interactive_stacked_bar`, hard) to gold standard (76 total):
   - Reference bar: Referrals (total=180, South 41.6%)
@@ -227,6 +239,8 @@ Date: 2026-02-12
   - timed: 10 questions / 20 minutes (randomized from SJQ bank)
   - per-response rating scale (1-4) with partial credit (stored as correct_ratings / total_ratings)
   - ScoreReport override support for unit-based scoring + SJQ review table + DeepSeek tutor explainer
+  - Added competency tags to SJQ bank + competency breakdown panel on results screen with coaching tips per weak area
+  - SJQ attempts now persist answers keyed by question id (e.g. `sjq_014: { a: 2, b: 4, c: 1, d: 3 }`) for profile-building
   - dashboard NLNG card added + route wired in `src/App.jsx`
 - [x] Expanded `src/data/nlng-sjq-questions.json` bank to 50 questions (session still runs 10Q / 20m)
 

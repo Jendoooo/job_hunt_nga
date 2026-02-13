@@ -10,6 +10,7 @@ import AIGeneratedTest from './pages/AIGeneratedTest'
 import NLNGTest from './pages/NLNGTest'
 import NLNGInteractiveTest from './pages/NLNGInteractiveTest'
 import NLNGSJQTest from './pages/NLNGSJQTest'
+import NLNGProcessMonitorTest from './pages/NLNGProcessMonitorTest'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -55,6 +56,7 @@ function AppRoutes() {
       <Route path="/test/nlng" element={<ProtectedRoute><NLNGTest /></ProtectedRoute>} />
       <Route path="/test/nlng-interactive" element={<ProtectedRoute><NLNGInteractiveTest /></ProtectedRoute>} />
       <Route path="/test/nlng-sjq" element={<ProtectedRoute><NLNGSJQTest /></ProtectedRoute>} />
+      <Route path="/test/nlng-process-monitor" element={<ProtectedRoute><NLNGProcessMonitorTest /></ProtectedRoute>} />
       <Route path="/test/ai-generated" element={<ProtectedRoute><AIGeneratedTest /></ProtectedRoute>} />
     </Routes>
   )
