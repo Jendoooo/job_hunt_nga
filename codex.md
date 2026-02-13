@@ -55,6 +55,14 @@
 - `src/data/shl-gold-standard.json`: added more SHL-style stacked-bar questions using multi-constraint statements (absolute changes + totals) and more point-graph (line chart) scenarios.
 - Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive` (now 87 questions; higher proportion of pie/bar/line tasks).
 
+### [Codex 2026-02-13 10:53] Supabase Persistence Fix + Footer 2026 + Wholesale Discount Graph
+- Dropped the semantic attempt de-dup unique index in Supabase via `supabase/migrations/20260213095632_drop_attempt_semantic_dedup.sql` (it blocked legitimate repeat attempts).
+- `src/components/ScoreReport.jsx`: include a stable `created_at` timestamp in attempt payloads (improves local timeline sorting and outbox consistency) and format point-graph review values for `%` and `$` axes.
+- `src/pages/Dashboard.jsx`: outbox sync no longer discards items just because an insert error contains "duplicate" (only drop on primary-key conflict), merges pending-local attempts into history/KPIs, and adds a "Sync now" control.
+- `src/components/SiteFooter.jsx`: updated copyright year to 2026 and added WhatsApp contact link.
+- `src/components/interactive/SHLPointGraphWidget.jsx`: added `%` Y-axis label formatting.
+- `src/data/shl-gold-standard.json`: appended the SHL "Wholesale Discount" point-graph question; regenerated `src/data/shl-interactive-questions.json` (now 88 items).
+
 ---
 
 ## Architecture Notes (Codex's modules)

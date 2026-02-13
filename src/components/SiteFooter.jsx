@@ -11,7 +11,19 @@ export default function SiteFooter() {
                     </a>
                 </span>
                 <span className="site-footer__dot" aria-hidden="true">|</span>
-                <span>Copyright 2025</span>
+                <span>
+                    WhatsApp:{' '}
+                    <a
+                        className="site-footer__link"
+                        href="https://wa.me/2348112287258"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        08112287258
+                    </a>
+                </span>
+                <span className="site-footer__dot" aria-hidden="true">|</span>
+                <span>Copyright 2026</span>
             </div>
         </footer>
     )

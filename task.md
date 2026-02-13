@@ -24,6 +24,7 @@ Date: 2026-02-12
 - [x] Make dashboard attempts polling abort-safe to suppress cancellation noise/fetch race errors
 - [x] Add score-save fail-safe: after 5s mark as locally saved and never trap user on results screen
 - [Codex 2026-02-13 06:16] ScoreReport: ensure client-generated attempt IDs are always UUIDv4 (fixes rare Supabase insert failures on browsers without `crypto.randomUUID()`).
+- [Codex 2026-02-13 11:11] Supabase persistence + dashboard reliability: dropped semantic attempt de-dup unique index (`idx_test_attempts_semantic_dedup`) via migration, Dashboard now keeps outbox items unless PK-conflict and merges pending-local attempts into KPIs/history with a "Sync now" control; ScoreReport includes `created_at` in attempts for stable sorting. Also added SHL "Wholesale Discount" point-graph (percent axis) and updated footer to 2026 + WhatsApp.
 
 ## Phase 2: Design System Refactor (Light Theme)
 - [x] Consolidate core visual tokens and shared UI primitives in `src/index.css`
@@ -218,6 +219,20 @@ Date: 2026-02-12
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 - [Codex 2026-02-13 09:08] SHL interactive numerical bank overhaul: replaced simplistic store-volume items with multi-row SHL-style revenue audits, added product-profit ranking drag-table questions, added profit-share pie questions with SHL info cards, added additional stacked-bar and point-graph scenarios, updated `pie_offices` with info cards, and regenerated `src/data/shl-interactive-questions.json` (now 87 items).
+
+## Phase 23: Process Monitor — Two-Phase Alarm Mechanic + Polish [Claude 2026-02-13]
+- [x] Implemented wait-then-act two-phase logic for gas/temp/power alerts:
+  - Alarm phase (2.5s): values enter red zone, pressing any button blocked with "Wait" message, countdown bar goes red
+  - Clearing phase (4.5s): values auto-return to safe zone, user must now press the correct button; countdown bar goes green
+- [x] Stabilizer events and System Trip (gas_o2_temp) remain immediate-press (no waiting)
+- [x] System Reset button now blocked outside system trip with explicit message
+- [x] Phase-aware event hint banner: dark red + "WAIT — ALARM ACTIVE" / dark green + "CLEARED — ACT NOW"
+- [x] Phase-aware panel header status label
+- [x] Gas bar alarm indicator dot: dark idle → flashing bright red during alert
+- [x] Zone cards: neumorphic inner shadow for industrial depth
+- [x] Setup screen: stabilizer rows split into Reset N / Reset W (was "Press that stabilizer's Reset")
+- [x] Setup screen: yellow two-phase warning note added
+- [x] `npm run build` → 0 errors; pushed commit c18bb9a
 
 ## Phase 20: Process Monitoring UX Improvements [Claude 2026-02-13]
 - [x] Removed `pm-btn--alert-action` from all 9 action buttons — zones still glow red (SHL-correct) but no single button is highlighted (was hand-holding the user)

@@ -18,6 +18,9 @@ function formatYLabel(value, labelHint) {
     if (labelHint && labelHint.includes('$')) {
         return `$${Number(value).toLocaleString()}`
     }
+    if (labelHint && labelHint.includes('%')) {
+        return `${Math.round(Number(value))}%`
+    }
     return String(Math.round(value))
 }
 

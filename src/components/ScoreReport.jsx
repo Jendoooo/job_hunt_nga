@@ -279,6 +279,7 @@ export default function ScoreReport({
     const isMountedRef = useRef(false)
     const autoSaveTriggeredRef = useRef(false)
     const attemptIdRef = useRef(null)
+    const attemptCreatedAtRef = useRef(null)
     const [reviewMode, setReviewMode] = useState(false)
     const [reviewScope, setReviewScope] = useState('all')
     const [currentReview, setCurrentReview] = useState(0)
@@ -324,6 +325,10 @@ export default function ScoreReport({
             attemptIdRef.current = createClientAttemptId()
         }
 
+        if (!attemptCreatedAtRef.current) {
+            attemptCreatedAtRef.current = new Date().toISOString()
+        }
+
         const payload = {
             id: attemptIdRef.current,
             user_id: user.id,
@@ -334,6 +339,7 @@ export default function ScoreReport({
             time_taken_seconds: timeTaken,
             mode,
             answers: answersForPersistence,
+            created_at: attemptCreatedAtRef.current,
         }
 
         if (!hasSupabaseEnv) {
@@ -761,6 +767,9 @@ export default function ScoreReport({
 
         if (questionResult.type === 'interactive_point_graph') {
             const labels = Array.isArray(widgetData.x_axis_labels) ? widgetData.x_axis_labels : []
+            const yLabelHint = String(widgetData?.y_axis?.label || '')
+            const isCurrency = yLabelHint.includes('$')
+            const isPercent = yLabelHint.includes('%')
             const expectedValues = expectedAnswer && typeof expectedAnswer === 'object' && Array.isArray(expectedAnswer.values)
                 ? expectedAnswer.values
                 : (Array.isArray(expectedAnswer) ? expectedAnswer : [])
@@ -768,6 +777,13 @@ export default function ScoreReport({
                 ? actualAnswer.values
                 : (Array.isArray(actualAnswer) ? actualAnswer : [])
             const tolerance = questionResult?.tolerance?.value ?? 1
+
+            function formatPointValue(value) {
+                if (!Number.isFinite(value)) return '--'
+                if (isCurrency) return `$${value.toLocaleString()}`
+                if (isPercent) return `${Math.round(value)}%`
+                return value.toLocaleString()
+            }
 
             return (
                 <div className="score-review__interactive">
@@ -790,8 +806,8 @@ export default function ScoreReport({
                                 return (
                                     <tr key={label} className={ok ? 'score-review__interactive-row--ok' : ''}>
                                         <td>{label}</td>
-                                        <td>{Number.isFinite(act) ? act.toLocaleString() : '--'}</td>
-                                        <td>{Number.isFinite(exp) ? exp.toLocaleString() : '--'}</td>
+                                        <td>{formatPointValue(act)}</td>
+                                        <td>{formatPointValue(exp)}</td>
                                     </tr>
                                 )
                             })}

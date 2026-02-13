@@ -35,6 +35,19 @@ function isAbortLikeError(error) {
     return error?.name === 'AbortError' || message.includes('aborted')
 }
 
+function isPrimaryKeyConflict(error) {
+    const code = String(error?.code || '')
+    const message = String(error?.message || '').toLowerCase()
+    const details = String(error?.details || '').toLowerCase()
+    const hint = String(error?.hint || '').toLowerCase()
+
+    return code === '23505' && (
+        message.includes('test_attempts_pkey') ||
+        details.includes('test_attempts_pkey') ||
+        hint.includes('test_attempts_pkey')
+    )
+}
+
 function normalizeForComparison(value) {
     if (value === null || typeof value !== 'object') return value
 
@@ -52,6 +65,28 @@ function normalizeForComparison(value) {
 
 function stableSerialize(value) {
     return JSON.stringify(normalizeForComparison(value))
+}
+
+function buildPendingAttemptsFromOutbox(userId) {
+    if (!userId) return []
+
+    const pending = readAttemptOutbox().filter((item) => item?.payload?.user_id === userId)
+    return pending
+        .map((item) => {
+            const payload = item?.payload
+            if (!payload || typeof payload !== 'object') return null
+
+            const createdAt = payload.created_at
+                ? String(payload.created_at)
+                : (typeof item?.queued_at === 'number' ? new Date(item.queued_at).toISOString() : null)
+
+            return {
+                ...payload,
+                created_at: createdAt || payload.created_at,
+                pending_sync: true,
+            }
+        })
+        .filter(Boolean)
 }
 
 function withTimeout(promise, timeoutMs, message) {
@@ -130,12 +165,14 @@ export default function Dashboard() {
     const [averageScore, setAverageScore] = useState(null)
     const [practiceSessions, setPracticeSessions] = useState(0)
     const [pendingSyncCount, setPendingSyncCount] = useState(0)
+    const [outboxSyncError, setOutboxSyncError] = useState('')
     const [sjqRollingProfile, setSjqRollingProfile] = useState(null)
 
     const flushAttemptOutbox = useCallback(async (signal) => {
         if (!user) return
         if (!hasSupabaseEnv) return
 
+        setOutboxSyncError('')
         const pending = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
         if (pending.length === 0) {
             setPendingSyncCount(0)
@@ -179,8 +216,7 @@ export default function Dashboard() {
                 const { error: insertError } = await insertQuery
 
                 if (insertError) {
-                    const message = String(insertError?.message || '')
-                    if (message.toLowerCase().includes('duplicate')) {
+                    if (isPrimaryKeyConflict(insertError)) {
                         removeAttemptOutbox(attemptId)
                         continue
                     }
@@ -193,6 +229,7 @@ export default function Dashboard() {
                 if (isAbortLikeError(error) || signal?.aborted) return
                 // Keep item in outbox; we'll try again on next refresh/focus.
                 console.warn('Outbox sync failed (will retry):', error)
+                setOutboxSyncError('Some locally saved results could not be synced yet. We will retry automatically.')
             }
         }
 
@@ -206,7 +243,38 @@ export default function Dashboard() {
         setAttemptsError('')
 
         if (!hasSupabaseEnv) {
-            setAttemptsError('Supabase is not configured in this environment.')
+            const pendingAttempts = buildPendingAttemptsFromOutbox(user.id)
+            const merged = dedupeAttempts(
+                [...pendingAttempts].sort((left, right) => {
+                    const a = Date.parse(left?.created_at || '') || 0
+                    const b = Date.parse(right?.created_at || '') || 0
+                    return b - a
+                })
+            )
+
+            const examAttempts = merged.filter((attempt) => attempt.mode === 'exam')
+            const passRateSource = examAttempts.length > 0 ? examAttempts : merged
+            const passCount = passRateSource.filter((attempt) => attemptRatio(attempt) >= PASS_RATIO_THRESHOLD).length
+            const averageSource = passRateSource.length > 0 ? passRateSource : merged
+            const averagePercent = averageSource.length > 0
+                ? Math.round(
+                    averageSource.reduce((sum, attempt) => sum + attemptRatio(attempt), 0) / averageSource.length * 100
+                )
+                : null
+
+            const sjqBank = Array.isArray(sjqQuestions) ? sjqQuestions : []
+            const sjqBankById = new Map(sjqBank.map((q) => [q.id, q]))
+            const sjqProfile = buildSJQRollingProfileFromAttempts(merged, sjqBankById, { maxAttempts: 10 })
+
+            setPendingSyncCount(pendingAttempts.length)
+            setRecentAttempts(merged)
+            setTestsTaken(merged.length)
+            setPracticeSessions(merged.filter((attempt) => attempt.mode === 'practice').length)
+            setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
+            setAverageScore(averagePercent)
+            setSjqRollingProfile(sjqProfile)
+
+            setAttemptsError('Supabase is not configured in this environment. Showing locally saved attempts only.')
             setLoadingAttempts(false)
             return
         }
@@ -226,7 +294,23 @@ export default function Dashboard() {
             const { data, error } = await withTimeout(query, 20000, 'Stats fetch timed out after 20s')
 
             if (error) throw error
-            const attempts = dedupeAttempts(data || [])
+            const remoteAttempts = Array.isArray(data) ? data : []
+            const pendingAttempts = buildPendingAttemptsFromOutbox(user.id)
+            setPendingSyncCount(pendingAttempts.length)
+
+            const remoteIds = new Set(remoteAttempts.map((attempt) => attempt?.id).filter(Boolean))
+            const merged = [
+                ...remoteAttempts,
+                ...pendingAttempts.filter((attempt) => attempt?.id && !remoteIds.has(attempt.id)),
+            ]
+
+            merged.sort((left, right) => {
+                const a = Date.parse(left?.created_at || '') || 0
+                const b = Date.parse(right?.created_at || '') || 0
+                return b - a
+            })
+
+            const attempts = dedupeAttempts(merged)
             const examAttempts = attempts.filter((attempt) => attempt.mode === 'exam')
             const passRateSource = examAttempts.length > 0 ? examAttempts : attempts
             const passCount = passRateSource.filter((attempt) => attemptRatio(attempt) >= PASS_RATIO_THRESHOLD).length
@@ -299,6 +383,14 @@ export default function Dashboard() {
             window.removeEventListener('attempt-saved', handleAttemptSaved)
             window.removeEventListener('focus', handleWindowFocus)
         }
+    }, [fetchRecentAttempts, flushAttemptOutbox, user])
+
+    const handleManualSync = useCallback(async () => {
+        if (!user) return
+        const controller = new AbortController()
+        await flushAttemptOutbox(controller.signal)
+        await fetchRecentAttempts(controller.signal)
+        controller.abort()
     }, [fetchRecentAttempts, flushAttemptOutbox, user])
 
     async function handleGenerateQuestions() {
@@ -545,6 +637,20 @@ export default function Dashboard() {
                         <span>
                             {pendingSyncCount} result{pendingSyncCount === 1 ? '' : 's'} saved locally. Cloud sync will retry automatically.
                         </span>
+                        <button
+                            className="btn btn--secondary btn--sm"
+                            onClick={handleManualSync}
+                            disabled={loadingAttempts}
+                            style={{ marginLeft: 'auto' }}
+                        >
+                            Sync now
+                        </button>
+                    </div>
+                )}
+
+                {outboxSyncError && (
+                    <div className="score-report__save-error" style={{ marginTop: '0.75rem' }}>
+                        {outboxSyncError}
                     </div>
                 )}
 
@@ -750,7 +856,8 @@ export default function Dashboard() {
                                                 <strong>{attempt.module_name || 'Practice Test'}</strong>
                                                 <span>
                                                     {modeLabel && <span className={`activity-item__mode-badge activity-item__mode-badge--${attempt.mode}`}>{modeLabel}</span>}
-                                                    {' '}{attempt.score}/{attempt.total_questions}{' · '}
+                                                    {attempt.pending_sync && <span className="activity-item__mode-badge">Pending</span>}
+                                                    {' '}{attempt.score}/{attempt.total_questions}{' Â· '}
                                                     {new Date(attempt.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: '2-digit' })}
                                                 </span>
                                             </div>
