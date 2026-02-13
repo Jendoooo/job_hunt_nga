@@ -51,10 +51,10 @@ export function resolveSJQCompetencyMeta(id) {
 
 export function resolveSJQRatingLabel(value) {
     const rating = Number(value)
-    if (rating === 1) return 'Very Ineffective'
-    if (rating === 2) return 'Ineffective'
-    if (rating === 3) return 'Effective'
-    if (rating === 4) return 'Very Effective'
+    if (rating === 1) return 'Less Effective'
+    if (rating === 2) return 'Less Effective'
+    if (rating === 3) return 'More Effective'
+    if (rating === 4) return 'More Effective'
     return '--'
 }
 
@@ -222,4 +222,3 @@ export function buildSJQRollingProfileFromAttempts(attempts, questionBankById, {
         breakdown,
     }
 }
-

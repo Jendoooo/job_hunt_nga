@@ -203,11 +203,13 @@ export async function explainSJQAttempt(question, userAnswer) {
 
     const prompt = `You are an SHL situational judgement (SJQ) coach.
 
-Rating scale:
-1 = Very Ineffective
-2 = Ineffective
-3 = Effective
-4 = Very Effective
+Response choices:
+1 = Less Effective
+4 = More Effective
+
+If you see 2 or 3 in the data, treat:
+2 = Less Effective
+3 = More Effective
 
 Scenario:
 ${scenario}

@@ -10,12 +10,8 @@ import { scoreSJQQuestionUnits } from '../utils/sjqAnalytics'
 const TIME_LIMIT_SECONDS = 20 * 60
 const SESSION_QUESTION_COUNT = 10
 
-const RATING_SCALE = [
-    { value: 1, label: 'Very Ineffective' },
-    { value: 2, label: 'Ineffective' },
-    { value: 3, label: 'Effective' },
-    { value: 4, label: 'Very Effective' },
-]
+const LESS_EFFECTIVE = 1
+const MORE_EFFECTIVE = 4
 
 function scoreSessionUnits(questions, answers) {
     let earned = 0
@@ -67,11 +63,20 @@ export default function NLNGSJQTest() {
             const current = prev[currentQuestion] && typeof prev[currentQuestion] === 'object'
                 ? prev[currentQuestion]
                 : {}
+
+            const alreadySelected = Number(current?.[responseId]) === Number(ratingValue)
+            const nextMap = { ...current }
+
+            if (alreadySelected) {
+                delete nextMap[responseId]
+            } else {
+                nextMap[responseId] = ratingValue
+            }
+
             return {
                 ...prev,
                 [currentQuestion]: {
-                    ...current,
-                    [responseId]: ratingValue,
+                    ...nextMap,
                 },
             }
         })
@@ -91,24 +96,43 @@ export default function NLNGSJQTest() {
                 </header>
 
                 <div className="test-setup">
-                    <div className="test-setup__card">
-                        <h2 className="text-2xl font-bold text-slate-800 mb-2">SHL Job-Focused Assessment</h2>
-                        <p className="test-setup__description">
-                            Situational Judgement | {SESSION_QUESTION_COUNT} Questions | 20 minutes
-                        </p>
-
-                        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8 text-sm text-slate-700">
-                            Rate how effective each response would be in the workplace. You must rate all responses
-                            before moving to the next question. Session questions are randomized from a bank of {questionBank.length}.
+                    <div className="sjq-instructions">
+                        <div className="sjq-instructions__section">
+                            <div className="sjq-instructions__title">Instructions</div>
+                            <div className="sjq-instructions__content">
+                                <p>
+                                    This assessment is designed to help you become familiar with completing a Situational Judgement Test (SJT).
+                                    You will be given different situations you might find yourself in while at work.
+                                </p>
+                                <p>
+                                    For each response, select either <strong>More Effective</strong> or <strong>Less Effective</strong> based on
+                                    how you think the best way is to respond. All questions must be answered. Once you move on, you will not
+                                    have the opportunity to change your answers.
+                                </p>
+                                <p className="sjq-instructions__warning">
+                                    Do not refresh, reload, or use the browser Back button during the assessment.
+                                </p>
+                            </div>
                         </div>
 
-                        <button
-                            className="btn btn--primary btn--lg btn--full flex items-center justify-center gap-2"
-                            onClick={startAssessment}
-                            disabled={questionBank.length === 0}
-                        >
-                            Start Assessment
-                        </button>
+                        <div className="sjq-instructions__section">
+                            <div className="sjq-instructions__title">General</div>
+                            <div className="sjq-instructions__content">
+                                <div><strong>Number of questions:</strong> {SESSION_QUESTION_COUNT}</div>
+                                <div><strong>Time limit:</strong> 20 minutes</div>
+                                <div><strong>Question bank:</strong> randomised from {questionBank.length} scenarios</div>
+                            </div>
+                        </div>
+
+                        <div className="sjq-instructions__actions">
+                            <button
+                                className="btn btn--primary btn--lg flex items-center justify-center gap-2"
+                                onClick={startAssessment}
+                                disabled={questionBank.length === 0}
+                            >
+                                Take Assessment
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,7 +180,10 @@ export default function NLNGSJQTest() {
     const currentAnswer = answers[currentQuestion] && typeof answers[currentQuestion] === 'object'
         ? answers[currentQuestion]
         : {}
-    const allRated = (question.responses || []).every((r) => currentAnswer[r.id] != null)
+    const allRated = (question.responses || []).every((r) => {
+        const value = Number(currentAnswer?.[r.id])
+        return value === LESS_EFFECTIVE || value === MORE_EFFECTIVE
+    })
     const isLast = currentQuestion >= activeQuestions.length - 1
 
     return (
@@ -185,58 +212,65 @@ export default function NLNGSJQTest() {
                 </div>
             </header>
 
-            <div className="test-page__body">
+            <div className="test-page__body test-page__body--single">
                 <div className="test-page__content">
-                    <div className="max-w-3xl mx-auto w-full">
-                        <div className="question-card__rules mb-4">
-                            <div className="text-sm font-semibold text-slate-100 mb-2">
-                                Question {currentQuestion + 1} of {activeQuestions.length}
+                    <div className="sjq-portal">
+                        <div className="sjq-portal__card">
+                            <div className="sjq-portal__card-head">
+                                Question {currentQuestion + 1}
                             </div>
-                            <div className="text-slate-100 leading-relaxed text-sm">
+
+                            <div className="sjq-portal__scenario">
                                 {question.scenario}
                             </div>
-                        </div>
 
-                        <div className="question-card">
-                            <h3 className="text-lg font-bold text-slate-800 mb-4">
+                            <div className="sjq-portal__prompt">
                                 {question.question}
-                            </h3>
+                            </div>
 
-                            <div className="space-y-4">
+                            <div className="sjq-portal__rows" role="group" aria-label="Responses">
                                 {(question.responses || []).map((response) => {
                                     const selected = Number(currentAnswer?.[response.id]) || null
+                                    const lessLabel = selected === LESS_EFFECTIVE ? 'Clear' : 'Less Effective'
+                                    const moreLabel = selected === MORE_EFFECTIVE ? 'Clear' : 'More Effective'
+                                    const rowSelected = selected === LESS_EFFECTIVE || selected === MORE_EFFECTIVE
+
                                     return (
-                                        <div key={response.id} className="sjq-question-block">
-                                            <div className="sjq-response-text">
-                                                <strong className="mr-2">{String(response.id).toUpperCase()}.</strong>
-                                                {response.text}
+                                        <div
+                                            key={response.id}
+                                            className={`sjq-effect-row ${rowSelected ? 'sjq-effect-row--selected' : ''}`}
+                                        >
+                                            <button
+                                                type="button"
+                                                className={`sjq-effect-rail sjq-effect-rail--less ${selected === LESS_EFFECTIVE ? 'sjq-effect-rail--clear' : ''}`}
+                                                onClick={() => handleRate(response.id, LESS_EFFECTIVE)}
+                                                aria-pressed={selected === LESS_EFFECTIVE}
+                                            >
+                                                {lessLabel}
+                                            </button>
+
+                                            <div className="sjq-effect-body">
+                                                <div className="sjq-effect-text">
+                                                    {response.text}
+                                                </div>
                                             </div>
 
-                                            <div className="sjq-rating-pills" role="group" aria-label={`Rate response ${response.id}`}>
-                                                {RATING_SCALE.map((opt) => {
-                                                    const isSelected = selected === opt.value
-                                                    const colorClass = opt.value >= 3 ? 'sjq-pill--effective' : 'sjq-pill--ineffective'
-                                                    return (
-                                                        <button
-                                                            key={opt.value}
-                                                            type="button"
-                                                            className={`sjq-pill ${isSelected ? colorClass : ''}`}
-                                                            aria-pressed={isSelected}
-                                                            onClick={() => handleRate(response.id, opt.value)}
-                                                        >
-                                                            {opt.label}
-                                                        </button>
-                                                    )
-                                                })}
-                                            </div>
+                                            <button
+                                                type="button"
+                                                className={`sjq-effect-rail sjq-effect-rail--more ${selected === MORE_EFFECTIVE ? 'sjq-effect-rail--clear' : ''}`}
+                                                onClick={() => handleRate(response.id, MORE_EFFECTIVE)}
+                                                aria-pressed={selected === MORE_EFFECTIVE}
+                                            >
+                                                {moreLabel}
+                                            </button>
                                         </div>
                                     )
                                 })}
                             </div>
 
-                            <div className="test-page__nav-buttons mt-6">
+                            <div className="sjq-portal__actions">
                                 <button
-                                    className="btn btn--primary"
+                                    className="sjq-next-btn"
                                     onClick={() => {
                                         if (!allRated) return
                                         if (isLast) {
@@ -247,8 +281,12 @@ export default function NLNGSJQTest() {
                                     }}
                                     disabled={!allRated}
                                 >
-                                    {isLast ? 'Finish' : 'Next ->'}
+                                    {isLast ? 'Finish' : 'Next'}
                                 </button>
+                            </div>
+
+                            <div className="sjq-portal__hint">
+                                Once you move on, you will not have the opportunity to change your answers.
                             </div>
                         </div>
                     </div>

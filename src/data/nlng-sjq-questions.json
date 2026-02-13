@@ -56,10 +56,10 @@
       }
     ],
     "correct_answer": {
-      "a": 2,
+      "a": 1,
       "b": 4,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Consulting your manager (b) is most effective because they can re-prioritise based on business needs. Negotiating (d) shows initiative and manages expectations. Refusing outright (a) is passive and may not reflect urgency. Suffering in silence (c) risks quality and burnout and may still miss both deadlines."
   },
@@ -117,8 +117,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 3,
-      "c": 2,
+      "b": 4,
+      "c": 1,
       "d": 1
     },
     "explanation": "A private, constructive conversation (a) is most effective because it tackles the root cause and preserves trust. Escalating with evidence (b) can be appropriate if the issue persists or risks delivery. Taking over silently (c) may enable the problem and creates hidden risk. Avoiding the issue (d) allows delays to continue."
@@ -185,9 +185,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Seeking specific, actionable feedback (a) is most effective and shows a growth mindset. Getting a second review (d) is also helpful and proactive. Defending yourself (b) may damage relationships and misses the learning opportunity. Ignoring feedback (c) is very ineffective and likely repeats the same issue."
   },
@@ -241,9 +241,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Raising the issue with context and a proposed solution (a) is best practice and protects quality. Advising an accountable review (d) is also effective when risk is material. Changing it unilaterally (b) introduces governance and quality risk. Doing nothing (c) is very ineffective given potential customer impact."
   },
@@ -313,8 +313,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 3,
-      "c": 2,
+      "b": 4,
+      "c": 1,
       "d": 1
     },
     "explanation": "Raising concerns privately with evidence and solutions (a) is most effective and constructive. Documenting risks and agreeing mitigations (b) is a professional way to manage risk once a decision is made. Public confrontation (c) can damage trust and reduce psychological safety. Complaining and refusing (d) is very ineffective and harms delivery."
@@ -374,8 +374,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Taking ownership as the contact and coordinating resolution (a) is most effective. Providing an immediate plan and updates (d) helps manage expectations. Waiting too long to reply (c) can escalate the issue even if you need details. Blaming others (b) is very ineffective and damages trust."
   },
@@ -441,8 +441,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 3,
-      "c": 2,
+      "b": 4,
+      "c": 1,
       "d": 1
     },
     "explanation": "Escalating early to prioritise and manage stakeholder expectations (a) is most effective. Sharing work and documenting (b) is proactive and sustainable. Covering silently (c) may help short term but creates risk and hides capacity issues. Doing nothing (d) is very ineffective and risks missed deadlines."
@@ -508,9 +508,9 @@
       }
     ],
     "correct_answer": {
-      "a": 3,
+      "a": 4,
       "b": 1,
-      "c": 2,
+      "c": 1,
       "d": 4
     },
     "explanation": "Gathering evidence and involving the team (d) is most effective and increases buy-in. A clear proposal with a pilot (a) is also effective and practical. Implementing unilaterally (b) is very ineffective because it bypasses governance and alignment. Mentioning it and dropping it (c) is somewhat ineffective because it is unlikely to drive change."
@@ -577,8 +577,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 3,
-      "c": 2,
+      "b": 4,
+      "c": 1,
       "d": 1
     },
     "explanation": "Being transparent and setting a plan with support (a) is most effective and reduces delivery risk. Learning quickly and seeking help when needed (b) is generally effective. Declining outright (c) may be inappropriate if support is available and the task is important. Pretending and producing unreliable work (d) is very ineffective."
@@ -646,8 +646,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Aligning stakeholders directly (a) is most effective and prevents ongoing conflict. Getting written confirmation with clear constraints (d) is also effective. Trying to do both (c) often reduces quality and increases risk. Ignoring one manager (b) is very ineffective and can damage trust."
   },
@@ -713,9 +713,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Intervening immediately (a) aligns with the core value of Safety and 'Intervene in unsafe situations'. Reporting later (b) allows the risk to continue. Ignoring it (c) is completely ineffective and violates the code of conduct. Anonymous reporting (d) is better than ignoring but less effective than immediate intervention which prevents potential harm."
   },
@@ -776,9 +776,9 @@
       }
     ],
     "correct_answer": {
-      "a": 3,
+      "a": 4,
       "b": 4,
-      "c": 2,
+      "c": 1,
       "d": 1
     },
     "explanation": "Taking ownership to fix the error (b) demonstrates Teamwork and Excellence. Calling after hours (a) shows dedication but might disrespect work-life balance if the fix is manageable. Highlighting the error (c) protects you but doesn't solve the problem. Doing nothing (d) is ineffective and harms the team's output."
@@ -837,9 +837,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Listening and facilitating the right contact (a) shows Caring and Respect. Referral (b) is procedural but lacks the personal touch required for community relations. Walking away (c) is dismissive and damages reputation. Trying to solve it yourself (d) shows initiative but may bypass established protocols for community grievances."
   },
@@ -900,10 +900,10 @@
       }
     ],
     "correct_answer": {
-      "a": 2,
+      "a": 1,
       "b": 4,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Politely declining with reference to policy (b) upholds Integrity and maintains professionalism. Reporting immediately (d) might be necessary if it was a clear bribe, but 'token' gifts are often just cultural; declining is the first step. Accepting (a) or (c) creates a conflict of interest perception, violating the Code of Conduct."
   },
@@ -970,8 +970,8 @@
     "correct_answer": {
       "a": 1,
       "b": 4,
-      "c": 3,
-      "d": 2
+      "c": 4,
+      "d": 1
     },
     "explanation": "Inclusive behavior (b) demonstrates Teamwork and Respect, ensuring all ideas are heard. Asking privately (c) is supportive but misses the chance to benefit the group discussion. Criticizing publicly (d) creates conflict. Silence (a) allows potential value to be lost and condones exclusion."
   },
@@ -1038,8 +1038,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 3,
-      "d": 2
+      "c": 4,
+      "d": 1
     },
     "explanation": "Involving the team with data (a) shows Excellence and Innovation while managing change respectfully. Consulting management (c) is a good second step. Implementing without buy-in (b) will likely fail due to resistance. Avoiding improvement (d) neglects the value of continuous improvement."
   },
@@ -1100,10 +1100,10 @@
       }
     ],
     "correct_answer": {
-      "a": 2,
+      "a": 1,
       "b": 4,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Proactive communication (b) manages expectations and shows Accountability. Waiting silently (d) is unprofessional. Submitting incomplete work (a) might be acceptable if agreed, but risky without prior notice. Pressuring an understaffed team (c) lacks Caring and Teamwork."
   },
@@ -1156,10 +1156,10 @@
       }
     ],
     "correct_answer": {
-      "a": 2,
+      "a": 1,
       "b": 4,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Privately correcting behavior (b) demonstrates Integrity and Respect without causing a scene. Joining in (c) violates core values. Reporting immediately (d) might be an overreaction for a first offense depending on severity. Ignoring (a) condones the disrespect."
   },
@@ -1222,8 +1222,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Showing flexibility and ownership (a) is the most effective way to manage up. HR request (c) should be a last resort. Showing up unannounced (d) is disrespectful of their time. Giving up (b) shows a lack of drive for your own development."
   },
@@ -1286,8 +1286,8 @@
     "correct_answer": {
       "a": 1,
       "b": 4,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Enforcing standards (b) upholds Excellence and sustainability; undocumented work creates 'key person risk'. Assigning someone else (c) rewards non-compliance. Compromising (d) often leads to the work never being done. Allowing skipping (a) fails to manage the project properly."
   },
@@ -1345,8 +1345,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
-      "c": 3,
+      "b": 1,
+      "c": 4,
       "d": 1
     },
     "explanation": "Immediate intervention (a) is the only acceptable response under 'Safety First'. Allowing a violation (b) endangers life. Reporting later (c) leaves the immediate risk unmanaged. Doing nothing (d) is negligent."
@@ -1402,8 +1402,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "De-escalating respectfully while deferring to the correct department (a) shows Respect and Caring. Security force (b) could escalate conflict. Meeting outside your role (c) risks making promises the company cannot keep. Ignoring (d) is disrespectful."
   },
@@ -1465,9 +1465,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Integrity demands transparency regardless of materiality (a). Silent fixing (b) falsifies records. Ignoring (c) violates the principle of accuracy. Consulting (d) delays the necessary action."
   },
@@ -1537,9 +1537,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Professional negotiation and respecting lines of authority (a) is best. Blind obedience (b) disrupts planned work. Refusal (c) is unhelpful/disrespectful. Overworking (d) hides the resource conflict."
   },
@@ -1597,9 +1597,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Constructive input (a) shows Excellence and Teamwork. Interruption (b) is disrespectful. Letting them fail (c) wastes company resources. Private feedback (d) is okay but less efficient than real-time course correction."
   },
@@ -1653,9 +1653,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Direct, polite enforcement of Integrity (a) is proportionate. Reporting immediately (b) might be excessive for stationery (depends on policy severity) but is technically correct. Ignoring (c) condones misuse. Joking (d) is passive."
   },
@@ -1714,8 +1714,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 3,
-      "d": 2
+      "c": 4,
+      "d": 1
     },
     "explanation": "Declining to avoid Conflict of Interest (a) maintains Integrity. Accepting (b) compromises impartiality. Asking manager (c) shows doubt about a clear ethical rule. Partial acceptance (d) is still compromised."
   },
@@ -1773,8 +1773,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
-      "c": 3,
+      "b": 1,
+      "c": 4,
       "d": 1
     },
     "explanation": "Emotional intelligence and private resolution (a) shows Respect and Teamwork. Public argument (b) disrupts the team. complaining (c) is passive. False apology (d) confuses accountability."
@@ -1838,8 +1838,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "See it, Own it (a) is the Safety culture. Assuming (b) leads to disasters. Late reporting (c) is ineffective. Unqualified fixing (d) is dangerous."
   },
@@ -1898,8 +1898,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Offering support (a) demonstrates Teamwork and Caring. Going home (b) is selfish in a team crunch. Personal work (c) is neutral but not helpful. Asking manager (d) is good, but helping teammates is better for immediate team morale."
   },
@@ -1961,9 +1961,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Ethical handling of data (a) upholds Integrity. Using the data (b/c) is unethical and potentially illegal. Keeping a copy (d) is suspicious."
   },
@@ -2017,9 +2017,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Polite intervention (a) maintains control and Respect. Louder speaking (b) is passive-aggressive. Shouting (c) loses respect. Ignoring (d) allows the meeting to be derailed."
   },
@@ -2082,8 +2082,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Structured support (a) balances Caring/Teamwork with efficiency. Refusing help (b) is unsupportive. Doing it for them (c) prevents learning. Manuals (d) are helpful but the 'do not disturb' attitude is poor."
   },
@@ -2137,9 +2137,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Formal process (a) ensures Integrity and chain of custody. Leaving it (b) risks theft by others. Taking cash (c) is theft. Walking around (d) is inefficient and risky."
   },
@@ -2206,8 +2206,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Compliance/Integrity (a) overrides hierarchy. Blind obedience (b) makes you complicit. Compromise checks (c) are negligence. Reporting (d) is a secondary step if they insist, but refusal is the first step."
   },
@@ -2277,9 +2277,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Honesty/Excellence (a) builds trust. Hiding errors (b) destroys trust if caught. Blaming others (c) is poor leadership. Lying (d) is an integrity violation."
   },
@@ -2341,9 +2341,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 3,
+      "b": 4,
       "c": 1,
-      "d": 2
+      "d": 1
     },
     "explanation": "Address behavior directly and respectfully (a). Natural consequences (b) are okay but less supportive. Sarcasm (c) is toxic. HR (d) is for persistent issues, not the first step."
   },
@@ -2397,9 +2397,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Immediate alignment with Respect/Diversity (a) is required. Walking away (b) is passive. Laughing (c) is complicit. Private (d) is better than nothing but less effective than immediate correction for group norms."
   },
@@ -2470,8 +2470,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Data-driven persuasion (a) shows Excellence and Innovation. Insubordination (b) is risky. Accepting (c) is safer than insubordination but lacks drive. Escalating (d) is political and should be a last resort."
   },
@@ -2529,9 +2529,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Managing expectations with trade-offs (a) is professional. Blind optimism (b) leads to failure. Stubborn refusal (c) is uncooperative. '3 days' might be true, but explaining the 'why' is the key."
   },
@@ -2590,8 +2590,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Taking ownership (a) de-escalates. Excuses (b) irritate clients. Policing emotions (c) escalates. Passing the buck (d) is weak, though sometimes necessary if you can't solve it."
   },
@@ -2645,9 +2645,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 3,
+      "b": 4,
       "c": 1,
-      "d": 2
+      "d": 1
     },
     "explanation": "Active Integrity (a). Helping the victim (b) is good but misses holding the driver accountable. Ignoring (c) lacks Caring. Posting (d) is gossip."
   },
@@ -2705,8 +2705,8 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
-      "c": 3,
+      "b": 1,
+      "c": 4,
       "d": 1
     },
     "explanation": "Resilience and problem solving (a). Passive waiting (b) misses the meeting. Late apology (c) is unprofessional. Quitting (d) is unacceptable."
@@ -2770,8 +2770,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Innovation within Governance (a). Unauthorized deviation (b) is a compliance risk. Secret deviation (c) is worse. Blind compliance (d) stifles improvement but is safer than deviation."
   },
@@ -2825,9 +2825,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Caring/Empathy (a). Ignoring (b) is cold. Scolding (c) is cruel. Escalating (d) might be necessary later but immediate support is human."
   },
@@ -2894,8 +2894,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Integrity + Solutions (a). Falsification (b) is unethical. Refusal (c) is unhelpful. Problem dumping (d) shows lack of ownership."
   },
@@ -2950,8 +2950,8 @@
     "correct_answer": {
       "a": 4,
       "b": 1,
-      "c": 2,
-      "d": 3
+      "c": 1,
+      "d": 4
     },
     "explanation": "Safety/Process Integrity (a). Hacking (b) creates safety risks. Passing the buck (c) is lazy. Asking supervisor (d) puts the onus on them but suggests you are willing to cut corners."
   },
@@ -3005,9 +3005,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Courage to speak up (a) aids learning. Silence (b) leads to gaps. Disrupting (c) is rude. Talking over (d) is distracting."
   },
@@ -3073,9 +3073,9 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Responsible handover (a). Poor quality (b) damages reputation. AWOL (c/d) is unacceptable."
   },
@@ -3133,10 +3133,210 @@
     ],
     "correct_answer": {
       "a": 4,
-      "b": 2,
+      "b": 1,
       "c": 1,
-      "d": 3
+      "d": 4
     },
     "explanation": "Caring/Safety/Teamwork (a). Policing without helping (b) is arrogant. Watching (c) is malicious. Reporting (d) is secondary to immediate assistance."
+  },
+  {
+    "id": "sjq_051",
+    "subtest": "situational_judgement",
+    "competency": "people",
+    "scenario": "A client has just left the store after purchasing equipment that you showed them. You are very happy about the sale and feel you worked hard to convince them to purchase the product. A colleague mentions that it was one of their regular clients and is upset that you took a sale that may have been theirs. You were not aware that it was one of the regulars and the client was browsing when you offered your help. It is unlike your colleague to behave in this way and you know they have struggled to meet targets recently. It is a really busy day in store and you need to get back to assisting clients.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      {
+        "id": "a",
+        "text": "Adapt by making time today to meet with your colleague so you can offer to help them with figuring out their sales struggles.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "text": "Remind your colleague that the store is busy and suggest focusing on the waiting clients instead of the client that left.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "text": "Spend some time with the colleague to discuss their concern about the client as you want to consider their point of view.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
+      },
+      {
+        "id": "d",
+        "text": "Meet with your colleague about their recent struggles only if you have free time after the week as the current week is quite busy.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
+      }
+    ],
+    "correct_answer": {
+      "a": 4,
+      "b": 1,
+      "c": 4,
+      "d": 1
+    },
+    "explanation": "Addressing the issue constructively and supporting your colleague (a) is more effective and helps maintain teamwork. Taking time to listen and understand their perspective (c) is also more effective. Dismissing them due to busyness (b) is less effective and may escalate conflict. Delaying until a later time (d) avoids the issue and is less effective."
+  },
+  {
+    "id": "sjq_052",
+    "subtest": "situational_judgement",
+    "competency": "people",
+    "scenario": "You are conducting a stock take at the restaurant and there is a relatively new team member who is struggling during a busy shift. They ask you for help because they are finding it difficult to keep up with guests. You are unsure why the shift feels different today. While you would like to help, you need to get the stock take done as soon as possible.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      {
+        "id": "a",
+        "text": "Ask the team member to find out if there is someone else who could help as you need to get the stock take done.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "text": "Be flexible about the stock take so you can support your team member and finish it when the shift quietens down.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "text": "Tell the team member they have already worked a busy shift successfully so it should not be any different today.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
+      },
+      {
+        "id": "d",
+        "text": "Talk to the team member to understand why they are struggling today and what support they need to get through the shift.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.75
+          },
+          {
+            "id": "delivery",
+            "weight": 0.25
+          }
+        ]
+      }
+    ],
+    "correct_answer": {
+      "a": 1,
+      "b": 4,
+      "c": 1,
+      "d": 4
+    },
+    "explanation": "Supporting the team member and adjusting your plan (b) is more effective because it prioritizes service and teamwork during a busy period. Understanding the cause and offering targeted support (d) is also more effective. Deflecting the problem to someone else (a) is less effective and may leave them struggling. Dismissing their difficulty (c) is less effective and harms morale."
+  },
+  {
+    "id": "sjq_053",
+    "subtest": "situational_judgement",
+    "competency": "people",
+    "scenario": "A colleague has asked if you mind swapping a few of your shifts next week. There are no particular reasons why you would not be able to do so, but you like your current shift schedule and there are other colleagues who could accommodate the request. This colleague has asked to change their shift a few times recently, and you think the Manager may be able to change their schedule permanently.",
+    "question": "How effective would each of the following responses be?",
+    "responses": [
+      {
+        "id": "a",
+        "text": "Tell your colleague to speak to the Manager who may be able to change their schedule permanently.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.75
+          },
+          {
+            "id": "delivery",
+            "weight": 0.25
+          }
+        ]
+      },
+      {
+        "id": "b",
+        "text": "Advise the colleague to check with others as you would prefer to stick with your current schedule.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
+      },
+      {
+        "id": "c",
+        "text": "Find out why the colleague wants to swap shifts next week and then consider their request.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "id": "d",
+        "text": "Tell the colleague that you are willing to be flexible with your shift schedule on this occasion.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
+      }
+    ],
+    "correct_answer": {
+      "a": 4,
+      "b": 1,
+      "c": 4,
+      "d": 4
+    },
+    "explanation": "Understanding their reason and considering the request (c) is more effective because it balances empathy with fairness. Being flexible when you can (d) supports teamwork. Suggesting a longer-term solution via the Manager (a) can also be more effective given repeated requests. Refusing and pushing them to others without discussion (b) is less effective and can strain the relationship."
   }
 ]

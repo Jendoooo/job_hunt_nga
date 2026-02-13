@@ -426,7 +426,7 @@ export default function ScoreReport({
                     <thead>
                         <tr>
                             <th>Response</th>
-                            <th>Your Rating</th>
+                            <th>Your Choice</th>
                             <th>Expected</th>
                             <th>Score</th>
                         </tr>

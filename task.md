@@ -278,6 +278,7 @@ Date: 2026-02-12
   - Dashboard: added rolling SJQ profile panel (last 10 attempts)
   - dashboard NLNG card added + route wired in `src/App.jsx`
 - [Codex 2026-02-13 06:11] SJQ improvements: distance-based scoring, response-level competency weights, results competency breakdown now uses weighted points, and Dashboard shows rolling SJQ profile from Supabase attempts.
+- [Codex 2026-02-13 06:57] SJQ UI fidelity: redesigned the SJQ runner to match SHL's More/Less Effective bar interaction (with per-response Clear), fixed the desktop blank sidebar by using a single-column test layout, expanded the SJQ bank with extracted screenshot scenarios (sjq_051-sjq_053), and updated review/AI labels to More/Less Effective.
 - [x] Expanded `src/data/nlng-sjq-questions.json` bank to 50 questions (session still runs 10Q / 20m)
 
 ## Phase 14: SHL Visual Theme + Commission/Performance Questions (2026-02-12)

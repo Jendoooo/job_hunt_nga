@@ -36,6 +36,13 @@
 - `src/components/ScoreReport.jsx`: attempt IDs are now always UUIDv4 (fallback uses `crypto.getRandomValues` or Math.random).
 - Prevents Supabase insert failures if a browser lacks `crypto.randomUUID()`.
 
+### [Codex 2026-02-13 06:57] SJQ SHL UI + Screenshot Question Extraction
+- `src/pages/NLNGSJQTest.jsx`: redesigned the SJQ test stage to match SHL's More/Less Effective bar interaction (with per-response Clear) and removed the empty desktop sidebar by using a single-column layout.
+- `src/index.css`: added SHL-style SJQ portal + instructions styling (`.sjq-portal*`, `.sjq-effect-*`, `.sjq-instructions*`).
+- `src/data/nlng-sjq-questions.json`: appended extracted screenshot scenarios (sjq_051-sjq_053) and standardized SJQ answer keys to SHL-style More/Less Effective values.
+- `src/services/deepseek.js`: updated the SJQ coach prompt to reflect More/Less Effective choices.
+- `src/components/ScoreReport.jsx` + `src/utils/sjqAnalytics.js`: updated SJQ review labels to display More/Less Effective.
+
 ---
 
 ## Architecture Notes (Codex's modules)
