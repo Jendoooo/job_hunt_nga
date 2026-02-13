@@ -219,6 +219,13 @@ Date: 2026-02-12
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 - [Codex 2026-02-13 09:08] SHL interactive numerical bank overhaul: replaced simplistic store-volume items with multi-row SHL-style revenue audits, added product-profit ranking drag-table questions, added profit-share pie questions with SHL info cards, added additional stacked-bar and point-graph scenarios, updated `pie_offices` with info cards, and regenerated `src/data/shl-interactive-questions.json` (now 87 items).
 
+## Phase 20: Process Monitoring UX Improvements [Claude 2026-02-13]
+- [x] Removed `pm-btn--alert-action` from all 9 action buttons — zones still glow red (SHL-correct) but no single button is highlighted (was hand-holding the user)
+- [x] Temperature graph height: `H = 80 → 130` in SVG, `height: 78px → 130px` in CSS — visibly taller, easier to read trends
+- [x] Results screen: added percentile band estimate (e.g. "Above Average (75th percentile)") mapped from score %
+- [x] Results screen: added SHL-style Development Guidance text block aligned with real candidate report language
+- [x] `npm run build` → 0 errors; pushed commit 8a8b128
+
 ## Phase 19: Classification Questions + Pill Styling + DB History Fix [Claude 2026-02-13]
 - [x] Added 3 new `interactive_drag_table` questions to `shl-gold-standard.json` (now 79 total):
   - `sales_goals_person_a`: quarterly sales goals Met/Not Met (hard)
