@@ -1,5 +1,16 @@
 # Platform Architecture and Status
 
+## Multi-Agent Coordination
+This project uses two AI agents working in parallel: **Claude** (this file) and **Codex** (`codex.md`).
+
+| File | Owner | Others |
+|------|-------|--------|
+| `CLAUDE.md` | Claude — writes & maintains | Codex — read-only |
+| `codex.md` | Codex — writes & maintains | Claude — read-only |
+| `task.md` | Both edit | Always prefix entries with `[Claude YYYY-MM-DD HH:MM]` or `[Codex YYYY-MM-DD HH:MM]` |
+
+**Convention**: When you update `task.md`, always include the exact datetime and agent name. Never edit the other agent's `.md` file.
+
 ## Scope
 Light-theme assessment platform for graduate recruitment preparation, with employer-specific modules and shared scoring/reporting.
 
