@@ -44,13 +44,15 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - Queues unsynced attempts into a localStorage outbox for background cloud sync retries
   - Score review explanation supports formatted HTML content
   - Interactive review answers are rendered as readable tables (not raw JSON)
-  - Supports unit-based score overrides for partial-credit modules (e.g., SJQ: correct_ratings / total_ratings)
-  - SJQ: renders competency breakdown (based on `question.competency`) and can persist answers keyed by question id via `answersForSave`
+  - Supports unit-based score overrides for partial-credit modules (e.g., SJQ: alignment_points / max_points)
+  - SJQ: renders competency breakdown (weighted by `response.competencies`) and can persist answers keyed by question id via `answersForSave`
 - Session question selection: `src/utils/questionSession.js`
   - Dedupes by normalized question signature before session sampling
 - Question scoring: `src/utils/questionScoring.js`
   - Evaluates standard MCQ + interactive types with tolerance support + SJQ (situational judgement)
   - Supports stacked-bar single-target and multi-bar target answer contracts
+- SJQ analytics: `src/utils/sjqAnalytics.js`
+  - Distance-based scoring (0-3 per response) + competency breakdown + rolling profile aggregation for Dashboard
 - Interactive widgets:
   - `src/components/interactive/SHLDragTableWidget.jsx`
   - `src/components/interactive/SHLResizablePieWidget.jsx` (full pie + draggable handles, min-slice constraint; exact SHL colors #007ab3/#63b209/#f73c33/#f68016)
@@ -65,7 +67,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `src/data/technical-questions.json`
 - `src/data/saville-practice-questions.json`
 - `src/data/nlng-deductive-questions.json` (expanded bank; invalid items are excluded from sessions by runtime guard)
-- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ; 50-question bank with `competency` tags)
+- `src/data/nlng-sjq-questions.json` (SHL Job-Focused Assessment / SJQ; 50-question bank with `competency` tags + response-level `competencies` weights)
 - `src/data/shl-gold-standard.json` (source-of-truth bank for `interactive_numerical` standard difficulty records)
   - Includes extracted eligibility variants `elig_person_b_v2` and `elig_person_d_v2`
 - `src/data/shl-interactive-questions.json` (63 interactive numerical questions across 5 types)
@@ -80,7 +82,7 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - NLNG:
   - SHL Deductive Reasoning: Active (exam + practice, includes SHL real preset 16Q/18m)
   - SHL Interactive Numerical: Active (exam + practice; includes SHL real preset 10Q/18m for exam simulation; difficulty supports `all`/`easy`/`medium`/`hard`)
-  - SHL Job-Focused Assessment (SJQ): Active (timed 10Q/20m, randomized from 50Q bank, partial credit per rating)
+  - SHL Job-Focused Assessment (SJQ): Active (timed 10Q/20m, randomized from 50Q bank, distance-based partial credit + rolling profile panel on Dashboard)
   - SHL Process Monitoring: Active (5-min real-time simulation; 9 event types; 5s response window; `scheduleNextRef` pattern for event chaining after correct actions)
 - Drills:
   - Engineering Math Drills: Active (exam + practice, custom question count/time)

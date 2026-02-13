@@ -1,10 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import AIExplainer from './AIExplainer'
 import AISJQExplainer from './AISJQExplainer'
-import { supabase } from '../lib/supabase'
+import { supabase, hasSupabaseEnv } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
 import { buildQuestionResults, isInteractiveQuestionType } from '../utils/questionScoring'
 import { enqueueAttemptOutbox } from '../utils/attemptOutbox'
+import {
+    buildSJQCompetencyBreakdownFromQuestionResults,
+    resolveSJQRatingLabel,
+    scoreSJQResponseUnits,
+    SJQ_RESPONSE_MAX_UNITS,
+} from '../utils/sjqAnalytics'
 import {
     Trophy,
     Star,
@@ -24,81 +30,6 @@ import {
 const SAVE_FAILSAFE_MS = 15000
 const RECENT_ATTEMPT_CACHE_KEY = 'jobhunt_recent_attempt_fingerprints'
 const RECENT_ATTEMPT_TTL_MS = 120000
-
-const SJQ_COMPETENCIES = [
-    {
-        id: 'safety',
-        label: 'Safety',
-        tip: 'Prioritize risk control: stop unsafe work, follow critical controls, and escalate hazards immediately.',
-    },
-    {
-        id: 'integrity',
-        label: 'Integrity',
-        tip: 'Be transparent under pressure: avoid conflicts of interest, handle data ethically, and report issues early.',
-    },
-    {
-        id: 'quality',
-        label: 'Quality',
-        tip: 'Protect standards: follow checks/SOPs and fix errors before release even when deadlines are tight.',
-    },
-    {
-        id: 'people',
-        label: 'People',
-        tip: 'Communicate respectfully: listen, clarify, and address issues directly without blame or public confrontation.',
-    },
-    {
-        id: 'innovation',
-        label: 'Innovation',
-        tip: 'Improve with evidence: propose small pilots, measure impact, and get buy-in before scaling changes.',
-    },
-    {
-        id: 'delivery',
-        label: 'Delivery',
-        tip: 'Manage priorities early: negotiate scope/timeline, surface blockers, and confirm alignment with stakeholders.',
-    },
-]
-
-function resolveSJQCompetencyMeta(id) {
-    const key = String(id || '').trim().toLowerCase()
-    const match = SJQ_COMPETENCIES.find((item) => item.id === key)
-    return match || SJQ_COMPETENCIES.find((item) => item.id === 'delivery')
-}
-
-function buildSJQCompetencyBreakdown(questionResults) {
-    const totals = SJQ_COMPETENCIES.reduce((accumulator, item) => {
-        accumulator[item.id] = { correct: 0, total: 0 }
-        return accumulator
-    }, {})
-
-    for (const result of questionResults || []) {
-        if (result?.subtest !== 'situational_judgement') continue
-
-        const meta = resolveSJQCompetencyMeta(result?.competency)
-        const responses = Array.isArray(result?.responses) ? result.responses : []
-        const expectedMap = result?.correct_answer || {}
-        const actualMap = result?.answer && typeof result.answer === 'object' ? result.answer : {}
-
-        for (const response of responses) {
-            totals[meta.id].total += 1
-            if (Number(actualMap?.[response.id]) === Number(expectedMap?.[response.id])) {
-                totals[meta.id].correct += 1
-            }
-        }
-    }
-
-    return SJQ_COMPETENCIES.map((item) => {
-        const correct = totals[item.id].correct
-        const total = totals[item.id].total
-        const pct = total > 0 ? Math.round((correct / total) * 100) : 0
-
-        return {
-            ...item,
-            correct,
-            total,
-            pct,
-        }
-    })
-}
 
 function isAbortLikeError(error) {
     const message = typeof error?.message === 'string'
@@ -270,6 +201,18 @@ export default function ScoreReport({
             mode,
             answers: answersForPersistence,
         }
+
+        if (!hasSupabaseEnv) {
+            enqueueAttemptOutbox(payload)
+            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
+            if (isMountedRef.current) {
+                setSavedLocally(true)
+                setSaveError('Supabase is not configured in this environment. Result saved locally.')
+                setSaving(false)
+            }
+            return true
+        }
+
         const attemptFingerprint = stableSerialize(payload)
         const controller = new AbortController()
         let failsafeTimerId = null
@@ -374,7 +317,13 @@ export default function ScoreReport({
 
             console.error('Failed to save results:', err)
             if (isMountedRef.current) {
-                setSaveError(err?.message || 'Unable to save results right now.')
+                const message = String(err?.message || '')
+                const lowered = message.toLowerCase()
+                if (lowered.includes('row level security') || lowered.includes('permission') || lowered.includes('not authorized')) {
+                    setSaveError('Supabase permissions blocked saving this attempt (RLS). Result saved locally and will retry syncing.')
+                } else {
+                    setSaveError(message || 'Unable to save results right now.')
+                }
                 setSavedLocally(true)
             }
             enqueueAttemptOutbox(payload)
@@ -428,7 +377,7 @@ export default function ScoreReport({
     const isSJQAssessment = assessmentType === 'nlng_sjq'
         || questionResults.some((result) => result?.subtest === 'situational_judgement')
     const sjqCompetencyBreakdown = isSJQAssessment
-        ? buildSJQCompetencyBreakdown(questionResults)
+        ? buildSJQCompetencyBreakdownFromQuestionResults(questionResults)
         : null
 
     function resolveChoiceLabel(id, options) {
@@ -437,13 +386,11 @@ export default function ScoreReport({
         return match?.label || String(id)
     }
 
-    function resolveSJQRatingLabel(value) {
-        const rating = Number(value)
-        if (rating === 1) return 'Very Ineffective'
-        if (rating === 2) return 'Ineffective'
-        if (rating === 3) return 'Effective'
-        if (rating === 4) return 'Very Effective'
-        return '--'
+    function formatSJQUnits(value) {
+        const num = Number(value)
+        if (!Number.isFinite(num)) return '0'
+        const fixed = num.toFixed(1)
+        return fixed.endsWith('.0') ? fixed.slice(0, -2) : fixed
     }
 
     function renderSJQReview(questionResult) {
@@ -459,17 +406,23 @@ export default function ScoreReport({
                             <th>Response</th>
                             <th>Your Rating</th>
                             <th>Expected</th>
+                            <th>Score</th>
                         </tr>
                     </thead>
                     <tbody>
                         {responses.map((r) => {
                             const your = resolveSJQRatingLabel(actualMap?.[r.id])
                             const exp = resolveSJQRatingLabel(expectedMap?.[r.id])
-                            const ok = Number(actualMap?.[r.id]) === Number(expectedMap?.[r.id])
+                            const units = scoreSJQResponseUnits(expectedMap?.[r.id], actualMap?.[r.id])
+                            const rowTone = units === SJQ_RESPONSE_MAX_UNITS
+                                ? 'score-review__interactive-row--ok'
+                                : units >= Math.ceil(SJQ_RESPONSE_MAX_UNITS * 0.6)
+                                    ? 'score-review__interactive-row--mid'
+                                    : 'score-review__interactive-row--bad'
                             return (
                                 <tr
                                     key={r.id}
-                                    className={ok ? 'score-review__interactive-row--ok' : 'score-review__interactive-row--bad'}
+                                    className={rowTone}
                                 >
                                     <td>
                                         <strong className="mr-2">{String(r.id).toUpperCase()}.</strong>
@@ -477,6 +430,7 @@ export default function ScoreReport({
                                     </td>
                                     <td>{your}</td>
                                     <td>{exp}</td>
+                                    <td>{units}/{SJQ_RESPONSE_MAX_UNITS}</td>
                                 </tr>
                             )
                         })}
@@ -856,7 +810,7 @@ export default function ScoreReport({
                                         <div className="score-report__breakdown-value">
                                             {item.pct}%
                                             <span className="score-report__breakdown-sub">
-                                                {item.correct}/{item.total}
+                                                {formatSJQUnits(item.earned)}/{formatSJQUnits(item.total)}
                                             </span>
                                         </div>
                                     </div>

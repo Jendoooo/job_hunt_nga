@@ -243,10 +243,11 @@ Date: 2026-02-12
 - [x] `npm run build` → 0 errors
 - [x] Added SHL Job-Focused Assessment (SJQ) module (`/test/nlng-sjq`):
   - timed: 10 questions / 20 minutes (randomized from SJQ bank)
-  - per-response rating scale (1-4) with partial credit (stored as correct_ratings / total_ratings)
+  - per-response rating scale (1-4) with distance-based partial credit (3 points per response; 0-3 by distance from expected)
   - ScoreReport override support for unit-based scoring + SJQ review table + DeepSeek tutor explainer
-  - Added competency tags to SJQ bank + competency breakdown panel on results screen with coaching tips per weak area
+  - Added competency tags to SJQ bank + response-level competency weights + competency breakdown panel on results screen with coaching tips per weak area
   - SJQ attempts now persist answers keyed by question id (e.g. `sjq_014: { a: 2, b: 4, c: 1, d: 3 }`) for profile-building
+  - Dashboard: added rolling SJQ profile panel (last 10 attempts)
   - dashboard NLNG card added + route wired in `src/App.jsx`
 - [x] Expanded `src/data/nlng-sjq-questions.json` bank to 50 questions (session still runs 10Q / 20m)
 

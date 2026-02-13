@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
-import { supabase } from '../lib/supabase'
+import { supabase, hasSupabaseEnv } from '../lib/supabase'
 import { generateQuestions } from '../services/deepseek'
 import { readAttemptOutbox, removeAttemptOutbox } from '../utils/attemptOutbox'
+import sjqQuestions from '../data/nlng-sjq-questions.json'
+import { buildSJQRollingProfileFromAttempts } from '../utils/sjqAnalytics'
 import {
     Target,
     LogOut,
@@ -127,9 +129,11 @@ export default function Dashboard() {
     const [averageScore, setAverageScore] = useState(null)
     const [practiceSessions, setPracticeSessions] = useState(0)
     const [pendingSyncCount, setPendingSyncCount] = useState(0)
+    const [sjqRollingProfile, setSjqRollingProfile] = useState(null)
 
     const flushAttemptOutbox = useCallback(async (signal) => {
         if (!user) return
+        if (!hasSupabaseEnv) return
 
         const pending = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
         if (pending.length === 0) {
@@ -200,6 +204,12 @@ export default function Dashboard() {
         setLoadingAttempts(true)
         setAttemptsError('')
 
+        if (!hasSupabaseEnv) {
+            setAttemptsError('Supabase is not configured in this environment.')
+            setLoadingAttempts(false)
+            return
+        }
+
         try {
             let query = supabase
                 .from('test_attempts')
@@ -225,11 +235,16 @@ export default function Dashboard() {
                 )
                 : null
 
+            const sjqBank = Array.isArray(sjqQuestions) ? sjqQuestions : []
+            const sjqBankById = new Map(sjqBank.map((q) => [q.id, q]))
+            const sjqProfile = buildSJQRollingProfileFromAttempts(attempts, sjqBankById, { maxAttempts: 10 })
+
             setRecentAttempts(attempts.slice(0, 8))
             setTestsTaken(attempts.length)
             setPracticeSessions(attempts.filter((attempt) => attempt.mode === 'practice').length)
             setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
             setAverageScore(averagePercent)
+            setSjqRollingProfile(sjqProfile)
         } catch (err) {
             if (isAbortLikeError(err) || signal?.aborted) {
                 return
@@ -657,6 +672,40 @@ export default function Dashboard() {
                                 </div>
                             )}
                         </section>
+
+                        {sjqRollingProfile?.attemptsUsed > 0 && (
+                            <section className="score-report__breakdown sjq-profile-panel">
+                                <header className="score-report__breakdown-head">
+                                    <h3>SJQ Behavioral Profile</h3>
+                                    <p>
+                                        Rolling average across last {sjqRollingProfile.attemptsUsed} attempt{sjqRollingProfile.attemptsUsed === 1 ? '' : 's'}.
+                                    </p>
+                                </header>
+
+                                <div className="score-report__breakdown-grid">
+                                    {sjqRollingProfile.breakdown.map((item) => {
+                                        if (item.total <= 0) return null
+                                        const tone = item.pct >= 80 ? 'good' : item.pct >= 60 ? 'mid' : 'bad'
+                                        return (
+                                            <div key={item.id} className="score-report__breakdown-card">
+                                                <div className="score-report__breakdown-top">
+                                                    <div className="score-report__breakdown-label">{item.label}</div>
+                                                    <div className="score-report__breakdown-value">
+                                                        {item.pct}%
+                                                    </div>
+                                                </div>
+                                                <div className="score-report__breakdown-bar" aria-hidden="true">
+                                                    <span
+                                                        className={`score-report__breakdown-fill score-report__breakdown-fill--${tone}`}
+                                                        style={{ width: `${Math.max(0, Math.min(100, item.pct))}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </section>
+                        )}
 
                         <section className="activity-panel">
                             <header>

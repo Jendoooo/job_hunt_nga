@@ -1,3 +1,5 @@
+import { scoreSJQQuestionUnits } from './sjqAnalytics'
+
 function normalizeForComparison(value) {
     if (value === null || typeof value !== 'object') {
         return value
@@ -252,11 +254,8 @@ export function evaluateQuestionAnswer(question, answer) {
 }
 
 export function scoreSJQQuestion(question, answer) {
-    if (!answer || typeof answer !== 'object') return 0
-    const responses = question?.responses || []
-    const correctMap = question?.correct_answer || {}
-    const correct = responses.filter((r) => Number(answer[r.id]) === Number(correctMap[r.id])).length
-    return responses.length > 0 ? (correct / responses.length) * 100 : 0
+    const { earned, total } = scoreSJQQuestionUnits(question, answer)
+    return total > 0 ? (earned / total) * 100 : 0
 }
 
 export function buildQuestionResults(questions, answers) {

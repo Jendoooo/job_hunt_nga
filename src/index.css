@@ -2125,6 +2125,10 @@ select:focus-visible {
   gap: 0.55rem;
 }
 
+.sjq-profile-panel .score-report__breakdown-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .score-report__breakdown-card {
   border-radius: var(--radius-md);
   border: 1px solid var(--line);
@@ -2370,6 +2374,10 @@ select:focus-visible {
 
 .score-review__interactive-row--bad td {
   background: #fef2f2;
+}
+
+.score-review__interactive-row--mid td {
+  background: #fffbeb;
 }
 
 .score-review__sjq-prompt {

@@ -5,6 +5,7 @@ import Timer from '../components/Timer'
 import ScoreReport from '../components/ScoreReport'
 import sjqQuestions from '../data/nlng-sjq-questions.json'
 import { shuffleQuestions } from '../utils/questionSession'
+import { scoreSJQQuestionUnits } from '../utils/sjqAnalytics'
 
 const TIME_LIMIT_SECONDS = 20 * 60
 const SESSION_QUESTION_COUNT = 10
@@ -16,26 +17,17 @@ const RATING_SCALE = [
     { value: 4, label: 'Very Effective' },
 ]
 
-function countCorrectRatings(questions, answers) {
-    let correct = 0
+function scoreSessionUnits(questions, answers) {
+    let earned = 0
     let total = 0
 
     for (let i = 0; i < questions.length; i += 1) {
-        const q = questions[i]
-        const responseDefs = Array.isArray(q?.responses) ? q.responses : []
-        const answerMap = answers?.[i]
-        const correctMap = q?.correct_answer || {}
-
-        for (const r of responseDefs) {
-            total += 1
-            if (!answerMap || typeof answerMap !== 'object') continue
-            if (Number(answerMap[r.id]) === Number(correctMap[r.id])) {
-                correct += 1
-            }
-        }
+        const { earned: qEarned, total: qTotal } = scoreSJQQuestionUnits(questions[i], answers?.[i])
+        earned += qEarned
+        total += qTotal
     }
 
-    return { correct, total }
+    return { earned, total }
 }
 
 export default function NLNGSJQTest() {
@@ -124,7 +116,7 @@ export default function NLNGSJQTest() {
     }
 
     if (stage === 'finish') {
-        const { correct, total } = countCorrectRatings(activeQuestions, answers)
+        const { earned, total } = scoreSessionUnits(activeQuestions, answers)
         const answersByQuestionId = activeQuestions.reduce((accumulator, q, index) => {
             const value = answers?.[index]
             accumulator[q.id] = value && typeof value === 'object' ? value : {}
@@ -149,9 +141,9 @@ export default function NLNGSJQTest() {
                     assessmentType="nlng_sjq"
                     moduleName={`SHL Job-Focused Assessment (${activeQuestions.length}Q / 20m)`}
                     mode="exam"
-                    scoreCorrectUnits={correct}
+                    scoreCorrectUnits={earned}
                     scoreTotalUnits={total}
-                    scoreUnitLabel="correct ratings"
+                    scoreUnitLabel="alignment points"
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

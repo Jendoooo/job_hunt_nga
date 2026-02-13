@@ -326,17 +326,23 @@
 - `src/data/nlng-sjq-questions.json`
   - Added 50 SJQ questions (expanded bank including safety, ethics, stakeholder pressure, community relations, and professionalism scenarios).
   - Tagged each question with a primary `competency` (safety, integrity, quality, people, innovation, delivery).
+  - Added response-level competency weights (`response.competencies: [{ id, weight }]`) for profile scoring.
 - `src/pages/NLNGSJQTest.jsx`
   - New SJQ runner (setup -> test -> results) with 20-minute timer and per-response rating UI.
   - Session now runs 10 randomized questions per attempt (from the 50-question bank).
   - SJQ attempts now persist answers keyed by question id for long-term profile building.
+  - Updated scoring to distance-based partial credit (3 points per response; 0-3 by distance from expected rating).
 - `src/utils/questionScoring.js`
-  - Added `subtest === 'situational_judgement'` correctness support + `scoreSJQQuestion()` utility.
+  - Added `subtest === 'situational_judgement'` correctness support + `scoreSJQQuestion()` utility (distance-based).
+- `src/utils/sjqAnalytics.js`
+  - Centralized SJQ scoring + competency analytics (distance scoring, breakdown builders, rolling profile).
+- `scripts/tag_sjq_response_competencies.cjs`
+  - Script to infer and stamp response-level competency weights for the SJQ bank.
 - `src/components/ScoreReport.jsx`
   - Added unit-based score overrides (save + display) for partial-credit modules.
-  - Added SJQ review table (response text + your rating vs expected, green/red rows).
+  - Added SJQ review table (response text + your rating vs expected, green/amber/red rows + per-response score).
   - Added DeepSeek SJQ explainer slot during review.
-  - Added competency breakdown panel on results screen + one-sentence coaching tips for weak competencies.
+  - Added competency breakdown panel on results screen + one-sentence coaching tips for weak competencies (weighted by response competency mapping).
 - `src/services/deepseek.js`
   - Added `explainSJQAttempt()` prompt for SJQ coaching.
 - `src/components/AISJQExplainer.jsx`
@@ -347,6 +353,7 @@
   - Added protected route: `/test/nlng-sjq`.
 - `src/pages/Dashboard.jsx`
   - Added NLNG module card: "SHL Job-Focused Assessment" linking to `/test/nlng-sjq`.
+  - Added rolling SJQ profile panel (last 10 SJQ attempts).
 
 ## Verification
 - `npm run lint`: PASS

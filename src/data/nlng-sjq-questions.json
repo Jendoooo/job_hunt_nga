@@ -8,19 +8,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Tell your manager you cannot do the urgent task until your project is complete."
+        "text": "Tell your manager you cannot do the urgent task until your project is complete.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Ask your manager to help you prioritise between the two tasks."
+        "text": "Ask your manager to help you prioritise between the two tasks.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Work overtime to complete both tasks without telling anyone you are under pressure."
+        "text": "Work overtime to complete both tasks without telling anyone you are under pressure.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Negotiate a short extension on your original deadline to accommodate the urgent task."
+        "text": "Negotiate a short extension on your original deadline to accommodate the urgent task.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -40,19 +72,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Speak to the teammate privately to understand what is blocking them and agree a plan to get back on track."
+        "text": "Speak to the teammate privately to understand what is blocking them and agree a plan to get back on track.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Raise the issue with your manager, sharing specific examples and suggesting ways the team can support the teammate."
+        "text": "Raise the issue with your manager, sharing specific examples and suggesting ways the team can support the teammate.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Quietly complete the teammate’s work yourself to keep the project moving, without involving anyone."
+        "text": "Quietly complete the teammate’s work yourself to keep the project moving, without involving anyone.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Avoid addressing it directly and hope the teammate improves over time."
+        "text": "Avoid addressing it directly and hope the teammate improves over time.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "innovation",
+            "weight": 0.33
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -72,19 +132,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Thank them for the feedback and ask for specific examples of what was unclear so you can improve."
+        "text": "Thank them for the feedback and ask for specific examples of what was unclear so you can improve.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Defend your work and explain that the stakeholders should have understood the details."
+        "text": "Defend your work and explain that the stakeholders should have understood the details.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ignore the feedback and continue using the same approach in future presentations."
+        "text": "Ignore the feedback and continue using the same approach in future presentations.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ask a trusted colleague to review your next presentation in advance and give candid input."
+        "text": "Ask a trusted colleague to review your next presentation in advance and give candid input.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -104,19 +200,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Flag the error immediately to the project lead, explain the potential impact, and suggest a fix."
+        "text": "Flag the error immediately to the project lead, explain the potential impact, and suggest a fix.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Make a quick change yourself and push it through without telling anyone to avoid delays."
+        "text": "Make a quick change yourself and push it through without telling anyone to avoid delays.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Do nothing because you don’t want to be responsible for delaying the launch."
+        "text": "Do nothing because you don’t want to be responsible for delaying the launch.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Recommend pausing go-live until the error is reviewed and a decision is made by the accountable owner."
+        "text": "Recommend pausing go-live until the error is reviewed and a decision is made by the accountable owner.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -136,19 +256,59 @@
     "responses": [
       {
         "id": "a",
-        "text": "Request a short 1:1 with your manager to share your concerns with evidence and propose mitigations or an alternative."
+        "text": "Request a short 1:1 with your manager to share your concerns with evidence and propose mitigations or an alternative.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Support the decision publicly, but document the key risks and ask for agreement on mitigation actions."
+        "text": "Support the decision publicly, but document the key risks and ask for agreement on mitigation actions.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "safety",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Challenge your manager’s decision strongly in a team meeting so everyone knows you disagree."
+        "text": "Challenge your manager’s decision strongly in a team meeting so everyone knows you disagree.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.75
+          },
+          {
+            "id": "quality",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Complain to teammates about the decision and refuse to contribute to the work."
+        "text": "Complain to teammates about the decision and refuse to contribute to the work.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -168,19 +328,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Acknowledge the issue, apologise for the experience, and take ownership to coordinate a resolution with the responsible team."
+        "text": "Acknowledge the issue, apologise for the experience, and take ownership to coordinate a resolution with the responsible team.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Explain that it is not your fault and direct the customer to complain to the other team."
+        "text": "Explain that it is not your fault and direct the customer to complain to the other team.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Wait to respond until you have every detail, even if that takes a full day."
+        "text": "Wait to respond until you have every detail, even if that takes a full day.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Offer a clear next step and timeline now, and commit to providing updates as you gather more information."
+        "text": "Offer a clear next step and timeline now, and commit to providing updates as you gather more information.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -200,19 +388,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Inform your manager, clarify what must be covered urgently, and communicate any impact to stakeholders early."
+        "text": "Inform your manager, clarify what must be covered urgently, and communicate any impact to stakeholders early.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Ask a teammate to share the workload with you and document what you do so the colleague can pick up later."
+        "text": "Ask a teammate to share the workload with you and document what you do so the colleague can pick up later.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Take on all the tasks yourself and work overtime without telling anyone you are covering."
+        "text": "Take on all the tasks yourself and work overtime without telling anyone you are covering.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Leave the tasks until the colleague returns because they are not assigned to you."
+        "text": "Leave the tasks until the colleague returns because they are not assigned to you.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -232,19 +456,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Prepare a brief improvement proposal with expected benefits and suggest a small pilot to test it."
+        "text": "Prepare a brief improvement proposal with expected benefits and suggest a small pilot to test it.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 0.8
+          },
+          {
+            "id": "quality",
+            "weight": 0.2
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Implement the change immediately on your own without informing the team, to prove it works."
+        "text": "Implement the change immediately on your own without informing the team, to prove it works.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Mention the idea casually once and then drop it if no one responds right away."
+        "text": "Mention the idea casually once and then drop it if no one responds right away.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Collect a few examples of errors and ask the team for input before proposing the improvement."
+        "text": "Collect a few examples of errors and ask the team for input before proposing the improvement.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -264,19 +524,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Explain your current skill level and propose a plan: quick learning, a mentor check, and realistic milestones."
+        "text": "Explain your current skill level and propose a plan: quick learning, a mentor check, and realistic milestones.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Accept the task and start learning immediately, asking for help only if you get stuck."
+        "text": "Accept the task and start learning immediately, asking for help only if you get stuck.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Decline the task because it is outside your role and you do not want to risk failure."
+        "text": "Decline the task because it is outside your role and you do not want to risk failure.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Pretend you know the tool and deliver whatever you can, even if the output is unreliable."
+        "text": "Pretend you know the tool and deliver whatever you can, even if the output is unreliable.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -296,19 +592,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Bring both managers into a short alignment conversation to agree the priority and timeline."
+        "text": "Bring both managers into a short alignment conversation to agree the priority and timeline.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.75
+          },
+          {
+            "id": "people",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Choose the manager you work with most and ignore the other instruction."
+        "text": "Choose the manager you work with most and ignore the other instruction.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Try to do both tasks anyway, even if it means rushing and risking mistakes."
+        "text": "Try to do both tasks anyway, even if it means rushing and risking mistakes.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Explain your capacity constraints in writing and ask for confirmation of which task should take priority."
+        "text": "Explain your capacity constraints in writing and ask for confirmation of which task should take priority.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -328,19 +660,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Immediately intervene to stop the work and respectfully remind the contractor of the safety protocol."
+        "text": "Immediately intervene to stop the work and respectfully remind the contractor of the safety protocol.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.8
+          },
+          {
+            "id": "people",
+            "weight": 0.2
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Wait until the job is finished to avoid conflict, then report the incident to your supervisor."
+        "text": "Wait until the job is finished to avoid conflict, then report the incident to your supervisor.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "integrity",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ignore it this time since the contractor is senior and the project is already delayed."
+        "text": "Ignore it this time since the contractor is senior and the project is already delayed.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Take a photo of the violation and anonymously report it to the safety department later."
+        "text": "Take a photo of the violation and anonymously report it to the safety department later.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -360,19 +728,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Call the colleague immediately to ask for clarification, even though it is after hours."
+        "text": "Call the colleague immediately to ask for clarification, even though it is after hours.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Fix the error as best as you can based on your own analysis and leave a note for the colleague."
+        "text": "Fix the error as best as you can based on your own analysis and leave a note for the colleague.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Submit the report with the error but highlight it in the cover email so management is aware."
+        "text": "Submit the report with the error but highlight it in the cover email so management is aware.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Leave the section as is, reasoning that it is not your responsibility to correct others' work."
+        "text": "Leave the section as is, reasoning that it is not your responsibility to correct others' work.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -392,19 +792,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Listen to their concerns with empathy, take their contact details, and promise to have the Community Relations team contact them."
+        "text": "Listen to their concerns with empathy, take their contact details, and promise to have the Community Relations team contact them.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Politely explain that this is not your department and advise them to call the official helpline."
+        "text": "Politely explain that this is not your department and advise them to call the official helpline.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Tell them you can't help and walk away to avoid getting involved in a sensitive issue."
+        "text": "Tell them you can't help and walk away to avoid getting involved in a sensitive issue.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Attempt to solve the noise issue yourself by calling the plant control room immediately."
+        "text": "Attempt to solve the noise issue yourself by calling the plant control room immediately.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -424,19 +852,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Accept the gift but declare it to your manager immediately to ensure transparency."
+        "text": "Accept the gift but declare it to your manager immediately to ensure transparency.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.8
+          },
+          {
+            "id": "people",
+            "weight": 0.2
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Politely decline the gift, explaining that company policy prohibits accepting gifts during a tender process."
+        "text": "Politely decline the gift, explaining that company policy prohibits accepting gifts during a tender process.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Accept the gift to avoid offending the vendor, but donate it to charity."
+        "text": "Accept the gift to avoid offending the vendor, but donate it to charity.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Refuse the gift and immediately report the vendor to the ethics committee for attempted bribery."
+        "text": "Refuse the gift and immediately report the vendor to the ethics committee for attempted bribery.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.85
+          },
+          {
+            "id": "delivery",
+            "weight": 0.15
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -456,19 +916,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Stay silent to avoid challenging the senior engineer's authority."
+        "text": "Stay silent to avoid challenging the senior engineer's authority.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Speak up and ask the quiet team member to elaborate on their idea to ensure it is fully understood."
+        "text": "Speak up and ask the quiet team member to elaborate on their idea to ensure it is fully understood.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "innovation",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Privately ask the quiet team member later what their idea was."
+        "text": "Privately ask the quiet team member later what their idea was.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.75
+          },
+          {
+            "id": "innovation",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Openly criticize the senior engineer for interrupting and dismissing the idea."
+        "text": "Openly criticize the senior engineer for interrupting and dismissing the idea.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -488,19 +984,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Develop a data-driven proposal showing the benefits and present it to the team to get their input."
+        "text": "Develop a data-driven proposal showing the benefits and present it to the team to get their input.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 0.75
+          },
+          {
+            "id": "quality",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Implement the change immediately as it is clearly more efficient and saves money."
+        "text": "Implement the change immediately as it is clearly more efficient and saves money.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Discuss the idea with your manager first to get alignment before approaching the wider team."
+        "text": "Discuss the idea with your manager first to get alignment before approaching the wider team.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Decide not to pursue it to avoid causing friction with experienced colleagues."
+        "text": "Decide not to pursue it to avoid causing friction with experienced colleagues.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -520,19 +1052,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Submit the report on time with the missing section marked as 'data unavailable'."
+        "text": "Submit the report on time with the missing section marked as 'data unavailable'.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Inform your stakeholder of the delay, explain the dependency, and provide a new estimated delivery time."
+        "text": "Inform your stakeholder of the delay, explain the dependency, and provide a new estimated delivery time.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Keep pressuring the other department to hurry up, emphasizing the urgency of your deadline."
+        "text": "Keep pressuring the other department to hurry up, emphasizing the urgency of your deadline.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Wait until the data arrives to submit the report, even if it is a few days late."
+        "text": "Wait until the data arrives to submit the report, even if it is a few days late.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -552,19 +1116,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Ignore the messages and focus on the presentation."
+        "text": "Ignore the messages and focus on the presentation.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Send a private message to the colleagues asking them to stop as it is unprofessional."
+        "text": "Send a private message to the colleagues asking them to stop as it is unprofessional.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Join in with a mild joke to build rapport with the colleagues."
+        "text": "Join in with a mild joke to build rapport with the colleagues.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Report the colleagues to HR immediately after the meeting."
+        "text": "Report the colleagues to HR immediately after the meeting.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -584,19 +1172,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Send a polite email acknowledging their schedule and proposing a shorter, more focused agenda for the next slot."
+        "text": "Send a polite email acknowledging their schedule and proposing a shorter, more focused agenda for the next slot.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Stop scheduling meetings and wait for them to contact you when they are free."
+        "text": "Stop scheduling meetings and wait for them to contact you when they are free.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Request a new mentor from HR, citing the current mentor's lack of availability."
+        "text": "Request a new mentor from HR, citing the current mentor's lack of availability.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Show up at their office to ensure you get some face time."
+        "text": "Show up at their office to ensure you get some face time.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -616,19 +1236,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Allow them to skip documentation so they can focus on high-quality technical output."
+        "text": "Allow them to skip documentation so they can focus on high-quality technical output.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Explain the long-term risk to the company and insist that documentation is a non-negotiable part of the deliverable."
+        "text": "Explain the long-term risk to the company and insist that documentation is a non-negotiable part of the deliverable.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.75
+          },
+          {
+            "id": "safety",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Assign another team member to document their work for them."
+        "text": "Assign another team member to document their work for them.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Compromise by asking for minimal documentation now and promising to return to it later."
+        "text": "Compromise by asking for minimal documentation now and promising to return to it later.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -648,19 +1300,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Immediately stop the work and insist they re-clip before moving, reminding them of the 'Goal Zero' safety policy."
+        "text": "Immediately stop the work and insist they re-clip before moving, reminding them of the 'Goal Zero' safety policy.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.8
+          },
+          {
+            "id": "integrity",
+            "weight": 0.2
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Allow them to finish this specific movement since they are experienced, but warn them to clip in afterwards."
+        "text": "Allow them to finish this specific movement since they are experienced, but warn them to clip in afterwards.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Report the unsafe act to the site safety officer after the shift ends."
+        "text": "Report the unsafe act to the site safety officer after the shift ends.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Trust their judgment as an experienced contractor and focus on your own tasks."
+        "text": "Trust their judgment as an experienced contractor and focus on your own tasks.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -680,19 +1360,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Remain calm, explain you cannot hold a meeting now, but take their contact details and promise the Community Liaison Officer will call them."
+        "text": "Remain calm, explain you cannot hold a meeting now, but take their contact details and promise the Community Liaison Officer will call them.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Call site security to forcibly remove them from the entrance."
+        "text": "Call site security to forcibly remove them from the entrance.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Agree to the meeting immediately to de-escalate the tension, even though it is not your role."
+        "text": "Agree to the meeting immediately to de-escalate the tension, even though it is not your role.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ignore them and try to drive around to enter the site through a back gate."
+        "text": "Ignore them and try to drive around to enter the site through a back gate.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -712,19 +1416,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Flag the error to your manager and Finance immediately, and propose a correction process."
+        "text": "Flag the error to your manager and Finance immediately, and propose a correction process.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "integrity",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Fix it silently in the next month's report to balance the books."
+        "text": "Fix it silently in the next month's report to balance the books.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ignore it since the amount is immaterial and the report is already approved."
+        "text": "Ignore it since the amount is immaterial and the report is already approved.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ask a colleague if they think it is worth reporting before deciding."
+        "text": "Ask a colleague if they think it is worth reporting before deciding.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -744,19 +1480,59 @@
     "responses": [
       {
         "id": "a",
-        "text": "Explain your current deadline constraints and ask them to email your manager to agree on the priority change."
+        "text": "Explain your current deadline constraints and ask them to email your manager to agree on the priority change.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.75
+          },
+          {
+            "id": "people",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Immediately drop your work to help them since they are a senior manager."
+        "text": "Immediately drop your work to help them since they are a senior manager.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Refuse the request stating you only take instructions from your direct manager."
+        "text": "Refuse the request stating you only take instructions from your direct manager.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Try to do both tasks by working late, without informing anyone of the conflict."
+        "text": "Try to do both tasks by working late, without informing anyone of the conflict.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -776,19 +1552,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Wait for a pause, then share the history of the previous failure constructively to help refine the new idea."
+        "text": "Wait for a pause, then share the history of the previous failure constructively to help refine the new idea.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "innovation",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Interrupt immediately to say it won't work because it failed before."
+        "text": "Interrupt immediately to say it won't work because it failed before.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Let them proceed and fail so they learn the lesson themselves."
+        "text": "Let them proceed and fail so they learn the lesson themselves.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Speak to the team lead privately after the meeting to express your concerns."
+        "text": "Speak to the team lead privately after the meeting to express your concerns.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -808,19 +1612,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Remind them politely that company resources are for business use only."
+        "text": "Remind them politely that company resources are for business use only.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Report them to HR immediately for theft."
+        "text": "Report them to HR immediately for theft.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ignore it as it is just stationery and not worth the conflict."
+        "text": "Ignore it as it is just stationery and not worth the conflict.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Make a joke about it but do not directly challenge them."
+        "text": "Make a joke about it but do not directly challenge them.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -840,19 +1668,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Decline the offer explaining that NLNG pays for its own business travel to maintain independence."
+        "text": "Decline the offer explaining that NLNG pays for its own business travel to maintain independence.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Accept the offer to save the company money."
+        "text": "Accept the offer to save the company money.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ask your manager if you can accept it this one time."
+        "text": "Ask your manager if you can accept it this one time.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Accept the travel but insist on paying for your own hotel."
+        "text": "Accept the travel but insist on paying for your own hotel.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -872,19 +1728,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Stay calm during the meeting, then speak to them privately to correct the facts and ask for professional respect."
+        "text": "Stay calm during the meeting, then speak to them privately to correct the facts and ask for professional respect.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.8
+          },
+          {
+            "id": "quality",
+            "weight": 0.2
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Defend yourself loudly in the meeting to ensure everyone knows it wasn't you."
+        "text": "Defend yourself loudly in the meeting to ensure everyone knows it wasn't you.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ignore the comment and complain to your manager later."
+        "text": "Ignore the comment and complain to your manager later.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Apologize to keep the peace, even though you were not at fault."
+        "text": "Apologize to keep the peace, even though you were not at fault.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -904,19 +1788,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Report it immediately to the control room and stay nearby to warn others until help arrives."
+        "text": "Report it immediately to the control room and stay nearby to warn others until help arrives.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Assume the area operator knows about it and continue to your workstation."
+        "text": "Assume the area operator knows about it and continue to your workstation.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Mention it to a colleague later in the break room."
+        "text": "Mention it to a colleague later in the break room.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Try to fix the leak yourself even though you don't know the equipment."
+        "text": "Try to fix the leak yourself even though you don't know the equipment.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -936,19 +1852,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Ask your colleagues if there is anything you can do to support them before you leave."
+        "text": "Ask your colleagues if there is anything you can do to support them before you leave.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Go home early since you have completed your assigned work."
+        "text": "Go home early since you have completed your assigned work.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Use the time to organize your personal files until 5pm."
+        "text": "Use the time to organize your personal files until 5pm.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ask your manager for more work for yourself."
+        "text": "Ask your manager for more work for yourself.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -968,19 +1912,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Delete the email immediately and inform the supplier of their error without reading the attachment."
+        "text": "Delete the email immediately and inform the supplier of their error without reading the attachment.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Forward the email to your manager to see if we can use the information."
+        "text": "Forward the email to your manager to see if we can use the information.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Read the information to gain market intelligence but do not tell anyone."
+        "text": "Read the information to gain market intelligence but do not tell anyone.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Reply to the supplier pointing out their mistake and keep a copy 'just in case'."
+        "text": "Reply to the supplier pointing out their mistake and keep a copy 'just in case'.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1000,19 +1976,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Pause the meeting and politely ask if they have a question or contribution to share with the group."
+        "text": "Pause the meeting and politely ask if they have a question or contribution to share with the group.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Continue speaking louder to drown them out."
+        "text": "Continue speaking louder to drown them out.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Stop the meeting and shout at them to be quiet."
+        "text": "Stop the meeting and shout at them to be quiet.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ignore them and hope they stop eventually."
+        "text": "Ignore them and hope they stop eventually.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1032,19 +2032,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Schedule a specific time each day to answer their questions so you can both focus in between."
+        "text": "Schedule a specific time each day to answer their questions so you can both focus in between.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Tell them to figure it out themselves as you are too busy."
+        "text": "Tell them to figure it out themselves as you are too busy.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Do the work for them to save time."
+        "text": "Do the work for them to save time.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Direct them to the user manual and ask them not to disturb you."
+        "text": "Direct them to the user manual and ask them not to disturb you.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1064,19 +2096,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Turn it in to Security immediately and log the item."
+        "text": "Turn it in to Security immediately and log the item.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Leave it there so the owner can find it when they come back."
+        "text": "Leave it there so the owner can find it when they come back.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Take the cash for safe keeping and leave the wallet."
+        "text": "Take the cash for safe keeping and leave the wallet.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Try to find the person yourself by walking around the site."
+        "text": "Try to find the person yourself by walking around the site.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1096,19 +2152,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Respectfully refuse, explaining that the quality check is a mandatory compliance requirement."
+        "text": "Respectfully refuse, explaining that the quality check is a mandatory compliance requirement.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.8
+          },
+          {
+            "id": "people",
+            "weight": 0.2
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Do as they ask since they are the manager and took responsibility."
+        "text": "Do as they ask since they are the manager and took responsibility.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Perform a quicker, less thorough check to compromise."
+        "text": "Perform a quicker, less thorough check to compromise.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Report the manager to their superior immediately."
+        "text": "Report the manager to their superior immediately.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1128,19 +2220,59 @@
     "responses": [
       {
         "id": "a",
-        "text": "Pause, acknowledge the error, correct it verbally, and promise to send an updated deck."
+        "text": "Pause, acknowledge the error, correct it verbally, and promise to send an updated deck.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "integrity",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Skip the slide quickly and hope no one notices."
+        "text": "Skip the slide quickly and hope no one notices.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "quality",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Blame the data analyst who prepared the slide."
+        "text": "Blame the data analyst who prepared the slide.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "integrity",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Pretend the data is correct and explain it away."
+        "text": "Pretend the data is correct and explain it away.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.67
+          },
+          {
+            "id": "integrity",
+            "weight": 0.33
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1160,19 +2292,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Speak to them privately to understand why and explain the impact on the team."
+        "text": "Speak to them privately to understand why and explain the impact on the team.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Start the meeting on time and refuse to repeat information when they arrive."
+        "text": "Start the meeting on time and refuse to repeat information when they arrive.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Make a sarcastic comment about their 'time zone' when they enter."
+        "text": "Make a sarcastic comment about their 'time zone' when they enter.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Report them to HR for tardiness."
+        "text": "Report them to HR for tardiness.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1192,19 +2356,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Speak up immediately and say that such comments are not appropriate in the workplace."
+        "text": "Speak up immediately and say that such comments are not appropriate in the workplace.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Walk away and ignore it."
+        "text": "Walk away and ignore it.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Laugh along so you don't seem like an outcast."
+        "text": "Laugh along so you don't seem like an outcast.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Wait until later to tell the person privately that their joke was offensive."
+        "text": "Wait until later to tell the person privately that their joke was offensive.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1224,19 +2412,59 @@
     "responses": [
       {
         "id": "a",
-        "text": "Create a small proof-of-concept in your own time to demonstrate the value with data."
+        "text": "Create a small proof-of-concept in your own time to demonstrate the value with data.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 0.67
+          },
+          {
+            "id": "quality",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Do it your way anyway and hide it from your manager."
+        "text": "Do it your way anyway and hide it from your manager.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Accept the manager's decision and drop the idea."
+        "text": "Accept the manager's decision and drop the idea.",
+        "competencies": [
+          {
+            "id": "innovation",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Complain to your manager's boss about their lack of vision."
+        "text": "Complain to your manager's boss about their lack of vision.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1256,19 +2484,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Commit to 2 days but explain the risks to quality and what might be de-scoped."
+        "text": "Commit to 2 days but explain the risks to quality and what might be de-scoped.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.75
+          },
+          {
+            "id": "safety",
+            "weight": 0.25
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Agree to 2 days and just work faster, hoping for the best."
+        "text": "Agree to 2 days and just work faster, hoping for the best.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Refuse and insist on 3 days without explanation."
+        "text": "Refuse and insist on 3 days without explanation.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Say 3 days is the minimum and you cannot do it otherwise."
+        "text": "Say 3 days is the minimum and you cannot do it otherwise.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1288,19 +2544,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Listen to their frustration, apologize for the delay, and provide a confirmed new delivery time."
+        "text": "Listen to their frustration, apologize for the delay, and provide a confirmed new delivery time.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Remind them that you just joined the project and are not responsible for the delay."
+        "text": "Remind them that you just joined the project and are not responsible for the delay.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Tell them to calm down so you can explain."
+        "text": "Tell them to calm down so you can explain.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Refer them to your manager immediately."
+        "text": "Refer them to your manager immediately.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1320,19 +2604,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Approach the driver politely and remind them to leave a note, or report the plate number to security if they refuse."
+        "text": "Approach the driver politely and remind them to leave a note, or report the plate number to security if they refuse.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Leave a note yourself on the damaged car saying what you saw."
+        "text": "Leave a note yourself on the damaged car saying what you saw.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Ignore it as it is not your car."
+        "text": "Ignore it as it is not your car.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Post about it on the company intranet."
+        "text": "Post about it on the company intranet.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1352,19 +2660,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Immediately call in via phone to rejoin the audio and message the host to explain."
+        "text": "Immediately call in via phone to rejoin the audio and message the host to explain.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Wait for the internet to come back on."
+        "text": "Wait for the internet to come back on.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Send an email later apologizing."
+        "text": "Send an email later apologizing.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Give up and go do other work."
+        "text": "Give up and go do other work.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1384,19 +2720,51 @@
     "responses": [
       {
         "id": "a",
-        "text": "Submit a formal request to update the SOP with your new method, waiting for approval before using it."
+        "text": "Submit a formal request to update the SOP with your new method, waiting for approval before using it.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Use the new method immediately to save time."
+        "text": "Use the new method immediately to save time.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Tell your friends to use the new method but don't tell management."
+        "text": "Tell your friends to use the new method but don't tell management.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ignore the improvement to strictly follow the rules."
+        "text": "Ignore the improvement to strictly follow the rules.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "innovation",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1416,19 +2784,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Quietly ask if they want to step outside for a break and offer a listening ear."
+        "text": "Quietly ask if they want to step outside for a break and offer a listening ear.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Ignore them to respect their privacy."
+        "text": "Ignore them to respect their privacy.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Tell them to pull themselves together as this is a workplace."
+        "text": "Tell them to pull themselves together as this is a workplace.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Call the manager immediately to handle it."
+        "text": "Call the manager immediately to handle it.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1448,19 +2840,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Present the data accurately but focus the narrative on the action plan to fix the issues."
+        "text": "Present the data accurately but focus the narrative on the action plan to fix the issues.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "quality",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Manipulate the numbers as requested to please your manager."
+        "text": "Manipulate the numbers as requested to please your manager.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Refuse to present at all."
+        "text": "Refuse to present at all.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Present the bad data without any context or solution."
+        "text": "Present the bad data without any context or solution.",
+        "competencies": [
+          {
+            "id": "integrity",
+            "weight": 0.6
+          },
+          {
+            "id": "quality",
+            "weight": 0.4
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1480,19 +2908,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Tag the equipment as out of service and call maintenance for a proper repair."
+        "text": "Tag the equipment as out of service and call maintenance for a proper repair.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Apply the hack to keep production running."
+        "text": "Apply the hack to keep production running.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Leave it for the next shift to deal with."
+        "text": "Leave it for the next shift to deal with.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ask your supervisor if they want you to use the hack."
+        "text": "Ask your supervisor if they want you to use the hack.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1512,19 +2964,43 @@
     "responses": [
       {
         "id": "a",
-        "text": "Raise your hand and politely ask them to clarify the last point, as others may also be lost."
+        "text": "Raise your hand and politely ask them to clarify the last point, as others may also be lost.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Stay quiet and try to figure it out later."
+        "text": "Stay quiet and try to figure it out later.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Stop the class and complain that the teaching style is bad."
+        "text": "Stop the class and complain that the teaching style is bad.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Ask your neighbor to explain it while the teacher is talking."
+        "text": "Ask your neighbor to explain it while the teacher is talking.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1544,19 +3020,55 @@
     "responses": [
       {
         "id": "a",
-        "text": "Call your manager early, explain the situation, and send whatever work is done to a colleague to finish."
+        "text": "Call your manager early, explain the situation, and send whatever work is done to a colleague to finish.",
+        "competencies": [
+          {
+            "id": "people",
+            "weight": 0.67
+          },
+          {
+            "id": "delivery",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Power through and submit poor quality work."
+        "text": "Power through and submit poor quality work.",
+        "competencies": [
+          {
+            "id": "quality",
+            "weight": 0.6
+          },
+          {
+            "id": "delivery",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Don't call in and just apologize tomorrow."
+        "text": "Don't call in and just apologize tomorrow.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 0.67
+          },
+          {
+            "id": "people",
+            "weight": 0.33
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Take the day off but don't tell anyone about the deadline."
+        "text": "Take the day off but don't tell anyone about the deadline.",
+        "competencies": [
+          {
+            "id": "delivery",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
@@ -1576,19 +3088,47 @@
     "responses": [
       {
         "id": "a",
-        "text": "Stop and offer to help them carry it."
+        "text": "Stop and offer to help them carry it.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 0.6
+          },
+          {
+            "id": "people",
+            "weight": 0.4
+          }
+        ]
       },
       {
         "id": "b",
-        "text": "Tell them they are violating manual handling rules and walk away."
+        "text": "Tell them they are violating manual handling rules and walk away.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "c",
-        "text": "Watch to see if they drop it."
+        "text": "Watch to see if they drop it.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       },
       {
         "id": "d",
-        "text": "Report them for safety violation."
+        "text": "Report them for safety violation.",
+        "competencies": [
+          {
+            "id": "safety",
+            "weight": 1
+          }
+        ]
       }
     ],
     "correct_answer": {
