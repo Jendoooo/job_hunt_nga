@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 
 /* ── constants ─────────────────────────────────────────────────────────────── */
 const DURATION = 5 * 60       // 5-minute practice
@@ -175,13 +176,14 @@ export default function NLNGProcessMonitorTest() {
   const [flash, setFlash]         = useState(null)  // { msg, ok }
 
   // Refs for use inside timers
-  const phaseRef       = useRef('setup')
-  const panelRef       = useRef(initPanel())
-  const evRef          = useRef(null)
-  const scoreRef       = useRef(0)
-  const hitsRef        = useRef(0)
-  const missesRef      = useRef(0)
-  const maxScoreRef    = useRef(0)
+  const phaseRef        = useRef('setup')
+  const panelRef        = useRef(initPanel())
+  const evRef           = useRef(null)
+  const scoreRef        = useRef(0)
+  const hitsRef         = useRef(0)
+  const missesRef       = useRef(0)
+  const maxScoreRef     = useRef(0)
+  const scheduleNextRef = useRef(null)   // so handleAction can trigger next event
 
   function showFlash(msg, ok) {
     setFlash({ msg, ok })
@@ -243,6 +245,8 @@ export default function NLNGProcessMonitorTest() {
       setScore(scoreRef.current)
       setHits(hitsRef.current)
       showFlash(`+${PTS_HIT} Correct!`, true)
+      // Re-start the event chain — scheduleNext() was only called on miss, not correct
+      setTimeout(() => scheduleNextRef.current?.(), 900)
     } else {
       showFlash('Wrong button!', false)
     }
@@ -340,6 +344,7 @@ export default function NLNGProcessMonitorTest() {
       }, delay)
     }
 
+    scheduleNextRef.current = scheduleNext
     scheduleNext()
 
     return () => {
@@ -367,7 +372,17 @@ export default function NLNGProcessMonitorTest() {
   /* ── setup screen ──────────────────────────────────────────────────────── */
   if (phase === 'setup') {
     return (
-      <div className="pm-page">
+      <div className="test-page">
+        <header className="test-page__header test-page__header--compact">
+          <div className="test-page__header-left">
+            <button className="btn btn--ghost flex items-center gap-2" onClick={() => navigate('/')}>
+              <ArrowLeft size={18} /> Dashboard
+            </button>
+          </div>
+          <div className="test-page__header-right">
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-3)' }}>SHL Verify Interactive</span>
+          </div>
+        </header>
         <div className="pm-setup-card">
           <div className="pm-setup-header">
             <div className="pm-setup-badge">SHL Verify Interactive</div>
@@ -424,7 +439,14 @@ export default function NLNGProcessMonitorTest() {
     const pct = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0
     const pass = pct >= 60
     return (
-      <div className="pm-page">
+      <div className="test-page">
+        <header className="test-page__header test-page__header--compact">
+          <div className="test-page__header-left">
+            <button className="btn btn--ghost flex items-center gap-2" onClick={() => navigate('/')}>
+              <ArrowLeft size={18} /> Dashboard
+            </button>
+          </div>
+        </header>
         <div className="pm-results-card">
           <div className={`pm-results-header ${pass ? 'pm-results-header--pass' : 'pm-results-header--fail'}`}>
             <div className="pm-results-label">Simulation Complete</div>
@@ -448,13 +470,20 @@ export default function NLNGProcessMonitorTest() {
 
   /* ── playing screen ─────────────────────────────────────────────────────── */
   return (
-    <div className="pm-page">
-      {/* Header bar */}
-      <div className="pm-header">
-        <div className="pm-header__title">SHL Process Monitoring — Practice</div>
-        <div className={`pm-timer ${timeLeft <= 60 ? 'pm-timer--urgent' : ''}`}>{fmtTime(timeLeft)}</div>
-        <div className="pm-header__score">Score: <strong>{score}</strong></div>
-      </div>
+    <div className="test-page">
+      {/* Platform header */}
+      <header className="test-page__header test-page__header--compact">
+        <div className="test-page__header-left">
+          <button className="btn btn--ghost flex items-center gap-2" onClick={() => navigate('/')}>
+            <ArrowLeft size={18} /> Dashboard
+          </button>
+          <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-1)' }}>Process Monitoring</span>
+        </div>
+        <div className="test-page__header-right">
+          <div className={`pm-timer ${timeLeft <= 60 ? 'pm-timer--urgent' : ''}`}>{fmtTime(timeLeft)}</div>
+          <div className="pm-header__score">Score: <strong>{score}</strong></div>
+        </div>
+      </header>
 
       {/* Countdown bar */}
       <div className="pm-countdown-track">

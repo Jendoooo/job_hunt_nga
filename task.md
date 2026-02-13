@@ -216,6 +216,12 @@ Date: 2026-02-12
   - results screen never blocks navigation while saves are pending
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 
+## Phase 17: Process Monitoring — Bug Fix (2026-02-13 12:00)
+- [x] Fixed event chain: after a correct action `scheduleNext()` was never called → only one event fired per session.
+  Fixed by storing `scheduleNext` in `scheduleNextRef` inside the useEffect and calling it from `handleAction` on correct (900ms delay to let flash clear).
+- [x] Fixed visual shell: all three screens (setup / playing / results) now use `test-page` + `test-page__header` platform structure with `ArrowLeft → Dashboard` back-link. Previously rendered on a blank white canvas with no platform chrome.
+- [x] `npm run build` → 0 errors
+
 ## Phase 16: SHL Verify Interactive — Process Monitoring Simulation (2026-02-12)
 - [x] Created `src/pages/NLNGProcessMonitorTest.jsx` — full real-time simulation
   - Setup screen with rules cheat-sheet table + scoring info
