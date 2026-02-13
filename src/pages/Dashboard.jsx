@@ -114,6 +114,7 @@ export default function Dashboard() {
     const navigate = useNavigate()
 
     const [recentAttempts, setRecentAttempts] = useState([])
+    const [showAllAttempts, setShowAllAttempts] = useState(false)
     const [showAIGen, setShowAIGen] = useState(false)
     const [aiTopic, setAiTopic] = useState('')
     const [aiCount, setAiCount] = useState(5)
@@ -216,6 +217,7 @@ export default function Dashboard() {
                 .select('*')
                 .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
+                .limit(100)
 
             if (signal) {
                 query = query.abortSignal(signal)
@@ -239,7 +241,7 @@ export default function Dashboard() {
             const sjqBankById = new Map(sjqBank.map((q) => [q.id, q]))
             const sjqProfile = buildSJQRollingProfileFromAttempts(attempts, sjqBankById, { maxAttempts: 10 })
 
-            setRecentAttempts(attempts.slice(0, 8))
+            setRecentAttempts(attempts)
             setTestsTaken(attempts.length)
             setPracticeSessions(attempts.filter((attempt) => attempt.mode === 'practice').length)
             setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
@@ -709,7 +711,16 @@ export default function Dashboard() {
 
                         <section className="activity-panel">
                             <header>
-                                <h4><History size={16} /> Recent Activity</h4>
+                                <h4><History size={16} /> Attempt History</h4>
+                                {recentAttempts.length > 8 && (
+                                    <button
+                                        className="btn btn--ghost"
+                                        style={{ fontSize: '0.78rem', padding: '0.2rem 0.6rem' }}
+                                        onClick={() => setShowAllAttempts((prev) => !prev)}
+                                    >
+                                        {showAllAttempts ? 'Show less' : `View all (${recentAttempts.length})`}
+                                    </button>
+                                )}
                             </header>
                             <div className="activity-list">
                                 {loadingAttempts && recentAttempts.length === 0 && (
@@ -729,14 +740,19 @@ export default function Dashboard() {
                                         <p>No attempts yet. Start a module to build your stats.</p>
                                     </div>
                                 )}
-                                {recentAttempts.map(attempt => {
+                                {(showAllAttempts ? recentAttempts : recentAttempts.slice(0, 8)).map(attempt => {
                                     const percentage = Math.round(attemptRatio(attempt) * 100)
                                     const passed = percentage >= PASS_RATIO_THRESHOLD * 100
+                                    const modeLabel = attempt.mode === 'exam' ? 'Exam' : attempt.mode === 'practice' ? 'Practice' : null
                                     return (
                                         <article className="activity-item" key={attempt.id}>
                                             <div className="activity-item__text">
                                                 <strong>{attempt.module_name || 'Practice Test'}</strong>
-                                                <span>{new Date(attempt.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                                                <span>
+                                                    {modeLabel && <span className={`activity-item__mode-badge activity-item__mode-badge--${attempt.mode}`}>{modeLabel}</span>}
+                                                    {' '}{attempt.score}/{attempt.total_questions}{' · '}
+                                                    {new Date(attempt.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: '2-digit' })}
+                                                </span>
                                             </div>
                                             <span className={`activity-item__score ${passed ? 'activity-item__score--pass' : 'activity-item__score--warn'}`}>
                                                 {percentage}%

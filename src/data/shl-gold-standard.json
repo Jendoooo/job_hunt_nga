@@ -4050,5 +4050,157 @@
       "split_pct": 2
     },
     "explanation": "Cold Calls = 540 − 180 − 120 = 240. South CC = 132 (55%), North CC = 108 (45%). Verified: South CC − South CI = 132 − 48 = 84 ✓"
+  },
+  {
+    "id": "sales_goals_person_a",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Decide if Person A met their quarterly sales goals.",
+    "prompt_rules": [
+      "Goal 1: Total sales must reach at least €75,000.",
+      "Goal 2: Average monthly sales must be at least 50% above the average monthly target.",
+      "July: Sales €23,000 | Target €20,000",
+      "August: Sales €38,000 | Target €15,000",
+      "September: Sales €47,000 | Target €35,000"
+    ],
+    "widget_data": {
+      "columns": [
+        "Person",
+        "Total Sales",
+        "Avg Sales",
+        "Result"
+      ],
+      "rows": [
+        {
+          "id": "person_a_goals",
+          "values": [
+            "Person A",
+            "€108,000",
+            "€36,000"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "met",
+          "label": "Met",
+          "color": "green"
+        },
+        {
+          "id": "not_met",
+          "label": "Not Met",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_a_goals": "met"
+    },
+    "explanation": "Total €108k > €75k ✓. Avg Target = €70k ÷ 3 = €23.33k. Threshold = €23.33k × 1.5 = €35k. Avg Sales = €36k > €35k ✓ → Goals Met."
+  },
+  {
+    "id": "quality_team_d",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the quality grade for Team D.",
+    "prompt_rules": [
+      "Grade A: Less than 5% defect rate.",
+      "Grade B: Between 6% and 10% defect rate.",
+      "Grade C: More than 10% defect rate."
+    ],
+    "widget_data": {
+      "columns": [
+        "Team",
+        "Units Produced",
+        "Defects",
+        "Grade"
+      ],
+      "rows": [
+        {
+          "id": "team_d_grade",
+          "values": [
+            "Team D",
+            "24,200",
+            "2,178"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "grade_a",
+          "label": "Grade A",
+          "color": "green"
+        },
+        {
+          "id": "grade_b",
+          "label": "Grade B",
+          "color": "blue"
+        },
+        {
+          "id": "grade_c",
+          "label": "Grade C",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "team_d_grade": "grade_b"
+    },
+    "explanation": "Defect Rate: 2,178 ÷ 24,200 = 9.0%. Falls in Grade B range (6%–10%)."
+  },
+  {
+    "id": "finance_beatrice",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the finance rate for Beatrice.",
+    "prompt_rules": [
+      "4% rate: Credit score > 650 AND on-time payment rate > 95%.",
+      "6% rate: Credit score > 500 AND on-time payment rate > 90%.",
+      "7% rate: All other applicants."
+    ],
+    "widget_data": {
+      "columns": [
+        "Applicant",
+        "Total Payments",
+        "On-Time",
+        "Credit Score",
+        "Rate"
+      ],
+      "rows": [
+        {
+          "id": "beatrice_rate",
+          "values": [
+            "Beatrice",
+            "1,080",
+            "993",
+            "575"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "rate_4",
+          "label": "4%",
+          "color": "green"
+        },
+        {
+          "id": "rate_6",
+          "label": "6%",
+          "color": "blue"
+        },
+        {
+          "id": "rate_7",
+          "label": "7%",
+          "color": "orange"
+        }
+      ]
+    },
+    "correct_answer": {
+      "beatrice_rate": "rate_6"
+    },
+    "explanation": "On-time: 993 ÷ 1,080 = 91.9%. Score 575 < 650 → fails 4%. Score 575 > 500 and 91.9% > 90% → 6% rate."
   }
 ]

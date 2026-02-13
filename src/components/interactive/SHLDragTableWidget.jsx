@@ -39,8 +39,8 @@ function DraggablePill({ item, disabled = false }) {
                 ...(resolvePillColor(item.color)
                     ? {
                         borderColor: resolvePillColor(item.color),
-                        backgroundColor: `${resolvePillColor(item.color)}14`,
-                        color: resolvePillColor(item.color),
+                        backgroundColor: resolvePillColor(item.color),
+                        color: '#fff',
                     }
                     : {}),
             }}
