@@ -258,6 +258,7 @@ Date: 2026-02-12
   - SJQ attempts now persist answers keyed by question id (e.g. `sjq_014: { a: 2, b: 4, c: 1, d: 3 }`) for profile-building
   - Dashboard: added rolling SJQ profile panel (last 10 attempts)
   - dashboard NLNG card added + route wired in `src/App.jsx`
+- [Codex 2026-02-13 06:11] SJQ improvements: distance-based scoring, response-level competency weights, results competency breakdown now uses weighted points, and Dashboard shows rolling SJQ profile from Supabase attempts.
 - [x] Expanded `src/data/nlng-sjq-questions.json` bank to 50 questions (session still runs 10Q / 20m)
 
 ## Phase 14: SHL Visual Theme + Commission/Performance Questions (2026-02-12)

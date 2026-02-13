@@ -23,25 +23,34 @@
 - Fixed lint in `src/pages/NLNGProcessMonitorTest.jsx`: results screen now uses React state (`score`, `hits`, `misses`) not refs
 - Updated `src/pages/NLNGSJQTest.jsx`: randomizes 10 questions per session from the 50Q bank
 
+### [Codex 2026-02-13 06:11] SJQ Distance Scoring + Weighted Competency Profile (commit 9485eeb)
+- Implemented distance-based scoring (0–3 points per response; closer ratings score higher).
+- Added response-level competency weights: `response.competencies: [{ id, weight }]` (1–2 competencies per response).
+- Updated ScoreReport:
+  - SJQ review table now shows per-response points + green/amber/red row states.
+  - Competency breakdown now uses weighted, distance-based scoring (earned/total points).
+- Dashboard now shows a rolling SJQ profile (last 10 SJQ attempts) derived from Supabase attempts.
+- Added shared analytics module `src/utils/sjqAnalytics.js` + tagging script `scripts/tag_sjq_response_competencies.cjs`.
+
 ---
 
 ## Architecture Notes (Codex's modules)
 
 ### SJQ Module (`src/pages/NLNGSJQTest.jsx`)
 - 50-question bank in `src/data/nlng-sjq-questions.json`
-- Each question: `{ id, subtest, situation, options[4], correctAnswer, explanation, competency }`
+- Each question: `{ id, subtest, competency, scenario, question, responses[4], correct_answer, explanation }`
+  - Each response: `{ id: 'a'|'b'|'c'|'d', text, competencies?: [{ id, weight }] }`
 - `competency` values: `safety | integrity | quality | people | innovation | delivery`
-- Scoring: partial credit — user selects A/B/C/D; each option maps to a rating 1–4; score = correct_ratings / total_ratings
-- ScoreReport receives `answersForSave` object for per-question persistence in Supabase
+- Scoring: distance-based partial credit (0–3 points per response; 12 points per question; 120 per session)
+- ScoreReport receives `answersForSave` object keyed by question id for Supabase persistence
 
 ### Competency Tagging
 - Script: `scripts/tag_sjq_competencies.cjs` — reads nlng-sjq-questions.json, writes competency field
-- ScoreReport renders breakdown panel: groups answers by `question.competency`, shows % aligned per group
+- Script: `scripts/tag_sjq_response_competencies.cjs` — stamps `response.competencies` weights for response-level mapping
+- ScoreReport renders breakdown panel using weighted, distance-based scoring per competency
 
 ---
 
 ## Pending / Next Up
 <!-- Codex: update this section as you pick up new tasks -->
-- SJQ distance-based scoring (partial credit where rating offset matters — e.g., rating 3 vs correct 4 scores better than rating 1 vs correct 4)
-- Per-response competency mapping (each individual option a/b/c/d contributes to specific competency)
-- SJQ long-term rolling profile (aggregate competency scores across multiple Supabase-saved attempts)
+- (Optional) Improve auth bootstrap resilience if Supabase session fetch ever false-times-out in production.
