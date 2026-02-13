@@ -12,9 +12,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -69,9 +69,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -126,9 +126,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -183,9 +183,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -371,12 +371,12 @@
     ],
     "widget_data": {
       "columns": [
-        "Investment",
-        "Rev Y1",
-        "Rev Y2",
-        "Rev Y3",
-        "Rev Y4",
-        "Status"
+        "Investment required",
+        "Revenue Year 1",
+        "Revenue Year 2",
+        "Revenue Year 3",
+        "Revenue Year 4",
+        "Funding Status"
       ],
       "rows": [
         {
@@ -429,12 +429,12 @@
     ],
     "widget_data": {
       "columns": [
-        "Investment",
-        "Rev Y1",
-        "Rev Y2",
-        "Rev Y3",
-        "Rev Y4",
-        "Status"
+        "Investment required",
+        "Revenue Year 1",
+        "Revenue Year 2",
+        "Revenue Year 3",
+        "Revenue Year 4",
+        "Funding Status"
       ],
       "rows": [
         {
@@ -681,10 +681,10 @@
     ],
     "widget_data": {
       "columns": [
-        "Rev",
-        "Sales",
-        "Cancel/Day",
-        "Comm"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
@@ -732,10 +732,10 @@
     ],
     "widget_data": {
       "columns": [
-        "Rev",
-        "Sales",
-        "Cancel/Day",
-        "Comm"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
@@ -783,10 +783,10 @@
     ],
     "widget_data": {
       "columns": [
-        "Rev",
-        "Sales",
-        "Cancel/Day",
-        "Comm"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
@@ -834,10 +834,10 @@
     ],
     "widget_data": {
       "columns": [
-        "Rev",
-        "Sales",
-        "Cancel/Day",
-        "Comm"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
@@ -884,11 +884,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Status"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -934,11 +934,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Status"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -984,11 +984,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Status"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -1034,11 +1034,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Status"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -1084,9 +1084,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -1141,9 +1141,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -1198,9 +1198,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -1256,11 +1256,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Investment",
-        "Rev Y1",
-        "Rev Y2",
-        "Rev Y3",
-        "Status"
+        "Investment required",
+        "Revenue Year 1",
+        "Revenue Year 2",
+        "Revenue Year 3",
+        "Funding Status"
       ],
       "rows": [
         {
@@ -1312,11 +1312,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Investment",
-        "Rev Y1",
-        "Rev Y2",
-        "Rev Y3",
-        "Status"
+        "Investment required",
+        "Revenue Year 1",
+        "Revenue Year 2",
+        "Revenue Year 3",
+        "Funding Status"
       ],
       "rows": [
         {
@@ -1368,10 +1368,10 @@
     ],
     "widget_data": {
       "columns": [
-        "Rev",
-        "Sales",
-        "Cancel/Day",
-        "Comm"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
@@ -1419,10 +1419,10 @@
     ],
     "widget_data": {
       "columns": [
-        "Rev",
-        "Sales",
-        "Cancel/Day",
-        "Comm"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
@@ -1622,11 +1622,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Status"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -1672,11 +1672,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Status"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -3803,17 +3803,15 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Total Revenue",
-        "Sales/Week",
-        "Cancellations/Day",
-        "Commission"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
           "id": "person_b_comm",
           "values": [
-            "Person B",
             "£670",
             "15",
             "1"
@@ -3858,17 +3856,15 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Total Revenue",
-        "Sales/Week",
-        "Cancellations/Day",
-        "Commission"
+        "Total revenue per week",
+        "Sales per week",
+        "Average cancellations per day",
+        "Commission Earned"
       ],
       "rows": [
         {
           "id": "person_d_comm",
           "values": [
-            "Person D",
             "£1,120",
             "55",
             "5"
@@ -3913,18 +3909,16 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Days Attended",
-        "Total Days",
-        "Late Days",
-        "Holiday",
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
         "Eligibility"
       ],
       "rows": [
         {
           "id": "person_a_perf",
           "values": [
-            "Person A",
             "205",
             "235",
             "2",
@@ -3965,18 +3959,16 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Days Attended",
-        "Total Days",
-        "Late Days",
-        "Holiday",
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
         "Eligibility"
       ],
       "rows": [
         {
           "id": "person_b_perf",
           "values": [
-            "Person B",
             "109",
             "125",
             "10",
@@ -4017,18 +4009,16 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Days Attended",
-        "Total Days",
-        "Late Days",
-        "Holiday",
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
         "Eligibility"
       ],
       "rows": [
         {
           "id": "person_c_perf",
           "values": [
-            "Person C",
             "199",
             "227",
             "3",
@@ -4069,18 +4059,16 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Days Attended",
-        "Total Days",
-        "Late Days",
-        "Holiday",
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
         "Eligibility"
       ],
       "rows": [
         {
           "id": "person_d_perf",
           "values": [
-            "Person D",
             "67",
             "71",
             "1",
@@ -5136,11 +5124,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Store",
-        "Avg Price",
+        "Average Unit Price (£)",
         "Units",
         "Discount",
         "Delivery Fee",
+        "Price Per Unit",
         "Volume"
       ],
       "rows": [
@@ -5151,6 +5139,7 @@
             "£6.46",
             "60",
             "10%",
+            "—",
             "—"
           ]
         }
@@ -5194,11 +5183,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Store",
-        "Avg Price",
+        "Average Unit Price (£)",
         "Units",
         "Discount",
         "Delivery Fee",
+        "Price Per Unit",
         "Volume"
       ],
       "rows": [
@@ -5209,7 +5198,8 @@
             "£17.97",
             "80",
             "—",
-            "8%"
+            "8%",
+            "—"
           ]
         }
       ],
@@ -5251,12 +5241,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Person",
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Eligible?"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -5303,12 +5292,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Person",
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Eligible?"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -5355,12 +5343,11 @@
     ],
     "widget_data": {
       "columns": [
-        "Person",
-        "Attended",
-        "Possible",
-        "Late",
-        "Holiday",
-        "Eligible?"
+        "Days attended work",
+        "Total possible days at work",
+        "Days late to work",
+        "Holiday leave taken",
+        "Eligibility"
       ],
       "rows": [
         {
@@ -5407,10 +5394,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -5466,10 +5452,9 @@
     ],
     "widget_data": {
       "columns": [
-        "Name",
-        "Borrowed",
-        "Returned",
-        "Damaged",
+        "Books Borrowed",
+        "Books Returned on Time",
+        "Books Damaged",
         "Penalty"
       ],
       "rows": [
@@ -5511,5 +5496,124 @@
     "explanation": "Return rate: 60 ÷ 150 = 40% (Fail < 75% → Yellow). Damage rate: 2 ÷ 150 = 1.3% (Pass < 5%). Result: Yellow.",
     "question": "Work out the correct penalty for Angela.",
     "source_id": "library_angela_real"
+  },
+  {
+    "id": 96,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Classify Store B based on revenue volume.",
+    "prompt_rules": [
+      "Revenue = Price × Units × (1 + Delivery Fee %)",
+      "High Volume: Revenue > £1,500",
+      "Medium Volume: Revenue £350–£1,500",
+      "Low Volume: Revenue < £350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Average Unit Price (£)",
+        "Units",
+        "Discount",
+        "Delivery Fee",
+        "Price Per Unit",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "p_b",
+          "label": "Store B",
+          "values": [
+            "£6.89",
+            "50",
+            "—",
+            "6%",
+            "—"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High Volume",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium Volume",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low Volume",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_b": "medium"
+    },
+    "explanation": "No discount. Revenue: £6.89 × 50 × 1.06 = £365.17. Result: Medium Volume (£350–£1,500).",
+    "question": "Classify Store B based on revenue volume.",
+    "source_id": "pricing_store_b_real"
+  },
+  {
+    "id": 97,
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Classify Store C based on revenue volume.",
+    "prompt_rules": [
+      "Discount applies at the unit rate",
+      "Revenue = (Price − Discount) × Units × (1 + Delivery Fee %)",
+      "High Volume: Revenue > £1,500",
+      "Medium Volume: Revenue £350–£1,500",
+      "Low Volume: Revenue < £350"
+    ],
+    "widget_data": {
+      "columns": [
+        "Average Unit Price (£)",
+        "Units",
+        "Discount",
+        "Delivery Fee",
+        "Price Per Unit",
+        "Volume"
+      ],
+      "rows": [
+        {
+          "id": "p_c",
+          "label": "Store C",
+          "values": [
+            "£17.25",
+            "90",
+            "£2 off",
+            "6%",
+            "—"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "high",
+          "label": "High Volume",
+          "color": "green"
+        },
+        {
+          "id": "medium",
+          "label": "Medium Volume",
+          "color": "amber"
+        },
+        {
+          "id": "low",
+          "label": "Low Volume",
+          "color": "red"
+        }
+      ]
+    },
+    "correct_answer": {
+      "p_c": "medium"
+    },
+    "explanation": "Discounted price: £17.25 − £2 = £15.25. Revenue: £15.25 × 90 × 1.06 = £1,454.85. Result: Medium Volume (£350–£1,500).",
+    "question": "Classify Store C based on revenue volume.",
+    "source_id": "pricing_store_c_real"
   }
 ]

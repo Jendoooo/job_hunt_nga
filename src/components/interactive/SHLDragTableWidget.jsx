@@ -1,180 +1,106 @@
-import { DndContext, DragOverlay, PointerSensor, closestCenter, useDraggable, useDroppable, useSensor, useSensors } from '@dnd-kit/core'
-import { GripVertical, X } from 'lucide-react'
 import { useState } from 'react'
 
-function resolvePillColor(color) {
-    if (!color) return null
-    const palette = {
-        green: '#63b209',
-        red: '#f73c33',
-        blue: '#007ab3',
-        orange: '#f68016',
-        amber: '#f68016',
-        slate: '#475569',
-    }
-
-    if (color.startsWith('#')) return color
-    return palette[color.toLowerCase()] || null
-}
-
-function toTransformString(transform) {
-    if (!transform) return undefined
-    return `translate3d(${transform.x}px, ${transform.y}px, 0)`
-}
-
-function DraggablePill({ item, disabled = false }) {
-    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-        id: `drag-pill-${item.id}`,
-        data: { pillId: item.id },
-        disabled,
-    })
-
-    return (
-        <button
-            type="button"
-            ref={setNodeRef}
-            className={`interactive-pill ${isDragging ? 'interactive-pill--dragging' : ''}`}
-            style={{
-                transform: toTransformString(transform),
-                ...(resolvePillColor(item.color)
-                    ? {
-                        borderColor: resolvePillColor(item.color),
-                        backgroundColor: resolvePillColor(item.color),
-                        color: '#fff',
-                    }
-                    : {}),
-            }}
-            {...listeners}
-            {...attributes}
-            disabled={disabled}
-        >
-            <GripVertical size={14} />
-            {item.label}
-        </button>
-    )
-}
-
-function DropTarget({ rowId, assignedLabel, onClear }) {
-    const { setNodeRef, isOver } = useDroppable({
-        id: `drag-row-${rowId}`,
-        data: { rowId },
-    })
-
-    return (
-        <div
-            ref={setNodeRef}
-            className={`interactive-dropzone ${isOver ? 'interactive-dropzone--over' : ''}`}
-        >
-            {assignedLabel ? (
-                <div className="interactive-dropzone__value">
-                    <span>{assignedLabel}</span>
-                    <button type="button" onClick={() => onClear(rowId)} aria-label="Clear classification">
-                        <X size={14} />
-                    </button>
-                </div>
-            ) : (
-                <span className="interactive-dropzone__placeholder">Drop label</span>
-            )}
-        </div>
-    )
-}
-
+// SHL Verify Interactive: click-tab + click-answer pattern
+// User selects a person/store tab → data updates → clicks a lime-green answer button
 export default function SHLDragTableWidget({ data, value, onAnswer, disabled = false }) {
-    const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }))
-    const assignments = value && typeof value === 'object' ? value : {}
-    const draggables = Array.isArray(data?.draggables) ? data.draggables : []
-    const rows = Array.isArray(data?.rows) ? data.rows : []
-    const columns = Array.isArray(data?.columns) ? data.columns : []
-    const [activePillId, setActivePillId] = useState(null)
+  const assignments = value && typeof value === 'object' ? value : {}
+  const draggables = Array.isArray(data?.draggables) ? data.draggables : []
+  const rows = Array.isArray(data?.rows) ? data.rows : []
+  const columns = Array.isArray(data?.columns) ? data.columns : []
 
-    const pillLookup = draggables.reduce((accumulator, item) => {
-        accumulator[item.id] = item.label
-        return accumulator
-    }, {})
+  const [selectedIdx, setSelectedIdx] = useState(0)
 
-    function updateAnswer(nextAssignments) {
-        if (!onAnswer) return
-        onAnswer(nextAssignments)
-    }
+  const activeRow = rows[Math.min(selectedIdx, rows.length - 1)] || rows[0]
 
-    function handleDragStart(event) {
-        setActivePillId(event?.active?.data?.current?.pillId || null)
-    }
+  const pillLookup = draggables.reduce((acc, item) => {
+    acc[item.id] = item.label
+    return acc
+  }, {})
 
-    function handleDragEnd(event) {
-        const pillId = event?.active?.data?.current?.pillId
-        const rowId = event?.over?.data?.current?.rowId
-        setActivePillId(null)
+  function handleAnswer(draggableId) {
+    if (!onAnswer || !activeRow) return
+    const next = { ...assignments, [activeRow.id]: draggableId }
+    onAnswer(next)
+    // Auto-advance to next unanswered tab
+    const nextUnanswered = rows.findIndex((r, i) => i !== selectedIdx && !next[r.id])
+    if (nextUnanswered !== -1) setSelectedIdx(nextUnanswered)
+  }
 
-        if (!pillId || !rowId) return
-        updateAnswer({
-            ...assignments,
-            [rowId]: pillId,
-        })
-    }
+  if (!activeRow) return null
 
-    function handleDragCancel() {
-        setActivePillId(null)
-    }
+  // Last column = answer slot; all others = data columns
+  const dataCols = columns.length > 1 ? columns.slice(0, -1) : columns
+  const answerCol = columns.length > 1 ? columns[columns.length - 1] : 'Result'
+  const assignedId = assignments[activeRow.id]
+  const assignedLabel = assignedId ? (pillLookup[assignedId] ?? assignedId) : null
 
-    function clearAssignment(rowId) {
-        const next = { ...assignments }
-        delete next[rowId]
-        updateAnswer(next)
-    }
+  return (
+    <section className="shl-dt">
+      <div className="shl-dt__table-wrap">
+        <table className="shl-dt__table">
+          <thead>
+            <tr>
+              {dataCols.map((col) => (
+                <th key={col}>{col}</th>
+              ))}
+              <th className="shl-dt__answer-th">{answerCol}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {dataCols.map((col, i) => (
+                <td key={col}>{(activeRow.values || [])[i] ?? ''}</td>
+              ))}
+              <td className="shl-dt__answer-cell">
+                {assignedLabel ? (
+                  assignedLabel
+                ) : (
+                  <span className="shl-dt__answer-placeholder">—</span>
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    return (
-        <section className="interactive-widget interactive-widget--table">
-            <DndContext
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-                onDragCancel={handleDragCancel}
-            >
-                <div className="interactive-table-wrap">
-                    <table className="interactive-table">
-                        <thead>
-                            <tr>
-                                {columns.map((column) => (
-                                    <th key={column}>{column}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rows.map((row) => (
-                                <tr key={row.id}>
-                                    {(row.values || []).map((cell, cellIndex) => (
-                                        <td key={`${row.id}-${cellIndex}`}>{cell}</td>
-                                    ))}
-                                    <td>
-                                        <DropTarget
-                                            rowId={row.id}
-                                            assignedLabel={pillLookup[assignments[row.id]]}
-                                            onClear={clearAssignment}
-                                        />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+      {rows.length > 1 && (
+        <div className="shl-dt__tabs">
+          {rows.map((row, i) => {
+            const isAnswered = !!assignments[row.id]
+            const isActive = i === selectedIdx
+            return (
+              <button
+                key={row.id}
+                type="button"
+                className={[
+                  'shl-dt__tab',
+                  isActive ? 'shl-dt__tab--active' : '',
+                  isAnswered && !isActive ? 'shl-dt__tab--answered' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => setSelectedIdx(i)}
+              >
+                {row.label || `Tab ${i + 1}`}
+              </button>
+            )
+          })}
+        </div>
+      )}
 
-                <div className="interactive-bank">
-                    {draggables.map((item) => (
-                        <DraggablePill key={item.id} item={item} disabled={disabled} />
-                    ))}
-                </div>
-
-                <DragOverlay>
-                    {activePillId ? (
-                        <div className="interactive-pill interactive-pill--overlay">
-                            <GripVertical size={14} />
-                            {pillLookup[activePillId]}
-                        </div>
-                    ) : null}
-                </DragOverlay>
-            </DndContext>
-        </section>
-    )
+      <div className="shl-dt__answers">
+        {draggables.map((d) => (
+          <button
+            key={d.id}
+            type="button"
+            className="shl-dt__answer-btn"
+            onClick={() => handleAnswer(d.id)}
+            disabled={disabled}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+    </section>
+  )
 }

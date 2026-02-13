@@ -220,6 +220,25 @@ Date: 2026-02-12
 - [x] Expanded gold interactive point-graph coverage (added multiple stock-account variants) and regenerated `src/data/shl-interactive-questions.json`
 - [Codex 2026-02-13 09:08] SHL interactive numerical bank overhaul: replaced simplistic store-volume items with multi-row SHL-style revenue audits, added product-profit ranking drag-table questions, added profit-share pie questions with SHL info cards, added additional stacked-bar and point-graph scenarios, updated `pie_offices` with info cards, and regenerated `src/data/shl-interactive-questions.json` (now 87 items).
 
+## Phase 25: SHL Screenshot Audit — Fix Interaction Model + Add Missing Questions [Claude 2026-02-13]
+- [x] Screenshot audit: verified all 20 SHL Verify Interactive screenshots against our implementation
+- [x] Rewrote `src/components/interactive/SHLDragTableWidget.jsx` — replaced HTML drag-and-drop (dnd-kit) with SHL-authentic click-tab + click-answer pattern:
+  - Person/store tabs below data table; selected tab = lime green; answered tab = ✓
+  - All answer buttons are lime green (#84cc16) regardless of answer type (matches real SHL)
+  - Auto-advances to next unanswered tab on answer
+- [x] Added `.shl-dt*` CSS classes to `src/index.css` for new widget layout
+- [x] Fixed column names on 36 existing drag-table questions to match SHL exact wording:
+  - "Attended" → "Days attended work", "Possible" → "Total possible days at work"
+  - "Returned" → "Books Returned on Time", "Avg Price" → "Average Unit Price (£)"
+  - Stripped embedded person names from `values[]` on perf/comm `_real` questions
+  - Added "Price Per Unit" display column (value = "—") to pricing questions
+- [x] Added 2 new pricing questions confirmed from screenshots:
+  - `pricing_store_b_real`: £6.89/50 units/no discount/6% delivery → Medium Volume (£365.17)
+  - `pricing_store_c_real`: £17.25/90 units/£2 off/6% delivery → Medium Volume (£1,454.85)
+- [x] Gold standard: 95 → 97 questions
+- [x] Regenerated `src/data/shl-interactive-questions.json` (97 questions)
+- [x] `npm run build` → 0 errors
+
 ## Phase 23: Process Monitor — Two-Phase Alarm Mechanic + Polish [Claude 2026-02-13]
 - [x] Implemented wait-then-act two-phase logic for gas/temp/power alerts:
   - Alarm phase (2.5s): values enter red zone, pressing any button blocked with "Wait" message, countdown bar goes red
