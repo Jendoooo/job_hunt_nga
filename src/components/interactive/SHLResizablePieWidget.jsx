@@ -339,6 +339,34 @@ export default function SHLResizablePieWidget({ data, value, onAnswer, disabled 
                                     d={arcPath(CENTER, CENTER, OUTER_RADIUS, startAngle, endAngle)}
                                     fill={segment.fill}
                                     stroke="none"
+                                    className="interactive-pie-slice"
+                                    onPointerDown={(event) => {
+                                        if (disabled) return
+                                        if (segmentIds.length < 2) return
+
+                                        event.preventDefault()
+
+                                        const svgEl = svgRef.current
+                                        if (!svgEl) return
+                                        const { x, y } = getSvgPoint(svgEl, event.clientX, event.clientY)
+                                        const angle = Math.atan2(y - CENTER, x - CENTER)
+                                        const boundaryPct = percentFromAngle(angle)
+
+                                        const sliceCount = segmentIds.length
+                                        if (index === 0) {
+                                            setDragIndex(0)
+                                            return
+                                        }
+
+                                        if (index >= sliceCount - 1) {
+                                            setDragIndex(Math.max(0, sliceCount - 2))
+                                            return
+                                        }
+
+                                        const distToStart = Math.abs(boundaryPct - arc.startPct)
+                                        const distToEnd = Math.abs(arc.endPct - boundaryPct)
+                                        setDragIndex(distToStart < distToEnd ? index - 1 : index)
+                                    }}
                                 />
                                 {segment.percentage >= 6 && (
                                     <text

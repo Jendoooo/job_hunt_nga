@@ -6106,5 +6106,60 @@
     },
     "explanation": "Project A: Total revenue 10,900 is >=8,000 but <16,000.<br/>Project B: Total revenue 35,500 >= 35,000 (2 x investment).",
     "source_id": "project_funding_set_1"
+  },
+  {
+    "id": 103,
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "medium",
+    "instruction": "Arrange the sales revenue by quarter and region.",
+    "question": "Adjust each quarter to match the total revenue and the East/West split.",
+    "prompt_rules": [
+      "Total sales revenue was $120 million in Quarter 1.",
+      "Total sales revenue in Quarter 2 decreased by $10 million compared to Quarter 1.",
+      "Sales revenue in the East was $78 million in Quarter 1.",
+      "Sales revenue in the West increased by $46 million from Quarter 1 to Quarter 2."
+    ],
+    "widget_data": {
+      "axis_max": 140,
+      "axis_step": 20,
+      "axis_prefix": "$",
+      "axis_suffix": "m",
+      "total_prefix": "$",
+      "segment_labels": {
+        "primary": "East",
+        "secondary": "West"
+      },
+      "interactive_bars": [
+        {
+          "id": "q1",
+          "label": "Quarter 1",
+          "total": 100,
+          "split_pct": 50
+        },
+        {
+          "id": "q2",
+          "label": "Quarter 2",
+          "total": 100,
+          "split_pct": 50
+        }
+      ]
+    },
+    "correct_answer": {
+      "q1": {
+        "total": 120,
+        "split_pct": 65
+      },
+      "q2": {
+        "total": 110,
+        "split_pct": 20
+      }
+    },
+    "tolerance": {
+      "total": 3,
+      "split_pct": 2
+    },
+    "explanation": "Q1 total = 120. East = 78 so East share = 78/120 = 65% (West = 42). Q2 total = 110. West increased by 46 to 88 so East = 22 and East share = 22/110 = 20%.",
+    "source_id": "bar_sales_revenue_q1_q2"
   }
 ]
