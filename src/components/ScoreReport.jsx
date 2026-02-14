@@ -340,35 +340,35 @@ export default function ScoreReport({
         let failsafeTimerId = null
 
         async function persistToSupabase(signal) {
-            // Refresh auth token inside the failsafe-guarded block so a
-            // hanging refresh can never stall the save permanently.
-            try {
-                await Promise.race([
-                    supabase.auth.refreshSession(),
-                    new Promise((resolve) => setTimeout(resolve, 4000)),
-                ])
-            } catch {
-                // If refresh fails, continue — the existing token may still work.
-            }
-
             if (isFingerprintRecentlySaved(attemptFingerprint)) {
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return { status: 'saved' }
             }
 
-            // Single UPSERT — no preliminary SELECT, no .select().single()
-            // return chain.  The SELECT+single() pattern caused silent hangs
-            // because PostgREST issues a second query for the RETURNING data
-            // that can fail independently from the INSERT under RLS.
-            let upsertQuery = supabase
-                .from('test_attempts')
-                .upsert(payload, { onConflict: 'id' })
+            // Use server-side RPC instead of PostgREST .upsert().
+            // The .upsert() path consistently timed out in the browser
+            // despite PostgREST responding in <1s via curl.  The RPC
+            // function (SECURITY DEFINER) bypasses RLS and does a plain
+            // INSERT with ON CONFLICT DO NOTHING for retry safety.
+            let rpcPromise = supabase.rpc('save_test_attempt', {
+                p_id: payload.id,
+                p_user_id: payload.user_id,
+                p_assessment_type: payload.assessment_type,
+                p_module_name: payload.module_name,
+                p_score: payload.score,
+                p_total_questions: payload.total_questions,
+                p_score_pct: payload.score_pct,
+                p_time_taken_seconds: payload.time_taken_seconds,
+                p_mode: payload.mode,
+                p_answers: payload.answers,
+                p_created_at: payload.created_at,
+            })
 
             if (signal) {
-                upsertQuery = upsertQuery.abortSignal(signal)
+                rpcPromise = rpcPromise.abortSignal(signal)
             }
 
-            const { error } = await upsertQuery
+            const { error } = await rpcPromise
             if (signal?.aborted) return { status: 'aborted' }
             if (error) {
                 if (isAbortLikeError(error)) return { status: 'aborted' }

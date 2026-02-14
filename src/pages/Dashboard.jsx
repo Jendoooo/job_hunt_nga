@@ -175,17 +175,6 @@ export default function Dashboard() {
 
         setPendingSyncCount(pending.length)
 
-        // Refresh auth token before flushing — stale JWTs cause RLS failures.
-        // Race with a 4s timeout so a hanging refresh never blocks the flush.
-        try {
-            await Promise.race([
-                supabase.auth.refreshSession(),
-                new Promise((resolve) => setTimeout(resolve, 4000)),
-            ])
-        } catch {
-            // Continue anyway — existing token might still work
-        }
-
         for (const item of pending) {
             if (signal?.aborted) return
             const payload = item?.payload
@@ -196,29 +185,32 @@ export default function Dashboard() {
             }
 
             try {
-                // Upsert: if already exists (PK conflict), update instead of crashing.
-                // Also ensures score_pct is populated for older outbox items.
-                const upsertPayload = {
-                    ...payload,
-                    module_name: payload.module_name || '',
-                    mode: payload.mode || 'practice',
-                    score_pct: payload.score_pct ?? (
-                        payload.total_questions > 0
-                            ? Math.round((payload.score / payload.total_questions) * 100)
-                            : 0
-                    ),
-                }
+                const scorePct = payload.score_pct ?? (
+                    payload.total_questions > 0
+                        ? Math.round((payload.score / payload.total_questions) * 100)
+                        : 0
+                )
 
-                let upsertQuery = supabase
-                    .from('test_attempts')
-                    .upsert(upsertPayload, { onConflict: 'id' })
+                let rpcPromise = supabase.rpc('save_test_attempt', {
+                    p_id: payload.id,
+                    p_user_id: payload.user_id,
+                    p_assessment_type: payload.assessment_type,
+                    p_module_name: payload.module_name || '',
+                    p_score: payload.score ?? 0,
+                    p_total_questions: payload.total_questions ?? 0,
+                    p_score_pct: scorePct,
+                    p_time_taken_seconds: payload.time_taken_seconds ?? null,
+                    p_mode: payload.mode || 'practice',
+                    p_answers: payload.answers ?? null,
+                    p_created_at: payload.created_at,
+                })
 
-                if (signal) upsertQuery = upsertQuery.abortSignal(signal)
-                const { error: upsertError } = await upsertQuery
+                if (signal) rpcPromise = rpcPromise.abortSignal(signal)
+                const { error: rpcError } = await rpcPromise
 
-                if (upsertError) {
-                    if (isAbortLikeError(upsertError)) return
-                    throw upsertError
+                if (rpcError) {
+                    if (isAbortLikeError(rpcError)) return
+                    throw rpcError
                 }
 
                 removeAttemptOutbox(attemptId)
