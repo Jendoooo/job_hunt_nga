@@ -16,5 +16,12 @@ if (!hasSupabaseEnv) {
 
 export const supabase = createClient(
     supabaseUrl || FALLBACK_SUPABASE_URL,
-    supabaseAnonKey || FALLBACK_SUPABASE_KEY
+    supabaseAnonKey || FALLBACK_SUPABASE_KEY,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: false,
+        },
+    }
 )

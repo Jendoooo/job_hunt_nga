@@ -1,25 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { AuthContext } from './useAuth'
-
-function withTimeout(promise, timeoutMs, message) {
-    return Promise.race([
-        promise,
-        new Promise((_, reject) => {
-            setTimeout(() => reject(new Error(message)), timeoutMs)
-        }),
-    ])
-}
 
 function isAbortLikeError(error) {
     const message = typeof error?.message === 'string'
         ? error.message.toLowerCase()
         : ''
     return error?.name === 'AbortError' || message.includes('aborted')
-}
-
-function isSessionBootstrapTimeout(error) {
-    return String(error?.message || '').includes('Timed out while retrieving auth session.')
 }
 
 function clearSupabaseAuthStorage() {
@@ -50,6 +37,7 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
     const [loading, setLoading] = useState(true)
+    const initializedRef = useRef(false)
 
     const fetchProfile = useCallback(async (userId, signal) => {
         try {
@@ -76,67 +64,92 @@ export function AuthProvider({ children }) {
             }
             console.error('Error fetching profile:', error)
             return null
-        } finally {
-            if (!signal?.aborted) {
-                setLoading(false)
-            }
         }
     }, [])
 
     useEffect(() => {
         let active = true
         const controller = new AbortController()
+        initializedRef.current = false
 
-        async function initializeSession() {
-            try {
-                const { data, error } = await withTimeout(
-                    supabase.auth.getSession(),
-                    8000,
-                    'Timed out while retrieving auth session.'
-                )
-                if (!active) return
-                if (error) throw error
+        // ------------------------------------------------------------------
+        // onAuthStateChange is the SINGLE source of truth for auth state.
+        //
+        // In Supabase JS v2.39+, it fires INITIAL_SESSION automatically when
+        // the listener is set up.  We also call getSession() afterwards as a
+        // belt-and-suspenders trigger — but its return value is NOT used for
+        // state; onAuthStateChange handles that.
+        //
+        // Previous code wrapped getSession() in an 8-second timeout that
+        // forcefully set user = null on slow networks, causing logout on
+        // every page refresh when Supabase needed a moment to refresh the
+        // JWT access token.
+        // ------------------------------------------------------------------
 
-                const session = data?.session ?? null
-                setUser(session?.user ?? null)
-                if (session?.user) {
-                    await fetchProfile(session.user.id, controller.signal)
-                } else {
-                    setProfile(null)
-                    setLoading(false)
-                }
-            } catch (error) {
-                if (!isAbortLikeError(error) && !isSessionBootstrapTimeout(error)) {
-                    console.error('Error getting session:', error)
-                }
-                if (active) {
-                    setUser(null)
-                    setProfile(null)
-                    setLoading(false)
-                }
-            }
-        }
-
-        initializeSession()
-
-        // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (_event, session) => {
                 if (!active) return
-                setUser(session?.user ?? null)
-                if (session?.user) {
-                    await fetchProfile(session.user.id, controller.signal)
+
+                const sessionUser = session?.user ?? null
+                setUser(sessionUser)
+
+                if (sessionUser) {
+                    // Fetch profile in a microtask so Supabase internal locks
+                    // (if any) are released before we issue another query.
+                    await fetchProfile(sessionUser.id, controller.signal)
                 } else {
                     setProfile(null)
-                    setLoading(false)
+                }
+
+                // Mark loading done after the first auth event resolves.
+                if (!initializedRef.current) {
+                    initializedRef.current = true
+                    if (active) setLoading(false)
                 }
             }
         )
+
+        // Kick off getSession() so Supabase refreshes the access token if
+        // needed.  The result flows through onAuthStateChange above.
+        supabase.auth.getSession().then(({ data, error }) => {
+            if (!active) return
+            if (error) {
+                console.error('getSession error (non-fatal):', error)
+            }
+
+            // Fallback: if onAuthStateChange hasn't fired yet (shouldn't
+            // happen in v2.39+ but guard defensively), bootstrap from the
+            // getSession return value.
+            if (!initializedRef.current) {
+                initializedRef.current = true
+                const session = data?.session ?? null
+                setUser(session?.user ?? null)
+
+                if (session?.user) {
+                    fetchProfile(session.user.id, controller.signal).finally(() => {
+                        if (active) setLoading(false)
+                    })
+                } else {
+                    setProfile(null)
+                    if (active) setLoading(false)
+                }
+            }
+        })
+
+        // Safety net: if nothing resolves within 12 seconds, stop the
+        // loading spinner so the app doesn't hang forever.
+        const safetyTimer = setTimeout(() => {
+            if (active && !initializedRef.current) {
+                initializedRef.current = true
+                setLoading(false)
+            }
+        }, 12000)
 
         return () => {
             active = false
             controller.abort()
             subscription.unsubscribe()
+            clearTimeout(safetyTimer)
         }
     }, [fetchProfile])
 
@@ -164,11 +177,12 @@ export function AuthProvider({ children }) {
     async function signOut() {
         let localError = null
         try {
-            const { error } = await withTimeout(
+            const { error } = await Promise.race([
                 supabase.auth.signOut({ scope: 'local' }),
-                5000,
-                'Local sign-out timed out.'
-            )
+                new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('Local sign-out timed out.')), 5000)
+                ),
+            ])
             if (error) {
                 localError = error
             }
@@ -187,11 +201,12 @@ export function AuthProvider({ children }) {
         setLoading(false)
 
         // Best-effort global revoke in background; do not block local logout UX.
-        void withTimeout(
+        void Promise.race([
             supabase.auth.signOut({ scope: 'global' }),
-            5000,
-            'Global sign-out timed out.'
-        ).catch((error) => {
+            new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Global sign-out timed out.')), 5000)
+            ),
+        ]).catch((error) => {
             console.warn('Global sign-out revoke failed (non-blocking):', error)
         })
     }

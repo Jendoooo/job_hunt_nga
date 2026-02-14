@@ -198,8 +198,21 @@ Date: 2026-02-12
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 
+## Phase 29: Auth Session Persistence Fix [Claude 2026-02-14 16:00]
+- [x] **Root Cause**: `getSession()` was wrapped in an 8-second timeout — on slow networks or when Supabase needs to refresh an expired JWT, this timeout fires prematurely, sets `user = null`, and redirects to login on every page refresh
+- [x] **Root Cause**: Race condition between `initializeSession()` and `onAuthStateChange` — both set auth state independently, and `onAuthStateChange` could fire with null before `getSession()` completed token refresh
+- [x] **Fix**: Rewrote `AuthContext.jsx` to use `onAuthStateChange` as the single source of truth:
+  - Removed 8-second `withTimeout()` wrapper on `getSession()`
+  - `onAuthStateChange` handles ALL auth state updates (INITIAL_SESSION event in Supabase v2.39+)
+  - `getSession()` called without timeout as a trigger only — return value used as fallback, not primary source
+  - `initializedRef` prevents double-init race between `onAuthStateChange` and `getSession()` fallback
+  - 12-second safety timer ensures app never hangs on loading spinner
+- [x] **Fix**: Added explicit auth config to Supabase client (`persistSession: true`, `autoRefreshToken: true`, `detectSessionInUrl: false`)
+- [x] `npm run lint` passes
+- [x] `npm run build` passes
+
 ## Next Actions
-1. Deploy to Vercel and verify saves work end-to-end for all test types.
+1. Deploy to Vercel and verify auth persists across page refreshes and saves work end-to-end.
 2. Run manual UX/accessibility checks on all target breakpoints and log defects.
 3. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
 4. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
