@@ -169,9 +169,13 @@ export default function Dashboard() {
 
         setPendingSyncCount(pending.length)
 
-        // Refresh auth token before flushing — stale JWTs cause RLS failures
+        // Refresh auth token before flushing — stale JWTs cause RLS failures.
+        // Race with a 4s timeout so a hanging refresh never blocks the flush.
         try {
-            await supabase.auth.refreshSession()
+            await Promise.race([
+                supabase.auth.refreshSession(),
+                new Promise((resolve) => setTimeout(resolve, 4000)),
+            ])
         } catch {
             // Continue anyway — existing token might still work
         }

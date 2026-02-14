@@ -191,6 +191,13 @@ Date: 2026-02-12
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 
+## Phase 28: Save Hang Fix — refreshSession deadlock [Claude 2026-02-14 15:30]
+- [x] **Root Cause**: `supabase.auth.refreshSession()` was `await`ed OUTSIDE the `Promise.race` failsafe block in ScoreReport — if the refresh call hangs (network/dead session), the 15-second failsafe timer never starts, leaving the save stuck on "Saving your result..." indefinitely
+- [x] **Fix**: Moved `refreshSession()` INSIDE `persistToSupabase()` (which is governed by the 15s failsafe), and wrapped it in its own 4-second `Promise.race` timeout so a hanging refresh can never block the save
+- [x] **Dashboard.jsx**: Applied same 4-second timeout pattern to outbox flush `refreshSession()` call
+- [x] `npm run lint` passes
+- [x] `npm run build` passes
+
 ## Next Actions
 1. Deploy to Vercel and verify saves work end-to-end for all test types.
 2. Run manual UX/accessibility checks on all target breakpoints and log defects.

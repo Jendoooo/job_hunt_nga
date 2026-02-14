@@ -354,19 +354,22 @@ export default function ScoreReport({
             return true
         }
 
-        // Ensure the auth token is fresh before saving.
-        // Stale JWTs cause auth.uid()=null in RLS → silent insert failures.
-        try {
-            await supabase.auth.refreshSession()
-        } catch {
-            // If refresh fails, continue anyway — the existing token might still work.
-        }
-
         const attemptFingerprint = stableSerialize(payload)
         const controller = new AbortController()
         let failsafeTimerId = null
 
         async function persistToSupabase(signal) {
+            // Refresh auth token inside the failsafe-guarded block so a
+            // hanging refresh can never stall the save permanently.
+            try {
+                await Promise.race([
+                    supabase.auth.refreshSession(),
+                    new Promise((resolve) => setTimeout(resolve, 4000)),
+                ])
+            } catch {
+                // If refresh fails, continue — the existing token may still work.
+            }
+
             if (isFingerprintRecentlySaved(attemptFingerprint)) {
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return { status: 'saved' }
