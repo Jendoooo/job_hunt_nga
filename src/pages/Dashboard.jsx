@@ -284,16 +284,20 @@ export default function Dashboard() {
                 progressQuery = progressQuery.abortSignal(signal)
             }
 
+            console.log('[dash] fetching attempts + progress for', user.id)
+
             const [attemptsResult, progressResult] = await Promise.all([
                 withTimeout(attemptsQuery, 20000, 'Stats fetch timed out after 20s'),
                 progressQuery.then((res) => res).catch(() => ({ data: null, error: null })),
             ])
 
             const { data, error } = attemptsResult
+            console.log('[dash] attempts result:', { count: data?.length, error: error?.message || null })
             if (error) throw error
 
             // Build module progress map from user_progress table
             const progressRows = Array.isArray(progressResult?.data) ? progressResult.data : []
+            console.log('[dash] progress rows:', progressRows.length)
             const progressMap = {}
             for (const row of progressRows) {
                 progressMap[row.assessment_type] = {
@@ -350,6 +354,7 @@ export default function Dashboard() {
             }
 
             // Fallback: even if Supabase is slow/unreachable, keep showing locally saved attempts.
+            console.warn('[dash] fetch error:', err?.message || err)
             const pendingAttempts = buildPendingAttemptsFromOutbox(user.id)
             if (pendingAttempts.length > 0) {
                 const merged = dedupeAttempts(
