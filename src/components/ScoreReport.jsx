@@ -6,10 +6,11 @@ import SHLResizablePieWidget from './interactive/SHLResizablePieWidget'
 import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
 import SHLTabbedEvalWidget from './interactive/SHLTabbedEvalWidget'
 import SHLPointGraphWidget from './interactive/SHLPointGraphWidget'
-import { supabase, hasSupabaseEnv } from '../lib/supabase'
+import { hasSupabaseEnv } from '../lib/supabase'
+import { insertTestAttempt } from '../lib/supabaseWrites'
 import { useAuth } from '../context/useAuth'
 import { buildQuestionResults, isInteractiveQuestionType } from '../utils/questionScoring'
-import { enqueueAttemptOutbox } from '../utils/attemptOutbox'
+import { enqueueAttemptOutbox, removeAttemptOutbox } from '../utils/attemptOutbox'
 import {
     buildSJQCompetencyBreakdownFromQuestionResults,
     resolveSJQRatingLabel,
@@ -324,11 +325,16 @@ export default function ScoreReport({
             created_at: attemptCreatedAtRef.current,
         }
 
+        // Always persist locally first so results never "disappear" if the cloud write stalls
+        // and the user navigates away before the timeout.
+        enqueueAttemptOutbox(payload)
+        window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
+        if (isMountedRef.current) {
+            setSavedLocally(true)
+        }
+
         if (!hasSupabaseEnv) {
-            enqueueAttemptOutbox(payload)
-            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
             if (isMountedRef.current) {
-                setSavedLocally(true)
                 setSaveError('Supabase is not configured in this environment. Result saved locally.')
                 setSaving(false)
             }
@@ -341,40 +347,15 @@ export default function ScoreReport({
 
         async function persistToSupabase(signal) {
             if (isFingerprintRecentlySaved(attemptFingerprint)) {
+                removeAttemptOutbox(payload.id)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return { status: 'saved' }
             }
 
-            // Use server-side RPC instead of PostgREST .upsert().
-            // The .upsert() path consistently timed out in the browser
-            // despite PostgREST responding in <1s via curl.  The RPC
-            // function (SECURITY DEFINER) bypasses RLS and does a plain
-            // INSERT with ON CONFLICT DO NOTHING for retry safety.
-            let rpcPromise = supabase.rpc('save_test_attempt', {
-                p_id: payload.id,
-                p_user_id: payload.user_id,
-                p_assessment_type: payload.assessment_type,
-                p_module_name: payload.module_name,
-                p_score: payload.score,
-                p_total_questions: payload.total_questions,
-                p_score_pct: payload.score_pct,
-                p_time_taken_seconds: payload.time_taken_seconds,
-                p_mode: payload.mode,
-                p_answers: payload.answers,
-                p_created_at: payload.created_at,
-            })
-
-            if (signal) {
-                rpcPromise = rpcPromise.abortSignal(signal)
-            }
-
-            const { error } = await rpcPromise
+            await insertTestAttempt(payload, { signal, timeoutMs: SAVE_FAILSAFE_MS })
             if (signal?.aborted) return { status: 'aborted' }
-            if (error) {
-                if (isAbortLikeError(error)) return { status: 'aborted' }
-                throw error
-            }
 
+            removeAttemptOutbox(payload.id)
             markFingerprintAsSaved(attemptFingerprint)
             window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
             return { status: 'saved' }
@@ -402,6 +383,7 @@ export default function ScoreReport({
                 if (isMountedRef.current) {
                     setSaved(true)
                     setSavedLocally(false)
+                    setSaveError('')
                 }
                 return true
             }
@@ -411,8 +393,6 @@ export default function ScoreReport({
                     setSavedLocally(true)
                     setSaveError('Cloud save timed out. Will retry automatically.')
                 }
-                enqueueAttemptOutbox(payload)
-                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
                 return true
             }
 
@@ -433,8 +413,6 @@ export default function ScoreReport({
                 }
                 setSavedLocally(true)
             }
-            enqueueAttemptOutbox(payload)
-            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
             return true
         } finally {
             if (failsafeTimerId) {

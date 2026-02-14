@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { supabase, hasSupabaseEnv } from '../lib/supabase'
+import { insertTestAttempt } from '../lib/supabaseWrites'
 import { generateQuestions } from '../services/deepseek'
 import { readAttemptOutbox, removeAttemptOutbox } from '../utils/attemptOutbox'
 import sjqQuestions from '../data/nlng-sjq-questions.json'
@@ -191,27 +192,14 @@ export default function Dashboard() {
                         : 0
                 )
 
-                let rpcPromise = supabase.rpc('save_test_attempt', {
-                    p_id: payload.id,
-                    p_user_id: payload.user_id,
-                    p_assessment_type: payload.assessment_type,
-                    p_module_name: payload.module_name || '',
-                    p_score: payload.score ?? 0,
-                    p_total_questions: payload.total_questions ?? 0,
-                    p_score_pct: scorePct,
-                    p_time_taken_seconds: payload.time_taken_seconds ?? null,
-                    p_mode: payload.mode || 'practice',
-                    p_answers: payload.answers ?? null,
-                    p_created_at: payload.created_at,
-                })
-
-                if (signal) rpcPromise = rpcPromise.abortSignal(signal)
-                const { error: rpcError } = await rpcPromise
-
-                if (rpcError) {
-                    if (isAbortLikeError(rpcError)) return
-                    throw rpcError
-                }
+                await insertTestAttempt(
+                    {
+                        ...payload,
+                        module_name: payload.module_name || '',
+                        score_pct: scorePct,
+                    },
+                    { signal, timeoutMs: 15000 }
+                )
 
                 removeAttemptOutbox(attemptId)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
@@ -352,6 +340,43 @@ export default function Dashboard() {
             if (isAbortLikeError(err) || signal?.aborted) {
                 return
             }
+
+            // Fallback: even if Supabase is slow/unreachable, keep showing locally saved attempts.
+            const pendingAttempts = buildPendingAttemptsFromOutbox(user.id)
+            if (pendingAttempts.length > 0) {
+                const merged = dedupeAttempts(
+                    [...pendingAttempts].sort((left, right) => {
+                        const a = Date.parse(left?.created_at || '') || 0
+                        const b = Date.parse(right?.created_at || '') || 0
+                        return b - a
+                    })
+                )
+
+                const examAttempts = merged.filter((attempt) => attempt.mode === 'exam')
+                const passRateSource = examAttempts.length > 0 ? examAttempts : merged
+                const gradedForKpi = passRateSource
+                    .map((attempt) => ({ attempt, ratio: attemptRatio(attempt) }))
+                    .filter((item) => item.ratio !== null)
+                const passCount = gradedForKpi.filter((item) => item.ratio >= PASS_RATIO_THRESHOLD).length
+                const averagePercent = gradedForKpi.length > 0
+                    ? Math.round(
+                        gradedForKpi.reduce((sum, item) => sum + item.ratio, 0) / gradedForKpi.length * 100
+                    )
+                    : null
+
+                const sjqBank = Array.isArray(sjqQuestions) ? sjqQuestions : []
+                const sjqBankById = new Map(sjqBank.map((q) => [q.id, q]))
+                const sjqProfile = buildSJQRollingProfileFromAttempts(merged, sjqBankById, { maxAttempts: 10 })
+
+                setPendingSyncCount(pendingAttempts.length)
+                setRecentAttempts(merged)
+                setTestsTaken(merged.length)
+                setPracticeSessions(merged.filter((attempt) => attempt.mode === 'practice').length)
+                setPassRate(gradedForKpi.length > 0 ? Math.round((passCount / gradedForKpi.length) * 100) : null)
+                setAverageScore(averagePercent)
+                setSjqRollingProfile(sjqProfile)
+            }
+
             if (err?.message?.includes('timed out')) {
                 setAttemptsError('Supabase is taking too long to respond. Please wait a moment and refresh.')
                 return
