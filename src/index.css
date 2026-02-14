@@ -2960,6 +2960,248 @@ select:focus-visible {
   gap: 0.55rem;
 }
 
+.score-report__view-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.score-report__view-tab {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text-2);
+  padding: 0.45rem 0.9rem;
+  font-weight: 900;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.score-report__view-tab:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.score-report__view-tab:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.score-report__view-tab--active {
+  background: #007ab3;
+  border-color: #007ab3;
+  color: #fff;
+}
+
+.ability-report {
+  width: 100%;
+}
+
+.ability-report__page {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(1.1rem, 4vw, 1.9rem);
+}
+
+.ability-report__mast {
+  border-left: 6px solid #007ab3;
+  padding-left: 0.9rem;
+}
+
+.ability-report__mast-title {
+  font-weight: 900;
+  color: var(--text-1);
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.ability-report__mast-sub {
+  margin-top: 0.2rem;
+  color: var(--text-3);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.ability-report__section {
+  margin-top: 1.25rem;
+}
+
+.ability-report__h3 {
+  display: inline-block;
+  margin: 0 0 0.55rem;
+  color: #007ab3;
+  font-weight: 900;
+  font-size: 1.05rem;
+  padding-bottom: 0.22rem;
+  border-bottom: 3px solid #007ab3;
+}
+
+.ability-report__h4 {
+  margin: 0 0 0.6rem;
+  font-weight: 900;
+  color: var(--text-1);
+  font-size: 0.92rem;
+}
+
+.ability-report__body {
+  color: var(--text-1);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.ability-report__body p {
+  margin: 0.45rem 0 0;
+}
+
+.ability-report__body p:first-child {
+  margin-top: 0;
+}
+
+.ability-report__muted {
+  color: var(--text-3);
+}
+
+.ability-report__results-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #fff;
+}
+
+.ability-report__results-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.95rem;
+  background: #e0f2fe;
+  border-bottom: 1px solid #bae6fd;
+}
+
+.ability-report__results-label {
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.ability-report__results-grade {
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ability-report__grade-scale {
+  padding: 0.75rem 0.95rem 0.2rem;
+}
+
+.ability-report__grade-bar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #cbd5e1;
+}
+
+.ability-report__grade-seg {
+  background: #f1f5f9;
+  color: #475569;
+  text-align: center;
+  padding: 0.35rem 0;
+  font-weight: 900;
+  font-size: 0.78rem;
+  border-right: 1px solid #cbd5e1;
+}
+
+.ability-report__grade-seg:last-child {
+  border-right: 0;
+}
+
+.ability-report__grade-seg--filled {
+  background: #007ab3;
+  color: #fff;
+}
+
+.ability-report__results-meta {
+  padding: 0.75rem 0.95rem 0.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.ability-report__meta-k {
+  color: var(--text-3);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.ability-report__meta-v {
+  margin-top: 0.15rem;
+  font-weight: 900;
+  color: var(--text-1);
+}
+
+.ability-report__results-narrative {
+  margin: 0;
+  padding: 0.85rem 0.95rem 0.95rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  font-size: 0.9rem;
+}
+
+.ability-report__tips-card {
+  margin-top: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  padding: 0.95rem;
+}
+
+.ability-report__tips {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  font-size: 0.9rem;
+}
+
+.ability-report__tips li {
+  margin-top: 0.35rem;
+}
+
+.ability-report__tips li:first-child {
+  margin-top: 0;
+}
+
+.ability-report__table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fff;
+  font-size: 0.88rem;
+}
+
+.ability-report__table th,
+.ability-report__table td {
+  text-align: left;
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.ability-report__table th {
+  background: #f1f5f9;
+  font-weight: 900;
+  color: var(--text-1);
+}
+
+.ability-report__table tr:last-child td {
+  border-bottom: 0;
+}
+
 .score-review {
   max-width: 880px;
   margin: 0 auto;
@@ -3345,6 +3587,10 @@ select:focus-visible {
   }
 
   .score-report__breakdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ability-report__results-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

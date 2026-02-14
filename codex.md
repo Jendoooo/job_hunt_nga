@@ -115,6 +115,11 @@
 - `src/utils/behavioralScoring.js`: added support for reverse-keyed statements via `keying: "negative"` (rank3 can now contribute positively for negative statements).
 - `src/pages/NLNGBehavioralTest.jsx` + `src/pages/Dashboard.jsx` + `src/components/BehavioralReport.jsx`: renamed OPQ labeling to "JFA (Forced-Choice)" / "Job-Focused Assessment (Forced-Choice)".
 
+### [Codex 2026-02-14 20:37] Interactive Numerical: Batch 3 + Screenshot Bank + Ability Report View
+- `src/data/shl-gold-standard.json`: appended the missing Batch 3 questions (dept budget stacked bar, project timelines ranking, retail staffing stacked bar) and added screenshot-extracted items (project budgets bar, $500 profit point-graph, pool distribution pie, mobile phone ownership bars, weekly contracts pie, safety violations bar, student enrolment bar, new employees pie, chemical profit-share pie). All added items set to `difficulty: "hard"` and checked for duplicate IDs.
+- Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive` (now 119 items).
+- Added SHL/PDF-style report layout: `src/components/AbilityTestReport.jsx` + ScoreReport Summary/Report tabs + new CSS blocks in `src/index.css`.
+
 ---
 
 ## Architecture Notes (Codex's modules)

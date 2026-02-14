@@ -6171,5 +6171,711 @@
       "person_c_comm": "10pct"
     },
     "explanation": "Net Sales = 31 - (4x5) = 11. Avg Value = £1,440 / 11 = £130.91, which is > £101, so 10% commission."
+  },
+  {
+    "id": "bar_dept_budget_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the budget for Quarter 2.",
+    "question": "Adjust Quarter 2 so the Marketing and HR budgets follow the change rules.",
+    "prompt_rules": [
+      "Quarter 1: Marketing $4,000; HR $5,000.",
+      "Quarter 2: Marketing budget decreased by 15%.",
+      "Quarter 2: HR budget increased by 20%."
+    ],
+    "widget_data": {
+      "axis_max": 12000,
+      "axis_step": 2000,
+      "axis_prefix": "$",
+      "segment_labels": {
+        "primary": "HR",
+        "secondary": "Marketing"
+      },
+      "bar_1": {
+        "id": "q1",
+        "label": "Quarter 1",
+        "total": 9000,
+        "split_pct": 56
+      },
+      "bar_2_initial": {
+        "id": "q2",
+        "label": "Quarter 2",
+        "total": 9000,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 9400,
+      "split_pct": 64
+    },
+    "tolerance": {
+      "total": 100,
+      "split_pct": 3
+    },
+    "explanation": "Q2 Marketing = 4,000 x 0.85 = 3,400. Q2 HR = 5,000 x 1.20 = 6,000. Total = 9,400. HR share = 6,000/9,400 ~ 64%."
+  },
+  {
+    "id": "rank_projects_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_ranking",
+    "difficulty": "hard",
+    "instruction": "Rank the projects by duration (1 = Longest, 5 = Shortest).",
+    "question": "Drag each rank badge into the correct project row.",
+    "prompt_rules": [
+      "Project A: 12 weeks.",
+      "Project B: 15 weeks.",
+      "Project C: Half the duration of Project B.",
+      "Project D: Double the duration of Project A.",
+      "Project E: The average duration of Projects A and B."
+    ],
+    "widget_data": {
+      "items": [
+        {
+          "id": "proj_a",
+          "label": "Project A",
+          "detail": "12 weeks"
+        },
+        {
+          "id": "proj_b",
+          "label": "Project B",
+          "detail": "15 weeks"
+        },
+        {
+          "id": "proj_c",
+          "label": "Project C",
+          "detail": "Half of B"
+        },
+        {
+          "id": "proj_d",
+          "label": "Project D",
+          "detail": "Double A"
+        },
+        {
+          "id": "proj_e",
+          "label": "Project E",
+          "detail": "Average of A and B"
+        }
+      ],
+      "rank_labels": [
+        "1 (Longest)",
+        "2",
+        "3",
+        "4",
+        "5 (Shortest)"
+      ]
+    },
+    "correct_answer": {
+      "proj_d": 1,
+      "proj_b": 2,
+      "proj_e": 3,
+      "proj_a": 4,
+      "proj_c": 5
+    },
+    "explanation": "Durations: A=12, B=15, C=7.5, D=24, E=13.5. Order (Longest -> Shortest): D, B, E, A, C."
+  },
+  {
+    "id": "bar_staffing_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Adjust staffing levels for Shift 2.",
+    "question": "Update Shift 2 total staff and the full-time vs part-time split.",
+    "prompt_rules": [
+      "Shift 1: 50 staff total (30 Full-time).",
+      "Shift 2: Full-time staff increased by 10%.",
+      "Shift 2: Part-time staff increased by 50%."
+    ],
+    "widget_data": {
+      "axis_max": 80,
+      "axis_step": 10,
+      "segment_labels": {
+        "primary": "Full-time",
+        "secondary": "Part-time"
+      },
+      "bar_1": {
+        "id": "shift_1",
+        "label": "Shift 1",
+        "total": 50,
+        "split_pct": 60
+      },
+      "bar_2_initial": {
+        "id": "shift_2",
+        "label": "Shift 2",
+        "total": 50,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 63,
+      "split_pct": 52
+    },
+    "tolerance": {
+      "total": 2,
+      "split_pct": 2
+    },
+    "explanation": "Shift 2: Full-time = 30 x 1.10 = 33. Part-time = 20 x 1.50 = 30. Total = 63. Full-time share = 33/63 ~ 52%."
+  },
+  {
+    "id": "bar_project_budgets_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the budget and actual split for Projects X and Y (in $'000).",
+    "question": "Set the Project X vs Project Y percentages for both Budget and Actual spending.",
+    "prompt_rules": [
+      "Total budget for Projects X and Y is $73,000.",
+      "Total actual spending was exactly $73,000.",
+      "Project X actual spending was 60% over its original budget.",
+      "Project Y actual spending was 80% of its planned budget."
+    ],
+    "widget_data": {
+      "axis_max": 100,
+      "axis_step": 20,
+      "axis_prefix": "$",
+      "segment_labels": {
+        "primary": "Project X",
+        "secondary": "Project Y"
+      },
+      "interactive_bars": [
+        {
+          "id": "budget",
+          "label": "Budget",
+          "total": 73,
+          "split_pct": 50
+        },
+        {
+          "id": "actual",
+          "label": "Actual",
+          "total": 73,
+          "split_pct": 50
+        }
+      ]
+    },
+    "correct_answer": {
+      "budget": {
+        "total": 73,
+        "split_pct": 25
+      },
+      "actual": {
+        "total": 73,
+        "split_pct": 40
+      }
+    },
+    "tolerance": {
+      "total": 1,
+      "split_pct": 2
+    },
+    "explanation": "Let budgets be Bx + By = 73. Actuals: 1.6Bx + 0.8By = 73. Solve => Bx=18.25, By=54.75. Budget shares: X=25%, Y=75%. Actuals: Ax=29.2, Ay=43.8 => X=40%, Y=60%."
+  },
+  {
+    "id": "graph_profit_target_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_point_graph",
+    "difficulty": "hard",
+    "instruction": "Plot the minimum sales needed for each product to earn at least $500 profit.",
+    "question": "Drag each product point to the required number of sales.",
+    "prompt_rules": [
+      "Profit per unit = Retail price - Development cost.",
+      "Minimum sales = smallest whole number of units that gives profit of at least $500.",
+      "Development cost ($): A=17, B=5, C=135, D=50, E=37.",
+      "Retail price ($): A=49, B=47, C=260, D=68, E=100."
+    ],
+    "widget_data": {
+      "x_axis_labels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "y_axis": {
+        "min": 0,
+        "max": 36,
+        "step": 4,
+        "label": ""
+      },
+      "initial_values": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "correct_answer": {
+      "values": [
+        16,
+        12,
+        4,
+        28,
+        8
+      ]
+    },
+    "tolerance": {
+      "value": 0
+    },
+    "explanation": "Profits/unit: A=32, B=42, C=125, D=18, E=63. Min sales: A=ceil(500/32)=16, B=12, C=4, D=28, E=8."
+  },
+  {
+    "id": "pie_pool_distribution_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "hard",
+    "instruction": "Adjust the pie chart to represent the distribution of 150,000 litres of water.",
+    "question": "Resize each pool slice based on pool volume.",
+    "prompt_rules": [
+      "Each pool is a rectangular prism: Volume = Length x Width x Height.",
+      "Water is distributed in proportion to each pool's volume.",
+      "Total water = 150,000 litres."
+    ],
+    "widget_data": {
+      "total_value": 150000,
+      "info_cards": [
+        {
+          "id": "pool_1_info",
+          "title": "Pool 1",
+          "subtitle": "3L x 5W x 2H",
+          "color": "blue"
+        },
+        {
+          "id": "pool_2_info",
+          "title": "Pool 2",
+          "subtitle": "6L x 2W x 2H",
+          "color": "green"
+        },
+        {
+          "id": "pool_3_info",
+          "title": "Pool 3",
+          "subtitle": "6L x 5W x 2H",
+          "color": "red"
+        },
+        {
+          "id": "pool_4_info",
+          "title": "Pool 4",
+          "subtitle": "6L x 3W x 2H",
+          "color": "orange"
+        }
+      ],
+      "segments": [
+        {
+          "id": "pool_1",
+          "label": "Pool 1",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "pool_2",
+          "label": "Pool 2",
+          "color": "green",
+          "initial_pct": 25
+        },
+        {
+          "id": "pool_3",
+          "label": "Pool 3",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "pool_4",
+          "label": "Pool 4",
+          "color": "orange",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "pool_1": 20,
+      "pool_2": 16,
+      "pool_3": 40,
+      "pool_4": 24
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Volumes: P1=3x5x2=30, P2=6x2x2=24, P3=6x5x2=60, P4=6x3x2=36. Total=150. Shares: 20%, 16%, 40%, 24%."
+  },
+  {
+    "id": "bar_mobile_phone_ownership_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange smartphone vs non-smartphone percentages across the 3 years.",
+    "question": "Set each year's total and split correctly.",
+    "prompt_rules": [
+      "2010: 200 million adults owned mobiles; 70 million owned smartphones.",
+      "2014: 230 million adults owned mobiles; smartphones were 56.5 million higher than in 2010.",
+      "2018: 250 million adults owned mobiles; non-smartphone users dropped by 72.5 million compared to 2010."
+    ],
+    "widget_data": {
+      "axis_max": 300,
+      "axis_step": 50,
+      "segment_labels": {
+        "primary": "Smartphone",
+        "secondary": "Non-smartphone"
+      },
+      "interactive_bars": [
+        {
+          "id": "y2010",
+          "label": "2010",
+          "total": 200,
+          "split_pct": 50
+        },
+        {
+          "id": "y2014",
+          "label": "2014",
+          "total": 230,
+          "split_pct": 50
+        },
+        {
+          "id": "y2018",
+          "label": "2018",
+          "total": 250,
+          "split_pct": 50
+        }
+      ]
+    },
+    "correct_answer": {
+      "y2010": {
+        "total": 200,
+        "split_pct": 35
+      },
+      "y2014": {
+        "total": 230,
+        "split_pct": 55
+      },
+      "y2018": {
+        "total": 250,
+        "split_pct": 77
+      }
+    },
+    "tolerance": {
+      "total": 2,
+      "split_pct": 2
+    },
+    "explanation": "2010: 70/200=35% smartphones. 2014 smartphones = 70+56.5=126.5 => 126.5/230=55%. 2018 non-smart 2010 was 130; drop 72.5 => 57.5 non-smart, so smartphones=192.5 => 192.5/250=77%."
+  },
+  {
+    "id": "pie_weekly_contracts_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "hard",
+    "instruction": "Adjust the pie chart to represent this week's sales.",
+    "question": "Resize each employee slice based on contracts sold.",
+    "prompt_rules": [
+      "Four employees sold 20 contracts this week.",
+      "Adam sold five contracts.",
+      "Charles sold 2/3 fewer contracts than Barbara.",
+      "Daniela sold five more contracts than Charles."
+    ],
+    "widget_data": {
+      "total_value": 20,
+      "info_cards": [
+        {
+          "id": "adam_info",
+          "title": "Adam",
+          "subtitle": "Sold 5 contracts",
+          "color": "blue"
+        },
+        {
+          "id": "barbara_info",
+          "title": "Barbara",
+          "subtitle": "Solve for B",
+          "color": "green"
+        },
+        {
+          "id": "charles_info",
+          "title": "Charles",
+          "subtitle": "2/3 fewer than Barbara",
+          "color": "red"
+        },
+        {
+          "id": "daniela_info",
+          "title": "Daniela",
+          "subtitle": "5 more than Charles",
+          "color": "orange"
+        }
+      ],
+      "segments": [
+        {
+          "id": "adam",
+          "label": "Adam",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "barbara",
+          "label": "Barbara",
+          "color": "green",
+          "initial_pct": 25
+        },
+        {
+          "id": "charles",
+          "label": "Charles",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "daniela",
+          "label": "Daniela",
+          "color": "orange",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "adam": 25,
+      "barbara": 30,
+      "charles": 10,
+      "daniela": 35
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Let Barbara=B. Then Charles=B/3 (2/3 fewer). Daniela=B/3+5. Total: 5 + B + B/3 + (B/3+5) = 20 => B=6. So Adam=5, Barbara=6, Charles=2, Daniela=7 => 25%, 30%, 10%, 35%."
+  },
+  {
+    "id": "bar_safety_violations_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the total number of safety violations and the percentages for gloves and safety glasses.",
+    "question": "Adjust Year 2 to match the change rules.",
+    "prompt_rules": [
+      "Year 1: 200 safety violations total.",
+      "Year 1: 64 were for not wearing gloves; the rest were for not wearing safety glasses.",
+      "Year 2: glove violations increased by 38.",
+      "Year 2: safety-glasses violations decreased by 50%."
+    ],
+    "widget_data": {
+      "axis_max": 250,
+      "axis_step": 50,
+      "segment_labels": {
+        "primary": "Gloves",
+        "secondary": "Safety glasses"
+      },
+      "bar_1": {
+        "id": "y2016",
+        "label": "2016",
+        "total": 200,
+        "split_pct": 32
+      },
+      "bar_2_initial": {
+        "id": "y2017",
+        "label": "2017",
+        "total": 200,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 170,
+      "split_pct": 60
+    },
+    "tolerance": {
+      "total": 3,
+      "split_pct": 2
+    },
+    "explanation": "Year 1: Gloves=64, Glasses=136. Year 2: Gloves=64+38=102. Glasses=136 x 0.5 = 68. Total=170. Gloves share=102/170=60%."
+  },
+  {
+    "id": "bar_student_enrolment_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the number of students enrolled for each semester and the male and female percentages.",
+    "question": "Adjust Semester 2 to match the change rules.",
+    "prompt_rules": [
+      "Semester 1 total students: 100.",
+      "Semester 1 male:female ratio was 3:1.",
+      "Semester 2 male enrolment is 20% higher than Semester 1.",
+      "Semester 2 female enrolment is 40% higher than Semester 1."
+    ],
+    "widget_data": {
+      "axis_max": 150,
+      "axis_step": 25,
+      "segment_labels": {
+        "primary": "Male",
+        "secondary": "Female"
+      },
+      "bar_1": {
+        "id": "sem_1",
+        "label": "Semester 1",
+        "total": 100,
+        "split_pct": 75
+      },
+      "bar_2_initial": {
+        "id": "sem_2",
+        "label": "Semester 2",
+        "total": 100,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 125,
+      "split_pct": 72
+    },
+    "tolerance": {
+      "total": 3,
+      "split_pct": 2
+    },
+    "explanation": "Semester 1: Male=75, Female=25. Semester 2: Male=75x1.2=90, Female=25x1.4=35. Total=125. Male share=90/125=72%."
+  },
+  {
+    "id": "pie_new_employees_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "hard",
+    "instruction": "Adjust the pie chart to represent the new employees hired in the first four months.",
+    "question": "Resize each month slice to match the hiring rules.",
+    "prompt_rules": [
+      "Total hires across the first four months: 300.",
+      "April had 33 new employees.",
+      "January accounted for 22% more of the total hires than April.",
+      "February had 2/3 as many new employees as January.",
+      "March had the most new employees."
+    ],
+    "widget_data": {
+      "total_value": 300,
+      "info_cards": [
+        {
+          "id": "jan_info",
+          "title": "January",
+          "subtitle": "22% more of total than April",
+          "color": "blue"
+        },
+        {
+          "id": "feb_info",
+          "title": "February",
+          "subtitle": "2/3 of January",
+          "color": "green"
+        },
+        {
+          "id": "mar_info",
+          "title": "March",
+          "subtitle": "Most hires",
+          "color": "red"
+        },
+        {
+          "id": "apr_info",
+          "title": "April",
+          "subtitle": "33 hires",
+          "color": "orange"
+        }
+      ],
+      "segments": [
+        {
+          "id": "jan",
+          "label": "January",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "feb",
+          "label": "February",
+          "color": "green",
+          "initial_pct": 25
+        },
+        {
+          "id": "mar",
+          "label": "March",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "apr",
+          "label": "April",
+          "color": "orange",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "jan": 33,
+      "feb": 22,
+      "mar": 34,
+      "apr": 11
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "April is 33/300=11% of total. January is 11%+22%=33% => 99 hires. February is 2/3 of 99 => 66. Remaining for March = 300-(99+66+33)=102 (34%)."
+  },
+  {
+    "id": "pie_profit_grades_real_uk",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "hard",
+    "instruction": "Adjust the pie chart to represent the percentage of profit that each grade accounts for.",
+    "question": "Resize each grade slice based on profit contribution.",
+    "prompt_rules": [
+      "Each batch yields 4 grades of product.",
+      "Each grade has a fixed cost of Â£30,000.",
+      "Profit per grade = (Litres per batch x Sale price per litre) - 30,000."
+    ],
+    "widget_data": {
+      "total_value": 180,
+      "info_cards": [
+        {
+          "id": "g1_info_real",
+          "title": "Grade 1",
+          "subtitle": "672 litres | Â£125 per litre",
+          "color": "blue"
+        },
+        {
+          "id": "g2_info_real",
+          "title": "Grade 2",
+          "subtitle": "300 litres | Â£250 per litre",
+          "color": "green"
+        },
+        {
+          "id": "g3_info_real",
+          "title": "Grade 3",
+          "subtitle": "465 litres | Â£200 per litre",
+          "color": "red"
+        },
+        {
+          "id": "g4_info_real",
+          "title": "Grade 4",
+          "subtitle": "375 litres | Â£128 per litre",
+          "color": "orange"
+        }
+      ],
+      "segments": [
+        {
+          "id": "grade_1_real",
+          "label": "Grade 1",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "grade_2_real",
+          "label": "Grade 2",
+          "color": "green",
+          "initial_pct": 25
+        },
+        {
+          "id": "grade_3_real",
+          "label": "Grade 3",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "grade_4_real",
+          "label": "Grade 4",
+          "color": "orange",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "grade_1_real": 30,
+      "grade_2_real": 25,
+      "grade_3_real": 35,
+      "grade_4_real": 10
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Revenues: 672x125=84,000; 300x250=75,000; 465x200=93,000; 375x128=48,000. Profits after Â£30k each: 54k, 45k, 63k, 18k. Total=180k. Shares: 30%, 25%, 35%, 10%."
   }
 ]

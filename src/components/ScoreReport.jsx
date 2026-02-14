@@ -7,6 +7,7 @@ import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
 import SHLTabbedEvalWidget from './interactive/SHLTabbedEvalWidget'
 import SHLPointGraphWidget from './interactive/SHLPointGraphWidget'
 import SHLRankingWidget from './interactive/SHLRankingWidget'
+import AbilityTestReport from './AbilityTestReport'
 import { hasSupabaseEnv } from '../lib/supabase'
 import { insertTestAttempt } from '../lib/supabaseWrites'
 import { useAuth } from '../context/useAuth'
@@ -275,6 +276,7 @@ export default function ScoreReport({
     const [reviewMode, setReviewMode] = useState(false)
     const [reviewScope, setReviewScope] = useState('all')
     const [currentReview, setCurrentReview] = useState(0)
+    const [viewMode, setViewMode] = useState('summary')
     const [saved, setSaved] = useState(false)
     const [savedLocally, setSavedLocally] = useState(false)
     const [saving, setSaving] = useState(false)
@@ -474,6 +476,15 @@ export default function ScoreReport({
     const sjqCompetencyBreakdown = isSJQAssessment
         ? buildSJQCompetencyBreakdownFromQuestionResults(questionResults)
         : null
+
+    const canShowAbilityReport = !isSJQAssessment
+    const assessmentLabel = (() => {
+        const haystack = `${assessmentType || ''} ${moduleName || ''}`.toLowerCase()
+        if (haystack.includes('deductive')) return 'Deductive Reasoning'
+        if (haystack.includes('inductive')) return 'Inductive Reasoning'
+        if (haystack.includes('numerical')) return 'Numerical Reasoning'
+        return 'Ability Test'
+    })()
 
     function resolveChoiceLabel(id, options) {
         if (!id) return '--'
@@ -919,79 +930,115 @@ export default function ScoreReport({
 
     return (
         <section className="score-report">
-            <article className={`score-report__hero score-report__hero--${grade.tone}`}>
-                <div className="score-report__grade-icon">
-                    <grade.icon size={30} />
-                </div>
-                <h2>{grade.label}</h2>
-                <p className="score-report__score">{score}%</p>
-                <p className="score-report__score-sub">
-                    {correctCount}/{saveTotalQuestions} {scoreUnitLabel}
-                </p>
-            </article>
-
-            <div className="score-report__stats">
-                <article>
-                    <Clock size={16} />
-                    <span>{Math.floor(timeTaken / 60)}m {timeTaken % 60}s</span>
-                    <p>Time Taken</p>
-                </article>
-                <article>
-                    <Clock size={16} />
-                    <span>{Math.floor(totalTime / 60)}m</span>
-                    <p>Time Allowed</p>
-                </article>
-                <article>
-                    <XCircle size={16} />
-                    <span>{skipped}</span>
-                    <p>Skipped</p>
-                </article>
-                <article>
-                    <Flag size={16} />
-                    <span>{flagged.length}</span>
-                    <p>Flagged</p>
-                </article>
+            <div className="score-report__view-tabs" role="tablist" aria-label="Result view">
+                <button
+                    type="button"
+                    className={`score-report__view-tab ${viewMode === 'summary' ? 'score-report__view-tab--active' : ''}`}
+                    onClick={() => setViewMode('summary')}
+                    role="tab"
+                    aria-selected={viewMode === 'summary'}
+                >
+                    Summary
+                </button>
+                <button
+                    type="button"
+                    className={`score-report__view-tab ${viewMode === 'report' ? 'score-report__view-tab--active' : ''}`}
+                    onClick={() => canShowAbilityReport && setViewMode('report')}
+                    role="tab"
+                    aria-selected={viewMode === 'report'}
+                    disabled={!canShowAbilityReport}
+                >
+                    Report
+                </button>
             </div>
 
-            {sjqCompetencyBreakdown && (
-                <article className="score-report__breakdown">
-                    <header className="score-report__breakdown-head">
-                        <h3>Competency Breakdown</h3>
-                        <p>Alignment by NLNG value category (based on your ratings).</p>
-                    </header>
+            {viewMode === 'summary' ? (
+                <>
+                    <article className={`score-report__hero score-report__hero--${grade.tone}`}>
+                        <div className="score-report__grade-icon">
+                            <grade.icon size={30} />
+                        </div>
+                        <h2>{grade.label}</h2>
+                        <p className="score-report__score">{score}%</p>
+                        <p className="score-report__score-sub">
+                            {correctCount}/{saveTotalQuestions} {scoreUnitLabel}
+                        </p>
+                    </article>
 
-                    <div className="score-report__breakdown-grid">
-                        {sjqCompetencyBreakdown.map((item) => {
-                            const tone = item.pct >= 80 ? 'good' : item.pct >= 60 ? 'mid' : 'bad'
-                            const showTip = item.total > 0 && item.pct < 70
-
-                            return (
-                                <div key={item.id} className="score-report__breakdown-card">
-                                    <div className="score-report__breakdown-top">
-                                        <div className="score-report__breakdown-label">{item.label}</div>
-                                        <div className="score-report__breakdown-value">
-                                            {item.pct}%
-                                            <span className="score-report__breakdown-sub">
-                                                {formatSJQUnits(item.earned)}/{formatSJQUnits(item.total)}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="score-report__breakdown-bar" aria-hidden="true">
-                                        <span
-                                            className={`score-report__breakdown-fill score-report__breakdown-fill--${tone}`}
-                                            style={{ width: `${Math.max(0, Math.min(100, item.pct))}%` }}
-                                        />
-                                    </div>
-
-                                    {showTip && (
-                                        <p className="score-report__breakdown-tip">{item.tip}</p>
-                                    )}
-                                </div>
-                            )
-                        })}
+                    <div className="score-report__stats">
+                        <article>
+                            <Clock size={16} />
+                            <span>{Math.floor(timeTaken / 60)}m {timeTaken % 60}s</span>
+                            <p>Time Taken</p>
+                        </article>
+                        <article>
+                            <Clock size={16} />
+                            <span>{Math.floor(totalTime / 60)}m</span>
+                            <p>Time Allowed</p>
+                        </article>
+                        <article>
+                            <XCircle size={16} />
+                            <span>{skipped}</span>
+                            <p>Skipped</p>
+                        </article>
+                        <article>
+                            <Flag size={16} />
+                            <span>{flagged.length}</span>
+                            <p>Flagged</p>
+                        </article>
                     </div>
-                </article>
+
+                    {sjqCompetencyBreakdown && (
+                        <article className="score-report__breakdown">
+                            <header className="score-report__breakdown-head">
+                                <h3>Competency Breakdown</h3>
+                                <p>Alignment by NLNG value category (based on your ratings).</p>
+                            </header>
+
+                            <div className="score-report__breakdown-grid">
+                                {sjqCompetencyBreakdown.map((item) => {
+                                    const tone = item.pct >= 80 ? 'good' : item.pct >= 60 ? 'mid' : 'bad'
+                                    const showTip = item.total > 0 && item.pct < 70
+
+                                    return (
+                                        <div key={item.id} className="score-report__breakdown-card">
+                                            <div className="score-report__breakdown-top">
+                                                <div className="score-report__breakdown-label">{item.label}</div>
+                                                <div className="score-report__breakdown-value">
+                                                    {item.pct}%
+                                                    <span className="score-report__breakdown-sub">
+                                                        {formatSJQUnits(item.earned)}/{formatSJQUnits(item.total)}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="score-report__breakdown-bar" aria-hidden="true">
+                                                <span
+                                                    className={`score-report__breakdown-fill score-report__breakdown-fill--${tone}`}
+                                                    style={{ width: `${Math.max(0, Math.min(100, item.pct))}%` }}
+                                                />
+                                            </div>
+
+                                            {showTip && (
+                                                <p className="score-report__breakdown-tip">{item.tip}</p>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </article>
+                    )}
+                </>
+            ) : (
+                <AbilityTestReport
+                    moduleName={moduleName}
+                    assessmentLabel={assessmentLabel}
+                    scorePct={score}
+                    correctCount={correctCount}
+                    totalQuestions={saveTotalQuestions}
+                    timeTakenSeconds={timeTaken}
+                    timeAllowedSeconds={totalTime}
+                />
             )}
 
             {saved && (
