@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { supabase, hasSupabaseEnv } from '../lib/supabase'
-import { insertTestAttempt } from '../lib/supabaseWrites'
+import { insertTestAttempt, fetchAttemptsViaProxy } from '../lib/supabaseWrites'
 import { generateQuestions } from '../services/deepseek'
 import { readAttemptOutbox, removeAttemptOutbox } from '../utils/attemptOutbox'
 import sjqQuestions from '../data/nlng-sjq-questions.json'
@@ -267,37 +267,50 @@ export default function Dashboard() {
         }
 
         try {
-            let attemptsQuery = supabase
-                .from('test_attempts')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(100)
-
-            let progressQuery = supabase
-                .from('user_progress')
-                .select('*')
-                .eq('user_id', user.id)
-
-            if (signal) {
-                attemptsQuery = attemptsQuery.abortSignal(signal)
-                progressQuery = progressQuery.abortSignal(signal)
-            }
-
             console.log('[dash] fetching attempts + progress for', user.id)
 
-            const [attemptsResult, progressResult] = await Promise.all([
-                withTimeout(attemptsQuery, 20000, 'Stats fetch timed out after 20s'),
-                progressQuery.then((res) => res).catch(() => ({ data: null, error: null })),
-            ])
+            // Try same-origin proxy first (avoids ISP/network blocks on direct Supabase).
+            const proxyData = await fetchAttemptsViaProxy(user.id, { signal, timeoutMs: 12000 }).catch(() => null)
 
-            const { data, error } = attemptsResult
-            console.log('[dash] attempts result:', { count: data?.length, error: error?.message || null })
-            if (error) throw error
+            let data
+            let progressRows
 
-            // Build module progress map from user_progress table
-            const progressRows = Array.isArray(progressResult?.data) ? progressResult.data : []
-            console.log('[dash] progress rows:', progressRows.length)
+            if (proxyData) {
+                data = proxyData.attempts
+                progressRows = Array.isArray(proxyData.progress) ? proxyData.progress : []
+                console.log('[dash] proxy result:', { attempts: data?.length, progress: progressRows.length })
+            } else {
+                // Fallback to direct Supabase JS client
+                console.log('[dash] proxy failed, falling back to direct Supabase ...')
+                let attemptsQuery = supabase
+                    .from('test_attempts')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false })
+                    .limit(100)
+
+                let progressQuery = supabase
+                    .from('user_progress')
+                    .select('*')
+                    .eq('user_id', user.id)
+
+                if (signal) {
+                    attemptsQuery = attemptsQuery.abortSignal(signal)
+                    progressQuery = progressQuery.abortSignal(signal)
+                }
+
+                const [attemptsResult, progressResult] = await Promise.all([
+                    withTimeout(attemptsQuery, 20000, 'Stats fetch timed out after 20s'),
+                    progressQuery.then((res) => res).catch(() => ({ data: null, error: null })),
+                ])
+
+                const { data: directData, error } = attemptsResult
+                console.log('[dash] direct result:', { count: directData?.length, error: error?.message || null })
+                if (error) throw error
+
+                data = directData
+                progressRows = Array.isArray(progressResult?.data) ? progressResult.data : []
+            }
             const progressMap = {}
             for (const row of progressRows) {
                 progressMap[row.assessment_type] = {

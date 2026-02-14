@@ -166,6 +166,61 @@ async function insertViaProxy(payload, accessToken, { signal, timeoutMs }) {
     }
 }
 
+export async function fetchAttemptsViaProxy(userId, { signal, timeoutMs = 15000 } = {}) {
+    console.log('[dash] trying proxy /api/fetch-attempts ...')
+
+    const accessToken = await getAccessToken()
+    if (!accessToken) return null
+
+    const controller = new AbortController()
+    const detach = attachAbortSignal(controller, signal)
+    const timerId = setTimeout(() => controller.abort(), timeoutMs)
+
+    try {
+        const response = await fetch(`/api/fetch-attempts?user_id=${encodeURIComponent(userId)}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                Accept: 'application/json',
+            },
+            signal: controller.signal,
+        })
+
+        console.log('[dash] proxy response:', response.status)
+
+        if (response.status === 404 || response.status === 405) {
+            console.log('[dash] proxy endpoint not found')
+            return null
+        }
+
+        if (!response.ok) {
+            console.warn('[dash] proxy error:', response.status)
+            return null
+        }
+
+        const contentType = response.headers.get('content-type') || ''
+        if (!contentType.includes('application/json')) {
+            console.log('[dash] proxy returned non-JSON')
+            return null
+        }
+
+        const data = await response.json().catch(() => null)
+        if (!data || data.ok !== true) {
+            console.warn('[dash] proxy returned ok=false:', data)
+            return null
+        }
+
+        console.log('[dash] proxy SUCCESS:', { attempts: data.attempts?.length, progress: data.progress?.length })
+        return { attempts: data.attempts || [], progress: data.progress || [] }
+    } catch (err) {
+        console.warn('[dash] proxy threw:', err?.message || err)
+        return null
+    } finally {
+        clearTimeout(timerId)
+        detach()
+        controller.abort()
+    }
+}
+
 async function insertViaPostgrest(payload, accessToken, { signal, timeoutMs }) {
     const controller = new AbortController()
     const detach = attachAbortSignal(controller, signal)
