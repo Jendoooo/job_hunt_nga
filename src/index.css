@@ -1634,6 +1634,7 @@ select:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  position: relative;
 }
 
 .shl-beh__header {
@@ -1641,6 +1642,24 @@ select:focus-visible {
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.75rem;
+}
+
+.shl-beh__toast {
+  position: absolute;
+  top: -44px;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: #84cc16;
+  color: #0f172a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 26px rgba(132, 204, 22, 0.25);
+  pointer-events: none;
+  z-index: 2;
+  white-space: nowrap;
 }
 
 .shl-beh__prompt {
@@ -1931,6 +1950,27 @@ select:focus-visible {
   gap: 0.65rem;
 }
 
+.beh-sten__scale {
+  display: grid;
+  grid-template-columns: 1.35fr 2fr 32px;
+  gap: 0.75rem;
+  align-items: end;
+  margin-bottom: -0.25rem;
+}
+
+.beh-sten__scale-bar {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 3px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #94a3b8;
+}
+
+.beh-sten__scale-bar span {
+  text-align: center;
+}
+
 .beh-sten__row {
   display: grid;
   grid-template-columns: 1.35fr 2fr 32px;
@@ -1954,10 +1994,12 @@ select:focus-visible {
   height: 10px;
   border-radius: 3px;
   background: #e5e7eb;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.09);
 }
 
 .beh-sten__tick--on {
   background: #84cc16;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.18);
 }
 
 .beh-sten__value {

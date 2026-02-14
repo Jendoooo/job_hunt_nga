@@ -355,6 +355,15 @@ export default function BehavioralReport({
         </header>
 
         <div className="beh-sten">
+          <div className="beh-sten__scale" aria-hidden="true">
+            <div />
+            <div className="beh-sten__scale-bar">
+              {Array.from({ length: 10 }).map((_, idx) => (
+                <span key={idx}>{idx + 1}</span>
+              ))}
+            </div>
+            <div />
+          </div>
           {report.profile.map((item) => (
             <div className="beh-sten__row" key={item.id}>
               <div className="beh-sten__label">{item.label}</div>

@@ -19,6 +19,7 @@ const QUESTION_OPTIONS = [12, 20, 32, 40, 50]
 const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30]
 const REAL_PRESET_QUESTION_COUNT = 32
 const REAL_PRESET_TIME_MINUTES = 20
+const AUTO_ADVANCE_DELAY_MS = 300
 
 function normalizeTriplet(triplet, prefix = '') {
   const baseId = String(triplet?.id || '').trim()
@@ -80,6 +81,13 @@ export default function NLNGBehavioralTest() {
   const [answers, setAnswers] = useState({})
   const [timeTaken, setTimeTaken] = useState(0)
   const startTimeRef = useRef(null)
+  const autoAdvanceTimerRef = useRef(null)
+
+  function clearAutoAdvanceTimer() {
+    if (!autoAdvanceTimerRef.current) return
+    clearTimeout(autoAdvanceTimerRef.current)
+    autoAdvanceTimerRef.current = null
+  }
 
   const allTriplets = useMemo(() => {
     const base = getTripletsFromBank(behavioralBank)
@@ -110,6 +118,7 @@ export default function NLNGBehavioralTest() {
   }
 
   function startTest() {
+    clearAutoAdvanceTimer()
     const picked = shuffleQuestions(allTriplets).slice(0, effectiveQuestionCount)
     setActiveTriplets(picked)
     setCurrentIndex(0)
@@ -120,6 +129,7 @@ export default function NLNGBehavioralTest() {
   }
 
   function finishTest() {
+    clearAutoAdvanceTimer()
     const elapsed = startTimeRef.current
       ? Math.round((Date.now() - startTimeRef.current) / 1000)
       : totalTimeSeconds
@@ -131,6 +141,7 @@ export default function NLNGBehavioralTest() {
     const triplet = activeTriplets[currentIndex]
     if (!triplet) return
 
+    clearAutoAdvanceTimer()
     setAnswers((prev) => {
       const next = { ...prev }
       if (!value) {
@@ -140,23 +151,39 @@ export default function NLNGBehavioralTest() {
       next[triplet.id] = value
       return next
     })
+
+    const completed = Array.isArray(value) && value.length === 3
+    if (!completed) return
+    if (stage !== 'test') return
+    if (currentIndex >= activeTriplets.length - 1) return
+
+    autoAdvanceTimerRef.current = setTimeout(() => {
+      autoAdvanceTimerRef.current = null
+      setCurrentIndex((prev) => Math.min(activeTriplets.length - 1, prev + 1))
+    }, AUTO_ADVANCE_DELAY_MS)
   }
 
   const currentTriplet = activeTriplets[currentIndex] || null
   const currentAnswer = currentTriplet ? answers[currentTriplet.id] : null
   const isAnswered = Array.isArray(currentAnswer) && currentAnswer.length === 3
 
-  // Auto-advance after completing a triplet (SHL-like flow), but keep nav buttons too.
-  useEffect(() => {
-    if (stage !== 'test') return
-    if (!isAnswered) return
-    if (currentIndex >= activeTriplets.length - 1) return
+  useEffect(() => (
+    () => {
+      if (!autoAdvanceTimerRef.current) return
+      clearTimeout(autoAdvanceTimerRef.current)
+      autoAdvanceTimerRef.current = null
+    }
+  ), [])
 
-    const timeoutId = setTimeout(() => {
-      setCurrentIndex((prev) => Math.min(activeTriplets.length - 1, prev + 1))
-    }, 350)
-    return () => clearTimeout(timeoutId)
-  }, [activeTriplets.length, currentIndex, isAnswered, stage])
+  function goPrevious() {
+    clearAutoAdvanceTimer()
+    setCurrentIndex((prev) => Math.max(0, prev - 1))
+  }
+
+  function goNext() {
+    clearAutoAdvanceTimer()
+    setCurrentIndex((prev) => Math.min(activeTriplets.length - 1, prev + 1))
+  }
 
   if (stage === 'setup') {
     return (
@@ -375,7 +402,7 @@ export default function NLNGBehavioralTest() {
             <div className="test-page__nav-buttons mt-6">
               <button
                 className="btn btn--secondary"
-                onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
+                onClick={goPrevious}
                 disabled={currentIndex === 0}
               >
                 Previous
@@ -384,7 +411,7 @@ export default function NLNGBehavioralTest() {
               {currentIndex < activeTriplets.length - 1 ? (
                 <button
                   className="btn btn--primary"
-                  onClick={() => setCurrentIndex((prev) => Math.min(activeTriplets.length - 1, prev + 1))}
+                  onClick={goNext}
                   disabled={!isAnswered}
                 >
                   Next
