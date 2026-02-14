@@ -395,3 +395,9 @@ Date: 2026-02-12
 ## Phase 12: NLNG Deductive Draft Guard + Repo Hygiene (2026-02-12)
 - [x] NLNG deductive pool now excludes draft questions that are missing an answer key (`correctAnswer < 0`), so sessions only draw from valid questions.
 - [x] Expanded `.gitignore` to exclude local artifacts (`.claude/`, `image/`, `supabase/.temp/`, `src/index.css.bak`, etc.) to keep Git status clean.
+
+## Phase 28: SHL Behavioral (OPQ Style) [Codex 2026-02-14]
+- [x] Added OPQ-style ipsative behavioral module under NLNG (`/test/nlng-behavioral`) with 2-step forced-choice ranking widget.
+- [x] Added `src/data/shl-behavioral.json` (32 triplets) mapping each statement to a Great Eight competency.
+- [x] Added scoring + report UI: `src/utils/behavioralScoring.js` and `src/components/BehavioralReport.jsx` (Sten 1-10 bars).
+- [x] Wired routing + dashboard module card; excluded non-graded behavioral attempts (`assessment_type=nlng-opq`) from pass-rate/average KPIs and show “Profile” in attempt history.

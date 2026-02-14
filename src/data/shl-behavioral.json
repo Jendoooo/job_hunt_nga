@@ -1,0 +1,647 @@
+{
+  "id": "behavioral_set_1",
+  "type": "ipsative_triplet",
+  "triplets": [
+    {
+      "id": "q1",
+      "options": [
+        {
+          "id": "q1_a",
+          "text": "I encourage people to work together as a team.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q1_b",
+          "text": "I can see the advantages and disadvantages of an approach.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q1_c",
+          "text": "I follow rules and regulations.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "options": [
+        {
+          "id": "q2_a",
+          "text": "I easily start conversations with new people.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q2_b",
+          "text": "I listen carefully to understand what others need.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q2_c",
+          "text": "I generate several solutions to a problem.",
+          "competency": "creating_conceptualizing"
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "options": [
+        {
+          "id": "q3_a",
+          "text": "I am comfortable making decisions when information is incomplete.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q3_b",
+          "text": "I plan work so deadlines are met with minimal last-minute changes.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q3_c",
+          "text": "I stay calm when priorities change unexpectedly.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "options": [
+        {
+          "id": "q4_a",
+          "text": "I set ambitious targets and work hard to exceed them.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q4_b",
+          "text": "I like to verify facts before accepting a conclusion.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q4_c",
+          "text": "I make time to support colleagues when they are under pressure.",
+          "competency": "supporting_cooperating"
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "options": [
+        {
+          "id": "q5_a",
+          "text": "I enjoy exploring new approaches rather than repeating the usual way.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q5_b",
+          "text": "I take charge to keep a group focused and moving forward.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q5_c",
+          "text": "I feel confident presenting ideas to an audience.",
+          "competency": "interacting_presenting"
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "options": [
+        {
+          "id": "q6_a",
+          "text": "I keep track of details so nothing important is missed.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q6_b",
+          "text": "I recover quickly after setbacks and refocus on what matters.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q6_c",
+          "text": "I look for opportunities to improve results and performance.",
+          "competency": "enterprising_performing"
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "options": [
+        {
+          "id": "q7_a",
+          "text": "I enjoy analyzing data to identify patterns and trends.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q7_b",
+          "text": "I like to challenge assumptions and propose new possibilities.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q7_c",
+          "text": "I try to keep harmony in the team even when opinions differ.",
+          "competency": "supporting_cooperating"
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "options": [
+        {
+          "id": "q8_a",
+          "text": "I enjoy meeting customers or stakeholders to understand their needs.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q8_b",
+          "text": "I am motivated by achieving measurable business outcomes.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q8_c",
+          "text": "I like to keep processes consistent and repeatable.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "options": [
+        {
+          "id": "q9_a",
+          "text": "I speak up when a decision needs to be made.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q9_b",
+          "text": "I handle pressure well when workloads increase.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q9_c",
+          "text": "I prefer to base opinions on evidence rather than assumptions.",
+          "competency": "analyzing_interpreting"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "options": [
+        {
+          "id": "q10_a",
+          "text": "I help ensure everyone has a chance to contribute.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q10_b",
+          "text": "I set up routines that help work run smoothly.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q10_c",
+          "text": "I enjoy competing to be among the best performers.",
+          "competency": "enterprising_performing"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "options": [
+        {
+          "id": "q11_a",
+          "text": "I think of imaginative ways to solve difficult problems.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q11_b",
+          "text": "I find it easy to build rapport with people quickly.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q11_c",
+          "text": "I stay positive and composed in uncertain situations.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "options": [
+        {
+          "id": "q12_a",
+          "text": "I like to explore the causes behind a result before acting.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q12_b",
+          "text": "I set clear direction so others know what success looks like.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q12_c",
+          "text": "I organize tasks so the right work happens in the right order.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "options": [
+        {
+          "id": "q13_a",
+          "text": "I enjoy negotiating for better outcomes when opportunities arise.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q13_b",
+          "text": "I can adjust my approach when things do not go to plan.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q13_c",
+          "text": "I consider how my actions will affect other people.",
+          "competency": "supporting_cooperating"
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "options": [
+        {
+          "id": "q14_a",
+          "text": "I enjoy explaining complex ideas in a simple way.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q14_b",
+          "text": "I check information carefully for errors or inconsistencies.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q14_c",
+          "text": "I like brainstorming options before choosing a direction.",
+          "competency": "creating_conceptualizing"
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "options": [
+        {
+          "id": "q15_a",
+          "text": "I am willing to make tough calls when needed.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q15_b",
+          "text": "I value cooperation and work well with different personalities.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q15_c",
+          "text": "I focus on achieving results that improve business performance.",
+          "competency": "enterprising_performing"
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "options": [
+        {
+          "id": "q16_a",
+          "text": "I prefer structured plans and checklists to keep work on track.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q16_b",
+          "text": "I enjoy turning abstract ideas into practical improvements.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q16_c",
+          "text": "I stay flexible when requirements change at short notice.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "options": [
+        {
+          "id": "q17_a",
+          "text": "I like to compare options using clear criteria.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q17_b",
+          "text": "I am energized by targets, sales, and winning work.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q17_c",
+          "text": "I enjoy meeting new people and expanding my network.",
+          "competency": "interacting_presenting"
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "options": [
+        {
+          "id": "q18_a",
+          "text": "I help the team stay united when there is disagreement.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q18_b",
+          "text": "I take ownership of decisions and accept accountability.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q18_c",
+          "text": "I keep standards high by following procedures consistently.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "options": [
+        {
+          "id": "q19_a",
+          "text": "I manage stress well, even when the pace is intense.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q19_b",
+          "text": "I like persuading others and promoting ideas confidently.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q19_c",
+          "text": "I challenge results if the numbers do not add up.",
+          "competency": "analyzing_interpreting"
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "options": [
+        {
+          "id": "q20_a",
+          "text": "I push for improvement and do not settle for average results.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q20_b",
+          "text": "I enjoy inventing new methods to achieve a goal.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q20_c",
+          "text": "I build trust by being reliable and considerate.",
+          "competency": "supporting_cooperating"
+        }
+      ]
+    },
+    {
+      "id": "q21",
+      "options": [
+        {
+          "id": "q21_a",
+          "text": "I am happy to take the lead when the team needs direction.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q21_b",
+          "text": "I like to structure work so each step is clear.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q21_c",
+          "text": "I enjoy speaking in meetings and sharing my views.",
+          "competency": "interacting_presenting"
+        }
+      ]
+    },
+    {
+      "id": "q22",
+      "options": [
+        {
+          "id": "q22_a",
+          "text": "I like evaluating evidence before making recommendations.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q22_b",
+          "text": "I cope well when plans change and information is unclear.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q22_c",
+          "text": "I enjoy taking calculated risks to achieve bigger outcomes.",
+          "competency": "enterprising_performing"
+        }
+      ]
+    },
+    {
+      "id": "q23",
+      "options": [
+        {
+          "id": "q23_a",
+          "text": "I enjoy questioning the status quo and suggesting improvements.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q23_b",
+          "text": "I focus on cooperation and resolving misunderstandings quickly.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q23_c",
+          "text": "I like to work methodically and finish tasks thoroughly.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q24",
+      "options": [
+        {
+          "id": "q24_a",
+          "text": "I can influence decisions by communicating clearly and confidently.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q24_b",
+          "text": "I take control quickly when there is uncertainty about what to do.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q24_c",
+          "text": "I adapt quickly when I get new feedback or new constraints.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q25",
+      "options": [
+        {
+          "id": "q25_a",
+          "text": "I like setting goals and tracking progress against them.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q25_b",
+          "text": "I enjoy checking details to ensure results are accurate.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q25_c",
+          "text": "I keep work organized so tasks are completed efficiently.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q26",
+      "options": [
+        {
+          "id": "q26_a",
+          "text": "I treat people fairly and consider their perspectives.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q26_b",
+          "text": "I like thinking of new ways to make processes better.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q26_c",
+          "text": "I can handle uncertainty without getting overwhelmed.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q27",
+      "options": [
+        {
+          "id": "q27_a",
+          "text": "I am prepared to make difficult decisions and move forward.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q27_b",
+          "text": "I enjoy engaging an audience and keeping attention.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q27_c",
+          "text": "I break complex issues down into smaller parts to understand them.",
+          "competency": "analyzing_interpreting"
+        }
+      ]
+    },
+    {
+      "id": "q28",
+      "options": [
+        {
+          "id": "q28_a",
+          "text": "I prefer clear procedures and consistent standards.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q28_b",
+          "text": "I look for ways to win opportunities and grow results.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q28_c",
+          "text": "I enjoy developing original ideas to solve problems.",
+          "competency": "creating_conceptualizing"
+        }
+      ]
+    },
+    {
+      "id": "q29",
+      "options": [
+        {
+          "id": "q29_a",
+          "text": "I stay effective even when things around me are chaotic.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q29_b",
+          "text": "I build strong relationships by being supportive.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q29_c",
+          "text": "I enjoy working with people and energizing a group discussion.",
+          "competency": "interacting_presenting"
+        }
+      ]
+    },
+    {
+      "id": "q30",
+      "options": [
+        {
+          "id": "q30_a",
+          "text": "I like reviewing information carefully before committing.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q30_b",
+          "text": "I maintain structure and discipline in the way work is done.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q30_c",
+          "text": "I am motivated by achieving recognition for strong performance.",
+          "competency": "enterprising_performing"
+        }
+      ]
+    },
+    {
+      "id": "q31",
+      "options": [
+        {
+          "id": "q31_a",
+          "text": "I often come up with creative alternatives when options are limited.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q31_b",
+          "text": "I make decisions quickly so the team can keep moving.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q31_c",
+          "text": "I can adjust to different ways of working without frustration.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q32",
+      "options": [
+        {
+          "id": "q32_a",
+          "text": "I try to keep the team supportive and respectful.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q32_b",
+          "text": "I like investigating causes before deciding what action to take.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q32_c",
+          "text": "I like speaking up and contributing in group situations.",
+          "competency": "interacting_presenting"
+        }
+      ]
+    }
+  ]
+}
+

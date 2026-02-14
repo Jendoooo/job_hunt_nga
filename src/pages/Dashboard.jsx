@@ -27,6 +27,9 @@ import {
 
 const PASS_RATIO_THRESHOLD = 0.5
 const DUPLICATE_WINDOW_MS = 45000
+const NON_GRADED_ASSESSMENT_TYPES = new Set([
+    'nlng-opq',
+])
 
 function isAbortLikeError(error) {
     const message = typeof error?.message === 'string'
@@ -86,6 +89,9 @@ function withTimeout(promise, timeoutMs, message) {
 }
 
 function attemptRatio(attempt) {
+    const assessmentType = String(attempt?.assessment_type || '')
+    if (NON_GRADED_ASSESSMENT_TYPES.has(assessmentType)) return null
+
     const score = Number(attempt?.score)
     const total = Number(attempt?.total_questions)
     if (!Number.isFinite(score) || !Number.isFinite(total) || total <= 0) return 0
@@ -245,11 +251,13 @@ export default function Dashboard() {
 
             const examAttempts = merged.filter((attempt) => attempt.mode === 'exam')
             const passRateSource = examAttempts.length > 0 ? examAttempts : merged
-            const passCount = passRateSource.filter((attempt) => attemptRatio(attempt) >= PASS_RATIO_THRESHOLD).length
-            const averageSource = passRateSource.length > 0 ? passRateSource : merged
-            const averagePercent = averageSource.length > 0
+            const gradedForKpi = passRateSource
+                .map((attempt) => ({ attempt, ratio: attemptRatio(attempt) }))
+                .filter((item) => item.ratio !== null)
+            const passCount = gradedForKpi.filter((item) => item.ratio >= PASS_RATIO_THRESHOLD).length
+            const averagePercent = gradedForKpi.length > 0
                 ? Math.round(
-                    averageSource.reduce((sum, attempt) => sum + attemptRatio(attempt), 0) / averageSource.length * 100
+                    gradedForKpi.reduce((sum, item) => sum + item.ratio, 0) / gradedForKpi.length * 100
                 )
                 : null
 
@@ -261,7 +269,7 @@ export default function Dashboard() {
             setRecentAttempts(merged)
             setTestsTaken(merged.length)
             setPracticeSessions(merged.filter((attempt) => attempt.mode === 'practice').length)
-            setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
+            setPassRate(gradedForKpi.length > 0 ? Math.round((passCount / gradedForKpi.length) * 100) : null)
             setAverageScore(averagePercent)
             setSjqRollingProfile(sjqProfile)
 
@@ -328,11 +336,13 @@ export default function Dashboard() {
             const attempts = dedupeAttempts(merged)
             const examAttempts = attempts.filter((attempt) => attempt.mode === 'exam')
             const passRateSource = examAttempts.length > 0 ? examAttempts : attempts
-            const passCount = passRateSource.filter((attempt) => attemptRatio(attempt) >= PASS_RATIO_THRESHOLD).length
-            const averageSource = passRateSource.length > 0 ? passRateSource : attempts
-            const averagePercent = averageSource.length > 0
+            const gradedForKpi = passRateSource
+                .map((attempt) => ({ attempt, ratio: attemptRatio(attempt) }))
+                .filter((item) => item.ratio !== null)
+            const passCount = gradedForKpi.filter((item) => item.ratio >= PASS_RATIO_THRESHOLD).length
+            const averagePercent = gradedForKpi.length > 0
                 ? Math.round(
-                    averageSource.reduce((sum, attempt) => sum + attemptRatio(attempt), 0) / averageSource.length * 100
+                    gradedForKpi.reduce((sum, item) => sum + item.ratio, 0) / gradedForKpi.length * 100
                 )
                 : null
 
@@ -343,7 +353,7 @@ export default function Dashboard() {
             setRecentAttempts(attempts)
             setTestsTaken(attempts.length)
             setPracticeSessions(attempts.filter((attempt) => attempt.mode === 'practice').length)
-            setPassRate(passRateSource.length > 0 ? Math.round((passCount / passRateSource.length) * 100) : null)
+            setPassRate(gradedForKpi.length > 0 ? Math.round((passCount / gradedForKpi.length) * 100) : null)
             setAverageScore(averagePercent)
             setSjqRollingProfile(sjqProfile)
         } catch (err) {
@@ -448,6 +458,7 @@ export default function Dashboard() {
         'nlng-shl': 'nlng-shl',
         'nlng-interactive': 'nlng-interactive-numerical',
         'nlng-sjq': 'nlng_sjq',
+        'nlng-behavioral': 'nlng-opq',
         'saville-practice': 'saville-practice',
     }
 
@@ -528,6 +539,18 @@ export default function Dashboard() {
                     type: 'Timed 20 min',
                     status: 'active',
                     path: '/test/nlng-sjq',
+                    accent: 'sky',
+                },
+                {
+                    id: 'nlng-behavioral',
+                    title: 'SHL Behavioral (OPQ Style)',
+                    subtitle: 'Forced-choice ranking',
+                    description: 'Ipsative blocks: choose most like you, then best of remaining to reveal priorities.',
+                    icon: Brain,
+                    stat: '32 blocks',
+                    type: 'Profile',
+                    status: 'active',
+                    path: '/test/nlng-behavioral',
                     accent: 'sky',
                 },
                 {
@@ -893,8 +916,12 @@ export default function Dashboard() {
                                     </div>
                                 )}
                                 {(showAllAttempts ? recentAttempts : recentAttempts.slice(0, 8)).map(attempt => {
-                                    const percentage = Math.round(attemptRatio(attempt) * 100)
-                                    const passed = percentage >= PASS_RATIO_THRESHOLD * 100
+                                    const ratio = attemptRatio(attempt)
+                                    const percentage = ratio === null ? null : Math.round(ratio * 100)
+                                    const passed = percentage !== null && percentage >= PASS_RATIO_THRESHOLD * 100
+                                    const scoreTone = percentage === null
+                                        ? 'neutral'
+                                        : (passed ? 'pass' : 'warn')
                                     const modeLabel = attempt.mode === 'exam' ? 'Exam' : attempt.mode === 'practice' ? 'Practice' : null
                                     return (
                                         <article className="activity-item" key={attempt.id}>
@@ -907,8 +934,8 @@ export default function Dashboard() {
                                                     {new Date(attempt.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: '2-digit' })}
                                                 </span>
                                             </div>
-                                            <span className={`activity-item__score ${passed ? 'activity-item__score--pass' : 'activity-item__score--warn'}`}>
-                                                {percentage}%
+                                            <span className={`activity-item__score activity-item__score--${scoreTone}`}>
+                                                {percentage === null ? 'Profile' : `${percentage}%`}
                                             </span>
                                         </article>
                                     )
