@@ -185,7 +185,8 @@ export function AuthProvider({ children }) {
             email,
             password,
             options: {
-                data: { full_name: fullName }
+                data: { full_name: fullName },
+                emailRedirectTo: window.location.origin,
             }
         })
         if (error) throw error
