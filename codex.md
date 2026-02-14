@@ -85,6 +85,13 @@
 - Auto-advance now triggers only on newly answered blocks; manual nav cancels pending auto-advance.
 - Report: added a 1-10 sten scale row + clearer tick grid styling.
 
+### [Codex 2026-02-14 13:05] Behavioral OPQ: Tougher Items + Slower Flow + AI Narrative (commit c32ff1d)
+- Slowed block-to-block transition and improved end-of-block UX (after Rank 2 pick, UI briefly reveals the remaining Rank 3 statement).
+- Last block CTA now reads "Generate Report" once answered.
+- Expanded `src/data/shl-behavioral.json` with tougher trade-off triplets (q33-q44).
+- Added optional AI narrative profile generation using DeepSeek (`src/components/AIBehavioralExplainer.jsx`, `generateBehavioralProfileNarrative`).
+- Scoring now also tracks bottom areas and shows optional extra dimensions (e.g. Integrity & Ethics) when present.
+
 ---
 
 ## Architecture Notes (Codex's modules)
