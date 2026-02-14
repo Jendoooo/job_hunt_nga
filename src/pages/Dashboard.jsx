@@ -35,19 +35,6 @@ function isAbortLikeError(error) {
     return error?.name === 'AbortError' || message.includes('aborted')
 }
 
-function isPrimaryKeyConflict(error) {
-    const code = String(error?.code || '')
-    const message = String(error?.message || '').toLowerCase()
-    const details = String(error?.details || '').toLowerCase()
-    const hint = String(error?.hint || '').toLowerCase()
-
-    return code === '23505' && (
-        message.includes('test_attempts_pkey') ||
-        details.includes('test_attempts_pkey') ||
-        hint.includes('test_attempts_pkey')
-    )
-}
-
 function normalizeForComparison(value) {
     if (value === null || typeof value !== 'object') return value
 
@@ -167,6 +154,7 @@ export default function Dashboard() {
     const [pendingSyncCount, setPendingSyncCount] = useState(0)
     const [outboxSyncError, setOutboxSyncError] = useState('')
     const [sjqRollingProfile, setSjqRollingProfile] = useState(null)
+    const [moduleProgress, setModuleProgress] = useState({})
 
     const flushAttemptOutbox = useCallback(async (signal) => {
         if (!user) return
@@ -191,43 +179,35 @@ export default function Dashboard() {
             }
 
             try {
-                let existsQuery = supabase
-                    .from('test_attempts')
-                    .select('id')
-                    .eq('id', attemptId)
-                    .maybeSingle()
-
-                if (signal) existsQuery = existsQuery.abortSignal(signal)
-                const { data: existing, error: existsError } = await existsQuery
-                if (existsError && !isAbortLikeError(existsError)) {
-                    throw existsError
+                // Upsert: if already exists (PK conflict), update instead of crashing.
+                // Also ensures score_pct is populated for older outbox items.
+                const upsertPayload = {
+                    ...payload,
+                    module_name: payload.module_name || '',
+                    mode: payload.mode || 'practice',
+                    score_pct: payload.score_pct ?? (
+                        payload.total_questions > 0
+                            ? Math.round((payload.score / payload.total_questions) * 100)
+                            : 0
+                    ),
                 }
 
-                if (existing?.id) {
-                    removeAttemptOutbox(attemptId)
-                    continue
-                }
-
-                let insertQuery = supabase
+                let upsertQuery = supabase
                     .from('test_attempts')
-                    .insert(payload)
+                    .upsert(upsertPayload, { onConflict: 'id' })
 
-                if (signal) insertQuery = insertQuery.abortSignal(signal)
-                const { error: insertError } = await insertQuery
+                if (signal) upsertQuery = upsertQuery.abortSignal(signal)
+                const { error: upsertError } = await upsertQuery
 
-                if (insertError) {
-                    if (isPrimaryKeyConflict(insertError)) {
-                        removeAttemptOutbox(attemptId)
-                        continue
-                    }
-                    throw insertError
+                if (upsertError) {
+                    if (isAbortLikeError(upsertError)) return
+                    throw upsertError
                 }
 
                 removeAttemptOutbox(attemptId)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
             } catch (error) {
                 if (isAbortLikeError(error) || signal?.aborted) return
-                // Keep item in outbox; we'll try again on next refresh/focus.
                 console.warn('Outbox sync failed (will retry):', error)
                 setOutboxSyncError('Some locally saved results could not be synced yet. We will retry automatically.')
             }
@@ -280,20 +260,44 @@ export default function Dashboard() {
         }
 
         try {
-            let query = supabase
+            let attemptsQuery = supabase
                 .from('test_attempts')
                 .select('*')
                 .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
                 .limit(100)
 
+            let progressQuery = supabase
+                .from('user_progress')
+                .select('*')
+                .eq('user_id', user.id)
+
             if (signal) {
-                query = query.abortSignal(signal)
+                attemptsQuery = attemptsQuery.abortSignal(signal)
+                progressQuery = progressQuery.abortSignal(signal)
             }
 
-            const { data, error } = await withTimeout(query, 20000, 'Stats fetch timed out after 20s')
+            const [attemptsResult, progressResult] = await Promise.all([
+                withTimeout(attemptsQuery, 20000, 'Stats fetch timed out after 20s'),
+                progressQuery.then((res) => res).catch(() => ({ data: null, error: null })),
+            ])
 
+            const { data, error } = attemptsResult
             if (error) throw error
+
+            // Build module progress map from user_progress table
+            const progressRows = Array.isArray(progressResult?.data) ? progressResult.data : []
+            const progressMap = {}
+            for (const row of progressRows) {
+                progressMap[row.assessment_type] = {
+                    attempts: row.attempts_count,
+                    bestPct: row.best_score_pct,
+                    latestPct: row.latest_score_pct,
+                    lastAt: row.last_attempt_at,
+                }
+            }
+            setModuleProgress(progressMap)
+
             const remoteAttempts = Array.isArray(data) ? data : []
             const pendingAttempts = buildPendingAttemptsFromOutbox(user.id)
             setPendingSyncCount(pendingAttempts.length)
@@ -425,6 +429,22 @@ export default function Dashboard() {
         user?.user_metadata?.full_name ||
         user?.email?.split('@')[0] ||
         'Candidate'
+
+    // Map module card id -> assessment_type used in DB
+    const moduleAssessmentMap = {
+        'saville-aptitude': 'saville-aptitude',
+        'technical': 'totalenergies-technical',
+        'nlng-shl': 'nlng-shl',
+        'nlng-interactive': 'nlng-interactive-numerical',
+        'nlng-sjq': 'nlng_sjq',
+        'saville-practice': 'saville-practice',
+    }
+
+    function getModuleProgressInfo(moduleId) {
+        const assessmentType = moduleAssessmentMap[moduleId]
+        if (!assessmentType) return null
+        return moduleProgress[assessmentType] || null
+    }
 
     const moduleSections = [
         {
@@ -665,6 +685,7 @@ export default function Dashboard() {
                                 <div className="module-group__grid">
                                     {section.modules.map(module => {
                                         const isLive = module.status === 'active'
+                                        const prog = getModuleProgressInfo(module.id)
                                         return (
                                             <article
                                                 key={module.id}
@@ -688,6 +709,20 @@ export default function Dashboard() {
                                                     <span><Clock3 size={14} /> {module.stat}</span>
                                                     <span><Layers3 size={14} /> {module.type}</span>
                                                 </div>
+
+                                                {prog && (
+                                                    <div className="module-card__progress">
+                                                        <div className="module-card__progress-bar" aria-hidden="true">
+                                                            <span
+                                                                className="module-card__progress-fill"
+                                                                style={{ width: `${Math.max(0, Math.min(100, prog.bestPct))}%` }}
+                                                            />
+                                                        </div>
+                                                        <span className="module-card__progress-label">
+                                                            Best: {prog.bestPct}% &middot; {prog.attempts} attempt{prog.attempts === 1 ? '' : 's'}
+                                                        </span>
+                                                    </div>
+                                                )}
 
                                                 <button
                                                     className={`btn btn--sm ${isLive ? 'btn--primary' : 'btn--secondary'}`}

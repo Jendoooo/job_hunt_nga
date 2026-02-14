@@ -116,6 +116,7 @@ Date: 2026-02-12
 - [x] Link workspace to Supabase project ref `fjwfoedyomdgxadnjsdt`
 - [x] Verify remote migration connectivity (`npx supabase db push --linked`)
 - [Codex 2026-02-13 14:16] Phase 26 SHL drag-table + bank upgrades: added unique-rank move semantics in `src/components/interactive/SHLDragTableWidget.jsx`, stabilized interactive card height (`min-height`) and added used-rank styling in `src/index.css`, created `scripts/phase26_naturalize_and_consolidate_shl.cjs` to naturalize prompt rules, normalize volume labels, add missing tab labels, and append 5 consolidated multi-part drag-table questions; regenerated `src/data/shl-interactive-questions.json` (gold source now 102). Also updated `src/pages/NLNGInteractiveTest.jsx` SHL Real preset to prefer multi-part drag-table questions and refreshed the interaction-mode copy.
+- [Codex 2026-02-13 15:13] SHL drag-table: reintroduced drag-to-assign for answer badges (drop onto the answer cell) while keeping click-to-assign and unique-rank move semantics; added droppable/dragging CSS for SHL-style highlighting.
 
 ## Phase 8: Reliability Sprint (2026-02-12)
 - [x] **Bug 1** — Emit `attempt-saved` event on local-save path in `ScoreReport.jsx` (Dashboard was never refreshing after 8s failsafe)
@@ -169,8 +170,29 @@ Date: 2026-02-12
 - [x] Interactive dataset schema validation passes (no missing rows/draggables/segments/bar config)
 - [ ] Full manual end-to-end smoke test across every module in browser
 
+## Phase 27: Database Save Pipeline Overhaul [Claude 2026-02-14]
+- [x] **Root Cause**: Production `test_attempts.module_name` was NOT NULL (migration had it nullable) — INSERTs with null module_name silently failed via RLS
+- [x] **Root Cause**: `score` and `total_questions` had no defaults in production — partial payloads crashed
+- [x] **Fix**: Migration `20260214000000_fix_schema_and_add_progress.sql` pushed to live DB:
+  - `module_name` → nullable with default `''`
+  - `score` → default 0, `total_questions` → default 0
+  - Added `score_pct` column (smallint) for consistent percentage storage across MCQ/SJQ/interactive
+  - Back-filled `score_pct` on all 6 existing attempts
+- [x] **New table**: `user_progress` — aggregated per-user, per-module progress tracking:
+  - Columns: `attempts_count`, `best_score_pct`, `latest_score_pct`, `total_time_seconds`, `last_attempt_at`
+  - Unique on `(user_id, assessment_type)` — upserted by trigger on every attempt INSERT
+  - RLS: SELECT/INSERT/UPDATE own rows only
+  - Back-filled from existing test_attempts (5 progress records for 3 active users)
+- [x] **Trigger**: `on_test_attempt_inserted` (BEFORE INSERT) auto-computes `score_pct` and upserts `user_progress`
+- [x] **Cleaned up**: Removed duplicate RLS policies (4 → 3 on test_attempts); added UPDATE policy for retry/correction
+- [x] **ScoreReport.jsx**: payload now includes `score_pct`, `module_name` defaults to `''`, `mode` defaults to `'practice'`; INSERT changed to UPSERT (onConflict: 'id') so retries don't crash
+- [x] **Dashboard.jsx**: fetches `user_progress` in parallel with attempts; displays per-module progress bar + best score on module cards; outbox flush uses UPSERT instead of SELECT+INSERT
+- [x] **CSS**: Added `.module-card__progress*` styles for progress bar on module cards
+- [x] `npm run lint` passes
+- [x] `npm run build` passes
+
 ## Next Actions
-1. Test production deployment: verify results save to Supabase (not "saved locally") after env vars set.
+1. Deploy to Vercel and verify saves work end-to-end for all test types.
 2. Run manual UX/accessibility checks on all target breakpoints and log defects.
 3. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
 4. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.

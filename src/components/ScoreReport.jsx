@@ -333,11 +333,12 @@ export default function ScoreReport({
             id: attemptIdRef.current,
             user_id: user.id,
             assessment_type: assessmentType,
-            module_name: moduleName,
+            module_name: moduleName || '',
             score: correctCount,
             total_questions: saveTotalQuestions,
+            score_pct: Math.round((correctCount / (saveTotalQuestions || 1)) * 100),
             time_taken_seconds: timeTaken,
-            mode,
+            mode: mode || 'practice',
             answers: answersForPersistence,
             created_at: attemptCreatedAtRef.current,
         }
@@ -393,7 +394,7 @@ export default function ScoreReport({
 
             let insertQuery = supabase
                 .from('test_attempts')
-                .insert(payload)
+                .upsert(payload, { onConflict: 'id' })
                 .select('*')
                 .single()
 

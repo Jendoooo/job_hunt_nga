@@ -22,12 +22,31 @@ export default function SHLDragTableWidget({ data, value, onAnswer, disabled = f
     draggables.every((d) => isNumericRank(d.label ?? d.id))
 
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const [draggingId, setDraggingId] = useState(null)
+  const [isOverAnswerCell, setIsOverAnswerCell] = useState(false)
   const activeRow = rows[Math.min(selectedIdx, rows.length - 1)] || rows[0]
 
   const pillLookup = draggables.reduce((acc, item) => {
     acc[item.id] = item.label
     return acc
   }, {})
+
+  function handleDragStart(event, draggableId) {
+    if (disabled) return
+    setDraggingId(draggableId)
+
+    try {
+      event.dataTransfer.setData('text/plain', String(draggableId))
+      event.dataTransfer.effectAllowed = 'move'
+    } catch {
+      // Dragging is optional; ignore dataTransfer failures.
+    }
+  }
+
+  function handleDragEnd() {
+    setDraggingId(null)
+    setIsOverAnswerCell(false)
+  }
 
   function handleAnswer(draggableId) {
     if (!onAnswer || !activeRow) return
@@ -84,7 +103,45 @@ export default function SHLDragTableWidget({ data, value, onAnswer, disabled = f
               {dataCols.map((col, i) => (
                 <td key={col}>{(activeRow.values || [])[i] ?? ''}</td>
               ))}
-              <td className="shl-dt__answer-cell">
+              <td
+                className={[
+                  'shl-dt__answer-cell',
+                  draggingId ? 'shl-dt__answer-cell--droppable' : '',
+                  isOverAnswerCell ? 'shl-dt__answer-cell--over' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                onDragEnter={() => draggingId && setIsOverAnswerCell(true)}
+                onDragLeave={() => setIsOverAnswerCell(false)}
+                onDragOver={(event) => {
+                  if (disabled) return
+                  if (!draggingId) return
+                  event.preventDefault()
+                  try {
+                    event.dataTransfer.dropEffect = 'move'
+                  } catch {
+                    // Ignore.
+                  }
+                }}
+                onDrop={(event) => {
+                  if (disabled) return
+                  event.preventDefault()
+                  const droppedId = (() => {
+                    try {
+                      return event.dataTransfer.getData('text/plain')
+                    } catch {
+                      return null
+                    }
+                  })()
+
+                  const id = droppedId || draggingId
+                  if (!id) return
+
+                  setDraggingId(null)
+                  setIsOverAnswerCell(false)
+                  handleAnswer(id)
+                }}
+              >
                 {assignedLabel ? (
                   assignedLabel
                 ) : (
@@ -130,12 +187,17 @@ export default function SHLDragTableWidget({ data, value, onAnswer, disabled = f
               type="button"
               className={[
                 'shl-dt__answer-btn',
+                !disabled ? 'shl-dt__answer-btn--draggable' : '',
+                draggingId === d.id ? 'shl-dt__answer-btn--dragging' : '',
                 usedBy ? 'shl-dt__answer-btn--used' : '',
               ]
                 .filter(Boolean)
                 .join(' ')}
               onClick={() => handleAnswer(d.id)}
               disabled={disabled}
+              draggable={!disabled}
+              onDragStart={(event) => handleDragStart(event, d.id)}
+              onDragEnd={handleDragEnd}
               title={usedBy ? `Currently assigned to ${usedBy}` : undefined}
             >
               {d.label}

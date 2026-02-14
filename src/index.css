@@ -662,6 +662,32 @@ select:focus-visible {
   gap: 0.28rem;
 }
 
+.module-card__progress {
+  margin-top: 0.35rem;
+}
+
+.module-card__progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-1, #e5e7eb);
+  overflow: hidden;
+}
+
+.module-card__progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent, #3b82f6);
+  transition: width 0.4s ease;
+}
+
+.module-card__progress-label {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--text-3, #6b7280);
+}
+
 .module-card--disabled .btn {
   pointer-events: none;
 }
@@ -1482,6 +1508,15 @@ select:focus-visible {
   min-width: 110px;
 }
 
+.shl-dt__answer-cell--droppable {
+  outline: 2px dashed #84cc16;
+  outline-offset: -4px;
+}
+
+.shl-dt__answer-cell--over {
+  background: #dcfce7;
+}
+
 .shl-dt__answer-placeholder {
   color: #94a3b8;
   font-weight: 400;
@@ -1543,6 +1578,16 @@ select:focus-visible {
   font-size: 0.9rem;
   cursor: pointer;
   transition: filter 0.15s;
+}
+
+.shl-dt__answer-btn--draggable {
+  cursor: grab;
+  user-select: none;
+}
+
+.shl-dt__answer-btn--dragging {
+  cursor: grabbing;
+  opacity: 0.55;
 }
 
 .shl-dt__answer-btn:hover:not(:disabled) {
