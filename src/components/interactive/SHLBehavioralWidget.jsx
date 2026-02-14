@@ -40,6 +40,7 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
   const [rank2, setRank2] = useState(null)
   const [pendingPickId, setPendingPickId] = useState(null)
   const [savedToast, setSavedToast] = useState(false)
+  const [finalRevealId, setFinalRevealId] = useState(null)
   const pendingTimerRef = useRef(null)
   const toastTimerRef = useRef(null)
   const saved = Boolean(completedRanking)
@@ -79,6 +80,7 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
     if (disabled) return
     if (!optionId) return
     if (pendingPickId) return
+    if (finalRevealId) return
 
     if (saved) {
       // Require explicit reset to change completed answers.
@@ -96,6 +98,8 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
         const remaining = options.find((opt) => opt.id !== rank1 && opt.id !== optionId)
         const rank3 = remaining?.id
         if (!rank3) return
+        // Final UX: reveal the remaining (rank 3) card briefly rather than leaving 2 cards on-screen.
+        setFinalRevealId(rank3)
         if (onAnswer) onAnswer([rank1, optionId, rank3])
         triggerSavedToast()
       })
@@ -110,20 +114,25 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
     toastTimerRef.current = null
     setPendingPickId(null)
     setSavedToast(false)
+    setFinalRevealId(null)
     setRank1(null)
     setRank2(null)
     if (onAnswer) onAnswer(null)
   }
 
-  const showChange = saved && !rank1 && !rank2 && !pendingPickId
-  const prompt = rank1
-    ? 'Of the remaining two statements, which one describes you best?'
-    : 'Select the statement that is MOST like you.'
+  const showChange = saved && !pendingPickId
+  const prompt = saved || finalRevealId
+    ? 'Saved.'
+    : rank1
+      ? 'Of the remaining two statements, which one describes you best?'
+      : 'Select the statement that is MOST like you.'
 
   const showFullLocked = saved && !rank1 && !rank2
   const stage2Layout = Boolean(rank1) && !showFullLocked
-  const renderedOptions = showFullLocked ? options : (rank1 ? remainingOptions : options)
-  const showRanks = showFullLocked
+  const renderedOptions = finalRevealId
+    ? options.filter((opt) => opt.id === finalRevealId)
+    : (showFullLocked ? options : (rank1 ? remainingOptions : options))
+  const showRanks = showFullLocked || Boolean(finalRevealId)
 
   const rankById = saved && completedRanking
     ? completedRanking.reduce((acc, id, idx) => {
@@ -180,7 +189,9 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
       >
         <AnimatePresence mode="popLayout">
           {renderedOptions.map((opt) => {
-            const rank = showRanks ? rankById[opt.id] : null
+            const rank = showRanks
+              ? (showFullLocked ? rankById[opt.id] : (opt.id === finalRevealId ? 3 : null))
+              : null
             return (
               <Motion.button
                 key={opt.id}

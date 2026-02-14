@@ -641,7 +641,246 @@
           "competency": "interacting_presenting"
         }
       ]
+    },
+    {
+      "id": "q33",
+      "options": [
+        {
+          "id": "q33_a",
+          "text": "I push decisions through even when not everyone agrees.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q33_b",
+          "text": "I challenge ideas openly, even if it creates tension.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q33_c",
+          "text": "I stick to procedures even when they slow progress.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q34",
+      "options": [
+        {
+          "id": "q34_a",
+          "text": "I prefer to figure things out myself rather than ask for help.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q34_b",
+          "text": "I sometimes take risks to achieve results faster.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q34_c",
+          "text": "I avoid conflict to keep the peace, even if issues remain unresolved.",
+          "competency": "supporting_cooperating"
+        }
+      ]
+    },
+    {
+      "id": "q35",
+      "options": [
+        {
+          "id": "q35_a",
+          "text": "I get impatient when discussions drift away from the goal.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q35_b",
+          "text": "I can be very direct when presenting feedback.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q35_c",
+          "text": "I change plans quickly when new information appears, even if it unsettles others.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q36",
+      "options": [
+        {
+          "id": "q36_a",
+          "text": "I prefer proven methods over experimenting with new ideas.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q36_b",
+          "text": "I keep questioning decisions until the evidence convinces me.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q36_c",
+          "text": "I look for better approaches, even if it disrupts established routines.",
+          "competency": "creating_conceptualizing"
+        }
+      ]
+    },
+    {
+      "id": "q37",
+      "options": [
+        {
+          "id": "q37_a",
+          "text": "In a crisis, I take charge quickly and expect others to follow.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q37_b",
+          "text": "I focus on hitting targets, even if it means saying no to people.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q37_c",
+          "text": "I slow down to check details, even when time is tight.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q38",
+      "options": [
+        {
+          "id": "q38_a",
+          "text": "I speak up in groups even when my view is unpopular.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q38_b",
+          "text": "I adapt my style to fit the situation, even if it feels inconsistent.",
+          "competency": "adapting_coping"
+        },
+        {
+          "id": "q38_c",
+          "text": "I prefer clear roles and responsibilities over flexible arrangements.",
+          "competency": "organizing_executing"
+        }
+      ]
+    },
+    {
+      "id": "q39",
+      "options": [
+        {
+          "id": "q39_a",
+          "text": "I keep pushing for improvements and can be hard to satisfy.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q39_b",
+          "text": "I find it hard to let go of an idea once I believe in it.",
+          "competency": "creating_conceptualizing"
+        },
+        {
+          "id": "q39_c",
+          "text": "I weigh pros and cons carefully and can delay decisions.",
+          "competency": "analyzing_interpreting"
+        }
+      ]
+    },
+    {
+      "id": "q40",
+      "options": [
+        {
+          "id": "q40_a",
+          "text": "I follow directions without questioning to keep work moving.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q40_b",
+          "text": "I challenge authority when I believe the approach is wrong.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q40_c",
+          "text": "I focus on relationships and may avoid tough conversations.",
+          "competency": "supporting_cooperating"
+        }
+      ]
+    },
+    {
+      "id": "q41",
+      "options": [
+        {
+          "id": "q41_a",
+          "text": "I enjoy persuading others and can dominate the discussion.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q41_b",
+          "text": "I prefer strict schedules and feel uncomfortable with ambiguity.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q41_c",
+          "text": "I cope with change by trying different options quickly, even if some fail.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q42",
+      "options": [
+        {
+          "id": "q42_a",
+          "text": "I look for chances to win and can become competitive.",
+          "competency": "enterprising_performing"
+        },
+        {
+          "id": "q42_b",
+          "text": "I think through problems deeply, even if it slows progress.",
+          "competency": "analyzing_interpreting"
+        },
+        {
+          "id": "q42_c",
+          "text": "I try new approaches and may overlook practical constraints at first.",
+          "competency": "creating_conceptualizing"
+        }
+      ]
+    },
+    {
+      "id": "q43",
+      "options": [
+        {
+          "id": "q43_a",
+          "text": "I support colleagues, but I sometimes take on too much.",
+          "competency": "supporting_cooperating"
+        },
+        {
+          "id": "q43_b",
+          "text": "I decide quickly and can miss some details.",
+          "competency": "leading_deciding"
+        },
+        {
+          "id": "q43_c",
+          "text": "I stay calm under pressure, but I can appear detached.",
+          "competency": "adapting_coping"
+        }
+      ]
+    },
+    {
+      "id": "q44",
+      "options": [
+        {
+          "id": "q44_a",
+          "text": "I follow rules closely and may resist exceptions.",
+          "competency": "organizing_executing"
+        },
+        {
+          "id": "q44_b",
+          "text": "I enjoy speaking up, but I can talk more than I listen.",
+          "competency": "interacting_presenting"
+        },
+        {
+          "id": "q44_c",
+          "text": "I generate many ideas and can change direction often.",
+          "competency": "creating_conceptualizing"
+        }
+      ]
     }
   ]
 }
-

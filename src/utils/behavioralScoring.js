@@ -11,6 +11,10 @@ export const GREAT_EIGHT = [
 
 export const GREAT_EIGHT_IDS = new Set(GREAT_EIGHT.map((item) => item.id))
 
+export const EXTRA_COMPETENCIES = [
+  { id: 'integrity_ethics', label: 'Integrity & Ethics' },
+]
+
 export function normalizeIpsativeAnswer(value) {
   // Stored answer format: [rank1OptionId, rank2OptionId, rank3OptionId]
   if (Array.isArray(value) && value.length === 3) {
@@ -83,7 +87,7 @@ export function buildBehavioralProfile(triplets, answersByTripletId) {
     }
   }
 
-  const profile = GREAT_EIGHT.map((item) => {
+  function buildRow(item) {
     const max = (occurrences[item.id] || 0) * 2
     const earned = raw[item.id] || 0
     const pct = max > 0 ? Math.round((earned / max) * 100) : 0
@@ -96,17 +100,26 @@ export function buildBehavioralProfile(triplets, answersByTripletId) {
       pct,
       sten,
     }
-  })
+  }
 
-  const top = [...profile]
+  const profile = GREAT_EIGHT.map(buildRow)
+  const extras = EXTRA_COMPETENCIES
+    .filter((item) => (occurrences[item.id] || 0) > 0)
+    .map(buildRow)
+
+  const sorted = [...profile]
     .sort((a, b) => (b.sten - a.sten) || (b.pct - a.pct) || a.label.localeCompare(b.label))
+  const top = sorted.slice(0, 3)
+  const bottom = [...profile]
+    .sort((a, b) => (a.sten - b.sten) || (a.pct - b.pct) || a.label.localeCompare(b.label))
     .slice(0, 3)
 
   return {
     answeredCount,
     totalTriplets: tripletList.length,
     profile,
+    extras,
     top,
+    bottom,
   }
 }
-

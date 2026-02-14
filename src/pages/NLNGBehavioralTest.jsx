@@ -19,7 +19,7 @@ const QUESTION_OPTIONS = [12, 20, 32, 40, 50]
 const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30]
 const REAL_PRESET_QUESTION_COUNT = 32
 const REAL_PRESET_TIME_MINUTES = 20
-const AUTO_ADVANCE_DELAY_MS = 300
+const AUTO_ADVANCE_DELAY_MS = 600
 
 function normalizeTriplet(triplet, prefix = '') {
   const baseId = String(triplet?.id || '').trim()
@@ -418,7 +418,7 @@ export default function NLNGBehavioralTest() {
                 </button>
               ) : (
                 <button className="btn btn--primary" onClick={finishTest} disabled={!isAnswered}>
-                  Finish
+                  {isAnswered ? 'Generate Report' : 'Finish'}
                 </button>
               )}
             </div>

@@ -256,3 +256,66 @@ Return plain markdown. Do not output HTML.`
     const data = await response.json()
     return data.choices[0].message.content
 }
+
+export async function generateBehavioralProfileNarrative(report, opts = {}) {
+    assertApiKey()
+
+    const profile = Array.isArray(report?.profile) ? report.profile : []
+    const extras = Array.isArray(report?.extras) ? report.extras : []
+    const answeredCount = Number(report?.answeredCount || 0)
+    const totalTriplets = Number(report?.totalTriplets || 0)
+    const top = Array.isArray(report?.top) ? report.top : []
+    const bottom = Array.isArray(report?.bottom) ? report.bottom : []
+
+    const audience = String(opts?.audience || 'NLNG graduate assessment candidate').trim()
+
+    const prompt = `You are a professional assessment coach writing a high-fidelity personality profile summary for a candidate.
+
+Assessment format: Forced-choice ipsative (rank 1 earns +2, rank 2 earns +1, rank 3 earns +0). Scores reflect RELATIVE preferences across statements, not absolute traits.
+
+Candidate context: ${audience}. The environment is high-stakes operations/engineering where safety, integrity, teamwork, disciplined execution, learning, and clear communication matter.
+
+Completion: ${answeredCount}/${totalTriplets} blocks answered.
+
+Great Eight profile (Sten 1-10):
+${profile.map((p) => `- ${p.label}: ${p.sten}/10`).join('\n')}
+${extras.length > 0 ? `\nAdditional dimensions:\n${extras.map((p) => `- ${p.label}: ${p.sten}/10`).join('\n')}` : ''}
+
+Top focus areas:
+${top.map((p) => `- ${p.label} (Sten ${p.sten})`).join('\n') || '- (none)'}
+
+Less emphasised areas:
+${bottom.map((p) => `- ${p.label} (Sten ${p.sten})`).join('\n') || '- (none)'}
+
+Write a detailed but readable report in markdown with these sections:
+1) Executive Summary (3-5 sentences)
+2) Likely Strengths (bullets; connect to work behaviours)
+3) Potential Watch-outs / Trade-offs (bullets; be realistic, not harsh)
+4) Development Plan (3-5 concrete actions, e.g. habits, routines, scenarios)
+5) Fit For LNG/Operations Context (how strengths can be applied; what to emphasise in interviews)
+6) Example Interview Talking Points (5 short bullets)
+
+Do NOT claim this is an official NLNG report. Avoid medical/mental health language. Avoid mentioning "SHL" by name.`
+
+    const response = await fetch(DEEPSEEK_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+        },
+        body: JSON.stringify({
+            model: 'deepseek-chat',
+            messages: [{ role: 'user', content: prompt }],
+            temperature: 0.5,
+            max_tokens: 1400,
+        }),
+    })
+
+    if (!response.ok) {
+        const body = await response.text()
+        throw new Error(`DeepSeek API error ${response.status}: ${body}`)
+    }
+
+    const data = await response.json()
+    return data.choices[0].message.content
+}

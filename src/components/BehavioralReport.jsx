@@ -3,6 +3,7 @@ import { supabase, hasSupabaseEnv } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
 import { enqueueAttemptOutbox } from '../utils/attemptOutbox'
 import { buildBehavioralProfile } from '../utils/behavioralScoring'
+import AIBehavioralExplainer from './AIBehavioralExplainer'
 import {
   ArrowLeft,
   Check,
@@ -387,6 +388,57 @@ export default function BehavioralReport({
             {report.top.map((t) => t.label).join(', ')}.
           </div>
         )}
+
+        {report.bottom?.length > 0 && (
+          <div className="beh-report__top beh-report__top--muted">
+            <strong>Less emphasised areas:</strong>{' '}
+            {report.bottom.map((t) => t.label).join(', ')}.
+          </div>
+        )}
+      </article>
+
+      {Array.isArray(report.extras) && report.extras.length > 0 && (
+        <article className="beh-report__card">
+          <header className="beh-report__card-head">
+            <h3>Additional Signals</h3>
+            <p>Extra dimensions captured in the question bank (shown when present).</p>
+          </header>
+
+          <div className="beh-sten">
+            <div className="beh-sten__scale" aria-hidden="true">
+              <div />
+              <div className="beh-sten__scale-bar">
+                {Array.from({ length: 10 }).map((_, idx) => (
+                  <span key={idx}>{idx + 1}</span>
+                ))}
+              </div>
+              <div />
+            </div>
+            {report.extras.map((item) => (
+              <div className="beh-sten__row" key={item.id}>
+                <div className="beh-sten__label">{item.label}</div>
+                <div className="beh-sten__bar" aria-label={`${item.label} sten ${item.sten} of 10`}>
+                  {Array.from({ length: 10 }).map((_, idx) => (
+                    <span
+                      key={idx}
+                      className={`beh-sten__tick ${idx < item.sten ? 'beh-sten__tick--on' : ''}`}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </div>
+                <div className="beh-sten__value">{item.sten}</div>
+              </div>
+            ))}
+          </div>
+        </article>
+      )}
+
+      <article className="beh-report__card">
+        <header className="beh-report__card-head">
+          <h3>AI Narrative</h3>
+          <p>Optional: generate a longer profile summary and development guidance.</p>
+        </header>
+        <AIBehavioralExplainer report={report} />
       </article>
 
       <footer className="beh-report__actions">

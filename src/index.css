@@ -2018,6 +2018,11 @@ select:focus-visible {
   font-weight: 750;
 }
 
+.beh-report__top--muted {
+  background: #fff;
+  color: #334155;
+}
+
 .beh-report__actions {
   display: flex;
   gap: 0.75rem;
