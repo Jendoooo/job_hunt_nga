@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AnimatePresence, motion as Motion } from 'framer-motion'
 import Timer from '../components/Timer'
 import BehavioralReport from '../components/BehavioralReport'
 import SHLBehavioralWidget from '../components/interactive/SHLBehavioralWidget'
@@ -19,7 +20,7 @@ const QUESTION_OPTIONS = [12, 20, 32, 40, 50]
 const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30]
 const REAL_PRESET_QUESTION_COUNT = 32
 const REAL_PRESET_TIME_MINUTES = 20
-const AUTO_ADVANCE_DELAY_MS = 600
+const AUTO_ADVANCE_DELAY_MS = 950
 
 function normalizeTriplet(triplet, prefix = '') {
   const baseId = String(triplet?.id || '').trim()
@@ -392,12 +393,21 @@ export default function NLNGBehavioralTest() {
               </div>
             </div>
 
-            <SHLBehavioralWidget
-              key={currentTriplet.id}
-              data={{ options: currentTriplet.options }}
-              value={currentAnswer}
-              onAnswer={handleAnswer}
-            />
+            <AnimatePresence mode="wait">
+              <Motion.div
+                key={currentTriplet.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.28, ease: 'easeInOut' }}
+              >
+                <SHLBehavioralWidget
+                  data={{ options: currentTriplet.options }}
+                  value={currentAnswer}
+                  onAnswer={handleAnswer}
+                />
+              </Motion.div>
+            </AnimatePresence>
 
             <div className="test-page__nav-buttons mt-6">
               <button

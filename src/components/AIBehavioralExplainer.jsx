@@ -6,6 +6,10 @@ import 'katex/dist/katex.min.css'
 import { generateBehavioralProfileNarrative } from '../services/deepseek'
 import { Sparkles, X, Bot } from 'lucide-react'
 
+const CACHE_KEY = 'jobhunt_beh_ai_profile_cache_v1'
+const CACHE_TTL_MS = 1000 * 60 * 60 * 24 * 30 // 30 days
+const CACHE_MAX_ENTRIES = 12
+
 function normalizeModelOutput(value) {
   if (!value) return ''
 
@@ -21,15 +25,83 @@ function normalizeModelOutput(value) {
     .trim()
 }
 
+function getReportFingerprint(report) {
+  const profile = Array.isArray(report?.profile) ? report.profile : []
+  const extras = Array.isArray(report?.extras) ? report.extras : []
+  const base = [
+    `v=1`,
+    `a=${Number(report?.answeredCount || 0)}`,
+    `t=${Number(report?.totalTriplets || 0)}`,
+    `p=${profile.map((p) => `${p.id}:${p.sten}`).join('|')}`,
+    `x=${extras.map((p) => `${p.id}:${p.sten}`).join('|')}`,
+  ]
+  return base.join(';')
+}
+
+function readCache() {
+  if (typeof window === 'undefined') return {}
+  try {
+    const raw = window.localStorage.getItem(CACHE_KEY)
+    const parsed = raw ? JSON.parse(raw) : {}
+    return parsed && typeof parsed === 'object' ? parsed : {}
+  } catch {
+    return {}
+  }
+}
+
+function writeCache(cache) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(CACHE_KEY, JSON.stringify(cache))
+  } catch {
+    // Ignore (quota / private mode).
+  }
+}
+
+function pruneCache(cache) {
+  const now = Date.now()
+  const entries = Object.entries(cache || {})
+    .filter(([, item]) => item && typeof item === 'object')
+    .filter(([, item]) => typeof item.ts === 'number' && typeof item.value === 'string')
+    .filter(([, item]) => now - item.ts <= CACHE_TTL_MS)
+    .sort((a, b) => b[1].ts - a[1].ts)
+    .slice(0, CACHE_MAX_ENTRIES)
+
+  return entries.reduce((acc, [key, item]) => {
+    acc[key] = item
+    return acc
+  }, {})
+}
+
+function getCachedNarrative(fingerprint) {
+  const cache = pruneCache(readCache())
+  writeCache(cache)
+  return cache[fingerprint]?.value || null
+}
+
+function setCachedNarrative(fingerprint, narrative) {
+  const cache = pruneCache(readCache())
+  cache[fingerprint] = { value: narrative, ts: Date.now() }
+  writeCache(cache)
+}
+
 export default function AIBehavioralExplainer({ report }) {
   const [narrative, setNarrative] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
+  const fingerprint = getReportFingerprint(report)
+  const cachedNarrative = !narrative ? getCachedNarrative(fingerprint) : null
 
   async function handleGenerate() {
     if (narrative) {
       setIsOpen(!isOpen)
+      return
+    }
+
+    if (cachedNarrative) {
+      setNarrative(cachedNarrative)
+      setIsOpen(true)
       return
     }
 
@@ -42,6 +114,7 @@ export default function AIBehavioralExplainer({ report }) {
         audience: 'NLNG graduate assessment candidate',
       })
       setNarrative(result)
+      setCachedNarrative(fingerprint, result)
     } catch (err) {
       setError('Failed to generate AI profile. Please check your connection / API key.')
       console.error(err)
@@ -59,7 +132,7 @@ export default function AIBehavioralExplainer({ report }) {
           onClick={handleGenerate}
         >
           <Sparkles size={16} />
-          Generate AI Profile
+          {cachedNarrative ? 'View AI Profile' : 'Generate AI Profile'}
         </button>
       </div>
     )
@@ -118,4 +191,3 @@ export default function AIBehavioralExplainer({ report }) {
     </section>
   )
 }
-
