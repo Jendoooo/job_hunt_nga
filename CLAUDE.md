@@ -142,8 +142,13 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Run manual touch-device QA for interactive widgets (drag handles, pie handles, point graph dots).
 - Run complete manual QA across breakpoints 320/375/768/1024/1280+.
 - Optional: optimize bundle splitting to reduce large chunk warning.
-- Decide whether to route AI calls through a backend proxy/edge function in production.
 - Optional: remove `[save]`/`[dash]` diagnostic console.log once pipeline is stable for a few weeks.
+
+## Future Work — Gemini Audit (2026-02-14 20:15)
+- **Security**: Move DeepSeek API calls to server-side (Vercel API route or Edge Function) — `VITE_DEEPSEEK_API_KEY` is currently exposed in the client bundle.
+- **Database**: Add INSERT policy for `ai_explanations` table — only SELECT exists, so caching AI explanations will silently fail.
+- **Testing**: Add vitest + jsdom for automated unit tests — priority: `questionScoring.js`, `sjqAnalytics.js`, `questionSession.js`.
+- **Refactoring**: Break up `ScoreReport.jsx` (~1035 lines) into smaller components (`ScoreReviewTable`, `SaveStatus`, `InteractiveReview`).
 
 ## Update Snapshot (2026-02-12 - Interactive Expansion)
 - Interactive widget set now includes five question types:

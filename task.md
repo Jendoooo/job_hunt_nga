@@ -440,3 +440,16 @@ Date: 2026-02-12
 - [x] **Verified**: Console shows `[save] proxy SUCCESS` + `[dash] attempts result: { count: 26, error: null }` + `[dash] progress rows: 7`
 - [x] **Result**: 26 attempts synced, all KPIs populated, attempt history showing correctly
 - [x] Lint + build pass; commits e1a305b, a89907d
+
+## Phase 33: Auth Redirect Fix [Claude 2026-02-14 20:00]
+- [x] Fixed `signUp()` in `AuthContext.jsx` — added `emailRedirectTo: window.location.origin` so confirmation emails link to the correct domain (not localhost:3000)
+- [x] User updated Supabase Dashboard Site URL to `https://job-hunt-nga.vercel.app`
+- [x] Commit 291c856
+
+## Future Work (Gemini Audit) [Claude 2026-02-14 20:15]
+These items were identified by a Gemini audit and logged for future implementation. Not urgent — platform is functional and stable.
+
+- [ ] **Security: Move DeepSeek API to server-side** — `src/services/deepseek.js` exposes `VITE_DEEPSEEK_API_KEY` in client bundle via Vite. Any user can extract it from network traffic. Move AI calls to a Vercel API route (`api/ai-generate.js`) or Supabase Edge Function so the key stays server-side.
+- [ ] **Database: Add INSERT policy for `ai_explanations`** — Table has RLS enabled but only a SELECT policy exists. If the app ever tries to cache generated AI explanations to Supabase, writes will silently fail. Add: `CREATE POLICY "ai_explanations_insert_authenticated" ON public.ai_explanations FOR INSERT WITH CHECK (auth.role() = 'authenticated');`
+- [ ] **Testing: Add automated tests for core logic** — Install `vitest` + `jsdom`. Priority test targets: `src/utils/questionScoring.js` (MCQ, interactive, partial credit, tolerance), `src/utils/sjqAnalytics.js` (distance scoring, competency breakdown), `src/utils/questionSession.js` (dedup, sampling).
+- [ ] **Refactoring: Break up ScoreReport.jsx (~1035 lines)** — Extract into smaller components: `ScoreReviewTable` (tabular review data), `SaveStatus` (persistence UI + outbox feedback), `InteractiveReview` (widget read-only views for Your Answer vs Correct).
