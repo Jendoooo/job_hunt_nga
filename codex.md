@@ -92,6 +92,11 @@
 - Added optional AI narrative profile generation using DeepSeek (`src/components/AIBehavioralExplainer.jsx`, `generateBehavioralProfileNarrative`).
 - Scoring now also tracks bottom areas and shows optional extra dimensions (e.g. Integrity & Ethics) when present.
 
+### [Codex 2026-02-14 13:29] Behavioral OPQ: Smoother Transitions + AI Narrative Cache (commit e60f3ef)
+- Smoothed the next-block transition using a crossfade/slide animation between triplets (Framer Motion `AnimatePresence`).
+- Increased auto-advance delay to reduce the “jarring” jump after completing a block.
+- Added localStorage caching for the AI narrative so identical profiles can be re-opened without extra DeepSeek calls.
+
 ---
 
 ## Architecture Notes (Codex's modules)
