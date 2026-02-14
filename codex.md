@@ -70,6 +70,21 @@
 - `src/data/shl-gold-standard.json`: bank expanded to 102; `npm run generate:shl-interactive` regenerated `src/data/shl-interactive-questions.json`.
 - `src/pages/NLNGInteractiveTest.jsx`: SHL Real preset prefers multi-part drag-table sets; setup copy updated.
 
+### [Codex 2026-02-14 10:22] NLNG Behavioral (OPQ Style) Assessment (commit a4a7008)
+- Added OPQ-style ipsative behavioral runner under `/test/nlng-behavioral`.
+- Added the Great Eight scoring/report pipeline: `src/utils/behavioralScoring.js` + `src/components/BehavioralReport.jsx`.
+- Wired routing + dashboard module card; excluded non-graded attempts (`assessment_type=nlng-opq`) from pass-rate/avg KPIs.
+
+### [Codex 2026-02-14 10:45] Behavioral OPQ Polish + Real Triplets (commit 0087c82)
+- Added extracted "real" triplets in `src/data/shl-behavioral-real.json` and merged into the session bank.
+- Fixed desktop left-skew layout by using the single-column test grid.
+- Added SHL-like hover + click-confirm highlight, smoother layout animation, stage-2 centering, and disabled Next styling.
+
+### [Codex 2026-02-14 11:12] Behavioral OPQ UX Polish (commit 3de982c)
+- Removed layout thrashing by replacing in-flow "saved" messaging with a floating toast.
+- Auto-advance now triggers only on newly answered blocks; manual nav cancels pending auto-advance.
+- Report: added a 1-10 sten scale row + clearer tick grid styling.
+
 ---
 
 ## Architecture Notes (Codex's modules)

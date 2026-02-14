@@ -401,3 +401,5 @@ Date: 2026-02-12
 - [x] Added `src/data/shl-behavioral.json` (32 triplets) mapping each statement to a Great Eight competency.
 - [x] Added scoring + report UI: `src/utils/behavioralScoring.js` and `src/components/BehavioralReport.jsx` (Sten 1-10 bars).
 - [x] Wired routing + dashboard module card; excluded non-graded behavioral attempts (`assessment_type=nlng-opq`) from pass-rate/average KPIs and show “Profile” in attempt history.
+- [Codex 2026-02-14 10:45] Behavioral OPQ: merged extracted "real" triplets (`src/data/shl-behavioral-real.json`) into the session bank; fixed left-skew layout (single-column grid), added SHL-like hover + click confirm highlight, smoother layout animations, stage-2 vertical centering, and improved disabled Next styling (commit 0087c82).
+- [Codex 2026-02-14 11:12] Behavioral OPQ UX polish: removed layout thrash by replacing in-flow "saved" messaging with a floating toast; auto-advance now triggers only on newly answered blocks (no bounce when navigating back); report sten view now includes a 1-10 scale row + clearer grid ticks (commit 3de982c).
