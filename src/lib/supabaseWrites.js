@@ -133,12 +133,17 @@ async function insertViaProxy(payload, accessToken, { signal, timeoutMs }) {
             throw new Error(`Save proxy failed (${response.status})${suffix}`)
         }
 
-        const data = await response.json().catch(() => ({}))
-        if (data?.ok) {
-            return { ok: true, duplicate: Boolean(data?.duplicate) }
+        const contentType = response.headers.get('content-type') || ''
+        if (!contentType.includes('application/json')) {
+            return null
         }
 
-        return { ok: true, duplicate: false }
+        const data = await response.json().catch(() => null)
+        if (!data || data.ok !== true) {
+            return null
+        }
+
+        return { ok: true, duplicate: Boolean(data?.duplicate) }
     } finally {
         clearTimeout(timerId)
         detach()
