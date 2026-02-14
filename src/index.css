@@ -1207,6 +1207,33 @@ select:focus-visible {
   overflow-x: auto;
 }
 
+.question-card__context-text {
+  display: grid;
+  gap: 0.6rem;
+  line-height: 1.5;
+}
+
+.question-card__context-block {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.question-card__context-line {
+  white-space: pre-wrap;
+}
+
+.question-card__context-title {
+  font-weight: 800;
+  color: #0c4a6e;
+}
+
+.question-card__context-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
 .question-card__question {
   font-size: clamp(1.02rem, 2.3vw, 1.3rem);
   line-height: 1.4;
