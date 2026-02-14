@@ -96,6 +96,57 @@ export async function insertTestAttempt(payload, { signal, timeoutMs = 15000 } =
         throw new Error('Not authenticated.')
     }
 
+    // Prefer same-origin proxy route in production. This avoids ISP/network blocks
+    // that often affect direct browser -> Supabase POST requests.
+    if (typeof window !== 'undefined') {
+        const proxyResult = await insertViaProxy(payload, accessToken, { signal, timeoutMs }).catch(() => null)
+        if (proxyResult) return proxyResult
+    }
+
+    return insertViaPostgrest(payload, accessToken, { signal, timeoutMs })
+}
+
+async function insertViaProxy(payload, accessToken, { signal, timeoutMs }) {
+    const controller = new AbortController()
+    const detach = attachAbortSignal(controller, signal)
+    const timerId = setTimeout(() => controller.abort(), timeoutMs)
+
+    try {
+        const response = await fetch('/api/save-attempt', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+        })
+
+        if (response.status === 404 || response.status === 405) {
+            return null
+        }
+
+        if (!response.ok) {
+            const { message } = await readPostgrestError(response)
+            const suffix = message ? `: ${message}` : ''
+            throw new Error(`Save proxy failed (${response.status})${suffix}`)
+        }
+
+        const data = await response.json().catch(() => ({}))
+        if (data?.ok) {
+            return { ok: true, duplicate: Boolean(data?.duplicate) }
+        }
+
+        return { ok: true, duplicate: false }
+    } finally {
+        clearTimeout(timerId)
+        detach()
+        controller.abort()
+    }
+}
+
+async function insertViaPostgrest(payload, accessToken, { signal, timeoutMs }) {
     const controller = new AbortController()
     const detach = attachAbortSignal(controller, signal)
     const timerId = setTimeout(() => controller.abort(), timeoutMs)
