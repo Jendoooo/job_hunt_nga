@@ -97,6 +97,14 @@
 - Increased auto-advance delay to reduce the “jarring” jump after completing a block.
 - Added localStorage caching for the AI narrative so identical profiles can be re-opened without extra DeepSeek calls.
 
+### [Codex 2026-02-14 16:10] Interactive Numerical: SHL Ranking Widget + New Gold Items
+- `src/components/interactive/SHLRankingWidget.jsx`: added a SHL-style ranking widget (drag unique number badges into rank slots; swap behavior; touch-friendly).
+- `src/components/QuestionCard.jsx` + `src/components/ScoreReport.jsx` + `src/utils/questionScoring.js`: added `interactive_ranking` rendering + scoring + review support.
+- `src/data/shl-gold-standard.json`: appended 5 real-style questions: bricklaying ranking, insurance stacked bar, department bonuses stacked bar, volunteer committees pie, and a commission trap for Person C.
+- `src/pages/NLNGInteractiveTest.jsx`: SHL Real preset now includes 1 ranking item (3 bar / 3 pie / 2 drag-table / 1 ranking / 1 point-graph).
+- Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive` (now 107 items).
+- `src/index.css`: added `.shl-rank*` styling.
+
 ---
 
 ## Architecture Notes (Codex's modules)

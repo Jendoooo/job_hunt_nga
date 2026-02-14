@@ -48,9 +48,10 @@ function getQuestionDifficulty(question) {
 
 function selectRealPresetQuestions(pool, count) {
     const wanted = [
-        { type: 'interactive_stacked_bar', count: 4 },
+        { type: 'interactive_stacked_bar', count: 3 },
         { type: 'interactive_pie_chart', count: 3 },
         { type: 'interactive_drag_table', count: 2 },
+        { type: 'interactive_ranking', count: 1 },
         { type: 'interactive_point_graph', count: 1 },
     ]
 
@@ -191,7 +192,7 @@ export default function NLNGInteractiveTest() {
                     <div className="test-setup__card">
                         <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Interactive Session</h2>
                         <p className="test-setup__description">
-                            Tackle drag-table, pie, stacked-bar, tabbed evaluation, and point-graph tasks in one mixed set.
+                            Tackle drag-table, ranking, pie, stacked-bar, tabbed evaluation, and point-graph tasks in one mixed set.
                         </p>
 
                         <div className="test-setup__mode">

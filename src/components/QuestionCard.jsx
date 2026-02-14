@@ -4,6 +4,7 @@ import SHLResizablePieWidget from './interactive/SHLResizablePieWidget'
 import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
 import SHLTabbedEvalWidget from './interactive/SHLTabbedEvalWidget'
 import SHLPointGraphWidget from './interactive/SHLPointGraphWidget'
+import SHLRankingWidget from './interactive/SHLRankingWidget'
 import { evaluateQuestionAnswer, hasAnsweredValue, isInteractiveQuestionType } from '../utils/questionScoring'
 
 const HTML_TAG_RE = /<\/?[a-z][\s\S]*>/i
@@ -423,6 +424,15 @@ export default function QuestionCard({
             case 'interactive_point_graph':
                 return (
                     <SHLPointGraphWidget
+                        key={widgetKey}
+                        data={question.widget_data}
+                        value={selectedAnswer}
+                        onAnswer={onSelectAnswer}
+                    />
+                )
+            case 'interactive_ranking':
+                return (
+                    <SHLRankingWidget
                         key={widgetKey}
                         data={question.widget_data}
                         value={selectedAnswer}

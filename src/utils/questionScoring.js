@@ -40,6 +40,7 @@ export function isInteractiveQuestionType(type) {
         'interactive_stacked_bar',
         'interactive_tabbed_evaluation',
         'interactive_point_graph',
+        'interactive_ranking',
     ].includes(type)
 }
 
@@ -212,6 +213,12 @@ function evaluatePointGraph(question, answer) {
     )
 }
 
+function evaluateRanking(question, answer) {
+    if (!answer || typeof answer !== 'object') return false
+    const expected = question.correct_answer || question.correctAnswer || {}
+    return stableSerialize(answer) === stableSerialize(expected)
+}
+
 function evaluateStandardQuestion(question, answer) {
     const expected = question.correctAnswer
     if (expected === undefined) return false
@@ -248,6 +255,8 @@ export function evaluateQuestionAnswer(question, answer) {
             return evaluateTabbedEvaluation(question, answer)
         case 'interactive_point_graph':
             return evaluatePointGraph(question, answer)
+        case 'interactive_ranking':
+            return evaluateRanking(question, answer)
         default:
             return evaluateStandardQuestion(question, answer)
     }

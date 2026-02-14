@@ -5869,5 +5869,286 @@
       "proj_b": "funded"
     },
     "explanation": "Project A: Total revenue 10,900 is >=8,000 but <16,000.<br/>Project B: Total revenue 35,500 >= 35,000 (2 x investment)."
+  },
+  {
+    "id": "rank_bricks_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_ranking",
+    "difficulty": "hard",
+    "instruction": "Drag the badges from 1 (least laid) to 6 (most laid).",
+    "question": "Rank each person by the number of bricks laid.",
+    "prompt_rules": [
+      "Naomi laid 175 bricks.",
+      "Quentin laid 60% more bricks than Naomi.",
+      "Oscar laid half the bricks that Quentin laid.",
+      "Patsy laid double the bricks that Quentin laid.",
+      "Rachel laid 75% less bricks than Oscar.",
+      "Mike's bricks were a quarter of Patsy's, plus an additional 70."
+    ],
+    "widget_data": {
+      "items": [
+        {
+          "id": "mike",
+          "label": "Mike"
+        },
+        {
+          "id": "oscar",
+          "label": "Oscar"
+        },
+        {
+          "id": "quentin",
+          "label": "Quentin"
+        },
+        {
+          "id": "naomi",
+          "label": "Naomi"
+        },
+        {
+          "id": "patsy",
+          "label": "Patsy"
+        },
+        {
+          "id": "rachel",
+          "label": "Rachel"
+        }
+      ],
+      "rank_labels": [
+        "1 (Least)",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6 (Most)"
+      ]
+    },
+    "correct_answer": {
+      "rachel": 1,
+      "oscar": 2,
+      "naomi": 3,
+      "mike": 4,
+      "quentin": 5,
+      "patsy": 6
+    },
+    "explanation": "Naomi=175. Quentin=175*1.6=280. Oscar=280/2=140. Patsy=280*2=560. Rachel=140*0.25=35. Mike=(560/4)+70=210. Rank: 1 Rachel, 2 Oscar, 3 Naomi, 4 Mike, 5 Quentin, 6 Patsy."
+  },
+  {
+    "id": "bar_insurance_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange the total cost of insurance and the percentages of deductible and premium.",
+    "question": "Set Year 1 and Year 2 totals and the deductible vs premium split.",
+    "prompt_rules": [
+      "Year 1: Total cost = $1,500; Deductible = $300.",
+      "Year 2: Total cost increases by 20%.",
+      "Year 2: Premium increases by 20%."
+    ],
+    "widget_data": {
+      "axis_max": 2000,
+      "axis_step": 300,
+      "axis_prefix": "$",
+      "segment_labels": {
+        "primary": "Deductible",
+        "secondary": "Premium"
+      },
+      "bar_1": {
+        "id": "year_1",
+        "label": "Year 1",
+        "total": 1500,
+        "split_pct": 20
+      },
+      "bar_2_initial": {
+        "id": "year_2",
+        "label": "Year 2",
+        "total": 1500,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 1800,
+      "split_pct": 20
+    },
+    "tolerance": {
+      "total": 10,
+      "split_pct": 2
+    },
+    "explanation": "Year 1 premium = 1500 - 300 = 1200, so deductible is 20%. Year 2 total = 1500*1.2 = 1800. Premium = 1200*1.2 = 1440, so deductible = 1800 - 1440 = 360 (still 20%)."
+  },
+  {
+    "id": "bar_bonuses_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_stacked_bar",
+    "difficulty": "hard",
+    "instruction": "Arrange bonuses for Consulting.",
+    "question": "Adjust both bars to match the team totals and the partial vs full split.",
+    "prompt_rules": [
+      "Sales: 220 people received full bonuses (which is 80% of the team).",
+      "Consulting: Total bonuses given was 64% of the total number in Sales.",
+      "Consulting: The ratio of partial to full bonuses was 1:3."
+    ],
+    "widget_data": {
+      "axis_max": 400,
+      "axis_step": 50,
+      "segment_labels": {
+        "primary": "Partial",
+        "secondary": "Full"
+      },
+      "bar_1": {
+        "id": "sales",
+        "label": "Sales",
+        "total": 275,
+        "split_pct": 20
+      },
+      "bar_2_initial": {
+        "id": "consulting",
+        "label": "Consulting",
+        "total": 200,
+        "split_pct": 50
+      }
+    },
+    "correct_answer": {
+      "total": 176,
+      "split_pct": 25
+    },
+    "tolerance": {
+      "total": 5,
+      "split_pct": 2
+    },
+    "explanation": "Sales total = 220/0.8 = 275. Consulting total = 275*0.64 = 176. Ratio partial:full = 1:3, so partial is 1 of 4 parts = 176/4 = 44 (25%)."
+  },
+  {
+    "id": "pie_volunteers_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "medium",
+    "instruction": "Adjust the pie chart to represent the proportion of volunteers.",
+    "question": "Set each committee slice to match the rules.",
+    "prompt_rules": [
+      "Total volunteers = 20.",
+      "Venue: 5 volunteers.",
+      "Decorations: same as Venue.",
+      "Food: 1 more than Venue.",
+      "Marketing: 1 fewer than Decorations."
+    ],
+    "widget_data": {
+      "total_value": 20,
+      "min_pct": 5,
+      "info_cards": [
+        {
+          "id": "venue",
+          "title": "Venue",
+          "subtitle": "5 volunteers",
+          "color": "#f68016"
+        },
+        {
+          "id": "decor",
+          "title": "Decorations",
+          "subtitle": "Same as Venue",
+          "color": "#63b209"
+        },
+        {
+          "id": "food",
+          "title": "Food",
+          "subtitle": "1 more than Venue",
+          "color": "#007ab3"
+        },
+        {
+          "id": "marketing",
+          "title": "Marketing",
+          "subtitle": "1 fewer than Decorations",
+          "color": "#f73c33"
+        }
+      ],
+      "segments": [
+        {
+          "id": "seg_venue",
+          "label": "Venue",
+          "color": "#f68016",
+          "initial_pct": 25
+        },
+        {
+          "id": "seg_decor",
+          "label": "Decorations",
+          "color": "#63b209",
+          "initial_pct": 25
+        },
+        {
+          "id": "seg_food",
+          "label": "Food",
+          "color": "#007ab3",
+          "initial_pct": 25
+        },
+        {
+          "id": "seg_mark",
+          "label": "Marketing",
+          "color": "#f73c33",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "seg_venue": 25,
+      "seg_decor": 25,
+      "seg_food": 30,
+      "seg_mark": 20
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Venue=5 (25%). Decorations=5 (25%). Food=6 (30%). Marketing=4 (20%)."
+  },
+  {
+    "id": "comm_person_c_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "hard",
+    "instruction": "Determine the commission tier for Person C.",
+    "question": "Classify Person C's commission.",
+    "prompt_rules": [
+      "Net Sales = Sales per week - (Daily Cancellations x 5).",
+      "Avg Sale Value = Total Revenue / Net Sales.",
+      "£0-£40: No Commission | £41-£100: 5% | £101+: 10%."
+    ],
+    "widget_data": {
+      "columns": [
+        "Name",
+        "Total Revenue",
+        "Sales/Week",
+        "Cancellations/Day",
+        "Commission"
+      ],
+      "rows": [
+        {
+          "id": "person_c_comm",
+          "values": [
+            "Person C",
+            "£1,440",
+            "31",
+            "4"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None",
+          "color": "green"
+        },
+        {
+          "id": "5pct",
+          "label": "5%",
+          "color": "green"
+        },
+        {
+          "id": "10pct",
+          "label": "10%",
+          "color": "green"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_c_comm": "10pct"
+    },
+    "explanation": "Net Sales = 31 - (4x5) = 11. Avg Value = £1,440 / 11 = £130.91, which is > £101, so 10% commission."
   }
 ]

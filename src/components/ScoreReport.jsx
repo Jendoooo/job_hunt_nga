@@ -6,6 +6,7 @@ import SHLResizablePieWidget from './interactive/SHLResizablePieWidget'
 import SHLAdjustableBarWidget from './interactive/SHLAdjustableBarWidget'
 import SHLTabbedEvalWidget from './interactive/SHLTabbedEvalWidget'
 import SHLPointGraphWidget from './interactive/SHLPointGraphWidget'
+import SHLRankingWidget from './interactive/SHLRankingWidget'
 import { hasSupabaseEnv } from '../lib/supabase'
 import { insertTestAttempt } from '../lib/supabaseWrites'
 import { useAuth } from '../context/useAuth'
@@ -190,6 +191,15 @@ function renderInteractiveWidget(questionResult, value, { disabled = true } = {}
         case 'interactive_point_graph':
             return (
                 <SHLPointGraphWidget
+                    data={widgetData}
+                    value={normalizedValue}
+                    onAnswer={() => { }}
+                    disabled={disabled}
+                />
+            )
+        case 'interactive_ranking':
+            return (
+                <SHLRankingWidget
                     data={widgetData}
                     value={normalizedValue}
                     onAnswer={() => { }}
