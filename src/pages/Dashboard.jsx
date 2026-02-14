@@ -169,6 +169,13 @@ export default function Dashboard() {
 
         setPendingSyncCount(pending.length)
 
+        // Refresh auth token before flushing — stale JWTs cause RLS failures
+        try {
+            await supabase.auth.refreshSession()
+        } catch {
+            // Continue anyway — existing token might still work
+        }
+
         for (const item of pending) {
             if (signal?.aborted) return
             const payload = item?.payload
