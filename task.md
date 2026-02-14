@@ -211,13 +211,23 @@ Date: 2026-02-12
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 
+## Phase 30: Save Pipeline Simplification + Loading UX [Claude 2026-02-14 17:00]
+- [x] **Root Cause**: `.upsert(payload, { onConflict: 'id' }).select('*').single()` — PostgREST issues a separate SELECT for the RETURNING data that can fail under RLS even when the INSERT succeeds, causing the save to hang until the 15s failsafe
+- [x] **Fix**: Simplified `persistToSupabase()` in ScoreReport to a single `.upsert(payload, { onConflict: 'id' })` — no preliminary SELECT, no `.select().single()` return chain
+- [x] **Fix**: Removed dead code (`isLikelyDuplicateAttempt` function) that was only used by the removed SELECT
+- [x] **Fix**: Failsafe timeout now shows "Cloud save timed out. Will retry automatically." instead of blank
+- [x] **UX**: Login page now shows instantly for unauthenticated visitors — `loading` state starts `false` if no Supabase session exists in localStorage (`hasStoredSession()` check)
+- [x] Updated `CLAUDE.md`: corrected production URL, auth architecture notes, save pipeline description, added behavioral route
+- [x] Updated memory files with critical lessons learned (never timeout getSession, never use .select().single() on upsert)
+- [x] `npm run lint` passes
+- [x] `npm run build` passes
+
 ## Next Actions
-1. Deploy to Vercel and verify auth persists across page refreshes and saves work end-to-end.
-2. Run manual UX/accessibility checks on all target breakpoints and log defects.
-3. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
-4. Validate interactive session stability manually (setup -> full completion -> report -> retry) for each difficulty.
-5. Validate hard-mode interactive usability on touch devices (drag handles + drag/drop hit zones).
-6. Optionally split large frontend bundle if payload size reduction is required.
+1. Deploy to Vercel and verify saves work end-to-end (cloud, not local).
+2. If saves still fail, check browser console for specific error messages (now surfaced in UI).
+3. Run manual UX/accessibility checks on all target breakpoints and log defects.
+4. Continue SHL ingestion to complete Sets 2-4 and QA each new answer/explanation.
+5. Optionally split large frontend bundle if payload size reduction is required.
 
 ## Phase 10: Interactive Expansion + Save Stabilization (2026-02-12)
 - [x] Add new interactive widgets:

@@ -33,10 +33,28 @@ function clearSupabaseAuthStorage() {
     clearTokenKeys(window.sessionStorage)
 }
 
+function hasStoredSession() {
+    if (typeof window === 'undefined') return false
+    try {
+        for (let i = 0; i < window.localStorage.length; i += 1) {
+            const key = window.localStorage.key(i)
+            if (key && key.startsWith('sb-') && key.endsWith('-auth-token')) {
+                const raw = window.localStorage.getItem(key)
+                return Boolean(raw && raw.length > 10)
+            }
+        }
+    } catch {
+        // Storage access failed — assume no session.
+    }
+    return false
+}
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
-    const [loading, setLoading] = useState(true)
+    // Only show the loading spinner if there IS a stored session to validate.
+    // Unauthenticated visitors see the login page immediately — no spinner.
+    const [loading, setLoading] = useState(hasStoredSession)
     const initializedRef = useRef(false)
 
     const fetchProfile = useCallback(async (userId, signal) => {

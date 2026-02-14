@@ -24,21 +24,25 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - `/test/nlng-interactive` -> `src/pages/NLNGInteractiveTest.jsx` (protected)
 - `/test/nlng-sjq` -> `src/pages/NLNGSJQTest.jsx` (protected)
 - `/test/nlng-process-monitor` -> `src/pages/NLNGProcessMonitorTest.jsx` (protected)
+- `/test/nlng-behavioral` -> `src/pages/NLNGBehavioralTest.jsx` (protected)
 - `/test/ai-generated` -> `src/pages/AIGeneratedTest.jsx` (protected)
 
 ## Core Shared Contracts
 - Auth provider: `src/context/AuthContext.jsx`
-  - Sign-out attempts global then local fallback for reliability
-  - Bootstrap now explicitly checks `supabase.auth.getSession()` and handles abort-safe profile fetch
+  - `onAuthStateChange` is the single source of truth for auth state (INITIAL_SESSION in Supabase v2.39+)
+  - `getSession()` called as fallback trigger only — no timeout wrapper
+  - Sign-out attempts local then global background revoke for reliability
+  - If no stored session in localStorage, `loading` starts `false` → login page shows instantly (no spinner)
 - Auth hook/context: `src/context/useAuth.js`
 - Test timer: `src/components/Timer.jsx`
   - Uses urgency classes `timer--urgent`, `timer--critical`
 - Question navigation: `src/components/QuestionNav.jsx`
   - Uses `question-nav__btn*` contract aligned with `src/index.css`
 - Score and persistence: `src/components/ScoreReport.jsx`
-  - Saves attempts to Supabase `test_attempts`
+  - Saves attempts to Supabase `test_attempts` via single UPSERT (no SELECT pre-check, no `.select().single()` return)
   - Displays save progress/error and emits `attempt-saved` browser event
-  - Uses short-lived session fingerprint cache + latest-attempt check to reduce duplicate inserts
+  - Uses short-lived session fingerprint cache to prevent duplicate inserts
+  - `refreshSession()` runs inside the failsafe-guarded block with its own 4s timeout
   - Uses AbortController for cancellation-safe save flow during unmount/strict re-renders
   - Uses 15s fail-safe local-save fallback so users are never blocked on report exit
   - Queues unsynced attempts into a localStorage outbox for background cloud sync retries
@@ -116,9 +120,10 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 ## Verification Snapshot (2026-02-12)
 - `npm run lint`: pass
 - `npm run build`: pass
-- Production deployed: https://testplatfrom.vercel.app
+- Production deployed: https://job-hunt-nga.vercel.app (auto-deploys from GitHub pushes)
 - Vercel env vars set: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_DEEPSEEK_API_KEY
-- ScoreReport SELECT timeout removed — cold-start Supabase saves no longer fail
+- Supabase client config: `persistSession: true`, `autoRefreshToken: true`, `detectSessionInUrl: false`
+- ScoreReport uses single UPSERT (no SELECT pre-check or `.select().single()` return chain)
 - attemptOutbox.js auto-retries local-saves in background on dashboard load
 
 ## Pending Work

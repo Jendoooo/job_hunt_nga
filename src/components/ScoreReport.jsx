@@ -107,25 +107,6 @@ function markFingerprintAsSaved(fingerprint) {
     writeRecentAttemptCache(cache)
 }
 
-function isLikelyDuplicateAttempt(latestAttempt, payload) {
-    if (!latestAttempt) return false
-
-    const latestCreatedAt = new Date(latestAttempt.created_at).getTime()
-    const now = Date.now()
-    const ageInSeconds = Number.isNaN(latestCreatedAt) ? Number.MAX_SAFE_INTEGER : Math.abs(now - latestCreatedAt) / 1000
-
-    if (ageInSeconds > 30) return false
-
-    return (
-        latestAttempt.assessment_type === payload.assessment_type &&
-        latestAttempt.module_name === payload.module_name &&
-        latestAttempt.score === payload.score &&
-        latestAttempt.total_questions === payload.total_questions &&
-        latestAttempt.time_taken_seconds === payload.time_taken_seconds &&
-        latestAttempt.mode === payload.mode &&
-        stableSerialize(latestAttempt.answers || {}) === stableSerialize(payload.answers || {})
-    )
-}
 
 function createClientAttemptId() {
     const cryptoObj = typeof crypto !== 'undefined' ? crypto : null
@@ -375,45 +356,19 @@ export default function ScoreReport({
                 return { status: 'saved' }
             }
 
-            let selectQuery = supabase
-                .from('test_attempts')
-                .select('assessment_type, module_name, score, total_questions, answers, time_taken_seconds, mode, created_at')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(1)
-                .maybeSingle()
-
-            if (signal) {
-                selectQuery = selectQuery.abortSignal(signal)
-            }
-
-            // No inner timeout on the SELECT - governed by AbortController + SAVE_FAILSAFE_MS.
-            // Using withTimeout here caused false "timed out" errors on Supabase cold starts.
-            const { data: latestAttempt, error: latestError } = await selectQuery
-
-            if (signal?.aborted) return { status: 'aborted' }
-            if (latestError) {
-                if (isAbortLikeError(latestError)) return { status: 'aborted' }
-                throw latestError
-            }
-
-            if (isLikelyDuplicateAttempt(latestAttempt, payload)) {
-                markFingerprintAsSaved(attemptFingerprint)
-                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: latestAttempt }))
-                return { status: 'saved' }
-            }
-
-            let insertQuery = supabase
+            // Single UPSERT — no preliminary SELECT, no .select().single()
+            // return chain.  The SELECT+single() pattern caused silent hangs
+            // because PostgREST issues a second query for the RETURNING data
+            // that can fail independently from the INSERT under RLS.
+            let upsertQuery = supabase
                 .from('test_attempts')
                 .upsert(payload, { onConflict: 'id' })
-                .select('*')
-                .single()
 
             if (signal) {
-                insertQuery = insertQuery.abortSignal(signal)
+                upsertQuery = upsertQuery.abortSignal(signal)
             }
 
-            const { data: insertedAttempt, error } = await insertQuery
+            const { error } = await upsertQuery
             if (signal?.aborted) return { status: 'aborted' }
             if (error) {
                 if (isAbortLikeError(error)) return { status: 'aborted' }
@@ -421,7 +376,7 @@ export default function ScoreReport({
             }
 
             markFingerprintAsSaved(attemptFingerprint)
-            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: insertedAttempt || payload }))
+            window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
             return { status: 'saved' }
         }
 
@@ -454,7 +409,7 @@ export default function ScoreReport({
             if (result?.status === 'local') {
                 if (isMountedRef.current) {
                     setSavedLocally(true)
-                    setSaveError('')
+                    setSaveError('Cloud save timed out. Will retry automatically.')
                 }
                 enqueueAttemptOutbox(payload)
                 window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
