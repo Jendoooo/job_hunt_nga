@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { supabase, hasSupabaseEnv } from '../lib/supabase'
@@ -141,6 +141,7 @@ function dedupeAttempts(attempts) {
 export default function Dashboard() {
     const { user, profile, signOut } = useAuth()
     const navigate = useNavigate()
+    const flushInFlightRef = useRef(false)
 
     const [recentAttempts, setRecentAttempts] = useState([])
     const [showAllAttempts, setShowAllAttempts] = useState(false)
@@ -166,52 +167,59 @@ export default function Dashboard() {
     const flushAttemptOutbox = useCallback(async (signal) => {
         if (!user) return
         if (!hasSupabaseEnv) return
+        if (flushInFlightRef.current) return
 
+        flushInFlightRef.current = true
         setOutboxSyncError('')
-        const pending = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
-        if (pending.length === 0) {
-            setPendingSyncCount(0)
-            return
-        }
-
-        setPendingSyncCount(pending.length)
-
-        for (const item of pending) {
-            if (signal?.aborted) return
-            const payload = item?.payload
-            const attemptId = payload?.id
-            if (!attemptId) {
-                removeAttemptOutbox(item?.id)
-                continue
+        try {
+            const pending = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
+            if (pending.length === 0) {
+                setPendingSyncCount(0)
+                return
             }
 
-            try {
-                const scorePct = payload.score_pct ?? (
-                    payload.total_questions > 0
-                        ? Math.round((payload.score / payload.total_questions) * 100)
-                        : 0
-                )
+            setPendingSyncCount(pending.length)
 
-                await insertTestAttempt(
-                    {
-                        ...payload,
-                        module_name: payload.module_name || '',
-                        score_pct: scorePct,
-                    },
-                    { signal, timeoutMs: 15000 }
-                )
+            for (const item of pending) {
+                if (signal?.aborted) return
+                const payload = item?.payload
+                const attemptId = payload?.id
+                if (!attemptId) {
+                    removeAttemptOutbox(item?.id)
+                    continue
+                }
 
-                removeAttemptOutbox(attemptId)
-                window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
-            } catch (error) {
-                if (isAbortLikeError(error) || signal?.aborted) return
-                console.warn('Outbox sync failed (will retry):', error)
-                setOutboxSyncError('Some locally saved results could not be synced yet. We will retry automatically.')
+                try {
+                    const scorePct = payload.score_pct ?? (
+                        payload.total_questions > 0
+                            ? Math.round((payload.score / payload.total_questions) * 100)
+                            : 0
+                    )
+
+                    await insertTestAttempt(
+                        {
+                            ...payload,
+                            module_name: payload.module_name || '',
+                            score_pct: scorePct,
+                        },
+                        // Outbox sync should be more patient than the report page.
+                        { signal, timeoutMs: 45000 }
+                    )
+
+                    removeAttemptOutbox(attemptId)
+                    window.dispatchEvent(new CustomEvent('attempt-saved', { detail: payload }))
+                } catch (error) {
+                    if (isAbortLikeError(error) || signal?.aborted) return
+                    console.warn('Outbox sync failed (will retry):', error)
+                    setOutboxSyncError('Some locally saved results could not be synced yet. We will retry automatically.')
+                }
             }
-        }
 
-        const remaining = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
-        setPendingSyncCount(remaining.length)
+            const remaining = readAttemptOutbox().filter((item) => item?.payload?.user_id === user.id)
+            setPendingSyncCount(remaining.length)
+        } finally {
+            flushInFlightRef.current = false
+        }
     }, [user])
 
     const fetchRecentAttempts = useCallback(async (signal) => {
@@ -391,16 +399,17 @@ export default function Dashboard() {
     }, [user])
 
     useEffect(() => {
-        let activeController = null
+        let fetchController = null
+        const flushController = new AbortController()
 
         function runFetch() {
             if (!user) return
-            if (activeController) {
-                activeController.abort()
+            if (fetchController) {
+                fetchController.abort()
             }
-            activeController = new AbortController()
-            flushAttemptOutbox(activeController.signal)
-            fetchRecentAttempts(activeController.signal)
+            fetchController = new AbortController()
+            flushAttemptOutbox(flushController.signal)
+            fetchRecentAttempts(fetchController.signal)
         }
 
         runFetch()
@@ -413,14 +422,13 @@ export default function Dashboard() {
             runFetch()
         }
 
-        const intervalId = setInterval(runFetch, 20000)
+        const intervalId = setInterval(runFetch, 30000)
 
         window.addEventListener('attempt-saved', handleAttemptSaved)
         window.addEventListener('focus', handleWindowFocus)
         return () => {
-            if (activeController) {
-                activeController.abort()
-            }
+            if (fetchController) fetchController.abort()
+            flushController.abort()
             clearInterval(intervalId)
             window.removeEventListener('attempt-saved', handleAttemptSaved)
             window.removeEventListener('focus', handleWindowFocus)

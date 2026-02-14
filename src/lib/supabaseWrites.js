@@ -25,8 +25,18 @@ function readAccessTokenFromStorage() {
 }
 
 async function getAccessToken() {
+    // Avoid hanging on auth refresh in some browser/network setups:
+    // Prefer the cached token from localStorage and only try getSession briefly.
+    const stored = readAccessTokenFromStorage()
+    if (stored) return stored
+
+    const sessionPromise = supabase.auth.getSession()
     try {
-        const { data, error } = await supabase.auth.getSession()
+        const { data, error } = await Promise.race([
+            sessionPromise,
+            new Promise((resolve) => setTimeout(() => resolve({ data: null, error: new Error('getSession timeout') }), 1200)),
+        ])
+
         if (!error) {
             const token = data?.session?.access_token
             if (token) return token
@@ -122,4 +132,3 @@ export async function insertTestAttempt(payload, { signal, timeoutMs = 15000 } =
         controller.abort()
     }
 }
-
