@@ -427,3 +427,16 @@ Date: 2026-02-12
 - [x] Removed `refreshSession()` from save flow — Supabase client auto-refreshes tokens via `onAuthStateChange`
 - [x] Updated `src/pages/Dashboard.jsx` outbox flush — same RPC pattern, removed `refreshSession()`
 - [x] Lint + build pass; pushed commit 62b3884
+
+## Phase 32: Save Pipeline Final Fix — API Route → RPC + Diagnostics [Claude 2026-02-14 19:00]
+- [x] **Root Cause (final)**: Codex's Vercel API proxy (`api/save-attempt.js`) forwarded to PostgREST **table endpoint** (`/rest/v1/test_attempts`) with user JWT + RLS — same INSERT+RLS+trigger interaction that caused all previous hangs. No server-side timeout meant Vercel would wait until its own 10s kill.
+- [x] **Fix**: Rewrote `api/save-attempt.js` to call **RPC function** (`/rest/v1/rpc/save_test_attempt`) instead of table endpoint:
+  - SECURITY DEFINER bypasses RLS entirely — eliminates the locking/timeout condition
+  - Maps payload fields to `p_*` function parameters
+  - 8-second AbortController timeout (well within Vercel's limit)
+  - Added GET health-check handler for deployment verification
+- [x] **Diagnostics**: Added `[save]` console logging throughout `src/lib/supabaseWrites.js` (proxy attempt, response status, success/failure)
+- [x] **Diagnostics**: Added `[dash]` console logging to Dashboard fetch (attempt count, progress rows, errors)
+- [x] **Verified**: Console shows `[save] proxy SUCCESS` + `[dash] attempts result: { count: 26, error: null }` + `[dash] progress rows: 7`
+- [x] **Result**: 26 attempts synced, all KPIs populated, attempt history showing correctly
+- [x] Lint + build pass; commits e1a305b, a89907d

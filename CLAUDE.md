@@ -9,7 +9,7 @@ This project uses two AI agents working in parallel: **Claude** (this file) and 
 | `codex.md` | Codex — writes & maintains | Claude — read-only |
 | `task.md` | Both edit | Always prefix entries with `[Claude YYYY-MM-DD HH:MM]` or `[Codex YYYY-MM-DD HH:MM]` |
 
-**Convention**: When you update `task.md`, always include the exact datetime and agent name. Never edit the other agent's `.md` file.
+**Convention**: When you update `task.md` or `CLAUDE.md`, always include the exact date AND time (HH:MM) in phase headers and snapshot entries. Never edit the other agent's `.md` file.
 
 ## Scope
 Light-theme assessment platform for graduate recruitment preparation, with employer-specific modules and shared scoring/reporting.
@@ -39,13 +39,15 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - Question navigation: `src/components/QuestionNav.jsx`
   - Uses `question-nav__btn*` contract aligned with `src/index.css`
 - Score and persistence: `src/components/ScoreReport.jsx`
-  - Saves attempts to Supabase `test_attempts` via single UPSERT (no SELECT pre-check, no `.select().single()` return)
+  - Saves via `insertTestAttempt()` from `src/lib/supabaseWrites.js` (raw fetch, NOT Supabase JS client)
+  - Save path: Browser → Vercel proxy (`/api/save-attempt`) → RPC function (`save_test_attempt`) → Supabase
+  - RPC is `SECURITY DEFINER` — bypasses RLS entirely, validates `auth.uid()` internally
+  - Fallback: if proxy fails, falls back to direct PostgREST table endpoint
+  - Outbox-first: always `enqueueAttemptOutbox()` before cloud save; removes on success
   - Displays save progress/error and emits `attempt-saved` browser event
   - Uses short-lived session fingerprint cache to prevent duplicate inserts
-  - `refreshSession()` runs inside the failsafe-guarded block with its own 4s timeout
   - Uses AbortController for cancellation-safe save flow during unmount/strict re-renders
   - Uses 15s fail-safe local-save fallback so users are never blocked on report exit
-  - Queues unsynced attempts into a localStorage outbox for background cloud sync retries
   - Score review explanation supports formatted HTML content
   - Interactive review answers are rendered as readable tables (not raw JSON)
   - Supports unit-based score overrides for partial-credit modules (e.g., SJQ: alignment_points / max_points)
@@ -117,21 +119,31 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
 - 9 event types each mapped to a required button ID; temperature spike counter cycles 0→1→2→0 (High for spikes<2, 3rd High for spike===2)
 - CSS: `.pm-*` classes in `src/index.css` (~200 lines); panel background `#111827`, zone cards `#1e293b`
 
-## Verification Snapshot (2026-02-12)
+## Verification Snapshot (2026-02-14 19:30)
 - `npm run lint`: pass
 - `npm run build`: pass
 - Production deployed: https://job-hunt-nga.vercel.app (auto-deploys from GitHub pushes)
 - Vercel env vars set: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_DEEPSEEK_API_KEY
 - Supabase client config: `persistSession: true`, `autoRefreshToken: true`, `detectSessionInUrl: false`
-- ScoreReport uses single UPSERT (no SELECT pre-check or `.select().single()` return chain)
+- Save pipeline verified end-to-end: `[save] proxy SUCCESS` + `[dash] attempts result: { count: 26, error: null }`
 - attemptOutbox.js auto-retries local-saves in background on dashboard load
+
+## Save Pipeline Architecture (2026-02-14 19:00)
+- **Write path**: Browser → `insertTestAttempt()` → Vercel proxy (`/api/save-attempt`) → RPC (`save_test_attempt`) → Supabase
+- **API route**: `api/save-attempt.js` — maps payload to `p_*` params, 8s AbortController timeout, GET health-check
+- **RPC function**: `SECURITY DEFINER`, bypasses RLS, validates `auth.uid()`, INSERT with ON CONFLICT DO NOTHING
+- **Migration**: `supabase/migrations/20260214100000_save_attempt_rpc.sql`
+- **Client module**: `src/lib/supabaseWrites.js` — raw `fetch()`, NOT Supabase JS client; proxy-first with direct PostgREST fallback
+- **Outbox**: `src/utils/attemptOutbox.js` — localStorage queue, flushed on Dashboard load/focus/interval
+- **Trigger**: `handle_new_attempt` (BEFORE INSERT) computes `score_pct` + upserts `user_progress` — still fires under RPC
+- **CRITICAL LESSON**: Never use PostgREST table endpoints for INSERT when RLS + write triggers coexist. Use SECURITY DEFINER RPC instead.
 
 ## Pending Work
 - Run manual touch-device QA for interactive widgets (drag handles, pie handles, point graph dots).
 - Run complete manual QA across breakpoints 320/375/768/1024/1280+.
 - Optional: optimize bundle splitting to reduce large chunk warning.
-- Validate Supabase production RLS policies allow insert/select for authenticated users.
 - Decide whether to route AI calls through a backend proxy/edge function in production.
+- Optional: remove `[save]`/`[dash]` diagnostic console.log once pipeline is stable for a few weeks.
 
 ## Update Snapshot (2026-02-12 - Interactive Expansion)
 - Interactive widget set now includes five question types:
@@ -147,9 +159,11 @@ Light-theme assessment platform for graduate recruitment preparation, with emplo
   - stock account point graph
   - customer contact pie ratios
 - Generator (`scripts/generate_shl_module.js`) normalizes and carries these new types into `src/data/shl-interactive-questions.json`.
-- Save reliability update:
-  - `src/components/ScoreReport.jsx` duplicate-check SELECT and INSERT no longer use inner timeouts; they are controlled by AbortController + global failsafe timing.
-  - Pending (local) attempts are queued and auto-flushed on dashboard load/focus via `src/utils/attemptOutbox.js`.
+- Save reliability update (2026-02-14 19:00):
+  - Writes bypass Supabase JS client entirely — raw `fetch()` via Vercel proxy → RPC function
+  - RPC (`save_test_attempt`) is SECURITY DEFINER — no RLS interaction, no deadlock
+  - Outbox-first: localStorage queue ensures no data loss; auto-flushed on dashboard load/focus
+  - Diagnostic logging: `[save]` and `[dash]` prefixed console.log at every decision point
 
 ## Pending Work Addendum
 - Manual browser QA specifically for the two new widget types on desktop + mobile pointer interactions.
