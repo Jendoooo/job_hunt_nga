@@ -83,6 +83,8 @@ function attachAbortSignal(controller, externalSignal) {
 }
 
 export async function insertTestAttempt(payload, { signal, timeoutMs = 15000 } = {}) {
+    console.log('[save] insertTestAttempt starting', { id: payload?.id, type: payload?.assessment_type })
+
     if (!hasSupabaseEnv) {
         throw new Error('Supabase is not configured.')
     }
@@ -99,10 +101,16 @@ export async function insertTestAttempt(payload, { signal, timeoutMs = 15000 } =
     // Prefer same-origin proxy route in production. This avoids ISP/network blocks
     // that often affect direct browser -> Supabase POST requests.
     if (typeof window !== 'undefined') {
-        const proxyResult = await insertViaProxy(payload, accessToken, { signal, timeoutMs }).catch(() => null)
+        console.log('[save] trying proxy /api/save-attempt ...')
+        const proxyResult = await insertViaProxy(payload, accessToken, { signal, timeoutMs }).catch((err) => {
+            console.warn('[save] proxy threw:', err?.message || err)
+            return null
+        })
+        console.log('[save] proxy result:', proxyResult)
         if (proxyResult) return proxyResult
     }
 
+    console.log('[save] proxy failed, falling through to direct PostgREST ...')
     return insertViaPostgrest(payload, accessToken, { signal, timeoutMs })
 }
 
@@ -123,26 +131,33 @@ async function insertViaProxy(payload, accessToken, { signal, timeoutMs }) {
             signal: controller.signal,
         })
 
+        console.log('[save] proxy response:', response.status, response.headers.get('content-type'))
+
         if (response.status === 404 || response.status === 405) {
+            console.log('[save] proxy endpoint not found (404/405)')
             return null
         }
 
         if (!response.ok) {
             const { message } = await readPostgrestError(response)
+            console.warn('[save] proxy error:', response.status, message)
             const suffix = message ? `: ${message}` : ''
             throw new Error(`Save proxy failed (${response.status})${suffix}`)
         }
 
         const contentType = response.headers.get('content-type') || ''
         if (!contentType.includes('application/json')) {
+            console.log('[save] proxy returned non-JSON (likely SPA HTML fallback)')
             return null
         }
 
         const data = await response.json().catch(() => null)
         if (!data || data.ok !== true) {
+            console.warn('[save] proxy returned ok=false:', data)
             return null
         }
 
+        console.log('[save] proxy SUCCESS:', data)
         return { ok: true, duplicate: Boolean(data?.duplicate) }
     } finally {
         clearTimeout(timerId)
@@ -170,17 +185,22 @@ async function insertViaPostgrest(payload, accessToken, { signal, timeoutMs }) {
             signal: controller.signal,
         })
 
+        console.log('[save] direct PostgREST response:', response.status)
+
         // Duplicate attempt IDs can happen during retries. Treat conflict as success.
         if (response.status === 409) {
+            console.log('[save] direct PostgREST: duplicate (409), treating as success')
             return { ok: true, duplicate: true }
         }
 
         if (!response.ok) {
             const { message } = await readPostgrestError(response)
+            console.warn('[save] direct PostgREST error:', response.status, message)
             const suffix = message ? `: ${message}` : ''
             throw new Error(`Supabase insert failed (${response.status})${suffix}`)
         }
 
+        console.log('[save] direct PostgREST SUCCESS')
         return { ok: true, duplicate: false }
     } finally {
         clearTimeout(timerId)

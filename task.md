@@ -414,3 +414,16 @@ Date: 2026-02-12
 - [Codex 2026-02-14 10:45] Behavioral OPQ: merged extracted "real" triplets (`src/data/shl-behavioral-real.json`) into the session bank; fixed left-skew layout (single-column grid), added SHL-like hover + click confirm highlight, smoother layout animations, stage-2 vertical centering, and improved disabled Next styling (commit 0087c82).
 - [Codex 2026-02-14 11:12] Behavioral OPQ UX polish: removed layout thrash by replacing in-flow "saved" messaging with a floating toast; auto-advance now triggers only on newly answered blocks (no bounce when navigating back); report sten view now includes a 1-10 scale row + clearer grid ticks (commit 3de982c).
 - [Codex 2026-02-14 13:05] Behavioral OPQ: slowed auto-advance and improved end-of-block UX (final reveal leaves 1 card after rank-2 pick; last block button now says Generate Report). Expanded synthetic bank with tougher trade-off triplets (q33-q44). Added optional DeepSeek AI narrative profile section + bottom/extra competency rows (commit c32ff1d).
+
+## Phase 31: Bypass PostgREST UPSERT with Server-Side RPC [Claude 2026-02-14 16:30]
+- [x] Root cause: Supabase JS `.upsert()` consistently timed out from the browser despite PostgREST responding in <1s via curl. Issue is in PostgREST UPSERT handling through authenticated browser requests with RLS.
+- [x] Created `save_test_attempt` PostgreSQL RPC function (`SECURITY DEFINER`) that:
+  - Validates `auth.uid() = p_user_id` inside the function
+  - Does plain INSERT with ON CONFLICT DO NOTHING (retries safe)
+  - Bypasses RLS entirely — no PostgREST UPSERT semantics
+  - Existing BEFORE INSERT trigger still fires for `score_pct` + `user_progress`
+- [x] Migration: `supabase/migrations/20260214100000_save_attempt_rpc.sql` — pushed to live DB
+- [x] Updated `src/components/ScoreReport.jsx` — replaced `.upsert()` with `supabase.rpc('save_test_attempt', ...)`
+- [x] Removed `refreshSession()` from save flow — Supabase client auto-refreshes tokens via `onAuthStateChange`
+- [x] Updated `src/pages/Dashboard.jsx` outbox flush — same RPC pattern, removed `refreshSession()`
+- [x] Lint + build pass; pushed commit 62b3884
