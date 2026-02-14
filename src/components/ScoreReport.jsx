@@ -581,6 +581,43 @@ export default function ScoreReport({
             )
         }
 
+        if (questionResult.type === 'interactive_ranking') {
+            const items = Array.isArray(widgetData.items) ? widgetData.items : []
+            const expectedMap = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : {}
+            const actualMap = actualAnswer && typeof actualAnswer === 'object' ? actualAnswer : {}
+
+            return (
+                <div className="score-review__interactive">
+                    <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
+                    <table className="score-review__interactive-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Your Rank</th>
+                                <th>Expected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {items.map((item) => {
+                                const id = item?.id
+                                const label = item?.label || id
+                                const your = actualMap?.[id]
+                                const exp = expectedMap?.[id]
+                                const ok = Number(your) === Number(exp)
+                                return (
+                                    <tr key={id} className={ok ? 'score-review__interactive-row--ok' : ''}>
+                                        <td>{label}</td>
+                                        <td>{your ?? '--'}</td>
+                                        <td>{exp ?? '--'}</td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
         if (questionResult.type === 'interactive_pie_chart') {
             const segments = Array.isArray(widgetData.segments) ? widgetData.segments : []
             const expectedMap = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : {}
