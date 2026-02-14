@@ -35,6 +35,10 @@ function normalizeTriplet(triplet, prefix = '') {
       id: String(opt?.id || `${id}_${String.fromCharCode(97 + idx)}`),
       text: String(opt?.text || '').trim(),
       competency: String(opt?.competency || '').trim(),
+      keying: (() => {
+        const raw = String(opt?.keying ?? opt?.polarity ?? '').trim()
+        return raw ? raw : undefined
+      })(),
     }))
     .filter((opt) => opt.id && opt.text)
 
@@ -195,13 +199,13 @@ export default function NLNGBehavioralTest() {
           </button>
           <div className="flex items-center gap-2">
             <Brain className="text-sky-600" size={20} />
-            <h1 className="text-lg font-bold text-slate-800">NLNG Behavioral (OPQ Style)</h1>
+            <h1 className="text-lg font-bold text-slate-800">SHL Job-Focused Assessment (Forced-Choice)</h1>
           </div>
         </header>
 
         <div className="test-setup">
           <div className="test-setup__card">
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure Behavioral Session</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Configure JFA Session</h2>
             <p className="test-setup__description">
               Forced-choice (ipsative) blocks. Choose the statement most like you, then choose the best of the remaining two.
             </p>
@@ -213,7 +217,7 @@ export default function NLNGBehavioralTest() {
                   className={`test-setup__time-btn ${sessionPreset === 'real' ? 'test-setup__time-btn--active' : ''}`}
                   onClick={applyRealPreset}
                 >
-                  OPQ Real (32 blocks / 20m)
+                  JFA Real (32 blocks / 20m)
                 </button>
                 <button
                   className={`test-setup__time-btn ${sessionPreset === 'custom' ? 'test-setup__time-btn--active' : ''}`}
@@ -323,7 +327,7 @@ export default function NLNGBehavioralTest() {
         <header className="test-page__header">
           <div className="flex items-center gap-2">
             <Brain className="text-sky-600" size={20} />
-            <h1 className="text-lg font-bold text-slate-800">NLNG Behavioral - Report</h1>
+            <h1 className="text-lg font-bold text-slate-800">SHL JFA (Forced-Choice) - Report</h1>
           </div>
         </header>
         <BehavioralReport
@@ -332,7 +336,7 @@ export default function NLNGBehavioralTest() {
           timeTaken={timeTaken || (isExamMode ? totalTimeSeconds : 0)}
           totalTime={isExamMode ? totalTimeSeconds : 0}
           assessmentType="nlng-opq"
-          moduleName={`NLNG Behavioral OPQ (${effectiveMode}, ${activeTriplets.length} blocks${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
+          moduleName={`SHL JFA (Forced-Choice) (${effectiveMode}, ${activeTriplets.length} blocks${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
           mode={effectiveMode}
           onRetry={() => setStage('setup')}
           onBackToDashboard={() => navigate('/')}
@@ -356,7 +360,7 @@ export default function NLNGBehavioralTest() {
             <Brain size={18} />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-slate-800">Behavioral (OPQ Style)</h2>
+            <h2 className="text-sm font-bold text-slate-800">JFA (Forced-Choice)</h2>
             <div className="test-page__subtest-progress">
               Block {currentIndex + 1} of {activeTriplets.length}
             </div>

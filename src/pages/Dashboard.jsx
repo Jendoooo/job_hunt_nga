@@ -573,7 +573,7 @@ export default function Dashboard() {
                 },
                 {
                     id: 'nlng-behavioral',
-                    title: 'SHL Behavioral (OPQ Style)',
+                    title: 'SHL JFA (Forced-Choice)',
                     subtitle: 'Forced-choice ranking',
                     description: 'Ipsative blocks: choose most like you, then best of remaining to reveal priorities.',
                     icon: Brain,

@@ -881,6 +881,236 @@
           "competency": "creating_conceptualizing"
         }
       ]
+    },
+    {
+      "id": "q45",
+      "options": [
+        {
+          "id": "q45_a",
+          "text": "I often arrive late to appointments.",
+          "competency": "organizing_executing",
+          "keying": "negative"
+        },
+        {
+          "id": "q45_b",
+          "text": "I often respond to criticism negatively.",
+          "competency": "adapting_coping",
+          "keying": "negative"
+        },
+        {
+          "id": "q45_c",
+          "text": "I very rarely reward the performance of other people.",
+          "competency": "supporting_cooperating",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q46",
+      "options": [
+        {
+          "id": "q46_a",
+          "text": "I avoid taking responsibility when things go wrong.",
+          "competency": "leading_deciding",
+          "keying": "negative"
+        },
+        {
+          "id": "q46_b",
+          "text": "I keep quiet in meetings even when I disagree.",
+          "competency": "interacting_presenting",
+          "keying": "negative"
+        },
+        {
+          "id": "q46_c",
+          "text": "I prefer to reuse old methods rather than experiment with new ones.",
+          "competency": "creating_conceptualizing",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q47",
+      "options": [
+        {
+          "id": "q47_a",
+          "text": "I start tasks without planning and then rush to catch up.",
+          "competency": "organizing_executing",
+          "keying": "negative"
+        },
+        {
+          "id": "q47_b",
+          "text": "I accept figures as long as they look reasonable, without checking them.",
+          "competency": "analyzing_interpreting",
+          "keying": "negative"
+        },
+        {
+          "id": "q47_c",
+          "text": "If a target looks hard to reach, I lower my expectations quickly.",
+          "competency": "enterprising_performing",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q48",
+      "options": [
+        {
+          "id": "q48_a",
+          "text": "I take criticism personally and struggle to move on.",
+          "competency": "adapting_coping",
+          "keying": "negative"
+        },
+        {
+          "id": "q48_b",
+          "text": "I interrupt others to get my point across.",
+          "competency": "interacting_presenting",
+          "keying": "negative"
+        },
+        {
+          "id": "q48_c",
+          "text": "I delay decisions until someone else takes the lead.",
+          "competency": "leading_deciding",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q49",
+      "options": [
+        {
+          "id": "q49_a",
+          "text": "I find it hard to generate alternatives once I have a solution.",
+          "competency": "creating_conceptualizing",
+          "keying": "negative"
+        },
+        {
+          "id": "q49_b",
+          "text": "I forget important details (like dates or times) unless I write everything down.",
+          "competency": "organizing_executing",
+          "keying": "negative"
+        },
+        {
+          "id": "q49_c",
+          "text": "I make judgements with limited information and rarely revisit them.",
+          "competency": "analyzing_interpreting",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q50",
+      "options": [
+        {
+          "id": "q50_a",
+          "text": "I avoid ambitious targets because I dislike the chance of failing.",
+          "competency": "enterprising_performing",
+          "keying": "negative"
+        },
+        {
+          "id": "q50_b",
+          "text": "I keep feedback to myself rather than acknowledging others' good work.",
+          "competency": "supporting_cooperating",
+          "keying": "negative"
+        },
+        {
+          "id": "q50_c",
+          "text": "When plans change suddenly, I become stressed and lose focus.",
+          "competency": "adapting_coping",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q51",
+      "options": [
+        {
+          "id": "q51_a",
+          "text": "I avoid speaking to new people unless I have to.",
+          "competency": "interacting_presenting",
+          "keying": "negative"
+        },
+        {
+          "id": "q51_b",
+          "text": "I prefer clear instructions and resist open-ended tasks.",
+          "competency": "creating_conceptualizing",
+          "keying": "negative"
+        },
+        {
+          "id": "q51_c",
+          "text": "I postpone tasks until the deadline is close.",
+          "competency": "organizing_executing",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q52",
+      "options": [
+        {
+          "id": "q52_a",
+          "text": "I hesitate to challenge poor decisions, even when I disagree.",
+          "competency": "leading_deciding",
+          "keying": "negative"
+        },
+        {
+          "id": "q52_b",
+          "text": "I rarely question assumptions once a plan is agreed.",
+          "competency": "analyzing_interpreting",
+          "keying": "negative"
+        },
+        {
+          "id": "q52_c",
+          "text": "I can appear blunt and forget to consider how others feel.",
+          "competency": "supporting_cooperating",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q53",
+      "options": [
+        {
+          "id": "q53_a",
+          "text": "I lose motivation when there is no immediate reward.",
+          "competency": "enterprising_performing",
+          "keying": "negative"
+        },
+        {
+          "id": "q53_b",
+          "text": "I can be overly direct in messages and cause tension.",
+          "competency": "interacting_presenting",
+          "keying": "negative"
+        },
+        {
+          "id": "q53_c",
+          "text": "I dismiss unusual ideas quickly.",
+          "competency": "creating_conceptualizing",
+          "keying": "negative"
+        }
+      ]
+    },
+    {
+      "id": "q54",
+      "options": [
+        {
+          "id": "q54_a",
+          "text": "I sometimes bend rules if it makes life easier.",
+          "competency": "integrity_ethics",
+          "keying": "negative"
+        },
+        {
+          "id": "q54_b",
+          "text": "I pass responsibility to others when outcomes are uncertain.",
+          "competency": "leading_deciding",
+          "keying": "negative"
+        },
+        {
+          "id": "q54_c",
+          "text": "I ignore procedures if they slow me down.",
+          "competency": "organizing_executing",
+          "keying": "negative"
+        }
+      ]
     }
   ]
 }

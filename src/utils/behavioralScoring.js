@@ -37,24 +37,42 @@ export function scoreIpsativeTriplet(triplet, answer) {
   if (!triplet || !normalized) return null
 
   const options = Array.isArray(triplet.options) ? triplet.options : []
-  const competencyByOptionId = new Map(
+
+  function isNegativeKeyed(opt) {
+    const raw = String(opt?.keying ?? opt?.polarity ?? '').trim().toLowerCase()
+    if (raw === 'negative' || raw === 'neg' || raw === 'reverse' || raw === 'reversed' || raw === 'invert' || raw === 'inverted') {
+      return true
+    }
+
+    return opt?.reverse === true || opt?.reversed === true || opt?.invert === true || opt?.inverted === true
+  }
+
+  const metaByOptionId = new Map(
     options
-      .map((opt) => [String(opt?.id || ''), String(opt?.competency || '')])
-      .filter(([id, competency]) => id && competency)
+      .map((opt) => {
+        const id = String(opt?.id || '').trim()
+        const competency = String(opt?.competency || '').trim()
+        if (!id || !competency) return null
+        return [id, { competency, negative: isNegativeKeyed(opt) }]
+      })
+      .filter(Boolean)
   )
 
   const [rank1, rank2, rank3] = normalized
   const ranks = [
-    { id: rank1, points: 2 },
-    { id: rank2, points: 1 },
-    { id: rank3, points: 0 },
+    { id: rank1, basePoints: 2 },
+    { id: rank2, basePoints: 1 },
+    { id: rank3, basePoints: 0 },
   ]
 
   const pointsByCompetency = {}
   for (const item of ranks) {
-    const comp = competencyByOptionId.get(item.id)
-    if (!comp) continue
-    pointsByCompetency[comp] = (pointsByCompetency[comp] || 0) + item.points
+    const meta = metaByOptionId.get(item.id)
+    if (!meta) continue
+
+    // Reverse-keyed statements: "least like me" earns the most credit.
+    const points = meta.negative ? (2 - item.basePoints) : item.basePoints
+    pointsByCompetency[meta.competency] = (pointsByCompetency[meta.competency] || 0) + points
   }
 
   return pointsByCompetency

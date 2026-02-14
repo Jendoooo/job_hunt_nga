@@ -110,6 +110,11 @@
 - `scripts/append_bar_new_clients.cjs`: kept the append script in sync with the updated question shape.
 - Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive`.
 
+### [Codex 2026-02-14 17:05] Behavioral JFA: Negative-Keyed Items + Rename
+- `src/data/shl-behavioral.json`: added 10 tougher “lesser of evils” triplets (q45-q54) including lateness/criticism/reward trade-offs.
+- `src/utils/behavioralScoring.js`: added support for reverse-keyed statements via `keying: "negative"` (rank3 can now contribute positively for negative statements).
+- `src/pages/NLNGBehavioralTest.jsx` + `src/pages/Dashboard.jsx` + `src/components/BehavioralReport.jsx`: renamed OPQ labeling to "JFA (Forced-Choice)" / "Job-Focused Assessment (Forced-Choice)".
+
 ---
 
 ## Architecture Notes (Codex's modules)

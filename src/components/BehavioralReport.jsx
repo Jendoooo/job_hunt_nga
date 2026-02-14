@@ -303,7 +303,7 @@ export default function BehavioralReport({
       <header className="beh-report__hero">
         <div className="beh-report__hero-top">
           <div>
-            <h2>Behavioral Profile</h2>
+            <h2>JFA Profile</h2>
             <p>Forced-choice ranking across 8 competencies (Sten 1-10).</p>
           </div>
           <div className="beh-report__stats">
