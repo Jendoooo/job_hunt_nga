@@ -105,6 +105,11 @@
 - Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive` (now 107 items).
 - `src/index.css`: added `.shl-rank*` styling.
 
+### [Codex 2026-02-14 16:25] Interactive Numerical: Fix New-Clients Bar Count
+- `src/data/shl-gold-standard.json`: fixed `bar_new_clients_real` to show 3 bars (adds Client Initiated) with a complete expected answer map; added a missing constraint so the North/South split is solvable.
+- `scripts/append_bar_new_clients.cjs`: kept the append script in sync with the updated question shape.
+- Regenerated `src/data/shl-interactive-questions.json` via `npm run generate:shl-interactive`.
+
 ---
 
 ## Architecture Notes (Codex's modules)
