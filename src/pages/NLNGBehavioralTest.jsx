@@ -4,6 +4,7 @@ import Timer from '../components/Timer'
 import BehavioralReport from '../components/BehavioralReport'
 import SHLBehavioralWidget from '../components/interactive/SHLBehavioralWidget'
 import behavioralBank from '../data/shl-behavioral.json'
+import behavioralRealSets from '../data/shl-behavioral-real.json'
 import { shuffleQuestions } from '../utils/questionSession'
 import {
   ArrowLeft,
@@ -19,18 +20,52 @@ const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30]
 const REAL_PRESET_QUESTION_COUNT = 32
 const REAL_PRESET_TIME_MINUTES = 20
 
+function normalizeTriplet(triplet, prefix = '') {
+  const baseId = String(triplet?.id || '').trim()
+  if (!baseId) return null
+
+  const id = prefix ? `${prefix}_${baseId}` : baseId
+  const options = Array.isArray(triplet?.options) ? triplet.options.slice(0, 3) : []
+  if (options.length !== 3) return null
+
+  const normalizedOptions = options
+    .map((opt, idx) => ({
+      id: String(opt?.id || `${id}_${String.fromCharCode(97 + idx)}`),
+      text: String(opt?.text || '').trim(),
+      competency: String(opt?.competency || '').trim(),
+    }))
+    .filter((opt) => opt.id && opt.text)
+
+  if (normalizedOptions.length !== 3) return null
+
+  return {
+    ...triplet,
+    id,
+    options: normalizedOptions,
+  }
+}
+
 function getTripletsFromBank(bank) {
   const triplets = Array.isArray(bank?.triplets) ? bank.triplets : []
   return triplets
-    .filter((t) => t && typeof t === 'object' && Array.isArray(t.options) && t.options.length === 3)
-    .map((t) => ({
-      ...t,
-      options: t.options.map((opt, idx) => ({
-        id: String(opt?.id || `${t.id}_opt_${idx + 1}`),
-        text: String(opt?.text || ''),
-        competency: String(opt?.competency || ''),
-      })),
-    }))
+    .map((t) => normalizeTriplet(t))
+    .filter(Boolean)
+}
+
+function getTripletsFromRealSets(realSets) {
+  const sets = Array.isArray(realSets) ? realSets : []
+  const collected = []
+
+  for (const set of sets) {
+    const prefix = String(set?.id || 'real').trim()
+    const triplets = Array.isArray(set?.triplets) ? set.triplets : []
+    for (const triplet of triplets) {
+      const normalized = normalizeTriplet(triplet, prefix)
+      if (normalized) collected.push(normalized)
+    }
+  }
+
+  return collected
 }
 
 export default function NLNGBehavioralTest() {
@@ -46,7 +81,11 @@ export default function NLNGBehavioralTest() {
   const [timeTaken, setTimeTaken] = useState(0)
   const startTimeRef = useRef(null)
 
-  const allTriplets = useMemo(() => getTripletsFromBank(behavioralBank), [])
+  const allTriplets = useMemo(() => {
+    const base = getTripletsFromBank(behavioralBank)
+    const real = getTripletsFromRealSets(behavioralRealSets)
+    return [...base, ...real]
+  }, [])
   const availableCount = allTriplets.length
 
   const isRealPreset = sessionPreset === 'real'
@@ -313,7 +352,7 @@ export default function NLNGBehavioralTest() {
         </div>
       </header>
 
-      <div className="test-page__body">
+      <div className="test-page__body test-page__body--single">
         <div className="test-page__content">
           <div className="max-w-3xl mx-auto w-full">
             <div className="shl-beh-progress" aria-label="Session progress">

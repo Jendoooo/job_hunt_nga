@@ -1,0 +1,77 @@
+[
+  {
+    "id": "beh_real_10",
+    "type": "ipsative_triplet",
+    "triplets": [
+      {
+        "id": "q10",
+        "options": [
+          {
+            "text": "I often join conversations my colleagues are having.",
+            "competency": "interacting_presenting"
+          },
+          {
+            "text": "I perform well in repetitive jobs.",
+            "competency": "adapting_coping"
+          },
+          {
+            "text": "I quickly reach a decision.",
+            "competency": "leading_deciding"
+          }
+        ]
+      },
+      {
+        "id": "q11",
+        "options": [
+          {
+            "text": "I tend to provide perceptive arguments in meetings.",
+            "competency": "interacting_presenting"
+          },
+          {
+            "text": "I figure things out myself instead of asking for help.",
+            "competency": "analyzing_interpreting"
+          },
+          {
+            "text": "I use social media to make my organization more visible.",
+            "competency": "enterprising_performing"
+          }
+        ]
+      },
+      {
+        "id": "q12",
+        "options": [
+          {
+            "text": "I gather information from reliable sources before making any decisions.",
+            "competency": "analyzing_interpreting"
+          },
+          {
+            "text": "I usually try to fix technology problems myself.",
+            "competency": "creating_conceptualizing"
+          },
+          {
+            "text": "I can make difficult decisions that affect other people.",
+            "competency": "leading_deciding"
+          }
+        ]
+      },
+      {
+        "id": "q13",
+        "options": [
+          {
+            "text": "I encourage others to adopt new ways of doing things that increase efficiency.",
+            "competency": "creating_conceptualizing"
+          },
+          {
+            "text": "I do not reveal others' private information.",
+            "competency": "integrity_ethics"
+          },
+          {
+            "text": "I am polite.",
+            "competency": "adapting_coping"
+          }
+        ]
+      }
+    ]
+  }
+]
+

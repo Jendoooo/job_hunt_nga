@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion as Motion, AnimatePresence } from 'framer-motion'
 import { RotateCcw } from 'lucide-react'
+
+const PICK_CONFIRM_MS = 200
 
 function normalizeOptions(data) {
   const options = Array.isArray(data?.options) ? data.options : []
@@ -35,6 +37,8 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
 
   const [rank1, setRank1] = useState(null)
   const [rank2, setRank2] = useState(null)
+  const [pendingPickId, setPendingPickId] = useState(null)
+  const pendingTimerRef = useRef(null)
   const completed = Boolean(completedRanking)
 
   const remainingOptions = useMemo(() => {
@@ -42,9 +46,26 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
     return options.filter((opt) => opt.id !== rank1)
   }, [options, rank1])
 
+  useEffect(() => (
+    () => {
+      if (pendingTimerRef.current) clearTimeout(pendingTimerRef.current)
+    }
+  ), [])
+
+  function scheduleConfirm(optionId, fn) {
+    setPendingPickId(optionId)
+    if (pendingTimerRef.current) clearTimeout(pendingTimerRef.current)
+    pendingTimerRef.current = setTimeout(() => {
+      pendingTimerRef.current = null
+      fn()
+      setPendingPickId(null)
+    }, PICK_CONFIRM_MS)
+  }
+
   function handlePick(optionId) {
     if (disabled) return
     if (!optionId) return
+    if (pendingPickId) return
 
     if (completed) {
       // Require explicit reset to change completed answers.
@@ -52,35 +73,40 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
     }
 
     if (!rank1) {
-      setRank1(optionId)
+      scheduleConfirm(optionId, () => setRank1(optionId))
       return
     }
 
     if (rank1 && !rank2 && optionId !== rank1) {
-      setRank2(optionId)
-      const remaining = options.find((opt) => opt.id !== rank1 && opt.id !== optionId)
-      const rank3 = remaining?.id
-      if (!rank3) return
-      if (onAnswer) onAnswer([rank1, optionId, rank3])
+      scheduleConfirm(optionId, () => {
+        setRank2(optionId)
+        const remaining = options.find((opt) => opt.id !== rank1 && opt.id !== optionId)
+        const rank3 = remaining?.id
+        if (!rank3) return
+        if (onAnswer) onAnswer([rank1, optionId, rank3])
+      })
     }
   }
 
   function handleReset() {
     if (disabled) return
+    if (pendingTimerRef.current) clearTimeout(pendingTimerRef.current)
+    pendingTimerRef.current = null
+    setPendingPickId(null)
     setRank1(null)
     setRank2(null)
     if (onAnswer) onAnswer(null)
   }
 
+  const isStage2 = !completed && Boolean(rank1) && !rank2
   const prompt = completed
     ? 'Ranking saved for this block.'
     : rank1
       ? 'Of the remaining two statements, which one describes you best?'
       : 'Select the statement that is MOST like you.'
 
-  const renderedOptions = completed
-    ? options
-    : (rank1 ? remainingOptions : options)
+  const showFullLocked = completed && !rank1 && !rank2
+  const renderedOptions = showFullLocked ? options : (rank1 ? remainingOptions : options)
 
   const rankById = completed && completedRanking
     ? completedRanking.reduce((acc, id, idx) => {
@@ -107,7 +133,17 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
         )}
       </header>
 
-      <div className="shl-beh__cards" role="list">
+      <Motion.div
+        className={[
+          'shl-beh__cards',
+          isStage2 ? 'shl-beh__cards--stage2' : '',
+          pendingPickId ? 'shl-beh__cards--busy' : '',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        role="list"
+        layout
+      >
         <AnimatePresence mode="popLayout">
           {renderedOptions.map((opt) => {
             const rank = completed ? rankById[opt.id] : null
@@ -119,15 +155,17 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
                 className={[
                   'shl-beh__card',
                   completed ? 'shl-beh__card--locked' : '',
+                  pendingPickId === opt.id ? 'shl-beh__card--picked' : '',
                 ]
                   .filter(Boolean)
                   .join(' ')}
                 onClick={() => handlePick(opt.id)}
                 disabled={disabled}
+                layout="position"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.18 }}
+                exit={{ opacity: 0, y: -6, scale: 0.99 }}
+                transition={{ duration: 0.22, ease: 'easeInOut' }}
               >
                 {Number.isInteger(rank) && (
                   <span className="shl-beh__rank" aria-label={`Rank ${rank}`}>{rank}</span>
@@ -137,7 +175,7 @@ export default function SHLBehavioralWidget({ data, value, onAnswer, disabled = 
             )
           })}
         </AnimatePresence>
-      </div>
+      </Motion.div>
     </section>
   )
 }

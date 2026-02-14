@@ -263,6 +263,15 @@ select:focus-visible {
   box-shadow: 0 10px 22px rgba(3, 105, 161, 0.33);
 }
 
+.btn--primary:disabled {
+  opacity: 1;
+  transform: none;
+  box-shadow: none;
+  color: #475569;
+  border-color: #cbd5e1;
+  background: #cbd5e1;
+}
+
 .btn--secondary {
   color: var(--text-2);
   border-color: var(--line-strong);
@@ -1672,6 +1681,15 @@ select:focus-visible {
   gap: 0.75rem;
 }
 
+.shl-beh__cards--stage2 {
+  min-height: 260px;
+  align-content: center;
+}
+
+.shl-beh__cards--busy {
+  pointer-events: none;
+}
+
 .shl-beh__card {
   position: relative;
   text-align: center;
@@ -1705,8 +1723,19 @@ select:focus-visible {
   transform: none;
 }
 
+.shl-beh__card--picked {
+  border-color: #84cc16;
+  background: color-mix(in srgb, #84cc16 12%, white);
+  box-shadow: 0 12px 28px rgba(132, 204, 22, 0.18), var(--shadow-md);
+  transform: translateY(-2px);
+}
+
 .shl-beh__card--locked {
   cursor: default;
+  pointer-events: none;
+  transform: none;
+  border-color: #e5e7eb;
+  box-shadow: var(--shadow-sm);
 }
 
 .shl-beh__rank {
