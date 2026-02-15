@@ -148,8 +148,8 @@ function PowerBars({ power, alert }) {
 }
 
 function TempGraph({ history, value }) {
-  const H = 220
-  const W = 200
+  const H = 260
+  const W = 320
   const redLine = H * (1 - 75 / 100)
   const points = history.map((v, i) => `${(i / 49) * W},${H - (v / 100) * H}`).join(' ')
   return (
@@ -164,20 +164,24 @@ function TempGraph({ history, value }) {
 
 function GasBar({ label, level, alert }) {
   const fillPct = clamp(level, 0, 100)
-  const redZonePct = 20
+  const redZonePct = 25            // bottom 25% is red (low = danger)
+  const inRed = fillPct <= redZonePct
   return (
     <div className="pm-gas-col">
-      <div className={`pm-gas-alarm-dot ${alert ? 'pm-gas-alarm-dot--on' : ''}`} />
       <span className="pm-gas-label">{label}</span>
       <div className="pm-gas-track">
-        <div className="pm-gas-red-zone" />
-        <div
-          className={`pm-gas-fill ${alert ? 'pm-gas-fill--alert' : ''}`}
-          style={{ height: `${fillPct}%` }}
-        />
+        {/* Green safe zone (top) */}
+        <div className="pm-gas-safe-zone" />
+        {/* Red danger zone (bottom) */}
+        <div className="pm-gas-red-zone" style={{ height: `${redZonePct}%` }} />
+        {/* Threshold line */}
         <div className="pm-gas-threshold" style={{ bottom: `${redZonePct}%` }} />
+        {/* Capsule indicator */}
+        <div
+          className={`pm-gas-indicator ${inRed || alert ? 'pm-gas-indicator--alert' : ''}`}
+          style={{ bottom: `calc(${fillPct}% - 12px)` }}
+        />
       </div>
-      <span className="pm-gas-value">{Math.round(level)}</span>
     </div>
   )
 }
