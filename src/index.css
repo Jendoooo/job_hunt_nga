@@ -4092,6 +4092,33 @@ select:focus-visible {
   background: rgba(239,68,68,0.08);
 }
 
+/* Duration picker */
+.pm-duration-picker {
+  display: flex; flex-direction: column; align-items: center; gap: .45rem;
+  padding: .75rem 0;
+}
+.pm-duration-picker__label {
+  font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--text-3, #64748b);
+}
+.pm-duration-chips {
+  display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center;
+}
+.pm-duration-chip {
+  padding: .35rem .75rem; border-radius: 999px; border: 1.5px solid var(--border, #e2e8f0);
+  background: transparent; color: var(--text-2, #475569); font-size: 0.82rem;
+  font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.pm-duration-chip:hover { background: var(--surface-2, #f8fafc); }
+.pm-duration-chip--active {
+  background: var(--primary, #2563eb); color: #fff; border-color: var(--primary, #2563eb);
+}
+.pm-duration-chip--active:hover { background: var(--primary, #2563eb); }
+.pm-duration-chip--real { font-weight: 800; }
+.pm-duration-picker__hint {
+  font-size: 0.72rem; color: var(--text-3, #94a3b8); font-style: italic;
+}
+
 /* ── Results ───────────────────────────────────────────────────────────────── */
 .pm-results-card {
   background: #fff;

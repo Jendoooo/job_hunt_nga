@@ -5,7 +5,8 @@ import { useAuth } from '../context/useAuth'
 import { earlySaveAttempt } from '../utils/earlySave'
 
 /* ── constants ─────────────────────────────────────────────────────────────── */
-const DURATION = 5 * 60       // 5-minute practice
+const DURATION_DEFAULT = 8 * 60  // 8-minute real SHL length
+const DURATION_OPTIONS = [1, 2, 3, 5, 8, 10, 12, 15]  // minutes
 const WINDOW_MS = 5000        // 5-second response window (immediate events)
 const ALARM_PHASE_MS = 2500   // alarm phase: values stay in red (two-phase events)
 const CLEAR_PHASE_MS = 4500   // clearing phase: user must press after values return safe
@@ -288,11 +289,13 @@ export default function NLNGProcessMonitorTest() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const [mode, setMode]           = useState(null)   // 'practice' | 'hard'
+  const [durationMin, setDurationMin] = useState(8)   // user-selected minutes
+  const durationSec = durationMin * 60
   const isHard = mode === 'hard'
   const assist = !isHard
   const [phase, setPhase]         = useState('setup')
   const [panel, setPanel]         = useState(initPanel)
-  const [timeLeft, setTimeLeft]   = useState(DURATION)
+  const [timeLeft, setTimeLeft]   = useState(DURATION_DEFAULT)
   const [score, setScore]         = useState(0)
   const [maxScore, setMaxScore]   = useState(0)
   const [hits, setHits]           = useState(0)
@@ -332,7 +335,7 @@ export default function NLNGProcessMonitorTest() {
   function startGame() {
     const p = initPanel()
     setPanel(p); panelRef.current = p
-    setTimeLeft(DURATION)
+    setTimeLeft(durationSec)
     setScore(0); scoreRef.current = 0
     setHits(0);  hitsRef.current = 0
     setMisses(0); missesRef.current = 0
@@ -388,8 +391,8 @@ export default function NLNGProcessMonitorTest() {
       questions:      [],                          // no question array for PM
       answers:        { hits: finalHits, misses: finalMisses, events: finalHits + finalMisses },
       assessmentType: 'nlng-process-monitoring',
-      moduleName:     isHard ? 'Process Monitoring (Hard Mode)' : 'Process Monitoring (5 min simulation)',
-      elapsed:        DURATION - (timeLeft > 0 ? timeLeft : 0),
+      moduleName:     isHard ? 'Process Monitoring (Hard Mode)' : `Process Monitoring (${durationMin} min)`,
+      elapsed:        durationSec - (timeLeft > 0 ? timeLeft : 0),
       mode:           'practice',
       scoreOverride:  pct,                         // save percentage as score
       totalOverride:  100,                         // out of 100
@@ -582,7 +585,7 @@ export default function NLNGProcessMonitorTest() {
 
       // Difficulty scaling: gap shrinks over time (easy start → hard end)
       const elapsed = (Date.now() - gameStartRef.current) / 1000
-      const progress = Math.min(1, elapsed / DURATION)  // 0..1 over the session
+      const progress = Math.min(1, elapsed / durationSec)  // 0..1 over the session
       const gapMin = GAP_MIN_START + (GAP_MIN_END - GAP_MIN_START) * progress
       const gapMax = GAP_MAX_START + (GAP_MAX_END - GAP_MAX_START) * progress
       const delay = rand(gapMin, gapMax)
@@ -719,8 +722,8 @@ export default function NLNGProcessMonitorTest() {
               {!mode
                 ? 'Choose a mode below to begin'
                 : isHard
-                  ? 'Hard mode simulation · Minimal on-screen guidance'
-                  : '5-minute practice simulation · Respond within 5 seconds per event'
+                  ? `${durationMin}-minute hard simulation · Minimal on-screen guidance`
+                  : `${durationMin}-minute practice simulation · Respond within 5 seconds per event`
               }
             </p>
           </div>
@@ -784,8 +787,24 @@ export default function NLNGProcessMonitorTest() {
             </div>
           ) : (
             <div className="pm-mode-picker">
+              {/* Duration picker */}
+              <div className="pm-duration-picker">
+                <span className="pm-duration-picker__label">Duration</span>
+                <div className="pm-duration-chips">
+                  {DURATION_OPTIONS.map(m => (
+                    <button
+                      key={m}
+                      className={`pm-duration-chip ${m === durationMin ? 'pm-duration-chip--active' : ''} ${m === 8 ? 'pm-duration-chip--real' : ''}`}
+                      onClick={() => setDurationMin(m)}
+                    >
+                      {m} min{m === 8 ? ' ✦' : ''}
+                    </button>
+                  ))}
+                </div>
+                <span className="pm-duration-picker__hint">✦ = Real SHL duration</span>
+              </div>
               <button className="btn btn--primary pm-start-btn" onClick={startGame}>
-                {isHard ? 'Start Hard Mode' : 'Start 5-Minute Practice'}
+                {isHard ? `Start Hard Mode (${durationMin} min)` : `Start Practice (${durationMin} min)`}
               </button>
               <button className="btn btn--ghost pm-start-btn" onClick={() => setMode(null)}>
                 ← Change Mode
