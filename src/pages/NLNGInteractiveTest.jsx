@@ -25,6 +25,15 @@ const DIFFICULTY_OPTIONS = [
     { value: 'medium', label: 'Medium' },
     { value: 'hard', label: 'Hard' },
 ]
+const TYPE_OPTIONS = [
+    { value: 'all', label: 'All Types' },
+    { value: 'interactive_drag_table', label: 'Drag & Drop' },
+    { value: 'interactive_pie_chart', label: 'Pie Chart' },
+    { value: 'interactive_stacked_bar', label: 'Stacked Bar' },
+    { value: 'interactive_point_graph', label: 'Point Graph' },
+    { value: 'interactive_ranking', label: 'Ranking' },
+    { value: 'interactive_tabbed_evaluation', label: 'Tabbed Eval' },
+]
 const REAL_SHL_QUESTION_COUNT = 10
 const REAL_SHL_TIME_MINUTES = 18
 const DEFAULT_QUESTION_COUNT = REAL_SHL_QUESTION_COUNT
@@ -98,6 +107,7 @@ export default function NLNGInteractiveTest() {
     const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
     const [difficulty, setDifficulty] = useState('all')
+    const [questionType, setQuestionType] = useState('all')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
     const [activeQuestions, setActiveQuestions] = useState([])
@@ -112,9 +122,10 @@ export default function NLNGInteractiveTest() {
         interactiveQuestions.filter((question) =>
             typeof question?.subtype === 'string' &&
             question.subtype.startsWith('interactive_numerical') &&
-            (difficulty === 'all' || getQuestionDifficulty(question) === difficulty)
+            (difficulty === 'all' || getQuestionDifficulty(question) === difficulty) &&
+            (questionType === 'all' || question.type === questionType)
         )
-    ), [difficulty])
+    ), [difficulty, questionType])
     const isRealPreset = sessionPreset === 'real'
     const effectiveMode = isRealPreset ? 'exam' : mode
     const effectiveQuestionCount = isRealPreset
@@ -258,6 +269,40 @@ export default function NLNGInteractiveTest() {
                             <p className="text-xs text-slate-500 mt-2">
                                 {availableQuestions.length} questions available for {difficultyLabel.toLowerCase()}.
                             </p>
+                        </div>
+
+                        <div className="test-setup__mode">
+                            <h3>Question Type</h3>
+                            <div className="test-setup__time-options" style={{ flexWrap: 'wrap' }}>
+                                {TYPE_OPTIONS.map((opt) => {
+                                    const count = opt.value === 'all'
+                                        ? interactiveQuestions.filter((q) =>
+                                            typeof q?.subtype === 'string' && q.subtype.startsWith('interactive_numerical') &&
+                                            (difficulty === 'all' || getQuestionDifficulty(q) === difficulty)
+                                        ).length
+                                        : interactiveQuestions.filter((q) =>
+                                            typeof q?.subtype === 'string' && q.subtype.startsWith('interactive_numerical') &&
+                                            q.type === opt.value &&
+                                            (difficulty === 'all' || getQuestionDifficulty(q) === difficulty)
+                                        ).length
+                                    return (
+                                        <button
+                                            key={opt.value}
+                                            className={`test-setup__time-btn ${questionType === opt.value ? 'test-setup__time-btn--active' : ''}`}
+                                            onClick={() => {
+                                                setQuestionType(opt.value)
+                                                setSessionPreset('custom')
+                                            }}
+                                            disabled={isRealPreset || count === 0}
+                                        >
+                                            {opt.label} ({count})
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                            {isRealPreset && (
+                                <p className="text-xs text-slate-400 mt-1">Type filter disabled in SHL Real preset (uses balanced mix).</p>
+                            )}
                         </div>
 
                         <div className="test-setup__mode">

@@ -594,12 +594,21 @@ export default function ScoreReport({
 
         if (questionResult.type === 'interactive_ranking') {
             const items = Array.isArray(widgetData.items) ? widgetData.items : []
+            const rankLabels = Array.isArray(widgetData.rank_labels) ? widgetData.rank_labels : []
             const expectedMap = expectedAnswer && typeof expectedAnswer === 'object' ? expectedAnswer : {}
             const actualMap = actualAnswer && typeof actualAnswer === 'object' ? actualAnswer : {}
+            const firstLabel = rankLabels[0] || ''
+            const lastLabel = rankLabels[rankLabels.length - 1] || ''
+            const rankHint = firstLabel && lastLabel ? `${firstLabel} → ${lastLabel}` : ''
 
             return (
                 <div className="score-review__interactive">
                     <InteractiveWidgetPreview questionResult={questionResult} expectedAnswer={expectedAnswer} />
+                    {rankHint && (
+                        <p className="text-xs text-slate-500 mb-2" style={{ fontStyle: 'italic' }}>
+                            Rank scale: {rankHint}
+                        </p>
+                    )}
                     <table className="score-review__interactive-table">
                         <thead>
                             <tr>
@@ -614,12 +623,14 @@ export default function ScoreReport({
                                 const label = item?.label || id
                                 const your = actualMap?.[id]
                                 const exp = expectedMap?.[id]
+                                const yourLabel = your != null && rankLabels[Number(your) - 1] ? `${your} — ${rankLabels[Number(your) - 1]}` : (your ?? '--')
+                                const expLabel = exp != null && rankLabels[Number(exp) - 1] ? `${exp} — ${rankLabels[Number(exp) - 1]}` : (exp ?? '--')
                                 const ok = Number(your) === Number(exp)
                                 return (
                                     <tr key={id} className={ok ? 'score-review__interactive-row--ok' : ''}>
                                         <td>{label}</td>
-                                        <td>{your ?? '--'}</td>
-                                        <td>{exp ?? '--'}</td>
+                                        <td>{yourLabel}</td>
+                                        <td>{expLabel}</td>
                                     </tr>
                                 )
                             })}
