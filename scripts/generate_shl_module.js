@@ -235,6 +235,12 @@ function normalizeGoldQuestion(question, index) {
     if (normalized.type === 'interactive_tabbed_evaluation') {
         const widgetData = normalized.widget_data || {}
         const tabs = Array.isArray(widgetData.tabs) ? widgetData.tabs : []
+        const columns = Array.isArray(widgetData.columns) && widgetData.columns.length > 0
+            ? widgetData.columns
+            : null
+        const approvalLabel = typeof widgetData.approval_label === 'string' && widgetData.approval_label.trim().length > 0
+            ? widgetData.approval_label.trim()
+            : null
         const expected = normalized.correct_answer && typeof normalized.correct_answer === 'object'
             ? normalized.correct_answer
             : {}
@@ -249,6 +255,8 @@ function normalizeGoldQuestion(question, index) {
             options: hasOptions
                 ? widgetData.options
                 : optionIds.map((id) => ({ id, label: titleCase(id) })),
+            ...(columns ? { columns } : {}),
+            ...(approvalLabel ? { approval_label: approvalLabel } : {}),
         }
     }
 
@@ -269,6 +277,9 @@ function normalizeGoldQuestion(question, index) {
                 max: Number(yAxis.max ?? 100),
                 step: Number(yAxis.step ?? 10),
                 label: String(yAxis.label ?? ''),
+                ...(Number.isFinite(Number(yAxis.tick_step)) && Number(yAxis.tick_step) > 0
+                    ? { tick_step: Number(yAxis.tick_step) }
+                    : {}),
             },
             initial_values: initialValues,
         }

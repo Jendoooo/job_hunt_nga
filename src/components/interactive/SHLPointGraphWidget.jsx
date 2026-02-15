@@ -15,10 +15,17 @@ function clamp(value, min, max) {
 }
 
 function formatYLabel(value, labelHint) {
-    if (labelHint && labelHint.includes('$')) {
-        return `$${Number(value).toLocaleString()}`
+    const hint = typeof labelHint === 'string' ? labelHint.trim() : ''
+    const numeric = Number(value)
+
+    if (hint.startsWith('$')) {
+        const suffix = hint.slice(1)
+        const formatted = Number.isFinite(numeric)
+            ? numeric.toLocaleString(undefined, { maximumFractionDigits: 2 })
+            : String(value)
+        return `$${formatted}${suffix}`
     }
-    if (labelHint && labelHint.includes('%')) {
+    if (hint.includes('%')) {
         return `${Math.round(Number(value))}%`
     }
     return String(Math.round(value))
@@ -55,6 +62,9 @@ export default function SHLPointGraphWidget({ data, value, onAnswer, disabled = 
     const yMax = yMaxRaw > yMin ? yMaxRaw : yMin + 1
     const yRange = yMax - yMin
     const step = Number.isFinite(Number(yAxis.step)) && Number(yAxis.step) > 0 ? Number(yAxis.step) : 1
+    const tickStep = Number.isFinite(Number(yAxis.tick_step)) && Number(yAxis.tick_step) > 0
+        ? Number(yAxis.tick_step)
+        : step
 
     const [values, setValues] = useState(() => normalizeValues(value, initialValues, xLabels.length))
     const [draggingIndex, setDraggingIndex] = useState(null)
@@ -76,7 +86,7 @@ export default function SHLPointGraphWidget({ data, value, onAnswer, disabled = 
 
     const yTicks = useMemo(() => {
         const ticks = []
-        for (let valueTick = yMin; valueTick <= yMax; valueTick += step) {
+        for (let valueTick = yMin; valueTick <= yMax; valueTick += tickStep) {
             ticks.push(valueTick)
         }
 
@@ -85,7 +95,7 @@ export default function SHLPointGraphWidget({ data, value, onAnswer, disabled = 
         }
 
         return ticks
-    }, [step, yMax, yMin])
+    }, [tickStep, yMax, yMin])
 
     const count = xLabels.length
     const xStep = count <= 1 ? 0 : (PLOT_RIGHT - PLOT_LEFT) / (count - 1)
