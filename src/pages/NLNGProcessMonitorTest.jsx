@@ -9,13 +9,17 @@ const DURATION = 5 * 60       // 5-minute practice
 const WINDOW_MS = 5000        // 5-second response window (immediate events)
 const ALARM_PHASE_MS = 2500   // alarm phase: values stay in red (two-phase events)
 const CLEAR_PHASE_MS = 4500   // clearing phase: user must press after values return safe
-const GAP_MIN = 3500
-const GAP_MAX = 7500
+const GAP_MIN_START = 4500    // initial gap between events (easy start)
+const GAP_MAX_START = 7500
+const GAP_MIN_END   = 2200    // gap at end of session (ramped up difficulty)
+const GAP_MAX_END   = 4000
 const PTS_HIT = 10
 const PTS_MISS = 5
 const HARD_PTS_EARLY = 2
 const HARD_INPUT_LATENCY_MIN_MS = 200
 const HARD_INPUT_LATENCY_MAX_MS = 300
+
+const SESSION_HISTORY_KEY = 'pm_session_history'
 
 // Events where user must WAIT for values to return to safe zone before pressing
 const TWO_PHASE_EVENTS = new Set(['gas_o2_low','gas_co2_low','gas_both_low','temp_high','power_high'])
@@ -42,6 +46,57 @@ const ZONE_LABEL = {
   stab_north:   'N Stabilizer alert',
   stab_west:    'W Stabilizer alert',
   stab_both:    'Stabilizer alert',
+}
+
+/* Map event types → zone group for report breakdown */
+const ZONE_GROUP = {
+  power_high:   'Generator',
+  temp_high:    'Temperature',
+  gas_o2_low:   'Gas',
+  gas_co2_low:  'Gas',
+  gas_both_low: 'Gas',
+  gas_o2_temp:  'System',
+  stab_north:   'Stabilizer',
+  stab_west:    'Stabilizer',
+  stab_both:    'Stabilizer',
+}
+const ZONE_GROUPS_ORDER = ['Generator','Temperature','Gas','System','Stabilizer']
+const ZONE_COLORS = {
+  Generator:   '#f59e0b',
+  Temperature: '#ef4444',
+  Gas:         '#3b82f6',
+  System:      '#8b5cf6',
+  Stabilizer:  '#06b6d4',
+}
+
+/* ── session history helpers ───────────────────────────────────────────────── */
+function loadSessionHistory() {
+  try { return JSON.parse(localStorage.getItem(SESSION_HISTORY_KEY) || '[]') } catch { return [] }
+}
+function saveSessionHistory(entry) {
+  const hist = loadSessionHistory()
+  hist.push(entry)
+  // Keep last 50 sessions
+  if (hist.length > 50) hist.splice(0, hist.length - 50)
+  localStorage.setItem(SESSION_HISTORY_KEY, JSON.stringify(hist))
+}
+
+/* ── audio cue (Web Audio API — no files needed) ──────────────────────────── */
+let _audioCtx = null
+function playAlertBeep() {
+  try {
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+    const osc = _audioCtx.createOscillator()
+    const gain = _audioCtx.createGain()
+    osc.type = 'square'
+    osc.frequency.value = 880
+    gain.gain.setValueAtTime(0.12, _audioCtx.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.001, _audioCtx.currentTime + 0.15)
+    osc.connect(gain)
+    gain.connect(_audioCtx.destination)
+    osc.start()
+    osc.stop(_audioCtx.currentTime + 0.15)
+  } catch { /* ignore audio failures silently */ }
 }
 
 /* ── helpers ───────────────────────────────────────────────────────────────── */
@@ -262,6 +317,10 @@ export default function NLNGProcessMonitorTest() {
   const attemptIdRef    = useRef(null)
   const finishedRef     = useRef(false)  // guard against double finish
   const actionLockRef   = useRef(false)  // hard-mode input latency + anti-spam guard
+  const eventLogRef     = useRef([])     // [{type, zone, firedAt, respondedAt, reactionMs, outcome}]
+  const gameStartRef    = useRef(0)      // Date.now() when game started (for difficulty scaling)
+
+  const [eventLog, setEventLog] = useState([])  // snapshot for results screen
 
   function showFlash(msg, ok) {
     if (isHard) return
@@ -286,6 +345,9 @@ export default function NLNGProcessMonitorTest() {
     attemptIdRef.current = null
     finishedRef.current = false
     actionLockRef.current = false
+    eventLogRef.current = []
+    setEventLog([])
+    gameStartRef.current = Date.now()
     phaseRef.current = 'playing'
     setPhase('playing')
   }
@@ -301,6 +363,20 @@ export default function NLNGProcessMonitorTest() {
     const finalHits     = hitsRef.current
     const finalMisses   = missesRef.current
     const pct = finalMaxScore > 0 ? Math.round((finalScore / finalMaxScore) * 100) : 0
+    const logSnapshot = [...eventLogRef.current]
+    setEventLog(logSnapshot)
+
+    // Save session to local history
+    saveSessionHistory({
+      date: new Date().toISOString(),
+      mode: isHard ? 'hard' : 'practice',
+      score: finalScore,
+      maxScore: finalMaxScore,
+      pct,
+      hits: finalHits,
+      misses: finalMisses,
+      totalEvents: finalHits + finalMisses,
+    })
 
     // Generate stable attempt ID for this run
     attemptIdRef.current = crypto.randomUUID()
@@ -324,6 +400,7 @@ export default function NLNGProcessMonitorTest() {
         misses: finalMisses,
         totalEvents: finalHits + finalMisses,
         variant: isHard ? 'hard' : 'practice',
+        eventLog: logSnapshot,
       },
     })
 
@@ -408,6 +485,17 @@ export default function NLNGProcessMonitorTest() {
       evPhaseRef.current = null
       setEvPhase(null)
 
+      // Log this event as a hit
+      const reactionMs = ev.firedAt ? Date.now() - ev.firedAt : 0
+      eventLogRef.current.push({
+        type: ev.type,
+        zone: ZONE_GROUP[ev.type] || 'Unknown',
+        firedAt: ev.firedAt || 0,
+        respondedAt: Date.now(),
+        reactionMs,
+        outcome: 'hit',
+      })
+
       // Two-phase events already returned to safe values at the end of alarm phase.
       // Pressing acknowledges/clears the alarm, it should not mutate readings again.
       if (!isTwoPhase) {
@@ -491,7 +579,14 @@ export default function NLNGProcessMonitorTest() {
 
     function scheduleNext() {
       if (phaseRef.current !== 'playing') return
-      const delay = rand(GAP_MIN, GAP_MAX)
+
+      // Difficulty scaling: gap shrinks over time (easy start → hard end)
+      const elapsed = (Date.now() - gameStartRef.current) / 1000
+      const progress = Math.min(1, elapsed / DURATION)  // 0..1 over the session
+      const gapMin = GAP_MIN_START + (GAP_MIN_END - GAP_MIN_START) * progress
+      const gapMax = GAP_MAX_START + (GAP_MAX_END - GAP_MAX_START) * progress
+      const delay = rand(gapMin, gapMax)
+
       evTimeout = setTimeout(() => {
         if (phaseRef.current !== 'playing' || evRef.current) { scheduleNext(); return }
 
@@ -499,6 +594,7 @@ export default function NLNGProcessMonitorTest() {
         const isTwoPhase = TWO_PHASE_EVENTS.has(ev.type)
         const totalWindow = isTwoPhase ? (ALARM_PHASE_MS + CLEAR_PHASE_MS) : WINDOW_MS
         const deadline = Date.now() + totalWindow
+        const firedAt  = Date.now()
 
         // Capture context needed to validate responses after the alarm phase.
         const ctx = {}
@@ -506,7 +602,10 @@ export default function NLNGProcessMonitorTest() {
           ctx.tempSpikesAtStart = panelRef.current.temp.spikes
         }
 
-        const newEv = { ...ev, deadline, ctx }
+        const newEv = { ...ev, deadline, ctx, firedAt }
+
+        // Play audio alert
+        playAlertBeep()
 
         setPanel((prev) => { const n = applyEvent(ev.type, prev); panelRef.current = n; return n })
         evRef.current = newEv
@@ -555,6 +654,17 @@ export default function NLNGProcessMonitorTest() {
           missesRef.current += 1
           setScore(scoreRef.current)
           setMisses(missesRef.current)
+
+          // Log this event as a miss
+          eventLogRef.current.push({
+            type: evRef.current?.type || ev.type,
+            zone: ZONE_GROUP[ev.type] || 'Unknown',
+            firedAt,
+            respondedAt: null,
+            reactionMs: null,
+            outcome: 'miss',
+          })
+
           showFlash(`Missed! -${PTS_MISS}`, false)
           scheduleNext()
         }, totalWindow)
@@ -708,6 +818,28 @@ export default function NLNGProcessMonitorTest() {
       : pct >= 60
         ? 'You will likely, with appropriate instruction and a reasonable learning curve, be able to successfully complete tasks involving the interpretation of machine readings and timely responses to control panel alerts.'
         : 'Focus on learning the rules table thoroughly before each session. Identifying the alert zone first, then recalling the correct action, is the key skill assessed. Additional practice sessions are recommended before your assessment.'
+
+    // ── Per-zone breakdown ───────────────────────────────────────────────
+    const zoneStats = {}
+    for (const z of ZONE_GROUPS_ORDER) zoneStats[z] = { hits: 0, misses: 0, reactionTimes: [] }
+    for (const entry of eventLog) {
+      const z = entry.zone
+      if (!zoneStats[z]) zoneStats[z] = { hits: 0, misses: 0, reactionTimes: [] }
+      if (entry.outcome === 'hit') {
+        zoneStats[z].hits++
+        if (entry.reactionMs > 0) zoneStats[z].reactionTimes.push(entry.reactionMs)
+      } else {
+        zoneStats[z].misses++
+      }
+    }
+    const activeZones = ZONE_GROUPS_ORDER.filter(z => zoneStats[z].hits + zoneStats[z].misses > 0)
+    const avgReaction = (times) => times.length > 0 ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : null
+    const overallReactionTimes = eventLog.filter(e => e.outcome === 'hit' && e.reactionMs > 0).map(e => e.reactionMs)
+    const overallAvgMs = avgReaction(overallReactionTimes)
+
+    // ── Session history ──────────────────────────────────────────────────
+    const sessionHistory = loadSessionHistory()
+
     return (
       <div className="test-page">
         <header className="test-page__header test-page__header--compact">
@@ -717,23 +849,134 @@ export default function NLNGProcessMonitorTest() {
             </button>
           </div>
         </header>
-        <div className="pm-results-card">
+        <div className="pm-results-card pm-results-card--wide">
+          {/* ── Score header ──────────────────────── */}
           <div className={`pm-results-header ${pass ? 'pm-results-header--pass' : 'pm-results-header--fail'}`}>
-            <div className="pm-results-label">Simulation Complete</div>
+            <div className="pm-results-label">Simulation Complete{isHard ? ' (Hard Mode)' : ''}</div>
             <div className="pm-results-score">{score} / {maxScore}</div>
             <div className="pm-results-pct">{pct}%</div>
             <div className="pm-results-percentile">{percentileLabel}</div>
             <div className="pm-results-verdict">{pass ? 'Good performance' : 'Keep practising'}</div>
           </div>
+
+          {/* ── Core stats ────────────────────────── */}
           <div className="pm-results-stats">
             <div className="pm-stat"><span className="pm-stat__num pm-stat__num--green">{hits}</span><span className="pm-stat__label">Correct</span></div>
             <div className="pm-stat"><span className="pm-stat__num pm-stat__num--red">{misses}</span><span className="pm-stat__label">Missed</span></div>
-            <div className="pm-stat"><span className="pm-stat__num">{hits + misses}</span><span className="pm-stat__label">Total Events</span></div>
+            <div className="pm-stat"><span className="pm-stat__num">{hits + misses}</span><span className="pm-stat__label">Total</span></div>
+            {overallAvgMs !== null && (
+              <div className="pm-stat"><span className="pm-stat__num pm-stat__num--blue">{(overallAvgMs / 1000).toFixed(1)}s</span><span className="pm-stat__label">Avg Reaction</span></div>
+            )}
           </div>
+
+          {/* ── Zone breakdown ────────────────────── */}
+          {activeZones.length > 0 && (
+            <div className="pm-report-section">
+              <div className="pm-report-section__title">Performance by Zone</div>
+              <div className="pm-zone-breakdown">
+                {activeZones.map(zone => {
+                  const s = zoneStats[zone]
+                  const total = s.hits + s.misses
+                  const zonePct = total > 0 ? Math.round((s.hits / total) * 100) : 0
+                  const avg = avgReaction(s.reactionTimes)
+                  return (
+                    <div key={zone} className="pm-zone-row">
+                      <div className="pm-zone-row__label">
+                        <span className="pm-zone-dot" style={{ background: ZONE_COLORS[zone] }} />
+                        {zone}
+                      </div>
+                      <div className="pm-zone-row__bar-wrap">
+                        <div className="pm-zone-row__bar" style={{ width: `${zonePct}%`, background: ZONE_COLORS[zone] }} />
+                      </div>
+                      <div className="pm-zone-row__stats">
+                        <span className="pm-zone-row__pct">{zonePct}%</span>
+                        <span className="pm-zone-row__detail">{s.hits}/{total}</span>
+                        {avg !== null && <span className="pm-zone-row__rt">{(avg / 1000).toFixed(1)}s</span>}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ── Event timeline ────────────────────── */}
+          {eventLog.length > 0 && (
+            <div className="pm-report-section">
+              <div className="pm-report-section__title">Event Timeline</div>
+              <div className="pm-timeline">
+                {eventLog.map((entry, i) => {
+                  const timeIntoGame = entry.firedAt && gameStartRef.current
+                    ? Math.round((entry.firedAt - gameStartRef.current) / 1000)
+                    : null
+                  return (
+                    <div key={i} className={`pm-timeline-item ${entry.outcome === 'hit' ? 'pm-timeline-item--hit' : 'pm-timeline-item--miss'}`}>
+                      <div className="pm-timeline-item__dot" style={{ background: ZONE_COLORS[entry.zone] || '#94a3b8' }} />
+                      <div className="pm-timeline-item__body">
+                        <span className="pm-timeline-item__zone">{entry.zone}</span>
+                        <span className="pm-timeline-item__type">{ZONE_LABEL[entry.type] || entry.type}</span>
+                      </div>
+                      <div className="pm-timeline-item__meta">
+                        {timeIntoGame !== null && <span className="pm-timeline-item__time">{Math.floor(timeIntoGame / 60)}:{String(timeIntoGame % 60).padStart(2, '0')}</span>}
+                        {entry.outcome === 'hit' && entry.reactionMs > 0
+                          ? <span className="pm-timeline-item__rt">{(entry.reactionMs / 1000).toFixed(1)}s</span>
+                          : <span className="pm-timeline-item__miss-tag">MISSED</span>
+                        }
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* ── Session History ────────────────────── */}
+          {sessionHistory.length > 1 && (
+            <div className="pm-report-section">
+              <div className="pm-report-section__title">Session History ({sessionHistory.length} attempts)</div>
+              <div className="pm-history-chart">
+                {sessionHistory.slice(-15).map((s, i) => (
+                  <div key={i} className="pm-history-bar-col" title={`${new Date(s.date).toLocaleDateString()} · ${s.pct}% · ${s.mode}`}>
+                    <div className="pm-history-bar"
+                      style={{
+                        height: `${Math.max(4, s.pct)}%`,
+                        background: s.pct >= 60 ? '#22c55e' : '#ef4444',
+                      }}
+                    />
+                    <span className="pm-history-bar__label">{s.pct}%</span>
+                  </div>
+                ))}
+              </div>
+              <div className="pm-history-legend">
+                <span>← Older</span><span>Recent →</span>
+              </div>
+            </div>
+          )}
+
+          {/* ── Development guidance ──────────────── */}
           <div className="pm-results-advice">
             <div className="pm-results-advice__title">Development Guidance</div>
             <p className="pm-results-advice__text">{devAdvice}</p>
+            {activeZones.length > 0 && (() => {
+              // Find the weakest zone
+              const weakest = activeZones.reduce((worst, z) => {
+                const s = zoneStats[z]
+                const p = (s.hits + s.misses) > 0 ? s.hits / (s.hits + s.misses) : 1
+                const wp = (zoneStats[worst].hits + zoneStats[worst].misses) > 0 ? zoneStats[worst].hits / (zoneStats[worst].hits + zoneStats[worst].misses) : 1
+                return p < wp ? z : worst
+              }, activeZones[0])
+              const ws = zoneStats[weakest]
+              const wPct = (ws.hits + ws.misses) > 0 ? Math.round((ws.hits / (ws.hits + ws.misses)) * 100) : 100
+              if (wPct < 80) {
+                return <p className="pm-results-advice__text" style={{ marginTop: '.5rem', fontWeight: 600 }}>
+                  Focus area: <span style={{ color: ZONE_COLORS[weakest] }}>{weakest}</span> zone ({wPct}% accuracy). Review the rules for this zone and practice reacting faster to these alerts.
+                </p>
+              }
+              return null
+            })()}
           </div>
+
+          {/* ── Actions ───────────────────────────── */}
           <div className="pm-results-actions">
             <button className="btn btn--primary" onClick={startGame}>Try Again</button>
             <button className="btn btn--ghost" onClick={() => navigate('/')}>Dashboard</button>
