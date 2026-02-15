@@ -7688,5 +7688,434 @@
       "pct": 2
     },
     "explanation": "Total=5+3+8+4=20. Design=5/20=25%, R&D=3/20=15%, Production=8/20=40%, Delivery=4/20=20%."
+  },
+  {
+    "id": "drag_profit_growth_ranges_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Four companies track profit growth each quarter.",
+    "question": "Work out the total percentage increase compared to the previous year's profit.",
+    "prompt_rules": [
+      "Total profit this year = Q1 + Q2 + Q3 + Q4.",
+      "Percentage increase = (This year total - Previous year) / Previous year x 100.",
+      "Choose the correct growth range for each company."
+    ],
+    "widget_data": {
+      "columns": [
+        "Previous Year Profit",
+        "Q1 profit",
+        "Q2 profit",
+        "Q3 profit",
+        "Q4 profit",
+        "Profit Growth"
+      ],
+      "rows": [
+        {
+          "id": "company_a",
+          "label": "Company A",
+          "values": [
+            "£15,000",
+            "£4,400",
+            "£5,350",
+            "£6,400",
+            "£4,090"
+          ]
+        },
+        {
+          "id": "company_b",
+          "label": "Company B",
+          "values": [
+            "£436",
+            "£69",
+            "£150",
+            "£167",
+            "£50"
+          ]
+        },
+        {
+          "id": "company_c",
+          "label": "Company C",
+          "values": [
+            "£89,500",
+            "£29,000",
+            "£34,500",
+            "£62,590",
+            "£36,000"
+          ]
+        },
+        {
+          "id": "company_d",
+          "label": "Company D",
+          "values": [
+            "£7,030",
+            "£3,567",
+            "£3,589",
+            "£1,040",
+            "£2,489"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "range_0_25",
+          "label": "0-25%"
+        },
+        {
+          "id": "range_26_50",
+          "label": "26-50%"
+        },
+        {
+          "id": "range_51_75",
+          "label": "51-75%"
+        },
+        {
+          "id": "range_76_plus",
+          "label": "76%+"
+        }
+      ]
+    },
+    "correct_answer": {
+      "company_a": "range_26_50",
+      "company_b": "range_0_25",
+      "company_c": "range_76_plus",
+      "company_d": "range_51_75"
+    },
+    "explanation": "Company A: Total = 4,400+5,350+6,400+4,090 = 20,240. Increase = 20,240-15,000 = 5,240 (34.9%) -> 26-50%.<br/>Company B: Total = 69+150+167+50 = 436. Increase = 0 (0%) -> 0-25%.<br/>Company C: Total = 29,000+34,500+62,590+36,000 = 162,090. Increase = 72,590 (81.1%) -> 76%+.<br/>Company D: Total = 3,567+3,589+1,040+2,489 = 10,685. Increase = 3,655 (52.0%) -> 51-75%."
+  },
+  {
+    "id": "drag_tax_brackets_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Employees can reduce their tax by taking salary deductions from four schemes.",
+    "question": "Work out which tax bracket each employee is in (deductions occur before the tax bracket is calculated).",
+    "prompt_rules": [
+      "20% Tax: Total net salary after deductions is less than £15,000.",
+      "40% Tax: Total net salary after deductions is between £15,000-£39,999.",
+      "50% Tax: Total net salary after deductions is £40,000 and over.",
+      "Net salary = Gross salary - (Gross salary x total deductions)."
+    ],
+    "widget_data": {
+      "columns": [
+        "Childcare Vouchers",
+        "Dentist Insurance",
+        "Health Insurance",
+        "Life Insurance",
+        "Gross Salary",
+        "Tax Bracket"
+      ],
+      "rows": [
+        {
+          "id": "person_a",
+          "label": "Person A",
+          "values": [
+            "0%",
+            "0%",
+            "3%",
+            "2%",
+            "£25,000"
+          ]
+        },
+        {
+          "id": "person_c",
+          "label": "Person C",
+          "values": [
+            "1%",
+            "0%",
+            "2%",
+            "2%",
+            "£43,000"
+          ]
+        },
+        {
+          "id": "person_d",
+          "label": "Person D",
+          "values": [
+            "2%",
+            "0%",
+            "0%",
+            "1%",
+            "£15,450"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "tax_20",
+          "label": "20%"
+        },
+        {
+          "id": "tax_40",
+          "label": "40%"
+        },
+        {
+          "id": "tax_50",
+          "label": "50%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "person_a": "tax_40",
+      "person_c": "tax_50",
+      "person_d": "tax_20"
+    },
+    "explanation": "Person A: Deductions 0%+0%+3%+2%=5% -> Net £25,000 x 0.95 = £23,750 -> 40%.<br/>Person C: Deductions 1%+0%+2%+2%=5% -> Net £43,000 x 0.95 = £40,850 -> 50%.<br/>Person D: Deductions 2%+0%+0%+1%=3% -> Net £15,450 x 0.97 = £14,986.50 -> 20%."
+  },
+  {
+    "id": "drag_incentive_eligibility_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Decide if each person is eligible for a pay rise, bonus, neither or both.",
+    "question": "Use the monthly sales data to classify each person.",
+    "prompt_rules": [
+      "Pay Rise: Increase sales by 10% or more for three consecutive months.",
+      "Bonus: In any month, sales must at least double sales from previous month."
+    ],
+    "widget_data": {
+      "columns": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "Incentive"
+      ],
+      "rows": [
+        {
+          "id": "melissa",
+          "label": "Melissa",
+          "values": [
+            "$3,144",
+            "$6,290",
+            "$6,850",
+            "$5,700"
+          ]
+        },
+        {
+          "id": "cathy",
+          "label": "Cathy",
+          "values": [
+            "$2,010",
+            "$4,080",
+            "$4,490",
+            "$4,953"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "pay_rise",
+          "label": "Pay Rise"
+        },
+        {
+          "id": "bonus",
+          "label": "Bonus"
+        },
+        {
+          "id": "neither",
+          "label": "Neither"
+        },
+        {
+          "id": "both",
+          "label": "Both"
+        }
+      ]
+    },
+    "correct_answer": {
+      "melissa": "bonus",
+      "cathy": "both"
+    },
+    "explanation": "Melissa: Bonus because Feb >= 2 x Jan (6,290 >= 6,288). Pay Rise fails (Feb->Mar is <10% and Mar->Apr decreases).<br/>Cathy: Pay Rise because Feb/Jan, Mar/Feb, and Apr/Mar are all >=10%. Bonus because Feb >= 2 x Jan (4,080 >= 4,020)."
+  },
+  {
+    "id": "drag_department_budget_reduction_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_drag_table",
+    "difficulty": "medium",
+    "instruction": "Determine the correct budget reduction for each department.",
+    "question": "Use the allocated vs used budget to select the reduction.",
+    "prompt_rules": [
+      "2.5% budget reduction: Budget used is between 91% and 95% of the budget allocated.",
+      "5.0% budget reduction: Budget used is less than 90% of the budget allocated.",
+      "None: Budget used is greater than 95% of the budget allocated."
+    ],
+    "widget_data": {
+      "columns": [
+        "Department",
+        "Allocated Budget",
+        "Budget Used",
+        "Budget Reduction"
+      ],
+      "rows": [
+        {
+          "id": "human_resources",
+          "label": "Human Resources",
+          "values": [
+            "Human Resources",
+            "$274,000",
+            "$254,820"
+          ]
+        }
+      ],
+      "draggables": [
+        {
+          "id": "none",
+          "label": "None"
+        },
+        {
+          "id": "reduction_2_5",
+          "label": "2.5%"
+        },
+        {
+          "id": "reduction_5",
+          "label": "5%"
+        }
+      ]
+    },
+    "correct_answer": {
+      "human_resources": "reduction_2_5"
+    },
+    "explanation": "Budget used % = 254,820 / 274,000 ≈ 92.9%, which is between 91% and 95% -> 2.5% reduction."
+  },
+  {
+    "id": "pie_ice_cream_sales_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_pie_chart",
+    "difficulty": "hard",
+    "instruction": "A street vendor sells cups of ice cream.",
+    "question": "Adjust the pie chart to represent the percentage of total sales from each flavor.",
+    "prompt_rules": [
+      "Vanilla + (3 x Chocolate) is 8% more of total sales than Strawberry + Mint combined.",
+      "Vanilla is 42% less of total sales than 2 x (Chocolate + Strawberry).",
+      "Vanilla is 18% more of total sales than half the number of Strawberry servings.",
+      "All flavors must sum to 100%."
+    ],
+    "widget_data": {
+      "total_value": 100,
+      "info_cards": [
+        {
+          "id": "vanilla_info",
+          "title": "Vanilla",
+          "subtitle": "Vanilla + 3 x Chocolate is 8% more of total sales than Strawberry + Mint combined.",
+          "color": "blue"
+        },
+        {
+          "id": "chocolate_info",
+          "title": "Chocolate",
+          "subtitle": "Vanilla is 42% less of total sales than 2 x (Chocolate + Strawberry).",
+          "color": "green"
+        },
+        {
+          "id": "strawberry_info",
+          "title": "Strawberry",
+          "subtitle": "Vanilla is 18% more of total sales than half the number of Strawberry servings.",
+          "color": "red"
+        },
+        {
+          "id": "mint_info",
+          "title": "Mint",
+          "subtitle": "",
+          "color": "orange"
+        }
+      ],
+      "segments": [
+        {
+          "id": "vanilla",
+          "label": "Vanilla",
+          "color": "blue",
+          "initial_pct": 25
+        },
+        {
+          "id": "chocolate",
+          "label": "Chocolate",
+          "color": "green",
+          "initial_pct": 25
+        },
+        {
+          "id": "strawberry",
+          "label": "Strawberry",
+          "color": "red",
+          "initial_pct": 25
+        },
+        {
+          "id": "mint",
+          "label": "Mint",
+          "color": "orange",
+          "initial_pct": 25
+        }
+      ]
+    },
+    "correct_answer": {
+      "vanilla": 30,
+      "chocolate": 12,
+      "strawberry": 24,
+      "mint": 34
+    },
+    "tolerance": {
+      "pct": 2
+    },
+    "explanation": "Solving the equations gives Vanilla=30%, Chocolate=12%, Strawberry=24%, Mint=34%."
+  },
+  {
+    "id": "rank_client_visit_time_real",
+    "subtype": "interactive_numerical",
+    "type": "interactive_ranking",
+    "difficulty": "medium",
+    "instruction": "Rank clients by the total time required for a visit (travel + meeting).",
+    "question": "Drag the badges to each client, sorting them from 1 (highest time) to 6 (lowest time).",
+    "prompt_rules": [
+      "Client A: 1 hour travel, 1.5 hours meeting.",
+      "Client B: 0.5 hours travel, 1 hour meeting.",
+      "Client C: 1.5 hours travel, 0.5 hours meeting.",
+      "Client D: 0.25 hours travel, 1 hour meeting.",
+      "Client E: 0.75 hours travel, 1 hour meeting.",
+      "Client F: 1 hour travel, 2 hours meeting."
+    ],
+    "widget_data": {
+      "items": [
+        {
+          "id": "client_a",
+          "label": "Client A"
+        },
+        {
+          "id": "client_b",
+          "label": "Client B"
+        },
+        {
+          "id": "client_c",
+          "label": "Client C"
+        },
+        {
+          "id": "client_d",
+          "label": "Client D"
+        },
+        {
+          "id": "client_e",
+          "label": "Client E"
+        },
+        {
+          "id": "client_f",
+          "label": "Client F"
+        }
+      ],
+      "rank_labels": [
+        "1 (Highest)",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6 (Lowest)"
+      ]
+    },
+    "correct_answer": {
+      "client_a": 2,
+      "client_b": 5,
+      "client_c": 3,
+      "client_d": 6,
+      "client_e": 4,
+      "client_f": 1
+    },
+    "explanation": "Totals: F=3.0h, A=2.5h, C=2.0h, E=1.75h, B=1.5h, D=1.25h. Rank 1 (highest) to 6 (lowest)."
   }
 ]
