@@ -608,6 +608,18 @@ export default function Dashboard() {
                     path: '/test/nlng-process-monitor',
                     accent: 'red',
                 },
+                {
+                    id: 'nlng-process-monitor-hard',
+                    title: 'SHL Process Monitoring (Hard Mode)',
+                    subtitle: 'Minimal guidance',
+                    description: 'Hard mode: no hints/countdown, input latency, early clicks penalized.',
+                    icon: Cpu,
+                    stat: '5 min',
+                    type: 'Simulation',
+                    status: 'active',
+                    path: '/test/nlng-process-monitor-hard',
+                    accent: 'red',
+                },
             ],
         },
         {

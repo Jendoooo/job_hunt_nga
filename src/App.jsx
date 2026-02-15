@@ -11,6 +11,7 @@ import NLNGTest from './pages/NLNGTest'
 import NLNGInteractiveTest from './pages/NLNGInteractiveTest'
 import NLNGSJQTest from './pages/NLNGSJQTest'
 import NLNGProcessMonitorTest from './pages/NLNGProcessMonitorTest'
+import NLNGProcessMonitorHardTest from './pages/NLNGProcessMonitorHardTest'
 import NLNGBehavioralTest from './pages/NLNGBehavioralTest'
 import SiteFooter from './components/SiteFooter'
 
@@ -59,6 +60,7 @@ function AppRoutes() {
       <Route path="/test/nlng-interactive" element={<ProtectedRoute><NLNGInteractiveTest /></ProtectedRoute>} />
       <Route path="/test/nlng-sjq" element={<ProtectedRoute><NLNGSJQTest /></ProtectedRoute>} />
       <Route path="/test/nlng-process-monitor" element={<ProtectedRoute><NLNGProcessMonitorTest /></ProtectedRoute>} />
+      <Route path="/test/nlng-process-monitor-hard" element={<ProtectedRoute><NLNGProcessMonitorHardTest /></ProtectedRoute>} />
       <Route path="/test/nlng-behavioral" element={<ProtectedRoute><NLNGBehavioralTest /></ProtectedRoute>} />
       <Route path="/test/ai-generated" element={<ProtectedRoute><AIGeneratedTest /></ProtectedRoute>} />
     </Routes>
