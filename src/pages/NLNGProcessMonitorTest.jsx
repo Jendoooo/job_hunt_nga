@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
+import { useAuth } from '../context/useAuth'
+import { earlySaveAttempt } from '../utils/earlySave'
 
 /* ── constants ─────────────────────────────────────────────────────────────── */
 const DURATION = 5 * 60       // 5-minute practice
@@ -182,6 +184,7 @@ function StabDial({ angle, alert, label1, label2 }) {
 /* ── main component ────────────────────────────────────────────────────────── */
 export default function NLNGProcessMonitorTest() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [phase, setPhase]         = useState('setup')
   const [panel, setPanel]         = useState(initPanel)
   const [timeLeft, setTimeLeft]   = useState(DURATION)
@@ -205,6 +208,8 @@ export default function NLNGProcessMonitorTest() {
   const maxScoreRef     = useRef(0)
   const scheduleNextRef = useRef(null)   // so handleAction can trigger next event
   const alarmToutRef    = useRef(null)   // alarm-phase auto-resolve timeout
+  const attemptIdRef    = useRef(null)
+  const finishedRef     = useRef(false)  // guard against double finish
 
   function showFlash(msg, ok) {
     setFlash({ msg, ok })
@@ -225,8 +230,49 @@ export default function NLNGProcessMonitorTest() {
     clearTimeout(alarmToutRef.current)
     setCntPct(100)
     setFlash(null)
+    attemptIdRef.current = null
+    finishedRef.current = false
     phaseRef.current = 'playing'
     setPhase('playing')
+  }
+
+  /* ── finish & save ──────────────────────────────────────────────────────── */
+  function finishGame() {
+    if (finishedRef.current) return          // guard against double-call
+    finishedRef.current = true
+    phaseRef.current = 'results'
+
+    const finalScore    = scoreRef.current
+    const finalMaxScore = maxScoreRef.current
+    const finalHits     = hitsRef.current
+    const finalMisses   = missesRef.current
+    const pct = finalMaxScore > 0 ? Math.round((finalScore / finalMaxScore) * 100) : 0
+
+    // Generate stable attempt ID for this run
+    attemptIdRef.current = crypto.randomUUID()
+
+    // Persist to outbox before results screen renders
+    earlySaveAttempt({
+      attemptId:      attemptIdRef.current,
+      user,
+      questions:      [],                          // no question array for PM
+      answers:        { hits: finalHits, misses: finalMisses, events: finalHits + finalMisses },
+      assessmentType: 'nlng-process-monitoring',
+      moduleName:     'Process Monitoring (5 min simulation)',
+      elapsed:        DURATION - (timeLeft > 0 ? timeLeft : 0),
+      mode:           'practice',
+      scoreOverride:  pct,                         // save percentage as score
+      totalOverride:  100,                         // out of 100
+      answersForSave: {
+        score: finalScore,
+        maxScore: finalMaxScore,
+        hits: finalHits,
+        misses: finalMisses,
+        totalEvents: finalHits + finalMisses,
+      },
+    })
+
+    setPhase('results')
   }
 
   /* ── button handler ─────────────────────────────────────────────────────── */
@@ -292,17 +338,20 @@ export default function NLNGProcessMonitorTest() {
   }, [])
 
   /* ── game loop ──────────────────────────────────────────────────────────── */
+  // Separate effect: finish game when timer hits 0
+  useEffect(() => {
+    if (timeLeft === 0 && phaseRef.current === 'playing') {
+      finishGame()
+    }
+  }, [timeLeft])
+
   useEffect(() => {
     if (phase !== 'playing') return
 
     // Countdown timer
     const timerIv = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev <= 1) {
-          phaseRef.current = 'results'
-          setPhase('results')
-          return 0
-        }
+        if (prev <= 1) return 0
         return prev - 1
       })
     }, 1000)
@@ -573,7 +622,7 @@ export default function NLNGProcessMonitorTest() {
           <div className="pm-header__score">Score: <strong>{score}</strong></div>
           <button
             className="btn btn--ghost pm-end-btn"
-            onClick={() => { phaseRef.current = 'results'; setPhase('results') }}
+            onClick={finishGame}
           >End Test</button>
         </div>
       </header>
