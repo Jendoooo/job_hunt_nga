@@ -112,13 +112,20 @@ export default function SavillePractice() {
                                 {QUESTION_OPTIONS.map((count) => (
                                     <button
                                         key={count}
-                                        className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
+                                        className={`test-setup__time-btn ${questionCount === count && questionCount < practiceQuestions.length ? 'test-setup__time-btn--active' : ''}`}
                                         onClick={() => setQuestionCount(count)}
                                         disabled={count > practiceQuestions.length}
                                     >
                                         {count} Qs
                                     </button>
                                 ))}
+                                <button
+                                    key="all"
+                                    className={`test-setup__time-btn ${questionCount >= practiceQuestions.length ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={() => setQuestionCount(practiceQuestions.length)}
+                                >
+                                    All ({practiceQuestions.length})
+                                </button>
                             </div>
                         </div>
 

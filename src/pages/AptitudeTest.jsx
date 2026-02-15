@@ -48,6 +48,7 @@ export default function AptitudeTest() {
     const sectionDurationSeconds = minutesPerSubtest * 60
     const totalTimeSeconds = SUBTESTS.length * sectionDurationSeconds
     const isExamMode = mode === 'exam'
+    const maxSubtestSize = Math.max(...SUBTESTS.map((s) => aptitudeQuestions.filter((q) => q.subtest === s.key).length))
 
     const subtestQuestions = useMemo(
         () => sessionQuestions[currentSubtest?.key] || [],
@@ -150,12 +151,19 @@ export default function AptitudeTest() {
                                 {QUESTION_OPTIONS.map((count) => (
                                     <button
                                         key={count}
-                                        className={`test-setup__time-btn ${questionsPerSubtest === count ? 'test-setup__time-btn--active' : ''}`}
+                                        className={`test-setup__time-btn ${questionsPerSubtest === count && questionsPerSubtest < maxSubtestSize ? 'test-setup__time-btn--active' : ''}`}
                                         onClick={() => setQuestionsPerSubtest(count)}
                                     >
                                         {count} Qs
                                     </button>
                                 ))}
+                                <button
+                                    key="all"
+                                    className={`test-setup__time-btn ${questionsPerSubtest >= maxSubtestSize ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={() => setQuestionsPerSubtest(maxSubtestSize)}
+                                >
+                                    All
+                                </button>
                             </div>
                         </div>
 

@@ -2,9 +2,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { supabase, hasSupabaseEnv } from '../lib/supabase'
 import { useAuth } from '../context/useAuth'
 import { enqueueAttemptOutbox } from '../utils/attemptOutbox'
-import { buildBehavioralProfile } from '../utils/behavioralScoring'
+import { buildBehavioralProfile, computeConsistencyProfile, buildNLNGAlignmentFromProfile } from '../utils/behavioralScoring'
 import AIBehavioralExplainer from './AIBehavioralExplainer'
 import {
+  AlertTriangle,
   ArrowLeft,
   Check,
   CheckCircle2,
@@ -148,6 +149,14 @@ export default function BehavioralReport({
   const report = useMemo(() => (
     buildBehavioralProfile(triplets, answers)
   ), [answers, triplets])
+
+  const consistency = useMemo(() => (
+    computeConsistencyProfile(triplets, answers, report.profile)
+  ), [answers, report.profile, triplets])
+
+  const nlngAlignment = useMemo(() => (
+    buildNLNGAlignmentFromProfile(report.profile)
+  ), [report.profile])
 
   const saveResults = useCallback(async () => {
     if (!user || saved || savedLocally || saving) return saved || savedLocally
@@ -432,6 +441,79 @@ export default function BehavioralReport({
           </div>
         </article>
       )}
+
+      <article className="beh-report__card">
+        <header className="beh-report__card-head">
+          <h3>Response Consistency</h3>
+          <p>How uniformly you ranked each competency across all blocks.</p>
+        </header>
+
+        <div className="beh-consistency">
+          <div className="beh-consistency__overall">
+            <div className="beh-consistency__overall-label">Overall Consistency</div>
+            <div className="beh-consistency__overall-bar">
+              <div
+                className={`beh-consistency__overall-fill ${consistency.overall >= 70 ? 'beh-consistency__overall-fill--good' : consistency.overall >= 40 ? 'beh-consistency__overall-fill--mid' : 'beh-consistency__overall-fill--low'}`}
+                style={{ width: `${consistency.overall}%` }}
+              />
+            </div>
+            <div className="beh-consistency__overall-value">{consistency.overall}%</div>
+          </div>
+
+          {consistency.perCompetency.length > 0 && (
+            <div className="beh-consistency__breakdown">
+              {consistency.perCompetency.map((item) => (
+                <div className="beh-consistency__row" key={item.id}>
+                  <div className="beh-consistency__row-label">{item.label}</div>
+                  <div className="beh-consistency__row-bar">
+                    <div
+                      className="beh-consistency__row-fill"
+                      style={{ width: `${item.consistency}%` }}
+                    />
+                  </div>
+                  <div className="beh-consistency__row-value">{item.consistency}%</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {consistency.contradictions.length > 0 && (
+          <div className="beh-consistency__warnings">
+            {consistency.contradictions.map((c, idx) => (
+              <div className="beh-consistency__warning" key={idx}>
+                <AlertTriangle size={14} className="shrink-0" />
+                <span>{c.message}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </article>
+
+      <article className="beh-report__card">
+        <header className="beh-report__card-head">
+          <h3>NLNG Values Alignment</h3>
+          <p>How your behavioural profile maps to NLNG&rsquo;s core company values.</p>
+        </header>
+
+        <div className="beh-nlng">
+          {nlngAlignment.map((item) => (
+            <div className="beh-nlng__row" key={item.id}>
+              <div className="beh-nlng__label">
+                <strong>{item.label}</strong>
+                <span className="beh-nlng__tip">{item.tip}</span>
+              </div>
+              <div className="beh-nlng__bar">
+                <div
+                  className="beh-nlng__fill"
+                  style={{ width: `${item.pct}%` }}
+                />
+              </div>
+              <div className="beh-nlng__value">{item.pct}%</div>
+            </div>
+          ))}
+        </div>
+      </article>
 
       <article className="beh-report__card">
         <header className="beh-report__card-head">

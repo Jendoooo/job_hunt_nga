@@ -29,6 +29,15 @@ export default function SHLTabbedEvalWidget({ data, value, onAnswer, disabled = 
                 { id: 'not_approved', label: 'Not Approved' },
             ]
     ), [data?.options])
+    const columns = useMemo(() => {
+        if (Array.isArray(data?.columns) && data.columns.length > 0) return data.columns
+        return [
+            { key: 'item', label: 'Meal' },
+            { key: 'count', label: '# of People' },
+            { key: 'cost', label: 'Cost' },
+        ]
+    }, [data?.columns])
+    const approvalLabel = data?.approval_label || 'Approval Status'
 
     const [activeTabId, setActiveTabId] = useState(tabs[0]?.id || null)
     const [answers, setAnswers] = useState(() => normalizeAnswerMap(value))
@@ -90,17 +99,19 @@ export default function SHLTabbedEvalWidget({ data, value, onAnswer, disabled = 
                     <table className="tabeval-table">
                         <thead>
                             <tr>
-                                <th>Meal</th>
-                                <th># of People</th>
-                                <th>Cost</th>
+                                {columns.map((col) => (
+                                    <th key={col.key}>{col.label}</th>
+                                ))}
                             </tr>
                         </thead>
                         <tbody>
                             {(Array.isArray(activeTab.rows) ? activeTab.rows : []).map((row, index) => (
                                 <tr key={`${activeTab.id}-${index}`} className={row.item === 'Total' ? 'tabeval-row--total' : ''}>
-                                    <td>{row.item || ''}</td>
-                                    <td>{row.count != null ? row.count : '--'}</td>
-                                    <td>{toDisplayCost(row.cost)}</td>
+                                    {columns.map((col) => (
+                                        <td key={col.key}>
+                                            {col.key === 'cost' ? toDisplayCost(row[col.key]) : (row[col.key] ?? '--')}
+                                        </td>
+                                    ))}
                                 </tr>
                             ))}
                         </tbody>
@@ -109,15 +120,17 @@ export default function SHLTabbedEvalWidget({ data, value, onAnswer, disabled = 
             )}
 
             <div className="tabeval-approval-section">
-                <div className="tabeval-approval__label">Approval Status</div>
+                <div className="tabeval-approval__label">{approvalLabel}</div>
                 <div className="tabeval-approval__btns">
                     {options.map((option) => {
                         const isSelected = currentAnswer === option.id
                         let className = 'tabeval-btn'
                         if (isSelected) {
-                            className += option.id === 'approved'
+                            className += option.id === 'approved' || option.id === 'none'
                                 ? ' tabeval-btn--approved'
-                                : ' tabeval-btn--not-approved'
+                                : option.id === 'not_approved'
+                                    ? ' tabeval-btn--not-approved'
+                                    : ' tabeval-btn--approved'
                         }
 
                         return (

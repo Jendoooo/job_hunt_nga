@@ -1,3 +1,5 @@
+import { SJQ_COMPETENCIES } from './sjqAnalytics'
+
 export const GREAT_EIGHT = [
   { id: 'leading_deciding', label: 'Leading & Deciding' },
   { id: 'supporting_cooperating', label: 'Supporting & Cooperating' },
@@ -140,4 +142,139 @@ export function buildBehavioralProfile(triplets, answersByTripletId) {
     top,
     bottom,
   }
+}
+
+// ---------------------------------------------------------------------------
+// Consistency scoring
+// ---------------------------------------------------------------------------
+
+const CONTRADICTION_PAIRS = [
+  {
+    a: 'leading_deciding',
+    b: 'supporting_cooperating',
+    message: 'You scored high on both Leading & Deciding and Supporting & Cooperating. These reflect different orientations — taking charge vs. deferring to the group.',
+  },
+  {
+    a: 'adapting_coping',
+    b: 'organizing_executing',
+    message: 'You scored high on both Adapting & Coping and Organizing & Executing. Flexibility and rigid planning can conflict in practice.',
+  },
+  {
+    a: 'creating_conceptualizing',
+    b: 'organizing_executing',
+    message: 'You scored high on both Creating & Conceptualizing and Organizing & Executing. Innovation and rule-following can pull in opposite directions.',
+  },
+]
+
+export { CONTRADICTION_PAIRS }
+
+function stddev(values) {
+  if (values.length < 2) return 0
+  const mean = values.reduce((s, v) => s + v, 0) / values.length
+  const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length
+  return Math.sqrt(variance)
+}
+
+export function computeConsistencyProfile(triplets, answersByTripletId, profile) {
+  const tripletList = Array.isArray(triplets) ? triplets : []
+  const answers = answersByTripletId && typeof answersByTripletId === 'object' ? answersByTripletId : {}
+
+  // Collect per-triplet scores for each competency
+  const scoresByCompetency = {}
+  for (const triplet of tripletList) {
+    const scored = scoreIpsativeTriplet(triplet, answers[triplet?.id])
+    if (!scored) continue
+
+    // Each option in the triplet maps to a competency — record the score it got
+    for (const opt of triplet?.options || []) {
+      const comp = String(opt?.competency || '').trim()
+      if (!comp) continue
+      if (!scoresByCompetency[comp]) scoresByCompetency[comp] = []
+      scoresByCompetency[comp].push(scored[comp] ?? 0)
+    }
+  }
+
+  const allCompetencies = [...GREAT_EIGHT, ...EXTRA_COMPETENCIES]
+  const perCompetency = allCompetencies
+    .filter((item) => (scoresByCompetency[item.id] || []).length >= 2)
+    .map((item) => {
+      const scores = scoresByCompetency[item.id] || []
+      const sd = stddev(scores)
+      // Max possible stdDev for scores in {0, 1, 2} is 1.0
+      const consistency = Math.round(Math.max(0, 100 * (1 - sd)))
+      return {
+        id: item.id,
+        label: item.label,
+        consistency,
+        appearances: scores.length,
+        stdDev: Math.round(sd * 100) / 100,
+      }
+    })
+
+  // Weighted overall
+  const totalAppearances = perCompetency.reduce((s, c) => s + c.appearances, 0)
+  const overall = totalAppearances > 0
+    ? Math.round(perCompetency.reduce((s, c) => s + c.consistency * c.appearances, 0) / totalAppearances)
+    : 100
+
+  // Contradiction detection
+  const profileById = {}
+  for (const row of (profile || [])) {
+    profileById[row.id] = row
+  }
+
+  const contradictions = CONTRADICTION_PAIRS
+    .filter((pair) => {
+      const a = profileById[pair.a]
+      const b = profileById[pair.b]
+      return a && b && a.sten >= 7 && b.sten >= 7
+    })
+    .map((pair) => ({ pair: [pair.a, pair.b], message: pair.message }))
+
+  return { overall, perCompetency, contradictions }
+}
+
+// ---------------------------------------------------------------------------
+// NLNG company values alignment
+// ---------------------------------------------------------------------------
+
+const GREAT_EIGHT_TO_NLNG = {
+  leading_deciding: [{ id: 'delivery', weight: 0.5 }, { id: 'safety', weight: 0.5 }],
+  supporting_cooperating: [{ id: 'people', weight: 1.0 }],
+  interacting_presenting: [{ id: 'people', weight: 0.6 }, { id: 'delivery', weight: 0.4 }],
+  analyzing_interpreting: [{ id: 'quality', weight: 0.6 }, { id: 'innovation', weight: 0.4 }],
+  creating_conceptualizing: [{ id: 'innovation', weight: 1.0 }],
+  organizing_executing: [{ id: 'delivery', weight: 0.5 }, { id: 'quality', weight: 0.5 }],
+  adapting_coping: [{ id: 'safety', weight: 0.5 }, { id: 'people', weight: 0.5 }],
+  enterprising_performing: [{ id: 'delivery', weight: 0.7 }, { id: 'innovation', weight: 0.3 }],
+  integrity_ethics: [{ id: 'integrity', weight: 1.0 }],
+}
+
+export { GREAT_EIGHT_TO_NLNG }
+
+export function buildNLNGAlignmentFromProfile(profile) {
+  const totals = {}
+  const weights = {}
+  for (const comp of SJQ_COMPETENCIES) {
+    totals[comp.id] = 0
+    weights[comp.id] = 0
+  }
+
+  for (const row of (profile || [])) {
+    const mapping = GREAT_EIGHT_TO_NLNG[row.id]
+    if (!mapping) continue
+
+    for (const { id, weight } of mapping) {
+      if (totals[id] === undefined) continue
+      totals[id] += row.pct * weight
+      weights[id] += weight
+    }
+  }
+
+  return SJQ_COMPETENCIES.map((comp) => ({
+    id: comp.id,
+    label: comp.label,
+    tip: comp.tip,
+    pct: weights[comp.id] > 0 ? Math.round(totals[comp.id] / weights[comp.id]) : 0,
+  }))
 }

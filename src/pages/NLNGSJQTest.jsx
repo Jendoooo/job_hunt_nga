@@ -7,8 +7,10 @@ import sjqQuestions from '../data/nlng-sjq-questions.json'
 import { shuffleQuestions } from '../utils/questionSession'
 import { scoreSJQQuestionUnits } from '../utils/sjqAnalytics'
 
-const TIME_LIMIT_SECONDS = 20 * 60
-const SESSION_QUESTION_COUNT = 10
+const QUESTION_OPTIONS = [10, 20, 30]
+const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30]
+const DEFAULT_QUESTION_COUNT = 10
+const DEFAULT_TIME_MINUTES = 20
 
 const LESS_EFFECTIVE = 1
 const MORE_EFFECTIVE = 4
@@ -31,17 +33,20 @@ export default function NLNGSJQTest() {
     const startTimeRef = useRef(null)
 
     const [stage, setStage] = useState('setup')
+    const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
+    const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
     const [activeQuestions, setActiveQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [answers, setAnswers] = useState({})
     const [timeTaken, setTimeTaken] = useState(0)
 
     const questionBank = Array.isArray(sjqQuestions) ? sjqQuestions : []
+    const timeLimitSeconds = timeLimitMinutes * 60
 
     const question = activeQuestions[currentQuestion]
 
     function startAssessment() {
-        const selected = shuffleQuestions(questionBank).slice(0, Math.min(SESSION_QUESTION_COUNT, questionBank.length))
+        const selected = shuffleQuestions(questionBank).slice(0, Math.min(questionCount, questionBank.length))
         setActiveQuestions(selected)
         setAnswers({})
         setCurrentQuestion(0)
@@ -53,7 +58,7 @@ export default function NLNGSJQTest() {
     function finishAssessment() {
         const elapsed = startTimeRef.current
             ? Math.round((Date.now() - startTimeRef.current) / 1000)
-            : TIME_LIMIT_SECONDS
+            : timeLimitSeconds
         setTimeTaken(elapsed)
         setStage('finish')
     }
@@ -116,10 +121,48 @@ export default function NLNGSJQTest() {
                         </div>
 
                         <div className="sjq-instructions__section">
+                            <div className="sjq-instructions__title">Question Count</div>
+                            <div className="test-setup__time-options">
+                                {QUESTION_OPTIONS.map((count) => (
+                                    <button
+                                        key={count}
+                                        className={`test-setup__time-btn ${questionCount === count && questionCount < questionBank.length ? 'test-setup__time-btn--active' : ''}`}
+                                        onClick={() => setQuestionCount(count)}
+                                        disabled={count > questionBank.length}
+                                    >
+                                        {count} Qs
+                                    </button>
+                                ))}
+                                <button
+                                    key="all"
+                                    className={`test-setup__time-btn ${questionCount >= questionBank.length ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={() => setQuestionCount(questionBank.length)}
+                                >
+                                    All ({questionBank.length})
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="sjq-instructions__section">
+                            <div className="sjq-instructions__title">Time Limit</div>
+                            <div className="test-setup__time-options">
+                                {TIME_OPTIONS_MINUTES.map((minutes) => (
+                                    <button
+                                        key={minutes}
+                                        className={`test-setup__time-btn ${timeLimitMinutes === minutes ? 'test-setup__time-btn--active' : ''}`}
+                                        onClick={() => setTimeLimitMinutes(minutes)}
+                                    >
+                                        {minutes} min
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="sjq-instructions__section">
                             <div className="sjq-instructions__title">General</div>
                             <div className="sjq-instructions__content">
-                                <div><strong>Number of questions:</strong> {SESSION_QUESTION_COUNT}</div>
-                                <div><strong>Time limit:</strong> 20 minutes</div>
+                                <div><strong>Number of questions:</strong> {Math.min(questionCount, questionBank.length)}</div>
+                                <div><strong>Time limit:</strong> {timeLimitMinutes} minutes</div>
                                 <div><strong>Question bank:</strong> randomised from {questionBank.length} scenarios</div>
                             </div>
                         </div>
@@ -160,10 +203,10 @@ export default function NLNGSJQTest() {
                     answers={answers}
                     answersForSave={answersByQuestionId}
                     flagged={[]}
-                    timeTaken={timeTaken || TIME_LIMIT_SECONDS}
-                    totalTime={TIME_LIMIT_SECONDS}
+                    timeTaken={timeTaken || timeLimitSeconds}
+                    totalTime={timeLimitSeconds}
                     assessmentType="nlng_sjq"
-                    moduleName={`SHL Job-Focused Assessment (${activeQuestions.length}Q / 20m)`}
+                    moduleName={`SHL Job-Focused Assessment (${activeQuestions.length}Q / ${timeLimitMinutes}m)`}
                     mode="exam"
                     scoreCorrectUnits={earned}
                     scoreTotalUnits={total}
@@ -204,7 +247,7 @@ export default function NLNGSJQTest() {
                 <div className="test-page__header-right">
                     <div className="flex items-center gap-2">
                         <TimerIcon size={16} className="text-slate-500" />
-                        <Timer duration={TIME_LIMIT_SECONDS} onTimeUp={finishAssessment} />
+                        <Timer duration={timeLimitSeconds} onTimeUp={finishAssessment} />
                     </div>
                     <button className="btn btn--secondary btn--sm flex items-center gap-1" onClick={finishAssessment}>
                         <StopCircle size={14} /> End Test

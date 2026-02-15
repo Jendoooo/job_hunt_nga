@@ -166,7 +166,7 @@ export default function NLNGTest() {
                                 {QUESTION_OPTIONS.map((count) => (
                                     <button
                                         key={count}
-                                        className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
+                                        className={`test-setup__time-btn ${questionCount === count && questionCount < availableQuestions.length ? 'test-setup__time-btn--active' : ''}`}
                                         onClick={() => {
                                             setSessionPreset('custom')
                                             setQuestionCount(count)
@@ -176,6 +176,16 @@ export default function NLNGTest() {
                                         {count} Qs
                                     </button>
                                 ))}
+                                <button
+                                    key="all"
+                                    className={`test-setup__time-btn ${questionCount >= availableQuestions.length ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={() => {
+                                        setSessionPreset('custom')
+                                        setQuestionCount(availableQuestions.length)
+                                    }}
+                                >
+                                    All ({availableQuestions.length})
+                                </button>
                             </div>
                         </div>
 

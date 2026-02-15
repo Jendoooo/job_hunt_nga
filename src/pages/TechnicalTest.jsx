@@ -164,12 +164,20 @@ export default function TechnicalTest() {
                                         {[20, 40, 60, 100].map((count) => (
                                             <button
                                                 key={count}
-                                                className={`test-setup__time-btn ${questionCount === count ? 'test-setup__time-btn--active' : ''}`}
+                                                className={`test-setup__time-btn ${questionCount === count && questionCount < availableQuestions.length ? 'test-setup__time-btn--active' : ''}`}
                                                 onClick={() => setQuestionCount(count)}
+                                                disabled={count > availableQuestions.length}
                                             >
                                                 {count}
                                             </button>
                                         ))}
+                                        <button
+                                            key="all"
+                                            className={`test-setup__time-btn ${questionCount >= availableQuestions.length ? 'test-setup__time-btn--active' : ''}`}
+                                            onClick={() => setQuestionCount(availableQuestions.length)}
+                                        >
+                                            All ({availableQuestions.length})
+                                        </button>
                                     </div>
                                 </div>
                             </div>

@@ -260,7 +260,7 @@ export default function NLNGBehavioralTest() {
                 {QUESTION_OPTIONS.map((count) => (
                   <button
                     key={count}
-                    className={`test-setup__time-btn ${effectiveQuestionCount === count ? 'test-setup__time-btn--active' : ''}`}
+                    className={`test-setup__time-btn ${effectiveQuestionCount === count && effectiveQuestionCount < availableCount ? 'test-setup__time-btn--active' : ''}`}
                     onClick={() => {
                       setSessionPreset('custom')
                       setQuestionCount(count)
@@ -270,6 +270,16 @@ export default function NLNGBehavioralTest() {
                     {count}
                   </button>
                 ))}
+                <button
+                  key="all"
+                  className={`test-setup__time-btn ${effectiveQuestionCount >= availableCount ? 'test-setup__time-btn--active' : ''}`}
+                  onClick={() => {
+                    setSessionPreset('custom')
+                    setQuestionCount(availableCount)
+                  }}
+                >
+                  All ({availableCount})
+                </button>
               </div>
               <p className="text-xs text-slate-500 mt-2">
                 {availableCount} blocks available in the bank.
