@@ -13,6 +13,9 @@ const GAP_MIN = 3500
 const GAP_MAX = 7500
 const PTS_HIT = 10
 const PTS_MISS = 5
+const HARD_PTS_EARLY = 2
+const HARD_INPUT_LATENCY_MIN_MS = 200
+const HARD_INPUT_LATENCY_MAX_MS = 300
 
 // Events where user must WAIT for values to return to safe zone before pressing
 const TWO_PHASE_EVENTS = new Set(['gas_o2_low','gas_co2_low','gas_both_low','temp_high','power_high'])
@@ -46,6 +49,18 @@ function rand(lo, hi) { return Math.random() * (hi - lo) + lo }
 function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)) }
 function pad2(n) { return String(Math.floor(n)).padStart(2, '0') }
 function fmtTime(s) { return `${pad2(s / 60)}:${pad2(s % 60)}` }
+
+function isInAlarmZone(evType, panel) {
+  if (!panel || !evType) return false
+
+  // Hard-mode validation checks the actual readings (no pre-alert logic).
+  if (evType === 'power_high') return panel.gen.power >= 75
+  if (evType === 'temp_high') return panel.temp.value >= 75
+  if (evType === 'gas_o2_low') return panel.gas.o2 < 20
+  if (evType === 'gas_co2_low') return panel.gas.co2 < 20
+  if (evType === 'gas_both_low') return panel.gas.o2 < 20 || panel.gas.co2 < 20
+  return false
+}
 
 function initPanel() {
   return {
@@ -96,6 +111,22 @@ function resolveEvent(type, p) {
 }
 
 /* ── sub-components ────────────────────────────────────────────────────────── */
+function AlarmLamp({ on }) {
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        width: 10,
+        height: 10,
+        borderRadius: '50%',
+        display: 'inline-block',
+        background: on ? '#ef4444' : '#1e2d3d',
+        border: `1.5px solid ${on ? '#ef4444' : '#243044'}`,
+      }}
+    />
+  )
+}
+
 function PowerBars({ power, alert }) {
   const thresholds = [15, 30, 45, 60, 75, 88]
   const colors = ['#22c55e','#22c55e','#22c55e','#f59e0b','#f97316','#ef4444']
@@ -162,13 +193,15 @@ function StabDial({ angle, alert, label1, label2 }) {
     <svg viewBox="-50 -50 100 100" className={`pm-dial-svg ${alert ? 'pm-dial--alert' : ''}`}>
       <circle r="46" fill="#0f172a" />
       <circle r={R} fill="none" stroke={ringColor} strokeWidth="8" />
-      {/* Red arc: outer right zone (clock 1 o'clock to 5 o'clock) */}
-      <circle
-        r={R} fill="none"
-        stroke="#ef4444" strokeWidth="8"
-        strokeDasharray={`${R * 0.9} ${2 * Math.PI * R}`}
-        strokeDashoffset={`${-R * 1.1}`}
-        opacity="0.35"
+      {/* Red arc: RIGHT danger zone (55° to 105° clockwise from 12 o'clock) */}
+      <path
+        d="M 29.5 -20.7 A 36 36 0 0 1 34.8 9.3"
+        fill="none" stroke="#ef4444" strokeWidth="8" strokeLinecap="round" opacity="0.4"
+      />
+      {/* Red arc: LEFT danger zone (255° to 305° clockwise from 12 o'clock) */}
+      <path
+        d="M -34.8 9.3 A 36 36 0 0 1 -29.5 -20.7"
+        fill="none" stroke="#ef4444" strokeWidth="8" strokeLinecap="round" opacity="0.4"
       />
       <circle r="18" fill="#1e293b" />
       {/* Needle */}
@@ -182,9 +215,11 @@ function StabDial({ angle, alert, label1, label2 }) {
 }
 
 /* ── main component ────────────────────────────────────────────────────────── */
-export default function NLNGProcessMonitorTest() {
+export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
   const navigate = useNavigate()
   const { user } = useAuth()
+  const isHard = variant === 'hard'
+  const assist = !isHard
   const [phase, setPhase]         = useState('setup')
   const [panel, setPanel]         = useState(initPanel)
   const [timeLeft, setTimeLeft]   = useState(DURATION)
@@ -210,8 +245,10 @@ export default function NLNGProcessMonitorTest() {
   const alarmToutRef    = useRef(null)   // alarm-phase auto-resolve timeout
   const attemptIdRef    = useRef(null)
   const finishedRef     = useRef(false)  // guard against double finish
+  const actionLockRef   = useRef(false)  // hard-mode input latency + anti-spam guard
 
   function showFlash(msg, ok) {
+    if (isHard) return
     setFlash({ msg, ok })
     setTimeout(() => setFlash(null), 1100)
   }
@@ -232,6 +269,7 @@ export default function NLNGProcessMonitorTest() {
     setFlash(null)
     attemptIdRef.current = null
     finishedRef.current = false
+    actionLockRef.current = false
     phaseRef.current = 'playing'
     setPhase('playing')
   }
@@ -258,7 +296,7 @@ export default function NLNGProcessMonitorTest() {
       questions:      [],                          // no question array for PM
       answers:        { hits: finalHits, misses: finalMisses, events: finalHits + finalMisses },
       assessmentType: 'nlng-process-monitoring',
-      moduleName:     'Process Monitoring (5 min simulation)',
+      moduleName:     isHard ? 'Process Monitoring (Hard Mode)' : 'Process Monitoring (5 min simulation)',
       elapsed:        DURATION - (timeLeft > 0 ? timeLeft : 0),
       mode:           'practice',
       scoreOverride:  pct,                         // save percentage as score
@@ -269,6 +307,7 @@ export default function NLNGProcessMonitorTest() {
         hits: finalHits,
         misses: finalMisses,
         totalEvents: finalHits + finalMisses,
+        variant: isHard ? 'hard' : 'practice',
       },
     })
 
@@ -278,28 +317,63 @@ export default function NLNGProcessMonitorTest() {
   /* ── button handler ─────────────────────────────────────────────────────── */
   const handleAction = useCallback((btnId) => {
     if (phaseRef.current !== 'playing') return
+
+    if (isHard) {
+      if (actionLockRef.current) return
+      const clickEvDeadline = evRef.current?.deadline
+      if (!clickEvDeadline) return
+
+      actionLockRef.current = true
+      const latencyMs = Math.round(rand(HARD_INPUT_LATENCY_MIN_MS, HARD_INPUT_LATENCY_MAX_MS))
+
+      setTimeout(() => {
+        actionLockRef.current = false
+        if (phaseRef.current !== 'playing') return
+        const ev = evRef.current
+        if (!ev || ev.deadline !== clickEvDeadline) return
+        processAction(btnId, ev)
+      }, latencyMs)
+
+      return
+    }
+
     const ev = evRef.current
     if (!ev) return
+    processAction(btnId, ev)
+  }, [isHard])
 
+  function processAction(btnId, ev) {
     // System Reset is only valid during a system trip (gas_o2_temp)
     if (btnId === 'system_reset' && ev.type !== 'gas_o2_temp') {
       showFlash('⚠ System Reset: only on system trip!', false)
       return
     }
 
-    // Two-phase events: block all actions during the alarm phase
-    // User must WAIT for values to return to safe zone before pressing
-    if (TWO_PHASE_EVENTS.has(ev.type) && evPhaseRef.current === 'alarm') {
+    const isTwoPhase = TWO_PHASE_EVENTS.has(ev.type)
+    const stillInAlarmZone = isTwoPhase && isInAlarmZone(ev.type, panelRef.current)
+
+    // Two-phase events: user must WAIT for values to return to safe zone before pressing.
+    if (isTwoPhase && stillInAlarmZone) {
+      if (isHard) {
+        scoreRef.current = Math.max(0, scoreRef.current - HARD_PTS_EARLY)
+        setScore(scoreRef.current)
+        return
+      }
       showFlash('⏳ Wait — value still in alarm zone!', false)
       return
     }
 
-    const spikes = panelRef.current.temp.spikes
+    const spikesAtStart = typeof ev?.ctx?.tempSpikesAtStart === 'number'
+      ? ev.ctx.tempSpikesAtStart
+      : null
+    const spikesNow = panelRef.current.temp.spikes
+    const spikesForTemp = spikesAtStart ?? spikesNow
+
     let correct = false
 
     if (btnId === 'generator_off')  correct = ev.action === 'generator_off'
-    if (btnId === 'high')           correct = ev.type === 'temp_high' && spikes < 2
-    if (btnId === '3rd_high')       correct = ev.type === 'temp_high' && spikes === 2
+    if (btnId === 'high')           correct = ev.type === 'temp_high' && spikesForTemp < 2
+    if (btnId === '3rd_high')       correct = ev.type === 'temp_high' && spikesForTemp === 2
     if (btnId === 'gas_reset')      correct = ev.action === 'gas_reset'
     if (btnId === 'gas_alarm')      correct = ev.action === 'gas_alarm'
     if (btnId === 'system_reset')   correct = ev.action === 'system_reset'
@@ -309,19 +383,25 @@ export default function NLNGProcessMonitorTest() {
 
     // gas_o2_temp event: temp_btn also valid for temperature spike
     if (ev.type === 'gas_o2_temp') {
-      if (btnId === 'high')    correct = spikes < 2
-      if (btnId === '3rd_high') correct = spikes === 2
+      if (btnId === 'high')     correct = spikesNow < 2
+      if (btnId === '3rd_high') correct = spikesNow === 2
     }
 
     if (correct) {
       clearTimeout(alarmToutRef.current)
       evPhaseRef.current = null
       setEvPhase(null)
-      setPanel((prev) => {
-        const n = resolveEvent(ev.type, prev)
-        panelRef.current = n
-        return n
-      })
+
+      // Two-phase events already returned to safe values at the end of alarm phase.
+      // Pressing acknowledges/clears the alarm, it should not mutate readings again.
+      if (!isTwoPhase) {
+        setPanel((prev) => {
+          const n = resolveEvent(ev.type, prev)
+          panelRef.current = n
+          return n
+        })
+      }
+
       evRef.current = null
       setActiveEvent(null)
       setCntPct(100)
@@ -335,7 +415,7 @@ export default function NLNGProcessMonitorTest() {
     } else {
       showFlash('Wrong button!', false)
     }
-  }, [])
+  }
 
   /* ── game loop ──────────────────────────────────────────────────────────── */
   // Separate effect: finish game when timer hits 0
@@ -403,7 +483,14 @@ export default function NLNGProcessMonitorTest() {
         const isTwoPhase = TWO_PHASE_EVENTS.has(ev.type)
         const totalWindow = isTwoPhase ? (ALARM_PHASE_MS + CLEAR_PHASE_MS) : WINDOW_MS
         const deadline = Date.now() + totalWindow
-        const newEv = { ...ev, deadline }
+
+        // Capture context needed to validate responses after the alarm phase.
+        const ctx = {}
+        if (ev.type === 'temp_high') {
+          ctx.tempSpikesAtStart = panelRef.current.temp.spikes
+        }
+
+        const newEv = { ...ev, deadline, ctx }
 
         setPanel((prev) => { const n = applyEvent(ev.type, prev); panelRef.current = n; return n })
         evRef.current = newEv
@@ -502,7 +589,12 @@ export default function NLNGProcessMonitorTest() {
           <div className="pm-setup-header">
             <div className="pm-setup-badge">SHL Verify Interactive</div>
             <h1 className="pm-setup-title">Process Monitoring</h1>
-            <p className="pm-setup-sub">5-minute practice simulation · Respond within 5 seconds per event</p>
+            <p className="pm-setup-sub">
+              {assist
+                ? '5-minute practice simulation · Respond within 5 seconds per event'
+                : 'Hard mode simulation · Minimal on-screen guidance'
+              }
+            </p>
           </div>
 
           <div className="pm-rules-grid">
@@ -514,11 +606,11 @@ export default function NLNGProcessMonitorTest() {
                   <tr><td>Power too high</td><td>Turn Generator <strong>Off</strong></td></tr>
                   <tr><td>Temperature high (1st/2nd spike)</td><td>Press <strong>High</strong></td></tr>
                   <tr><td>Temperature high (3rd spike)</td><td>Press <strong>3rd High</strong></td></tr>
-                  <tr><td>One gas in red, temp normal</td><td>Press <strong>Gas Reset</strong></td></tr>
+                  <tr><td>One gas in red, temp normal</td><td>Press <strong>Reset</strong> (gas)</td></tr>
                   <tr><td>O₂ low + temp high (System Trip)</td><td>Press <strong>System Reset</strong> immediately</td></tr>
                   <tr><td>Both gases in red</td><td>Press <strong>Alarm</strong></td></tr>
-                  <tr><td>N Stabilizer needle in red zone</td><td>Press <strong>Reset N</strong></td></tr>
-                  <tr><td>W Stabilizer needle in red zone</td><td>Press <strong>Reset W</strong></td></tr>
+                  <tr><td>N Stabilizer needle in red zone</td><td>Press <strong>Reset</strong> (N Stab)</td></tr>
+                  <tr><td>W Stabilizer needle in red zone</td><td>Press <strong>Reset</strong> (W Stab)</td></tr>
                   <tr><td>Both stabilizer needles in red</td><td>Press <strong>Recentre</strong></td></tr>
                 </tbody>
               </table>
@@ -526,24 +618,35 @@ export default function NLNGProcessMonitorTest() {
                 ⚠ Gas · Temperature · Power alerts: <strong>wait</strong> for the value to return to the safe zone — then press the action button to clear the alarm.
               </div>
             </div>
-            <div className="pm-rules-col">
-              <div className="pm-rules-title">Scoring</div>
-              <div className="pm-score-info">
-                <div className="pm-score-row"><span className="pm-badge pm-badge--green">+{PTS_HIT}</span> Correct response in time</div>
-                <div className="pm-score-row"><span className="pm-badge pm-badge--red">−{PTS_MISS}</span> No response (timeout)</div>
-                <div className="pm-score-row"><span className="pm-badge pm-badge--gray">0</span> Wrong button pressed</div>
+            {assist ? (
+              <div className="pm-rules-col">
+                <div className="pm-rules-title">Scoring</div>
+                <div className="pm-score-info">
+                  <div className="pm-score-row"><span className="pm-badge pm-badge--green">+{PTS_HIT}</span> Correct response in time</div>
+                  <div className="pm-score-row"><span className="pm-badge pm-badge--red">−{PTS_MISS}</span> No response (timeout)</div>
+                  <div className="pm-score-row"><span className="pm-badge pm-badge--gray">0</span> Wrong button pressed</div>
+                </div>
+                <div className="pm-rules-title" style={{ marginTop: '1rem' }}>Tips</div>
+                <ul className="pm-tips">
+                  <li>Keep mental count of temperature spikes (resets at 3)</li>
+                  <li>Watch ALL zones simultaneously — multiple can alert</li>
+                  <li>Gas Reset ≠ System Reset — read the condition carefully</li>
+                </ul>
               </div>
-              <div className="pm-rules-title" style={{ marginTop: '1rem' }}>Tips</div>
-              <ul className="pm-tips">
-                <li>Keep mental count of temperature spikes (resets at 3)</li>
-                <li>Watch ALL zones simultaneously — multiple can alert</li>
-                <li>Gas Reset ≠ System Reset — read the condition carefully</li>
-              </ul>
-            </div>
+            ) : (
+              <div className="pm-rules-col">
+                <div className="pm-rules-title">Hard Mode</div>
+                <div className="pm-score-info">
+                  <div className="pm-score-row">No in-test hints, countdown, or live scoring</div>
+                  <div className="pm-score-row">200–300ms input latency on button presses</div>
+                  <div className="pm-score-row">Early presses during the alarm phase deduct points</div>
+                </div>
+              </div>
+            )}
           </div>
 
           <button className="btn btn--primary pm-start-btn" onClick={startGame}>
-            Start 5-Minute Practice
+            {assist ? 'Start 5-Minute Practice' : 'Start Hard Mode'}
           </button>
           <button className="btn btn--ghost pm-back-btn" onClick={() => navigate('/')}>
             ← Back to Dashboard
@@ -616,10 +719,15 @@ export default function NLNGProcessMonitorTest() {
             <ArrowLeft size={18} /> Dashboard
           </button>
           <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-1)' }}>Process Monitoring</span>
+          {!assist && (
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-3)', fontWeight: 800, letterSpacing: '.06em' }}>
+              HARD MODE
+            </span>
+          )}
         </div>
         <div className="test-page__header-right">
           <div className={`pm-timer ${timeLeft <= 60 ? 'pm-timer--urgent' : ''}`}>{fmtTime(timeLeft)}</div>
-          <div className="pm-header__score">Score: <strong>{score}</strong></div>
+          {assist && <div className="pm-header__score">Score: <strong>{score}</strong></div>}
           <button
             className="btn btn--ghost pm-end-btn"
             onClick={finishGame}
@@ -628,29 +736,29 @@ export default function NLNGProcessMonitorTest() {
       </header>
 
       <div className="pm-playing-wrap">
-      {/* Countdown bar */}
-      <div className="pm-countdown-track">
-        <div
-          className="pm-countdown-bar"
-          style={{
-            width: `${cntPct}%`,
-            background: evPhase === 'alarm'
-              ? '#ef4444'
-              : (cntPct > 50 ? '#84cc16' : cntPct > 25 ? '#f59e0b' : '#ef4444'),
-            opacity: ev ? 1 : 0,
-          }}
-        />
-      </div>
+      {assist && (
+        <div className="pm-countdown-track">
+          <div
+            className="pm-countdown-bar"
+            style={{
+              width: `${cntPct}%`,
+              background: evPhase === 'alarm'
+                ? '#ef4444'
+                : (cntPct > 50 ? '#84cc16' : cntPct > 25 ? '#f59e0b' : '#ef4444'),
+              opacity: ev ? 1 : 0,
+            }}
+          />
+        </div>
+      )}
 
-      {/* Flash feedback */}
-      {flash && (
+      {assist && flash && (
         <div className={`pm-flash ${flash.ok ? 'pm-flash--ok' : 'pm-flash--err'}`}>
           {flash.msg}
         </div>
       )}
 
       {/* Event hint */}
-      {ev && (
+      {assist && ev && (
         <div className={`pm-event-hint ${evPhase === 'alarm' ? 'pm-event-hint--wait' : 'pm-event-hint--act'}`}>
           {evPhase === 'alarm'
             ? `⛔ ${ZONE_LABEL[ev.type] ?? 'Alert'} — wait for value to return to safe zone`
@@ -662,9 +770,11 @@ export default function NLNGProcessMonitorTest() {
       {/* Panel header bar */}
       <div className="pm-panel-header">
         <span className="pm-panel-header__title">◉ Process Control System</span>
-        <span className={`pm-panel-header__status ${ev ? (evPhase === 'alarm' ? 'pm-panel-header__status--wait' : 'pm-panel-header__status--alert') : ''}`}>
-          {ev ? (evPhase === 'alarm' ? '⛔ WAIT — ALARM ACTIVE' : '✓ CLEARED — ACT NOW') : '● MONITORING'}
-        </span>
+        {assist && (
+          <span className={`pm-panel-header__status ${ev ? (evPhase === 'alarm' ? 'pm-panel-header__status--wait' : 'pm-panel-header__status--alert') : ''}`}>
+            {ev ? (evPhase === 'alarm' ? '⛔ WAIT — ALARM ACTIVE' : '✓ CLEARED — ACT NOW') : '● MONITORING'}
+          </span>
+        )}
       </div>
 
       {/* Control Panel */}
@@ -673,10 +783,15 @@ export default function NLNGProcessMonitorTest() {
         {/* ── Col 1: Generator + Temperature ─────────────────────────────── */}
         <div className="pm-col">
           {/* Generator */}
-          <div className={`pm-zone ${genAlert ? 'pm-zone--alert' : ''}`}>
-            <div className="pm-zone__title">Generator</div>
+          <div className={`pm-zone ${assist && genAlert ? 'pm-zone--alert' : ''}`}>
+            <div className="pm-zone__title">
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem' }}>
+                {!assist && <AlarmLamp on={genAlert} />}
+                Generator
+              </span>
+            </div>
             <div className="pm-gen-display">
-              <PowerBars power={panel.gen.power} alert={genAlert} />
+              <PowerBars power={panel.gen.power} alert={assist && genAlert} />
               <div className="pm-power-label">{Math.round(panel.gen.power)}%</div>
             </div>
             <button
@@ -688,10 +803,13 @@ export default function NLNGProcessMonitorTest() {
           </div>
 
           {/* Temperature */}
-          <div className={`pm-zone ${tempAlert ? 'pm-zone--alert' : ''}`}>
+          <div className={`pm-zone ${assist && tempAlert ? 'pm-zone--alert' : ''}`}>
             <div className="pm-zone__title">
-              Temperature
-              <span className="pm-spike-count">Spike: {spikes}/3</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem' }}>
+                {!assist && <AlarmLamp on={tempAlert} />}
+                Temperature
+              </span>
+              {assist && <span className="pm-spike-count">Spike: {spikes}/3</span>}
             </div>
             <TempGraph history={panel.temp.history} value={panel.temp.value} />
             <div className="pm-temp-val">{Math.round(panel.temp.value)}°</div>
@@ -715,9 +833,14 @@ export default function NLNGProcessMonitorTest() {
         {/* ── Col 2: System Reset + Gas ────────────────────────────────────── */}
         <div className="pm-col">
           {/* System Reset */}
-          <div className={`pm-zone pm-zone--center ${sysAlert ? 'pm-zone--alert' : ''}`}>
-            <div className="pm-zone__title">System Reset</div>
-            <div className={`pm-sysreset-dial ${sysAlert ? 'pm-sysreset-dial--alert' : ''}`}>
+          <div className={`pm-zone pm-zone--center ${assist && sysAlert ? 'pm-zone--alert' : ''}`}>
+            <div className="pm-zone__title">
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem' }}>
+                {!assist && <AlarmLamp on={sysAlert} />}
+                System Reset
+              </span>
+            </div>
+            <div className={`pm-sysreset-dial ${assist && sysAlert ? 'pm-sysreset-dial--alert' : ''}`}>
               <div className="pm-sysreset-ring" />
               <div className="pm-sysreset-inner">↺</div>
             </div>
@@ -730,45 +853,48 @@ export default function NLNGProcessMonitorTest() {
           </div>
 
           {/* Gas */}
-          <div className={`pm-zone ${(gasO2Alert || gasCO2Alert) ? 'pm-zone--alert' : ''}`}>
-            <div className="pm-zone__title">Gas Levels</div>
+          <div className={`pm-zone ${assist && (gasO2Alert || gasCO2Alert) ? 'pm-zone--alert' : ''}`}>
+            <div className="pm-zone__title">
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem' }}>
+                {!assist && <AlarmLamp on={gasO2Alert || gasCO2Alert} />}
+                Gas Levels
+              </span>
+            </div>
+            <button
+              className="pm-btn"
+              onClick={() => handleAction('gas_alarm')}
+            >
+              Alarm
+            </button>
             <div className="pm-gas-bars">
-              <GasBar label="O₂" level={panel.gas.o2} alert={gasO2Alert} />
-              <GasBar label="CO₂" level={panel.gas.co2} alert={gasCO2Alert} />
+              <GasBar label="O₂" level={panel.gas.o2} alert={assist && gasO2Alert} />
+              <GasBar label="CO₂" level={panel.gas.co2} alert={assist && gasCO2Alert} />
             </div>
-            <div className="pm-btn-row">
-              <button
-                className="pm-btn"
-                onClick={() => handleAction('gas_reset')}
-              >
-                Gas Reset
-              </button>
-              <button
-                className="pm-btn"
-                onClick={() => handleAction('gas_alarm')}
-              >
-                Alarm
-              </button>
-            </div>
+            <button
+              className="pm-btn"
+              onClick={() => handleAction('gas_reset')}
+            >
+              Reset
+            </button>
           </div>
         </div>
 
         {/* ── Col 3: Stabilizers ───────────────────────────────────────────── */}
         <div className="pm-col pm-col--stab">
           {/* North Stabilizer */}
-          <div className={`pm-zone pm-zone--stab ${stabNAlert ? 'pm-zone--alert' : ''}`}>
+          <div className={`pm-zone pm-zone--stab ${assist && stabNAlert ? 'pm-zone--alert' : ''}`}>
             <div className="pm-zone__title">N Stabilizer</div>
-            <StabDial angle={panel.stabN.angle} alert={stabNAlert} label1="N" label2="S" />
+            <StabDial angle={panel.stabN.angle} alert={assist && stabNAlert} label1="N" label2="S" />
             <button
               className="pm-btn"
               onClick={() => handleAction('stab_n')}
             >
-              Reset N
+              Reset
             </button>
           </div>
 
           {/* Recentre */}
-          <div className={`pm-zone pm-zone--recentre ${recentreAlert ? 'pm-zone--alert' : ''}`}>
+          <div className={`pm-zone pm-zone--recentre ${assist && recentreAlert ? 'pm-zone--alert' : ''}`}>
             <button
               className="pm-btn pm-btn--recentre"
               onClick={() => handleAction('stab_recentre')}
@@ -778,23 +904,25 @@ export default function NLNGProcessMonitorTest() {
           </div>
 
           {/* West Stabilizer */}
-          <div className={`pm-zone pm-zone--stab ${stabWAlert ? 'pm-zone--alert' : ''}`}>
+          <div className={`pm-zone pm-zone--stab ${assist && stabWAlert ? 'pm-zone--alert' : ''}`}>
             <div className="pm-zone__title">W Stabilizer</div>
-            <StabDial angle={panel.stabW.angle} alert={stabWAlert} label1="W" label2="E" />
+            <StabDial angle={panel.stabW.angle} alert={assist && stabWAlert} label1="W" label2="E" />
             <button
               className="pm-btn"
               onClick={() => handleAction('stab_w')}
             >
-              Reset W
+              Reset
             </button>
           </div>
         </div>
 
       </div>{/* end pm-panel */}
 
-      <div className="pm-footer">
-        Events: <strong>{hits + misses}</strong> · Correct: <strong>{hits}</strong> · Missed: <strong>{misses}</strong>
-      </div>
+      {assist && (
+        <div className="pm-footer">
+          Events: <strong>{hits + misses}</strong> · Correct: <strong>{hits}</strong> · Missed: <strong>{misses}</strong>
+        </div>
+      )}
       </div>
     </div>
   )
