@@ -229,10 +229,11 @@ function StabDial({ angle, alert, label1, label2 }) {
 }
 
 /* ── main component ────────────────────────────────────────────────────────── */
-export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
+export default function NLNGProcessMonitorTest() {
   const navigate = useNavigate()
   const { user } = useAuth()
-  const isHard = variant === 'hard'
+  const [mode, setMode]           = useState(null)   // 'practice' | 'hard'
+  const isHard = mode === 'hard'
   const assist = !isHard
   const [phase, setPhase]         = useState('setup')
   const [panel, setPanel]         = useState(initPanel)
@@ -605,14 +606,16 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
             <div className="pm-setup-badge">SHL Verify Interactive</div>
             <h1 className="pm-setup-title">Process Monitoring</h1>
             <p className="pm-setup-sub">
-              {assist
-                ? '5-minute practice simulation · Respond within 5 seconds per event'
-                : 'Hard mode simulation · Minimal on-screen guidance'
+              {!mode
+                ? 'Choose a mode below to begin'
+                : isHard
+                  ? 'Hard mode simulation · Minimal on-screen guidance'
+                  : '5-minute practice simulation · Respond within 5 seconds per event'
               }
             </p>
           </div>
 
-          <div className="pm-rules-grid">
+          {mode && <div className="pm-rules-grid">
             <div className="pm-rules-col">
               <div className="pm-rules-title">Control Panel Rules</div>
               <table className="pm-rules-table">
@@ -621,7 +624,7 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
                   <tr><td>Power too high</td><td>Turn Generator <strong>Off</strong></td></tr>
                   <tr><td>Temperature high (1st/2nd spike)</td><td>Press <strong>High</strong></td></tr>
                   <tr><td>Temperature high (3rd spike)</td><td>Press <strong>3rd High</strong></td></tr>
-                  <tr><td>One gas in red, temp normal</td><td>Press <strong>Reset</strong> (gas)</td></tr>
+                  <tr><td>One gas in red, temp normal</td><td>Press <strong>Gas Reset</strong></td></tr>
                   <tr><td>O₂ low + temp high (System Trip)</td><td>Press <strong>System Reset</strong> immediately</td></tr>
                   <tr><td>Both gases in red</td><td>Press <strong>Alarm</strong></td></tr>
                   <tr><td>N Stabilizer needle in red zone</td><td>Press <strong>Reset</strong> (N Stab)</td></tr>
@@ -658,11 +661,27 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
                 </div>
               </div>
             )}
-          </div>
+          </div>}
 
-          <button className="btn btn--primary pm-start-btn" onClick={startGame}>
-            {assist ? 'Start 5-Minute Practice' : 'Start Hard Mode'}
-          </button>
+          {!mode ? (
+            <div className="pm-mode-picker">
+              <button className="btn btn--primary pm-start-btn" onClick={() => setMode('practice')}>
+                Practice Mode
+              </button>
+              <button className="btn btn--outline pm-start-btn pm-start-btn--hard" onClick={() => setMode('hard')}>
+                Real SHL Mode (Hard)
+              </button>
+            </div>
+          ) : (
+            <div className="pm-mode-picker">
+              <button className="btn btn--primary pm-start-btn" onClick={startGame}>
+                {isHard ? 'Start Hard Mode' : 'Start 5-Minute Practice'}
+              </button>
+              <button className="btn btn--ghost pm-start-btn" onClick={() => setMode(null)}>
+                ← Change Mode
+              </button>
+            </div>
+          )}
           <button className="btn btn--ghost pm-back-btn" onClick={() => navigate('/')}>
             ← Back to Dashboard
           </button>
@@ -769,7 +788,7 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
                 <tr><td>Power too high</td><td><strong>On / Off</strong></td></tr>
                 <tr><td>Temperature high (1st/2nd spike)</td><td><strong>High</strong></td></tr>
                 <tr><td>Temperature high (3rd spike)</td><td><strong>3rd High</strong></td></tr>
-                <tr><td>One gas in red zone</td><td><strong>Reset</strong> (gas)</td></tr>
+                <tr><td>One gas in red zone</td><td><strong>Gas Reset</strong></td></tr>
                 <tr><td>O₂ low + temp high (System Trip)</td><td><strong>System Reset</strong></td></tr>
                 <tr><td>Both gases in red zone</td><td><strong>Alarm</strong></td></tr>
                 <tr><td>N Stabilizer in red zone</td><td><strong>Reset</strong> (N Stab)</td></tr>
@@ -921,7 +940,7 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
               className="pm-btn"
               onClick={() => handleAction('gas_reset')}
             >
-              Reset
+              Gas Reset
             </button>
           </div>
         </div>

@@ -4077,8 +4077,20 @@ select:focus-visible {
 .pm-badge--gray  { background: #f3f4f6; color: var(--text-3); }
 
 .pm-tips { padding-left: 1.2rem; margin: 0; font-size: 0.83rem; color: var(--text-2); line-height: 1.85; }
-.pm-start-btn { display: block; width: 100%; margin-top: 1.75rem; }
+.pm-start-btn { display: block; width: 100%; margin-top: 0; }
 .pm-back-btn  { display: block; width: 100%; margin-top: .65rem; }
+
+/* Mode picker */
+.pm-mode-picker {
+  display: flex; flex-direction: column; gap: .65rem;
+  margin-top: 1.75rem;
+}
+.pm-start-btn--hard {
+  border: 1.5px solid #ef4444; color: #ef4444; background: transparent;
+}
+.pm-start-btn--hard:hover {
+  background: rgba(239,68,68,0.08);
+}
 
 /* ── Results ───────────────────────────────────────────────────────────────── */
 .pm-results-card {
