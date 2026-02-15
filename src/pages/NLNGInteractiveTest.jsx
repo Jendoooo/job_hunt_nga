@@ -7,6 +7,8 @@ import ScoreReport from '../components/ScoreReport'
 import RenderErrorBoundary from '../components/RenderErrorBoundary'
 import interactiveQuestions from '../data/shl-interactive-questions.json'
 import { selectUniqueSessionQuestions, shuffleQuestions } from '../utils/questionSession'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 import {
     ArrowLeft,
     BookOpen,
@@ -103,6 +105,8 @@ function selectRealPresetQuestions(pool, count) {
 
 export default function NLNGInteractiveTest() {
     const navigate = useNavigate()
+    const { user } = useAuth()
+    const attemptIdRef = useRef(null)
     const [stage, setStage] = useState('setup')
     const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
@@ -182,6 +186,22 @@ export default function NLNGInteractiveTest() {
             ? Math.round((Date.now() - startTimeRef.current) / 1000)
             : totalTimeSeconds
         setTimeTaken(elapsed)
+
+        // Safety-net: persist to local outbox BEFORE transitioning to finish screen.
+        if (user && activeQuestions.length > 0) {
+            if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+            earlySaveAttempt({
+                attemptId: attemptIdRef.current,
+                user,
+                questions: activeQuestions,
+                answers,
+                assessmentType: 'nlng-interactive-numerical',
+                moduleName: `NLNG Interactive Numerical (${difficultyLabel}, ${effectiveMode}, ${activeQuestions.length}Q${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`,
+                elapsed,
+                mode: effectiveMode,
+            })
+        }
+
         setStage('finish')
     }
 
@@ -437,6 +457,7 @@ export default function NLNGInteractiveTest() {
                     assessmentType="nlng-interactive-numerical"
                     moduleName={`NLNG Interactive Numerical (${difficultyLabel}, ${effectiveMode}, ${activeQuestions.length}Q${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
                     mode={effectiveMode}
+                    attemptId={attemptIdRef.current}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

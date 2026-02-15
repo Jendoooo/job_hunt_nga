@@ -5,6 +5,8 @@ import QuestionCard from '../components/QuestionCard'
 import ScoreReport from '../components/ScoreReport'
 import aptitudeQuestions from '../data/aptitude-questions.json'
 import { selectUniqueSessionQuestions } from '../utils/questionSession'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 import {
     Brain,
     ArrowLeft,
@@ -31,6 +33,8 @@ const DEFAULT_TIME_MINUTES = 6
 
 export default function AptitudeTest() {
     const navigate = useNavigate()
+    const { user } = useAuth()
+    const attemptIdRef = useRef(null)
     const [stage, setStage] = useState('setup')
     const [mode, setMode] = useState('exam')
     const [questionsPerSubtest, setQuestionsPerSubtest] = useState(DEFAULT_QUESTIONS)
@@ -79,6 +83,32 @@ export default function AptitudeTest() {
             : totalTimeSeconds
 
         setTimeTaken(elapsed)
+
+        if (user) {
+            if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+            const flatQ = SUBTESTS.flatMap((s) => sessionQuestions[s.key] || [])
+            const flatA = {}
+            let off = 0
+            SUBTESTS.forEach((s) => {
+                const items = sessionQuestions[s.key] || []
+                items.forEach((_, qi) => {
+                    const key = `${s.key}-${qi}`
+                    if (answers[key] !== undefined) flatA[off + qi] = answers[key]
+                })
+                off += items.length
+            })
+            earlySaveAttempt({
+                attemptId: attemptIdRef.current,
+                user,
+                questions: flatQ,
+                answers: flatA,
+                assessmentType: 'saville-aptitude',
+                moduleName: `Swift Analysis Aptitude (${mode}, ${questionsPerSubtest}Q x ${SUBTESTS.length}${isExamMode ? ` / ${minutesPerSubtest}m each` : ''})`,
+                elapsed,
+                mode,
+            })
+        }
+
         setStage('finish')
     }
 
@@ -283,6 +313,7 @@ export default function AptitudeTest() {
                     assessmentType="saville-aptitude"
                     moduleName={`Swift Analysis Aptitude (${mode}, ${questionsPerSubtest}Q x ${SUBTESTS.length}${isExamMode ? ` / ${minutesPerSubtest}m each` : ''})`}
                     mode={mode}
+                    attemptId={attemptIdRef.current}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

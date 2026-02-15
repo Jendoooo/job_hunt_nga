@@ -6,6 +6,8 @@ import ScoreReport from '../components/ScoreReport'
 import sjqQuestions from '../data/nlng-sjq-questions.json'
 import { shuffleQuestions } from '../utils/questionSession'
 import { scoreSJQQuestionUnits } from '../utils/sjqAnalytics'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 
 const QUESTION_OPTIONS = [10, 20, 30]
 const TIME_OPTIONS_MINUTES = [10, 15, 20, 25, 30]
@@ -30,7 +32,9 @@ function scoreSessionUnits(questions, answers) {
 
 export default function NLNGSJQTest() {
     const navigate = useNavigate()
+    const { user } = useAuth()
     const startTimeRef = useRef(null)
+    const attemptIdRef = useRef(null)
 
     const [stage, setStage] = useState('setup')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
@@ -60,6 +64,24 @@ export default function NLNGSJQTest() {
             ? Math.round((Date.now() - startTimeRef.current) / 1000)
             : timeLimitSeconds
         setTimeTaken(elapsed)
+
+        if (user && activeQuestions.length > 0) {
+            if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+            const { earned, total } = scoreSessionUnits(activeQuestions, answers)
+            earlySaveAttempt({
+                attemptId: attemptIdRef.current,
+                user,
+                questions: activeQuestions,
+                answers,
+                assessmentType: 'nlng_sjq',
+                moduleName: `SHL Job-Focused Assessment (${activeQuestions.length}Q / ${timeLimitMinutes}m)`,
+                elapsed,
+                mode: 'exam',
+                scoreOverride: earned,
+                totalOverride: total,
+            })
+        }
+
         setStage('finish')
     }
 
@@ -211,6 +233,7 @@ export default function NLNGSJQTest() {
                     scoreCorrectUnits={earned}
                     scoreTotalUnits={total}
                     scoreUnitLabel="alignment points"
+                    attemptId={attemptIdRef.current}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

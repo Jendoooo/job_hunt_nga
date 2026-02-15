@@ -7,6 +7,8 @@ import ScoreReport from '../components/ScoreReport'
 import AIExplainer from '../components/AIExplainer'
 import practiceQuestions from '../data/saville-practice-questions.json'
 import { selectUniqueSessionQuestions } from '../utils/questionSession'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 import {
     Wrench,
     ArrowLeft,
@@ -22,6 +24,8 @@ const DEFAULT_TIME_MINUTES = 30
 
 export default function SavillePractice() {
     const navigate = useNavigate()
+    const { user } = useAuth()
+    const attemptIdRef = useRef(null)
     const [stage, setStage] = useState('setup')
     const [mode, setMode] = useState('practice')
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
@@ -61,6 +65,21 @@ export default function SavillePractice() {
             ? Math.floor((Date.now() - startTimeRef.current) / 1000)
             : 0
         setTimeTaken(elapsed)
+
+        if (user && sessionQuestions.length > 0) {
+            if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+            earlySaveAttempt({
+                attemptId: attemptIdRef.current,
+                user,
+                questions: sessionQuestions,
+                answers,
+                assessmentType: 'saville-practice',
+                moduleName: `Detailed Calculation Practice (${questionCount}Q / ${timeLimitMinutes}m)`,
+                elapsed,
+                mode,
+            })
+        }
+
         setStage('review')
     }
 
@@ -175,6 +194,7 @@ export default function SavillePractice() {
                     assessmentType="saville-practice"
                     moduleName={`Detailed Calculation Practice (${questionCount}Q / ${timeLimitMinutes}m)`}
                     mode={mode}
+                    attemptId={attemptIdRef.current}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

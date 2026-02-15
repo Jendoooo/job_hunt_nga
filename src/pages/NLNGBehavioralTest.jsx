@@ -7,6 +7,8 @@ import SHLBehavioralWidget from '../components/interactive/SHLBehavioralWidget'
 import behavioralBank from '../data/shl-behavioral.json'
 import behavioralRealSets from '../data/shl-behavioral-real.json'
 import { shuffleQuestions } from '../utils/questionSession'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 import {
   ArrowLeft,
   BookOpen,
@@ -76,6 +78,8 @@ function getTripletsFromRealSets(realSets) {
 
 export default function NLNGBehavioralTest() {
   const navigate = useNavigate()
+  const { user } = useAuth()
+  const attemptIdRef = useRef(null)
   const [stage, setStage] = useState('setup')
   const [sessionPreset, setSessionPreset] = useState('real')
   const [mode, setMode] = useState('exam')
@@ -139,6 +143,24 @@ export default function NLNGBehavioralTest() {
       ? Math.round((Date.now() - startTimeRef.current) / 1000)
       : totalTimeSeconds
     setTimeTaken(elapsed)
+
+    if (user && activeTriplets.length > 0) {
+      if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+      const answered = Object.keys(answers).length
+      earlySaveAttempt({
+        attemptId: attemptIdRef.current,
+        user,
+        questions: activeTriplets,
+        answers,
+        assessmentType: 'nlng-opq',
+        moduleName: `SHL JFA (Forced-Choice) (${effectiveMode}, ${activeTriplets.length} blocks${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`,
+        elapsed,
+        mode: effectiveMode,
+        scoreOverride: answered,
+        totalOverride: activeTriplets.length,
+      })
+    }
+
     setStage('finish')
   }
 
@@ -348,6 +370,7 @@ export default function NLNGBehavioralTest() {
           assessmentType="nlng-opq"
           moduleName={`SHL JFA (Forced-Choice) (${effectiveMode}, ${activeTriplets.length} blocks${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
           mode={effectiveMode}
+          attemptId={attemptIdRef.current}
           onRetry={() => setStage('setup')}
           onBackToDashboard={() => navigate('/')}
         />

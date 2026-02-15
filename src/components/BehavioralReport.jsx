@@ -127,6 +127,7 @@ export default function BehavioralReport({
   mode,
   onRetry,
   onBackToDashboard,
+  attemptId,
 }) {
   const { user } = useAuth()
   const isMountedRef = useRef(false)
@@ -167,7 +168,7 @@ export default function BehavioralReport({
     }
 
     if (!attemptIdRef.current) {
-      attemptIdRef.current = createClientAttemptId()
+      attemptIdRef.current = attemptId || createClientAttemptId()
     }
 
     if (!attemptCreatedAtRef.current) {

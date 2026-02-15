@@ -267,6 +267,7 @@ export default function ScoreReport({
     scoreCorrectUnits,
     scoreTotalUnits,
     scoreUnitLabel = 'correct answers',
+    attemptId,
 }) {
     const { user } = useAuth()
     const isMountedRef = useRef(false)
@@ -316,7 +317,7 @@ export default function ScoreReport({
         }
 
         if (!attemptIdRef.current) {
-            attemptIdRef.current = createClientAttemptId()
+            attemptIdRef.current = attemptId || createClientAttemptId()
         }
 
         if (!attemptCreatedAtRef.current) {

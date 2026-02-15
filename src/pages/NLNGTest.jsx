@@ -6,6 +6,8 @@ import QuestionNav from '../components/QuestionNav'
 import ScoreReport from '../components/ScoreReport'
 import deductiveQuestions from '../data/nlng-deductive-questions.json'
 import { selectUniqueSessionQuestions } from '../utils/questionSession'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 import {
     Lightbulb,
     ArrowLeft,
@@ -34,6 +36,8 @@ function isValidDeductiveQuestion(question) {
 
 export default function NLNGTest() {
     const navigate = useNavigate()
+    const { user } = useAuth()
+    const attemptIdRef = useRef(null)
     const [stage, setStage] = useState('setup')
     const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
@@ -81,6 +85,21 @@ export default function NLNGTest() {
             : totalTimeSeconds
 
         setTimeTaken(elapsed)
+
+        if (user && activeQuestions.length > 0) {
+            if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+            earlySaveAttempt({
+                attemptId: attemptIdRef.current,
+                user,
+                questions: activeQuestions,
+                answers,
+                assessmentType: 'nlng-shl',
+                moduleName: `NLNG SHL Deductive (${mode}, ${activeQuestions.length}Q${isExamMode ? ` / ${timeLimitMinutes}m` : ''})`,
+                elapsed,
+                mode,
+            })
+        }
+
         setStage('finish')
     }
 
@@ -263,6 +282,7 @@ export default function NLNGTest() {
                     assessmentType="nlng-shl"
                     moduleName={`NLNG SHL Deductive (${mode}, ${activeQuestions.length}Q${isExamMode ? ` / ${timeLimitMinutes}m` : ''})`}
                     mode={mode}
+                    attemptId={attemptIdRef.current}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />

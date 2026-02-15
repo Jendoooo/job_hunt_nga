@@ -7,6 +7,8 @@ import ScoreReport from '../components/ScoreReport'
 import AIExplainer from '../components/AIExplainer'
 import technicalQuestions from '../data/technical-questions.json'
 import { dedupeQuestionsByContent, selectUniqueSessionQuestions } from '../utils/questionSession'
+import { earlySaveAttempt } from '../utils/earlySave'
+import { useAuth } from '../context/useAuth'
 import {
     Settings,
     ArrowLeft,
@@ -27,6 +29,8 @@ const SECTIONS = [
 
 export default function TechnicalTest() {
     const navigate = useNavigate()
+    const { user } = useAuth()
+    const attemptIdRef = useRef(null)
     const [stage, setStage] = useState('setup')
     const [mode, setMode] = useState('practice')
     const [selectedSections, setSelectedSections] = useState(SECTIONS.map((section) => section.key))
@@ -88,6 +92,21 @@ export default function TechnicalTest() {
             ? Math.floor((Date.now() - startTimeRef.current) / 1000)
             : 0
         setTimeTaken(elapsed)
+
+        if (user && activeQuestions.length > 0) {
+            if (!attemptIdRef.current) attemptIdRef.current = crypto.randomUUID()
+            earlySaveAttempt({
+                attemptId: attemptIdRef.current,
+                user,
+                questions: activeQuestions,
+                answers,
+                assessmentType: 'totalenergies-technical',
+                moduleName: selectedSectionNames,
+                elapsed,
+                mode,
+            })
+        }
+
         setStage('review')
     }
 
@@ -248,6 +267,7 @@ export default function TechnicalTest() {
                     assessmentType="totalenergies-technical"
                     moduleName={selectedSectionNames}
                     mode={mode}
+                    attemptId={attemptIdRef.current}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}
                 />
