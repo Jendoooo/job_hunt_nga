@@ -162,20 +162,30 @@ function TempGraph({ history, value }) {
   )
 }
 
-function GasBar({ label, level, alert }) {
+function GasBar({ label, level, alert, inverted = false }) {
   const fillPct = clamp(level, 0, 100)
-  const redZonePct = 25            // bottom 25% is red (low = danger)
-  const inRed = fillPct <= redZonePct
+  const redZonePct = 25
+  // O₂: red at bottom (low = danger), CO₂ (inverted): red at top (high = danger)
+  const inRed = inverted ? fillPct >= (100 - redZonePct) : fillPct <= redZonePct
   return (
     <div className="pm-gas-col">
       <span className="pm-gas-label">{label}</span>
-      <div className="pm-gas-track">
-        {/* Green safe zone (top) */}
-        <div className="pm-gas-safe-zone" />
-        {/* Red danger zone (bottom) */}
-        <div className="pm-gas-red-zone" style={{ height: `${redZonePct}%` }} />
-        {/* Threshold line */}
-        <div className="pm-gas-threshold" style={{ bottom: `${redZonePct}%` }} />
+      <div className={`pm-gas-track ${inverted ? 'pm-gas-track--inverted' : ''}`}>
+        {inverted ? (
+          <>
+            {/* CO₂: red danger zone at TOP (high = danger) */}
+            <div className="pm-gas-red-zone" style={{ height: `${redZonePct}%`, top: 0, bottom: 'auto', borderRadius: '12px 12px 0 0' }} />
+            <div className="pm-gas-safe-zone" style={{ top: `${redZonePct}%`, bottom: 0, height: 'auto', borderRadius: '0 0 12px 12px' }} />
+            <div className="pm-gas-threshold" style={{ top: `${redZonePct}%`, bottom: 'auto' }} />
+          </>
+        ) : (
+          <>
+            {/* O₂: red danger zone at BOTTOM (low = danger) */}
+            <div className="pm-gas-safe-zone" />
+            <div className="pm-gas-red-zone" style={{ height: `${redZonePct}%` }} />
+            <div className="pm-gas-threshold" style={{ bottom: `${redZonePct}%` }} />
+          </>
+        )}
         {/* Capsule indicator */}
         <div
           className={`pm-gas-indicator ${inRed || alert ? 'pm-gas-indicator--alert' : ''}`}
@@ -235,6 +245,7 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
   const [evPhase, setEvPhase]     = useState(null)   // 'alarm' | 'clearing' | null
   const [cntPct, setCntPct]       = useState(100)
   const [flash, setFlash]         = useState(null)  // { msg, ok }
+  const [showHelp, setShowHelp]   = useState(false)
 
   // Refs for use inside timers
   const phaseRef        = useRef('setup')
@@ -736,8 +747,40 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
             className="btn btn--ghost pm-end-btn"
             onClick={finishGame}
           >End Test</button>
+          <button
+            className="pm-help-btn"
+            onClick={() => setShowHelp(h => !h)}
+            title="Rules reference"
+          >?</button>
         </div>
       </header>
+
+      {/* Help overlay */}
+      {showHelp && (
+        <div className="pm-help-overlay" onClick={() => setShowHelp(false)}>
+          <div className="pm-help-card" onClick={e => e.stopPropagation()}>
+            <div className="pm-help-card__header">
+              <span>Control Panel Rules</span>
+              <button className="pm-help-card__close" onClick={() => setShowHelp(false)}>✕</button>
+            </div>
+            <table className="pm-rules-table pm-rules-table--help">
+              <thead><tr><th>Condition</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Power too high</td><td><strong>On / Off</strong></td></tr>
+                <tr><td>Temperature high (1st/2nd spike)</td><td><strong>High</strong></td></tr>
+                <tr><td>Temperature high (3rd spike)</td><td><strong>3rd High</strong></td></tr>
+                <tr><td>One gas in red zone</td><td><strong>Reset</strong> (gas)</td></tr>
+                <tr><td>O₂ low + temp high (System Trip)</td><td><strong>System Reset</strong></td></tr>
+                <tr><td>Both gases in red zone</td><td><strong>Alarm</strong></td></tr>
+                <tr><td>N Stabilizer in red zone</td><td><strong>Reset</strong> (N Stab)</td></tr>
+                <tr><td>W Stabilizer in red zone</td><td><strong>Reset</strong> (W Stab)</td></tr>
+                <tr><td>Both stabilizers in red</td><td><strong>Recentre</strong></td></tr>
+              </tbody>
+            </table>
+            <p className="pm-help-card__note">⚠ Two-phase events (Gas, Temp, Power): <strong>wait</strong> for values to return to safe zone before pressing.</p>
+          </div>
+        </div>
+      )}
 
       <div className="pm-playing-wrap">
       {assist && (
@@ -872,7 +915,7 @@ export default function NLNGProcessMonitorTest({ variant = 'practice' } = {}) {
             </button>
             <div className="pm-gas-bars">
               <GasBar label="O₂" level={panel.gas.o2} alert={assist && gasO2Alert} />
-              <GasBar label="CO₂" level={panel.gas.co2} alert={assist && gasCO2Alert} />
+              <GasBar label="CO₂" level={panel.gas.co2} alert={assist && gasCO2Alert} inverted />
             </div>
             <button
               className="pm-btn"

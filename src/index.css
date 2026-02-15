@@ -4358,6 +4358,59 @@ select:focus-visible {
   text-anchor: middle; dominant-baseline: middle;
 }
 
+/* ── Help (?) button ────────────────────────────────────────────────────────── */
+.pm-help-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #1e293b; border: 2px solid #3b82f6;
+  color: #3b82f6; font-size: 1.1rem; font-weight: 800;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s, box-shadow .15s;
+  flex-shrink: 0;
+}
+.pm-help-btn:hover {
+  background: #3b82f6; color: #fff;
+  box-shadow: 0 0 12px rgba(59,130,246,0.5);
+}
+
+/* ── Help overlay ───────────────────────────────────────────────────────────── */
+.pm-help-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(3px);
+}
+.pm-help-card {
+  background: #111827; border: 1px solid #243044;
+  border-radius: 14px; padding: 1.5rem; max-width: 540px; width: 90%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+.pm-help-card__header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.95rem; font-weight: 800; color: #e2e8f0;
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.pm-help-card__close {
+  background: none; border: none; color: #64748b; font-size: 1.2rem;
+  cursor: pointer; padding: 4px 8px; border-radius: 6px;
+}
+.pm-help-card__close:hover { background: #1e293b; color: #e2e8f0; }
+.pm-rules-table--help {
+  width: 100%; font-size: 0.82rem;
+}
+.pm-rules-table--help td, .pm-rules-table--help th {
+  padding: .5rem .65rem; border-color: #1e2d3d;
+}
+.pm-help-card__note {
+  margin-top: .75rem; font-size: 0.78rem; color: #f59e0b;
+  line-height: 1.45;
+}
+
+/* ── Inverted gas track helper ──────────────────────────────────────────────── */
+.pm-gas-track--inverted .pm-gas-safe-zone {
+  top: auto; bottom: 0; border-radius: 0 0 12px 12px;
+}
+
 /* -- SHL Ranking: drag number badges into the Rank column -- */
 .shl-rank {
   display: flex;
