@@ -8527,10 +8527,10 @@
     "source_id": "pie_production_cost_hard"
   },
   {
-    "type": "interactive_stacked_bar",
+    "type": "interactive_point_graph",
     "difficulty": "hard",
     "instruction": "Graph the wholesale price as a percentage of full price, by the number of laptops purchased.",
-    "question": "A shop offers volume discounts on laptops. Using the price table below, set each bar to the correct wholesale price expressed as a percentage of the full (1-9) price. The first bar is fixed at 100% for reference.",
+    "question": "A shop offers volume discounts on laptops. Drag each point to plot the wholesale price as a percentage of the full (1–9) price.",
     "prompt_rules": [
       "1–9 laptops: $1,280 per laptop (full price)",
       "10–49 laptops: $1,152 per laptop",
@@ -8539,63 +8539,37 @@
       "Express each discounted price as a % of full price ($1,280)"
     ],
     "widget_data": {
-      "axis_max": 100,
-      "axis_min": 0,
-      "axis_step": 10,
-      "axis_suffix": "%",
-      "total_prefix": "",
-      "segment_labels": {
-        "primary": "Price %",
-        "secondary": ""
-      },
-      "reference_bars": [
-        {
-          "id": "order_1_9",
-          "label": "1-9",
-          "total": 100,
-          "split_pct": 100
-        }
+      "x_axis_labels": [
+        "1-9",
+        "10-49",
+        "50-99",
+        "100-199"
       ],
-      "interactive_bars": [
-        {
-          "id": "order_10_49",
-          "label": "10-49",
-          "total": 50,
-          "split_pct": 100
-        },
-        {
-          "id": "order_50_99",
-          "label": "50-99",
-          "total": 50,
-          "split_pct": 100
-        },
-        {
-          "id": "order_100_199",
-          "label": "100-199",
-          "total": 50,
-          "split_pct": 100
-        }
+      "y_axis": {
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "label": "%"
+      },
+      "initial_values": [
+        50,
+        50,
+        50,
+        50
       ]
     },
     "correct_answer": {
-      "order_10_49": {
-        "total": 90,
-        "split_pct": 100
-      },
-      "order_50_99": {
-        "total": 80,
-        "split_pct": 100
-      },
-      "order_100_199": {
-        "total": 65,
-        "split_pct": 100
-      }
+      "values": [
+        100,
+        90,
+        80,
+        65
+      ]
     },
     "tolerance": {
-      "total": 3,
-      "split_pct": 100
+      "value": 2
     },
-    "explanation": "Full price = $1,280. 10-49: $1,152/$1,280 = 90%. 50-99: $1,024/$1,280 = 80%. 100-199: $832/$1,280 = 65%.",
-    "source_id": "bar_wholesale_discount_hard"
+    "explanation": "Full price = $1,280. 1-9: $1,280/$1,280 = 100%. 10-49: $1,152/$1,280 = 90%. 50-99: $1,024/$1,280 = 80%. 100-199: $832/$1,280 = 65%.",
+    "source_id": "graph_wholesale_discount_hard"
   }
 ]
