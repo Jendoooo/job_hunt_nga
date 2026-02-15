@@ -435,7 +435,7 @@ export default function NLNGInteractiveTest() {
                     timeTaken={timeTaken || (isExamMode ? totalTimeSeconds : 0)}
                     totalTime={isExamMode ? totalTimeSeconds : 0}
                     assessmentType="nlng-interactive-numerical"
-                    moduleName={`NLNG Interactive Numerical (${difficulty}, ${effectiveMode}, ${activeQuestions.length}Q${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
+                    moduleName={`NLNG Interactive Numerical (${difficultyLabel}, ${effectiveMode}, ${activeQuestions.length}Q${isExamMode ? ` / ${effectiveTimeLimitMinutes}m` : ''})`}
                     mode={effectiveMode}
                     onRetry={() => setStage('setup')}
                     onBackToDashboard={() => navigate('/')}

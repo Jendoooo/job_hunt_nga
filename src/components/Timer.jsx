@@ -3,10 +3,26 @@ import { useState, useEffect, useRef } from 'react'
 export default function Timer({ duration, onTimeUp, isPaused = false }) {
     const [timeLeft, setTimeLeft] = useState(duration)
     const intervalRef = useRef(null)
+    const onTimeUpRef = useRef(onTimeUp)
+    const firedRef = useRef(false)
+
+    // Keep callback ref in sync without restarting the interval
+    useEffect(() => {
+        onTimeUpRef.current = onTimeUp
+    }, [onTimeUp])
 
     useEffect(() => {
         setTimeLeft(duration)
+        firedRef.current = false
     }, [duration])
+
+    // Fire callback when time reaches 0 (outside state updater)
+    useEffect(() => {
+        if (timeLeft === 0 && !firedRef.current) {
+            firedRef.current = true
+            onTimeUpRef.current?.()
+        }
+    }, [timeLeft])
 
     useEffect(() => {
         if (isPaused) {
@@ -18,7 +34,6 @@ export default function Timer({ duration, onTimeUp, isPaused = false }) {
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     clearInterval(intervalRef.current)
-                    onTimeUp && onTimeUp()
                     return 0
                 }
                 return prev - 1
@@ -26,7 +41,7 @@ export default function Timer({ duration, onTimeUp, isPaused = false }) {
         }, 1000)
 
         return () => clearInterval(intervalRef.current)
-    }, [isPaused, onTimeUp])
+    }, [isPaused])
 
     const minutes = Math.floor(timeLeft / 60)
     const seconds = timeLeft % 60
