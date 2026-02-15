@@ -61,10 +61,14 @@ export default function SHLPointGraphWidget({ data, value, onAnswer, disabled = 
     const yMaxRaw = Number.isFinite(Number(yAxis.max)) ? Number(yAxis.max) : 100
     const yMax = yMaxRaw > yMin ? yMaxRaw : yMin + 1
     const yRange = yMax - yMin
-    const step = Number.isFinite(Number(yAxis.step)) && Number(yAxis.step) > 0 ? Number(yAxis.step) : 1
+    const rawStep = Number.isFinite(Number(yAxis.step)) && Number(yAxis.step) > 0 ? Number(yAxis.step) : 1
+    // snap = fine-grained precision for dragging; defaults to 1 (or rawStep if < 1)
+    const snap = Number.isFinite(Number(yAxis.snap)) && Number(yAxis.snap) > 0
+        ? Number(yAxis.snap)
+        : Math.min(rawStep, 1)
     const tickStep = Number.isFinite(Number(yAxis.tick_step)) && Number(yAxis.tick_step) > 0
         ? Number(yAxis.tick_step)
-        : step
+        : rawStep
 
     const [values, setValues] = useState(() => normalizeValues(value, initialValues, xLabels.length))
     const [draggingIndex, setDraggingIndex] = useState(null)
@@ -81,8 +85,8 @@ export default function SHLPointGraphWidget({ data, value, onAnswer, disabled = 
     const svgYToValue = useCallback((svgY) => {
         const ratio = (PLOT_BOTTOM - clamp(svgY, PLOT_TOP, PLOT_BOTTOM)) / PLOT_HEIGHT
         const rawValue = yMin + ratio * yRange
-        return clamp(Math.round(rawValue / step) * step, yMin, yMax)
-    }, [step, yMax, yMin, yRange])
+        return clamp(Math.round(rawValue / snap) * snap, yMin, yMax)
+    }, [snap, yMax, yMin, yRange])
 
     const yTicks = useMemo(() => {
         const ticks = []
@@ -246,6 +250,46 @@ export default function SHLPointGraphWidget({ data, value, onAnswer, disabled = 
                     </text>
                 )}
             </svg>
+
+            {/* Numeric inputs for precise value entry */}
+            <div className="graph-value-inputs" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px', justifyContent: 'center' }}>
+                {xLabels.map((label, index) => (
+                    <label key={`input-${index}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '0.75rem', color: '#475569' }}>
+                        <span style={{ marginBottom: '2px', fontWeight: 600 }}>{label}</span>
+                        <input
+                            type="number"
+                            min={yMin}
+                            max={yMax}
+                            step={snap}
+                            value={values[index] ?? ''}
+                            onChange={(e) => {
+                                if (disabled) return
+                                const raw = e.target.value
+                                if (raw === '') return
+                                const parsed = Number(raw)
+                                if (!Number.isFinite(parsed)) return
+                                const clamped = clamp(Math.round(parsed / snap) * snap, yMin, yMax)
+                                setValues((prev) => {
+                                    const next = [...prev]
+                                    next[index] = clamped
+                                    if (onAnswer) onAnswer({ values: next })
+                                    return next
+                                })
+                            }}
+                            disabled={disabled}
+                            style={{
+                                width: '72px',
+                                padding: '4px 6px',
+                                border: '1px solid #cbd5e1',
+                                borderRadius: '6px',
+                                textAlign: 'center',
+                                fontSize: '0.8rem',
+                                background: disabled ? '#f1f5f9' : '#fff',
+                            }}
+                        />
+                    </label>
+                ))}
+            </div>
         </section>
     )
 }

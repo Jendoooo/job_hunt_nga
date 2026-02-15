@@ -19,14 +19,12 @@ import {
 
 const QUESTION_OPTIONS = [5, 10, 15, 20, 30, 40, 50]
 const TIME_OPTIONS_MINUTES = [10, 15, 18, 20, 25, 30, 40]
-const DIFFICULTY_OPTIONS = [
-    { value: 'all', label: 'All (Mixed)' },
+const DIFFICULTY_CHIPS = [
     { value: 'easy', label: 'Easy' },
     { value: 'medium', label: 'Medium' },
     { value: 'hard', label: 'Hard' },
 ]
-const TYPE_OPTIONS = [
-    { value: 'all', label: 'All Types' },
+const TYPE_CHIPS = [
     { value: 'interactive_drag_table', label: 'Drag & Drop' },
     { value: 'interactive_pie_chart', label: 'Pie Chart' },
     { value: 'interactive_stacked_bar', label: 'Stacked Bar' },
@@ -34,6 +32,8 @@ const TYPE_OPTIONS = [
     { value: 'interactive_ranking', label: 'Ranking' },
     { value: 'interactive_tabbed_evaluation', label: 'Tabbed Eval' },
 ]
+const ALL_DIFFICULTY_VALUES = new Set(DIFFICULTY_CHIPS.map((d) => d.value))
+const ALL_TYPE_VALUES = new Set(TYPE_CHIPS.map((t) => t.value))
 const REAL_SHL_QUESTION_COUNT = 10
 const REAL_SHL_TIME_MINUTES = 18
 const DEFAULT_QUESTION_COUNT = REAL_SHL_QUESTION_COUNT
@@ -106,9 +106,23 @@ export default function NLNGInteractiveTest() {
     const [stage, setStage] = useState('setup')
     const [sessionPreset, setSessionPreset] = useState('real')
     const [mode, setMode] = useState('exam')
-    const [difficulty, setDifficulty] = useState('all')
-    const [questionType, setQuestionType] = useState('all')
+    const [selectedDifficulties, setSelectedDifficulties] = useState(new Set(ALL_DIFFICULTY_VALUES))
+    const [selectedTypes, setSelectedTypes] = useState(new Set(ALL_TYPE_VALUES))
     const [questionCount, setQuestionCount] = useState(DEFAULT_QUESTION_COUNT)
+
+    function toggleChip(current, setter, allValues, value) {
+        const next = new Set(current)
+        if (next.has(value)) {
+            next.delete(value)
+            if (next.size === 0) return // don't allow empty
+        } else {
+            next.add(value)
+        }
+        setter(next)
+        setSessionPreset('custom')
+    }
+    const allDiffSelected = selectedDifficulties.size === ALL_DIFFICULTY_VALUES.size
+    const allTypesSelected = selectedTypes.size === ALL_TYPE_VALUES.size
     const [timeLimitMinutes, setTimeLimitMinutes] = useState(DEFAULT_TIME_MINUTES)
     const [activeQuestions, setActiveQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -122,10 +136,10 @@ export default function NLNGInteractiveTest() {
         interactiveQuestions.filter((question) =>
             typeof question?.subtype === 'string' &&
             question.subtype.startsWith('interactive_numerical') &&
-            (difficulty === 'all' || getQuestionDifficulty(question) === difficulty) &&
-            (questionType === 'all' || question.type === questionType)
+            selectedDifficulties.has(getQuestionDifficulty(question)) &&
+            selectedTypes.has(question.type)
         )
-    ), [difficulty, questionType])
+    ), [selectedDifficulties, selectedTypes])
     const isRealPreset = sessionPreset === 'real'
     const effectiveMode = isRealPreset ? 'exam' : mode
     const effectiveQuestionCount = isRealPreset
@@ -134,7 +148,7 @@ export default function NLNGInteractiveTest() {
     const effectiveTimeLimitMinutes = isRealPreset ? REAL_SHL_TIME_MINUTES : timeLimitMinutes
     const totalTimeSeconds = effectiveTimeLimitMinutes * 60
     const isExamMode = effectiveMode === 'exam'
-    const difficultyLabel = DIFFICULTY_OPTIONS.find((option) => option.value === difficulty)?.label || 'All (Mixed)'
+    const difficultyLabel = allDiffSelected ? 'all difficulties' : [...selectedDifficulties].join(', ')
 
     function applyRealPreset() {
         setSessionPreset('real')
@@ -251,48 +265,57 @@ export default function NLNGInteractiveTest() {
                         </div>
 
                         <div className="test-setup__mode">
-                            <h3>Difficulty</h3>
-                            <div className="max-w-xs">
-                                <select
-                                    className="test-setup__select"
-                                    value={difficulty}
-                                    onChange={(event) => setDifficulty(event.target.value)}
-                                    aria-label="Select difficulty level"
+                            <h3>Difficulty <span className="text-xs font-normal text-slate-400">(multi-select)</span></h3>
+                            <div className="test-setup__time-options" style={{ flexWrap: 'wrap' }}>
+                                <button
+                                    className={`test-setup__time-btn ${allDiffSelected ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={() => { setSelectedDifficulties(new Set(ALL_DIFFICULTY_VALUES)); setSessionPreset('custom') }}
                                 >
-                                    {DIFFICULTY_OPTIONS.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </select>
+                                    All
+                                </button>
+                                {DIFFICULTY_CHIPS.map((opt) => {
+                                    const active = selectedDifficulties.has(opt.value)
+                                    const count = interactiveQuestions.filter((q) =>
+                                        typeof q?.subtype === 'string' && q.subtype.startsWith('interactive_numerical') &&
+                                        getQuestionDifficulty(q) === opt.value && selectedTypes.has(q.type)
+                                    ).length
+                                    return (
+                                        <button
+                                            key={opt.value}
+                                            className={`test-setup__time-btn ${active ? 'test-setup__time-btn--active' : ''}`}
+                                            onClick={() => toggleChip(selectedDifficulties, setSelectedDifficulties, ALL_DIFFICULTY_VALUES, opt.value)}
+                                        >
+                                            {opt.label} ({count})
+                                        </button>
+                                    )
+                                })}
                             </div>
                             <p className="text-xs text-slate-500 mt-2">
-                                {availableQuestions.length} questions available for {difficultyLabel.toLowerCase()}.
+                                {availableQuestions.length} questions available for {difficultyLabel}.
                             </p>
                         </div>
 
                         <div className="test-setup__mode">
-                            <h3>Question Type</h3>
+                            <h3>Question Type <span className="text-xs font-normal text-slate-400">(multi-select)</span></h3>
                             <div className="test-setup__time-options" style={{ flexWrap: 'wrap' }}>
-                                {TYPE_OPTIONS.map((opt) => {
-                                    const count = opt.value === 'all'
-                                        ? interactiveQuestions.filter((q) =>
-                                            typeof q?.subtype === 'string' && q.subtype.startsWith('interactive_numerical') &&
-                                            (difficulty === 'all' || getQuestionDifficulty(q) === difficulty)
-                                        ).length
-                                        : interactiveQuestions.filter((q) =>
-                                            typeof q?.subtype === 'string' && q.subtype.startsWith('interactive_numerical') &&
-                                            q.type === opt.value &&
-                                            (difficulty === 'all' || getQuestionDifficulty(q) === difficulty)
-                                        ).length
+                                <button
+                                    className={`test-setup__time-btn ${allTypesSelected ? 'test-setup__time-btn--active' : ''}`}
+                                    onClick={() => { setSelectedTypes(new Set(ALL_TYPE_VALUES)); setSessionPreset('custom') }}
+                                    disabled={isRealPreset}
+                                >
+                                    All
+                                </button>
+                                {TYPE_CHIPS.map((opt) => {
+                                    const active = selectedTypes.has(opt.value)
+                                    const count = interactiveQuestions.filter((q) =>
+                                        typeof q?.subtype === 'string' && q.subtype.startsWith('interactive_numerical') &&
+                                        q.type === opt.value && selectedDifficulties.has(getQuestionDifficulty(q))
+                                    ).length
                                     return (
                                         <button
                                             key={opt.value}
-                                            className={`test-setup__time-btn ${questionType === opt.value ? 'test-setup__time-btn--active' : ''}`}
-                                            onClick={() => {
-                                                setQuestionType(opt.value)
-                                                setSessionPreset('custom')
-                                            }}
+                                            className={`test-setup__time-btn ${active ? 'test-setup__time-btn--active' : ''}`}
+                                            onClick={() => toggleChip(selectedTypes, setSelectedTypes, ALL_TYPE_VALUES, opt.value)}
                                             disabled={isRealPreset || count === 0}
                                         >
                                             {opt.label} ({count})
