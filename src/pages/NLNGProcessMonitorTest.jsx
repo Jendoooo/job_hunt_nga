@@ -167,7 +167,8 @@ function resolveEvent(type, p) {
 }
 
 /* ── sub-components ────────────────────────────────────────────────────────── */
-function AlarmLamp({ on }) {
+function AlarmLamp() {
+  // Always amber in hard mode — no hint about active/inactive state
   return (
     <span
       aria-hidden="true"
@@ -176,8 +177,8 @@ function AlarmLamp({ on }) {
         height: 10,
         borderRadius: '50%',
         display: 'inline-block',
-        background: on ? '#ef4444' : '#1e2d3d',
-        border: `1.5px solid ${on ? '#ef4444' : '#243044'}`,
+        background: '#78716c',
+        border: '1.5px solid #57534e',
       }}
     />
   )
