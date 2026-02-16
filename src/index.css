@@ -4188,6 +4188,7 @@ select:focus-visible {
 .pm-timeline-item__time { font-size: 0.72rem; color: var(--text-3); font-family: monospace; }
 .pm-timeline-item__rt { font-size: 0.78rem; font-weight: 700; color: #2563eb; }
 .pm-timeline-item__miss-tag { font-size: 0.68rem; font-weight: 800; color: #ef4444; letter-spacing: .04em; }
+.pm-timeline-item__spike { font-size: 0.68rem; font-weight: 600; color: #f59e0b; margin-left: 4px; }
 
 /* Session history chart */
 .pm-history-chart {

@@ -159,7 +159,7 @@ function resolveEvent(type, p) {
   if (type === 'gas_o2_low')   { n.gas.o2 = 65 }
   if (type === 'gas_co2_low')  { n.gas.co2 = 60 }
   if (type === 'gas_both_low') { n.gas.o2 = 65; n.gas.co2 = 60 }
-  if (type === 'gas_o2_temp')  { n.gas.o2 = 65; n.temp.value = 40; n.temp.spikes = (p.temp.spikes + 1) % 3 }
+  if (type === 'gas_o2_temp')  { n.gas.o2 = 65; n.temp.value = 40 }  // system trip does NOT count as a temp spike
   if (type === 'stab_north')   { n.stabN.angle = rand(-15, 15) }
   if (type === 'stab_west')    { n.stabW.angle = rand(-15, 15) }
   if (type === 'stab_both')    { n.stabN.angle = rand(-15, 15); n.stabW.angle = rand(-15, 15) }
@@ -498,6 +498,7 @@ export default function NLNGProcessMonitorTest() {
         respondedAt: Date.now(),
         reactionMs,
         outcome: 'hit',
+        spikeNum: ev.type === 'temp_high' ? (ev.ctx?.tempSpikesAtStart ?? 0) + 1 : undefined,
       })
 
       // Two-phase events already returned to safe values at the end of alarm phase.
@@ -665,6 +666,7 @@ export default function NLNGProcessMonitorTest() {
             respondedAt: null,
             reactionMs: null,
             outcome: 'miss',
+            spikeNum: ev.type === 'temp_high' ? (ev.ctx?.tempSpikesAtStart ?? 0) + 1 : undefined,
           })
 
           showFlash(`Missed! -${PTS_MISS}`, false)
@@ -932,7 +934,10 @@ export default function NLNGProcessMonitorTest() {
                       <div className="pm-timeline-item__dot" style={{ background: ZONE_COLORS[entry.zone] || '#94a3b8' }} />
                       <div className="pm-timeline-item__body">
                         <span className="pm-timeline-item__zone">{entry.zone}</span>
-                        <span className="pm-timeline-item__type">{ZONE_LABEL[entry.type] || entry.type}</span>
+                        <span className="pm-timeline-item__type">
+                          {ZONE_LABEL[entry.type] || entry.type}
+                          {entry.spikeNum != null && <span className="pm-timeline-item__spike"> (Spike {entry.spikeNum}/3)</span>}
+                        </span>
                       </div>
                       <div className="pm-timeline-item__meta">
                         {timeIntoGame !== null && <span className="pm-timeline-item__time">{Math.floor(timeIntoGame / 60)}:{String(timeIntoGame % 60).padStart(2, '0')}</span>}
