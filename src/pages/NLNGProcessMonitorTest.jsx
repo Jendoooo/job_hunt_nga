@@ -113,8 +113,8 @@ function isInAlarmZone(evType, panel) {
   if (evType === 'power_high') return panel.gen.power >= 75
   if (evType === 'temp_high') return panel.temp.value >= 75
   if (evType === 'gas_o2_low') return panel.gas.o2 < 20
-  if (evType === 'gas_co2_low') return panel.gas.co2 < 20
-  if (evType === 'gas_both_low') return panel.gas.o2 < 20 || panel.gas.co2 < 20
+  if (evType === 'gas_co2_low') return panel.gas.co2 > 80
+  if (evType === 'gas_both_low') return panel.gas.o2 < 20 || panel.gas.co2 > 80
   return false
 }
 
@@ -143,8 +143,8 @@ function applyEvent(type, p) {
   if (type === 'power_high')   { n.gen.power = 88 }
   if (type === 'temp_high')    { n.temp.value = 85 }
   if (type === 'gas_o2_low')   { n.gas.o2 = 12 }
-  if (type === 'gas_co2_low')  { n.gas.co2 = 12 }
-  if (type === 'gas_both_low') { n.gas.o2 = 10; n.gas.co2 = 10 }
+  if (type === 'gas_co2_low')  { n.gas.co2 = 90 }
+  if (type === 'gas_both_low') { n.gas.o2 = 10; n.gas.co2 = 90 }
   if (type === 'gas_o2_temp')  { n.gas.o2 = 10; n.temp.value = 85 }
   if (type === 'stab_north')   { n.stabN.angle = 80 }
   if (type === 'stab_west')    { n.stabW.angle = -80 }
@@ -516,6 +516,7 @@ export default function NLNGProcessMonitorTest() {
       hitsRef.current += 1
       setScore(scoreRef.current)
       setHits(hitsRef.current)
+      playAlertBeep()  // audio feedback on correct press
       showFlash(`+${PTS_HIT} Correct!`, true)
       // Re-start the event chain
       setTimeout(() => scheduleNextRef.current?.(), 900)
@@ -606,9 +607,6 @@ export default function NLNGProcessMonitorTest() {
         }
 
         const newEv = { ...ev, deadline, ctx, firedAt }
-
-        // Play audio alert
-        playAlertBeep()
 
         setPanel((prev) => { const n = applyEvent(ev.type, prev); panelRef.current = n; return n })
         evRef.current = newEv
