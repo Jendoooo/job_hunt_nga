@@ -1,10 +1,45 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import { explainSJQAttempt } from '../services/deepseek'
 import { Sparkles, X, Bot } from 'lucide-react'
+
+/* ── localStorage explanation cache ─────────────────────── */
+const CACHE_KEY = 'jobhunt_ai_sjq_cache_v1'
+const CACHE_TTL_MS = 1000 * 60 * 60 * 24 * 30 // 30 days
+const CACHE_MAX = 50
+
+function readCache() {
+    try { const r = localStorage.getItem(CACHE_KEY); return r ? JSON.parse(r) : {} } catch { return {} }
+}
+function writeCache(c) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(c)) } catch { /* quota */ }
+}
+function pruneCache(cache) {
+    const now = Date.now()
+    return Object.fromEntries(
+        Object.entries(cache)
+            .filter(([, v]) => v && typeof v.t === 'number' && now - v.t <= CACHE_TTL_MS)
+            .sort((a, b) => b[1].t - a[1].t)
+            .slice(0, CACHE_MAX)
+    )
+}
+function fingerprint(q, ans) {
+    // Stable key: question id + user's chosen answer
+    const id = q?.id || (q?.scenario || '').trim().slice(0, 80)
+    const a = typeof ans === 'number' ? ans : JSON.stringify(ans ?? '').slice(0, 40)
+    return `sjq|${id}|${a}`
+}
+function getCached(fp) {
+    const c = pruneCache(readCache()); writeCache(c)
+    return c[fp]?.v || null
+}
+function setCached(fp, value) {
+    const c = pruneCache(readCache()); c[fp] = { v: value, t: Date.now() }; writeCache(c)
+}
+/* ──────────────────────────────────────────────────────── */
 
 function normalizeModelOutput(value) {
     if (!value) return ''
@@ -22,18 +57,20 @@ function normalizeModelOutput(value) {
 }
 
 export default function AISJQExplainer({ question, answer }) {
+    const fp = useMemo(() => fingerprint(question, answer), [question, answer])
     const [explanation, setExplanation] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
 
-    // Reset state when question changes
+    // Reset state when question changes — restore from cache if available
     useEffect(() => {
-        setExplanation(null)
+        const cached = getCached(fp)
+        setExplanation(cached)
         setLoading(false)
         setError(null)
         setIsOpen(false)
-    }, [question])
+    }, [fp])
 
     async function handleExplain() {
         if (explanation) {
@@ -48,6 +85,7 @@ export default function AISJQExplainer({ question, answer }) {
         try {
             const result = await explainSJQAttempt(question, answer)
             setExplanation(result)
+            setCached(fp, result)
         } catch (err) {
             setError('Failed to get AI explanation. Please check your connection.')
             console.error(err)
