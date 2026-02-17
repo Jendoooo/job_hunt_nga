@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
@@ -26,6 +26,14 @@ export default function AISJQExplainer({ question, answer }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [isOpen, setIsOpen] = useState(false)
+
+    // Reset state when question changes
+    useEffect(() => {
+        setExplanation(null)
+        setLoading(false)
+        setError(null)
+        setIsOpen(false)
+    }, [question])
 
     async function handleExplain() {
         if (explanation) {
